@@ -1,0 +1,27 @@
+{
+  "name": "@leke/rc",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "author": "guoquankai@cnstrong.cn",
+  "license": "MIT",
+  "scripts": {
+    "build": "gulp"
+  },
+  "files": [
+    "package.json",
+    "lib",
+    "es",
+    "style"
+  ],
+  "devDependencies": {
+  },
+  "peerDependencies": {
+    "@leke/icons": ">=1.0.0",
+    "react": ">=16.8.6",
+    "react-dom": ">=16.8.6"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6"
+  }
+}

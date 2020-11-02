@@ -1,0 +1,25 @@
+{
+  "name": "@leke/icons",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development gulp",
+    "build": "cross-env NODE_ENV=production gulp",
+    "gulp": "gulp"
+  },
+  "author": "",
+  "license": "ISC",
+  "files": [
+    "package.json",
+    "lib",
+    "es"
+  ],
+  "dependencies": {
+    "classnames": "^2.2.6"
+  },
+  "devDependencies": {
+    "vinyl": "^2.2.1"
+  }
+}

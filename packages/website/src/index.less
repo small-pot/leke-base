@@ -1,0 +1,72 @@
+@import "../../rc/style/theme";
+@import "../../rc/style/base";
+body{
+  font-size: 14px;
+  color:#333;
+}
+::-webkit-scrollbar {
+  width : 8px;
+  height: 1px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background   : #535353;
+}
+::-webkit-scrollbar-track {
+  box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background   : #ededed;
+}
+.main{
+  display: flex;
+}
+.left-tab{
+  width:260px;
+  border-right: 1px solid #f0f0f0;
+  height: 100vh;
+  overflow-y: auto;
+  .tab-item{
+    height:40px;
+    line-height: 40px;
+    cursor: pointer;
+    padding-left:20px;
+    padding-right:20px;
+    a{
+      display: block;
+      height:100%;
+    }
+    &:hover{
+      color: @color;
+    }
+    &.current{
+      color: @color;
+      background-color: #d2f0ed;
+    }
+  }
+  .tab-list .tab-item:first-child a{
+    border-top:1px solid #f0f0f0;
+  }
+  .tab-group{
+    font-size:16px;
+    color:#333;
+    .group-title{
+      padding-left:20px;
+      padding-right:20px;
+      color:rgba(0,0,0,0.45);
+      font-size:14px;
+      display: block;
+      height:36px;
+      line-height: 36px;
+      cursor: default;
+    }
+  }
+}
+.router-container{
+  width: calc(100% - 260px);
+  box-sizing: border-box;
+  padding:0 50px;
+}
+.leke-icon{
+  line-height: 0;
+}

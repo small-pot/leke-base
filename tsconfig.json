@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "sourceMap": false,
+    "allowSyntheticDefaultImports": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "baseUrl": ".",
+    "declaration": true,
+    "paths":{
+      "@leke/icons": ["./packages/icons"],
+      "@leke/rc": ["./packages/rc/components"],
+      "@leke/gulp-compile": ["./packages/gulp-compile"]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
