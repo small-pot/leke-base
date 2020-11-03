@@ -16,8 +16,8 @@ module.exports ={
     resolve: {
         extensions: ['.ts','.tsx','.js','.jsx'],
         alias: {
-            "@leke/rc":path.resolve(__dirname,'../../rc'),
-            "@leke/icons":path.resolve(__dirname,'../../icons')
+            "@leke/rc":path.resolve(__dirname,'../../packages/rc'),
+            "@leke/icons":path.resolve(__dirname,'../../packages/icons')
         }
     },
     module: {

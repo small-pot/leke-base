@@ -1,9 +1,9 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
 import {routes} from "./Router/config";
 import './index.less';
 import MarkdownView from "./MarkdownView";
-import configure from "../../rc/components/configure";
+import configure from "../../packages/rc/components/configure";
 import http,{extend} from './http';
 import classNames from 'classnames';
 import IconList from "./IconList";
@@ -23,22 +23,21 @@ function App(){
         function hashChange(){
             const key=window.location.hash.replace(/^#/,'');
             if(!key||key==='introduce'){
-                import('../../rc/introduce.md').then(res=>{
+                import('../../packages/rc/introduce.md').then(res=>{
                     keyRef.current='introduce';
                     setMds([res]);
                 });
             }else if(key==='icons'){
                 Promise.all([
                     import('@leke/icons'),
-                    import('../../icons/index.md')
+                    import('@leke/icons/index.md')
                 ]).then(([icons,md])=>{
                     keyRef.current=key;
                     setIcons(icons);
                     setMds([md]);
                 });
             }else if(keys.includes(key)){
-                import(`../../rc/components/${key}/demos/index.ts`).then(res=>{
-                    console.log(res.default);
+                import(`../../packages/rc/components/${key}/demos/index.ts`).then(res=>{
                     extend(res.mock);
                     keyRef.current=key;
                     setMds(res.default);

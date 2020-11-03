@@ -1,5 +1,5 @@
 import {configure} from '@leke/rc';
-import http,{extend} from './packages/website/src/http';
+import http,{extend} from './website/src/http';
 import glob from 'glob';
 
 configure({http});
