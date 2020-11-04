@@ -23,7 +23,7 @@
 }
 注意：
 1.当添加svg至icons中时，需执行npm run build:icons
-2.commit会对代码进行校验（tsc与fix），未通过无法提交代码，请大家注意代码规范与ts类型，必要时可通过eslint-disable
+2.commit会对代码进行校验（tsc与fix），未通过无法提交代码，请大家注意代码规范与ts类型，必要时可通过eslint-disable避开eslint代码校验
 ```
 
 ## 单元测试
