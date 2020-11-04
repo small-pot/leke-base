@@ -36,7 +36,7 @@
 *  在每个组件或者hook文件夹下创建demos文件夹
 *  demos使用.md文件，支持html语法
 *  demos应该包括核心功能渲染与参数描述，hooks还需对result进行描述，如果包含http请求，还需添加mock数据
-*  [demos输入规范](https://gitlab.leke.cn/frontend/fe-basics/leke-base/-/blob/master/packages/rc/components/MiniHeader/demos/index.ts)
+*  [demos输出规范](https://gitlab.leke.cn/frontend/fe-basics/leke-base/-/blob/master/packages/rc/components/MiniHeader/demos/index.ts)
 
 ## 官网理由配置
 每个事业线可以创建一个group，一个group大概是这样
