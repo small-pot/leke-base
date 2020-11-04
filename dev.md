@@ -1,7 +1,7 @@
 ## 工程介绍
 *  整个项目使用package.json中的workspace管理，所有依赖共享
 *  website为官网工程
-*  packages中是发布至npm中的源码工程
+*  packages/*是发布至npm中的源码工程
 *  tsetUtil是jest通用测试方法
 *  通过tsconfig中的path与website中webpack的alias配置依赖路径解析
 
