@@ -16,7 +16,7 @@
     "dev:website": 官网开发环境
     "dev": 先打包icons，然后启动开发环境
     "test": 启动单元测试，输出覆盖率文档
-    "test:update": 更快单元测试快照
+    "test:update": 更新单元测试快照
     "lint": 代码规范校验
     "fix": 自动格式化代码规范
     "tsc": ts类型校验
