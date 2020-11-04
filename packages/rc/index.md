@@ -1,8 +1,8 @@
 ## 安装
 #### 使用 npm 或 yarn 安装
 ```
-npm install @leke/rc @leke/icons --save
-yarn add @leke/rc @leke/icons --save
+npm install @leke/rc @leke/icons @leke/hooks --save
+yarn add @leke/rc @leke/icons @leke/hooks --save
 ```
 ## 按需加载<br>
 js支持基于 ES modules 的 tree shaking，需引入全部样式:

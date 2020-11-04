@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import ReactDOM from 'react-dom';
 import {componentRoutes,hookRoutes} from "./routes";
 import './index.less';
@@ -28,7 +28,6 @@ function App(){
                         import('@leke/icons'),
                         import('@leke/icons/index.md')
                     ]).then(([icons,md])=>{
-                        console.log(icons);
                         setIcons(icons);
                         setMds([md]);
                     });

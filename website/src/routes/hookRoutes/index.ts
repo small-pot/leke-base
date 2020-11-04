@@ -1,8 +1,4 @@
+import common from "./common";
 export default [
-    {
-        title:'通用',
-        keys:[
-            'useResolve'
-        ]
-    }
+    common
 ];
