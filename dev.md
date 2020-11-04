@@ -3,7 +3,7 @@
 *  website为官网工程
 *  packages中是发布至npm中的源码工程
 *  tsetUtil是jest通用测试方法
-*  通过tsconfig中的path配置依赖
+*  通过tsconfig中的path与website中webpack的alias配置依赖路径解析
 
 ## 命令行
 ```
