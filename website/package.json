@@ -1,13 +1,14 @@
 {
-  "name": "@leke/website",
+  "name": "website",
   "version": "1.0.1",
   "author": "guoquankai@cnstrong.cn",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --config build/webpack.development.js",
-    "build:website": "node_modules/.bin/rimraf dist && cross-env NODE_ENV=production webpack --config build/webpack.production.js"
+    "build": "rimraf dist && cross-env NODE_ENV=production webpack --config build/webpack.production.js"
   },
   "devDependencies": {
+    "@types/webpack-env": "^1.15.3",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.13.1",

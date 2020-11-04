@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "scripts": {
-    "build": "gulp"
+    "build": "rimraf es && rimraf lib && gulp"
   },
   "author": "",
   "license": "ISC",

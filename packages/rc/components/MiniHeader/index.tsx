@@ -44,7 +44,7 @@ function getHeaderState(userInfo?:userInfoTypes,messageCount?:number) {
 }
 export default function MiniHeader(props:MiniHeaderProps) {
     const {logo} = props;
-    const {data,loading,error} = useResolve<{userInfo:userInfoTypes,messageCount:number}>(getHeaderState(props.userInfo,props.messageCount));
+    const {data,loading} = useResolve<{userInfo:userInfoTypes,messageCount:number}>(getHeaderState(props.userInfo,props.messageCount));
 
     return (
         <div className='leke-miniHeader'>
@@ -53,11 +53,10 @@ export default function MiniHeader(props:MiniHeaderProps) {
                     {logo?<img src={logo} className='leke-miniHeader-logo' />:null}
                 </div>
                 {(()=>{
-                    if(loading||error){
+                    if(loading){
                         return null;
                     }
-                    const user=data.userInfo;
-                    if(user){
+                    if(data&&data.userInfo){
                         return(
                             <div className='leke-miniHeader-right'>
                                 <a
@@ -70,7 +69,7 @@ export default function MiniHeader(props:MiniHeaderProps) {
                                     <span>消息</span>
                                     {data.messageCount ? <span className='leke-miniHeader-count' >{Math.min(data.messageCount,99)}</span>:null}
                                 </a>
-                                <UserInfo userInfo={user} />
+                                <UserInfo userInfo={data.userInfo} />
                             </div>
                         );
                     }
