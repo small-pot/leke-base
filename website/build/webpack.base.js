@@ -17,7 +17,8 @@ module.exports ={
         extensions: ['.ts','.tsx','.js','.jsx'],
         alias: {
             "@leke/rc":path.resolve(__dirname,'../../packages/rc'),
-            "@leke/icons":path.resolve(__dirname,'../../packages/icons')
+            "@leke/icons":path.resolve(__dirname,'../../packages/icons'),
+            "@leke/hooks":path.resolve(__dirname,'../../packages/hooks/src/index.ts'),
         }
     },
     module: {

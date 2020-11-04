@@ -1,9 +1,8 @@
-export const routes = [
+export default [
     {
         title:'公共',
         keys:[
             'icons',
-            'Input',
             'MiniHeader'
         ]
     }

@@ -24,5 +24,7 @@ export function getUserInfo() {
     return http<userInfoTypes>({
         method:'get',
         url:'/auth/global/tutor/common/getMiniMenu.htm'
+    }).catch(()=>{
+        return null;
     });
 }

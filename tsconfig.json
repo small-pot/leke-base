@@ -13,7 +13,9 @@
     "paths":{
       "@leke/icons": ["./packages/icons"],
       "@leke/rc": ["./packages/rc/components"],
-      "@leke/gulp-compile": ["./packages/gulp-compile"]
+      "@leke/hooks": ["./packages/hooks/src/index.ts"],
+      "@leke/gulp-compile": ["./packages/gulp-compile"],
+      "testUtil": ["./testUtil/index.ts"]
     }
   },
   "exclude": [

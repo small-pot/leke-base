@@ -1,7 +1,8 @@
-import React, {useEffect, useRef, useReducer} from 'react';
+import React from 'react';
 import {Notice} from '@leke/icons';
 import UserInfo from './UserInfo';
 import {getUserInfo,getMessageCount,userInfoTypes} from "./api";
+import {useResolve} from "@leke/hooks";
 
 
 function Login() {
@@ -22,36 +23,28 @@ export interface MiniHeaderProps {
     userInfo ?:userInfoTypes,
     messageCount ?:number
 }
+function getHeaderState(userInfo?:userInfoTypes,messageCount?:number) {
+    if(userInfo===undefined){
+        return function () {
+            return getUserInfo().then(userInfo=>{
+                return getMessageCount().then(messageCount=>{
+                    return {userInfo,messageCount};
+                });
+            });
+        };
+    }
+    if(userInfo&&messageCount===undefined){
+        return function () {
+            return getMessageCount().then(messageCount=>{
+                return {userInfo,messageCount};
+            });
+        };
+    }
+    return {userInfo,messageCount};
+}
 export default function MiniHeader(props:MiniHeaderProps) {
-    const {logo,userInfo,messageCount} = props;
-    const userInfoRef=useRef<userInfoTypes>(undefined);
-    const messageCountRef=useRef<number>(undefined);
-    const forceUpdate=useReducer(state=>state+1,0)[1];
-    if(userInfo!==undefined&&userInfoRef.current!==userInfo){
-        userInfoRef.current=userInfo;
-    }
-    if(messageCount!==undefined&&messageCountRef.current!==messageCount){
-        messageCountRef.current=messageCount;
-    }
-    useEffect(()=>{
-        if(userInfoRef.current===undefined){
-            getUserInfo().then((user)=>{
-                userInfoRef.current=user;
-                getMessageCount().then((count)=>{
-                    messageCountRef.current=count;
-                    forceUpdate();
-                }).catch(forceUpdate);
-            }).catch(()=>{
-                userInfoRef.current=null;
-                forceUpdate();
-            });
-        }else if(userInfoRef.current&&messageCountRef.current===undefined){
-            getMessageCount().then((count)=>{
-                messageCountRef.current=count;
-                forceUpdate();
-            });
-        }
-    },[forceUpdate]);
+    const {logo} = props;
+    const {data,loading,error} = useResolve<{userInfo:userInfoTypes,messageCount:number}>(getHeaderState(props.userInfo,props.messageCount));
 
     return (
         <div className='leke-miniHeader'>
@@ -60,10 +53,10 @@ export default function MiniHeader(props:MiniHeaderProps) {
                     {logo?<img src={logo} className='leke-miniHeader-logo' />:null}
                 </div>
                 {(()=>{
-                    const user=userInfoRef.current;
-                    if(user===undefined){
+                    if(loading||error){
                         return null;
                     }
+                    const user=data.userInfo;
                     if(user){
                         return(
                             <div className='leke-miniHeader-right'>
@@ -75,7 +68,7 @@ export default function MiniHeader(props:MiniHeaderProps) {
                                 >
                                     <Notice className='icon-notice' />
                                     <span>消息</span>
-                                    {messageCountRef.current ? <span className='leke-miniHeader-count' >{Math.min(messageCountRef.current,99)}</span>:null}
+                                    {data.messageCount ? <span className='leke-miniHeader-count' >{Math.min(data.messageCount,99)}</span>:null}
                                 </a>
                                 <UserInfo userInfo={user} />
                             </div>

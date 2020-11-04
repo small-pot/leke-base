@@ -26,7 +26,7 @@ export default function ({source,JSXComponent}:propTypes) {
                     <div className='component-box'><JSXComponent /></div>
                     <div className='code-btn-group'>
                         <span onClick={click} className='show-code-btn'>
-                            {showCode?'隐藏':'显示'}代码
+                            code
                             <Down
                                 className='icon-down'
                                 style={{transform:`rotate(${showCode?180:0}deg)`}}

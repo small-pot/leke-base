@@ -3,6 +3,7 @@
 body{
   font-size: 14px;
   color:#333;
+  padding-top: 50px;
 }
 ::-webkit-scrollbar {
   width : 8px;
@@ -23,8 +24,7 @@ body{
 }
 .left-tab{
   width:260px;
-  border-right: 1px solid #f0f0f0;
-  height: 100vh;
+  height: calc(100vh - 50px);
   overflow-y: auto;
   .tab-item{
     height:40px;
@@ -64,9 +64,45 @@ body{
 }
 .router-container{
   width: calc(100% - 260px);
+  height: calc(100vh - 50px);
+  border-left:1px solid #f0f0f0;
   box-sizing: border-box;
-  padding:0 50px;
+  padding:0 50px 50px 50px;
+  overflow-y: auto;
 }
 .leke-icon{
   line-height: 0;
+}
+.header{
+  width:100%;
+  box-sizing: border-box;
+  height: 50px;
+  line-height: 50px;
+  padding:0 80px;
+  box-shadow: 0 2px 8px #f0f1f2;
+  background-color: #fff;
+  position: fixed;
+  top:0;
+  left:0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 200;
+  .nav{
+    display: flex;
+  }
+  a{
+    display: block;
+    height:100%;
+    font-size: 18px;
+    padding-left: 15px;
+    padding-right: 15px;
+    &:hover{
+      color: @color;
+    }
+    &.current{
+      color: @color;
+      background-color: #d2f0ed;
+    }
+  }
 }

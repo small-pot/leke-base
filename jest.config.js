@@ -8,12 +8,14 @@ module.exports = {
     moduleNameMapper:{
         '@leke/icons':'<rootDir>/packages/icons/es/index.js',
         "@leke/rc":"<rootDir>/packages/rc/components/index.ts",
+        'testUtil':'<rootDir>/testUtil'
     },
     setupFilesAfterEnv:["<rootDir>/jest.setup.js"],
     moduleFileExtensions: ['ts','tsx','js','jsx','md'],
     collectCoverageFrom: [
         "!**/node_modules/**",
-        "<rootDir>/packages/rc/components/**/*.tsx"
+        "<rootDir>/packages/rc/components/**/*.tsx",
+        "<rootDir>/packages/hooks/src/!(demos)/*.ts"
     ],
     testPathIgnorePatterns:[
         "node_modules",

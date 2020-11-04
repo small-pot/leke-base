@@ -18,6 +18,7 @@
   },
   "peerDependencies": {
     "@leke/icons": ">=1.0.0",
+    "@leke/hooks": ">=1.0.0",
     "react": ">=16.8.6",
     "react-dom": ">=16.8.6"
   },
