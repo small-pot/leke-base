@@ -6,13 +6,14 @@
   "author": "guoquankai@cnstrong.cn",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf es && rimraf lib && gulp"
+    "build": "rimraf es && rimraf lib && rimraf style && gulp"
   },
   "files": [
     "package.json",
     "lib",
     "es",
-    "style"
+    "style",
+    "less"
   ],
   "devDependencies": {
   },

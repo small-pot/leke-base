@@ -17,7 +17,7 @@ import '@leke/rc/style/index.less'; //or '@leke/rc/style/index.css'
         libraryDirectory: "es",
         camel2DashComponentName: false,
         style(name) {
-            return `${name}/index.less`;
+            return `${name}/index.less`.replace('/es/','/style/');
         }
     }
 ];
