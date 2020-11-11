@@ -18,6 +18,7 @@
     "build:hooks": "cd packages/hooks && npm run build",
     "build:rc": "cd packages/rc && npm run build",
     "build:store": "cd packages/store && npm run build",
+    "build:ssr": "cd packages/ssr && npm run build",
     "build:website": "cd website && npm run build",
     "build": "npm-run-all --serial build:icons build:hooks build:rc",
     "dev:website": "cd website && npm run dev",

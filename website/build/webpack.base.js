@@ -19,6 +19,7 @@ module.exports ={
             "@leke/rc":path.resolve(__dirname,'../../packages/rc'),
             "@leke/icons":path.resolve(__dirname,'../../packages/icons'),
             "@leke/hooks":path.resolve(__dirname,'../../packages/hooks/src/index.ts'),
+            "@leke/store":path.resolve(__dirname,'../../packages/store/src/index.ts')
         }
     },
     module: {

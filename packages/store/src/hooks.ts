@@ -29,8 +29,8 @@ export const useStore=function<T=object> ():storeType<T> {
 };
 const subscription=[];
 
-export const useData=<T=any,U=object>(selector:(data)=>T,compare=shallowEqual):T=>{
-    const {getData}=useStore<U>();
+export const useData=<T=any>(selector:(data)=>T,compare=shallowEqual):T=>{
+    const {getData}=useStore();
     const stateRef=useRef<T>(undefined);
 
     if(stateRef.current===undefined){

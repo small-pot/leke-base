@@ -11,6 +11,13 @@ module.exports={
     },
     parser: "@typescript-eslint/parser",
     plugins: ["markdown","react"],
+    overrides: [{
+        files: ["**/*.md"],
+        rules: {
+            "react-hooks/rules-of-hooks": 0,
+            "react-hooks/exhaustive-deps": 0
+        }
+    }],
     rules: {
         "react/prop-types": 0,
         "react-hooks/exhaustive-deps": 2,

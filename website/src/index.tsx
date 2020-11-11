@@ -48,6 +48,10 @@ function App(){
                         setMds(res.default);
                     });
                 }
+            }else {
+                import(`../../packages/${type}/index.md`).then(res=>{
+                    setMds([res]);
+                });
             }
         }
         if(!window.location.hash){
@@ -60,20 +64,10 @@ function App(){
         };
     },[setMds,setIcons]);
     const [type,key]=window.location.hash.replace(/^#/,'').split('/');
-    const routes=useMemo(()=>{
-        return type==='component'?componentRoutes:hookRoutes;
-    },[type]);
-    return(
-        <>
-            <div className='header'>
-                <div className='logo'>
-                </div>
-                <div className='nav'>
-                    <a href="#component" className={classNames(type==='component'?'current':'')}>组件</a>
-                    <a href="#hooks" className={classNames(type==='hooks'?'current':'')}>hooks</a>
-                </div>
-            </div>
-            <div className='main'>
+    const leftTab=useMemo(()=>{
+        const routes=type==='component'?componentRoutes:type==='hooks'?hookRoutes:null;
+        if(routes){
+            return (
                 <ul className='left-tab'>
                     <li className={classNames('tab-item',!key?'current':'')}>
                         <a href={'#'+type}>安装与配置</a>
@@ -91,6 +85,24 @@ function App(){
                         </li>
                     ))}
                 </ul>
+            );
+        }
+        return null;
+    },[type,key]);
+    return(
+        <>
+            <div className='header'>
+                <div className='logo'>
+                </div>
+                <div className='nav'>
+                    <a href="#component" className={classNames(type==='component'?'current':'')}>组件</a>
+                    <a href="#hooks" className={classNames(type==='hooks'?'current':'')}>hooks</a>
+                    <a href="#ssr" className={classNames(type==='ssr'?'current':'')}>SSR脚手架</a>
+                    <a href="#store" className={classNames(type==='store'?'current':'')}>store</a>
+                </div>
+            </div>
+            <div className='main'>
+                {leftTab}
                 <div className='router-container'>
                     {mds.map((item,index)=><MarkdownView key={index} source={item.source} JSXComponent={item.default} />)}
                     {key==='icons'&& icons? <IconList icons={icons}/>:null}
