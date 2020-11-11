@@ -84,10 +84,14 @@ export default start({
 | getComponent | 按需加载PageComponent | ()=>Promise<SSRpage> | _ |
 
 ## PageComponent
-```js
+```tsx
 import React from "react";
+import {SSRPage} from "@leke/ssr";
+interface propsType {
+    text:string
+}
 
-const PageComponent=function(props){
+const PageComponent:SSRPage<propsType>=function(props){
     return (
         <div>{props.text}</div> // hello
     );
