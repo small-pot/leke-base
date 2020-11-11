@@ -6,7 +6,13 @@ yarn add @leke/ssr --save
 ```
 ## 启动
 在package.json scripts中添加此配置
-
+```
+{
+    "dev": "cross-env NODE_ENV=development leke dev",
+    "build": "cross-env NODE_ENV=production leke build",
+    "debug": "cross-env NODE_ENV=development leke debug"
+}
+```
 ## 配置
 在nodejs运行目录下创建leke.config.js,配置大致如下：
 ```js
