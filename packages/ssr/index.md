@@ -80,7 +80,7 @@ export default start({
 | --- | --- | --- | --- | 
 | publicPath | 访问路径公共前缀 | string | _ |
 | path | 访问的路径应为publicPath+path | string | _ |
-| getComponent | 按需加载PageComponent | ()=>Promise<SSRpage> | _ |
+| getComponent | 按需加载PageComponent | ()=>Promise<SSRpage\> | _ |
 
 ## PageComponent
 ```tsx
