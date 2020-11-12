@@ -4,10 +4,12 @@ const resolvePaths=require('./resolvPaths');
 module.exports = {
     transform:{
         '\\.(ts|js)x?$':'babel-jest',
-        '\\.md$':path.resolve('./jest-markdown.js'),
+        '\\.md$':path.resolve('./jest-markdown.js')
+    },
+    moduleNameMapper:{
+        ...resolvePaths('<rootDir>'),
         '\\.(css|less)$': 'identity-obj-proxy'
     },
-    moduleNameMapper:resolvePaths('<rootDir>'),
     setupFilesAfterEnv:["<rootDir>/jest.setup.js"],
     moduleFileExtensions: ['ts','tsx','js','jsx','md'],
     collectCoverageFrom: [
