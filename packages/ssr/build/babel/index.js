@@ -13,7 +13,7 @@ function merge (opt1,opt2){
         const key=Array.isArray(item)?item[0]:item;
         if(!keys[key]){
             keys[key]=true;
-            opt1.push(item);
+            opt1.unshift(item);
         }
     });
 }
@@ -41,7 +41,6 @@ module.exports= function (env='client', isTs=false) {
         presets.push([
             "@babel/preset-env",
             {
-                loose: true,
                 targets:{
                     node:'current'
                 }

@@ -8,6 +8,7 @@ module.exports = {
     moduleNameMapper:{
         '@leke/icons':'<rootDir>/packages/icons/es/index.js',
         "@leke/rc":"<rootDir>/packages/rc/components/index.ts",
+        "@leke/hooks":"<rootDir>/packages/hooks/src/index.ts",
         'testUtil':'<rootDir>/testUtil'
     },
     setupFilesAfterEnv:["<rootDir>/jest.setup.js"],

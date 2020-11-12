@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {useRef,useEffect,useLayoutEffect,RefObject} from "react";
+import classNames from 'classnames';
 interface useAnimationProps {
     ref:RefObject<HTMLElement>,
     visible:boolean,
@@ -17,9 +19,7 @@ interface useAnimationProps {
     onAfterLeave?:(HTMLElement)=>void
 }
 export default function useAnimation(params:useAnimationProps) {
-    if(typeof window==='undefined'){
-        return
-    }
+    if(typeof window==='undefined') return;
     const {
         ref,
         visible,
@@ -36,9 +36,9 @@ export default function useAnimation(params:useAnimationProps) {
         onBeforeLeave,
         onLeave,
         onAfterLeave
-    }=params
-    const lifeCycle=useRef(null)
-    const className=useRef(null)
+    }=params;
+    const lifeCycle=useRef(null);
+    const className=useRef(null);
     lifeCycle.current={
         timeout,
         beforeEnterClass,
@@ -53,42 +53,42 @@ export default function useAnimation(params:useAnimationProps) {
         onBeforeLeave,
         onLeave,
         onAfterLeave
-    }
+    };
     
     useLayoutEffect(()=>{
-        const el=ref.current
+        const el=ref.current;
         if(!el){
-            return
+            return;
         }
-        className.current=el.className||''
-    },[])
+        className.current=el.className||'';
+    },[ref]);
     useLayoutEffect(()=>{
-        const el=ref.current
+        const el=ref.current;
         if(!el){
-            return
+            return;
         }
         if(className.current===null){
-            className.current=el.className||''
+            className.current=el.className||'';
         }
-        const {beforeEnterClass,onBeforeEnter,beforeLeaveClass,onBeforeLeave}=lifeCycle.current
+        const {beforeEnterClass,onBeforeEnter,beforeLeaveClass,onBeforeLeave}=lifeCycle.current;
         if(visible){
             if(beforeEnterClass){
-                el.className=className.current+' '+beforeEnterClass
+                el.className=classNames(className.current,beforeEnterClass);
             }
             if(typeof onBeforeEnter==='function'){
-                onBeforeEnter(el)
+                onBeforeEnter(el);
             }
         }else{
             if(beforeLeaveClass){
-                el.className=className.current+' '+beforeLeaveClass
+                el.className=classNames(className.current,beforeLeaveClass);
             }
             if(typeof onBeforeLeave==='function'){
-                onBeforeLeave(el)
+                onBeforeLeave(el);
             }
         }
-    },[visible])
+    },[visible,ref]);
     useEffect(()=>{
-        const el=ref.current
+        const el=ref.current;
         const {
             timeout,
             enterClass,
@@ -99,36 +99,38 @@ export default function useAnimation(params:useAnimationProps) {
             onAfterEnter,
             afterLeaveClass='',
             onAfterLeave
-        }=lifeCycle.current
+        }=lifeCycle.current;
         if(!el){
-            return
+            return;
         }
         if(visible){
             if(enterClass){
-                el.className=className.current+' '+enterClass
+                el.className=classNames(className.current,enterClass);
             }
             if(typeof onEnter==='function'){
-                onEnter(el)
+                onEnter(el);
             }
             if(typeof onAfterEnter==='function' || afterEnterClass){
                 setTimeout(()=>{
-                    afterEnterClass&&(el.className=className.current+' '+afterEnterClass)
-                    typeof onAfterEnter==='function'&&onAfterEnter(el)
-                },timeout)
+                    if(afterEnterClass){
+                        el.className=classNames(className.current,afterEnterClass);
+                    }
+                    typeof onAfterEnter==='function'&&onAfterEnter(el);
+                },timeout);
             }
         }else{
             if(leaveClass){
-                el.className=className.current+' '+leaveClass
+                el.className=classNames(className.current,leaveClass);
             }
             if(typeof onLeave==='function'){
-                onLeave(el)
+                onLeave(el);
             }
             if(typeof onAfterLeave==='function' || afterLeaveClass){
                 setTimeout(()=>{
-                    afterLeaveClass&&(el.className=className.current+' '+afterLeaveClass)
-                    typeof onAfterLeave==='function'&&onAfterLeave(el)
-                },timeout)
+                    classNames(className.current,afterLeaveClass);
+                    typeof onAfterLeave==='function'&&onAfterLeave(el);
+                },timeout);
             }
         }
-    },[visible])
+    },[visible,ref]);
 }
