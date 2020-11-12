@@ -102,4 +102,9 @@ PageComponent.getInitialData=async function (http,req,res) {
 };
 export default PageComponent;
 ```
+## SSR模块引用
+```
+<script src=`${publicPath}${path}?type=module&&rootId=${rootId}`></script>
+//rootId为挂载dom的Id
+```
 
