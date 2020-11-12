@@ -2,6 +2,7 @@ const webpack=require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path=require('path');
 const MiniCssExtractPlugin=require('mini-css-extract-plugin');
+const resolePaths=require('../../resolvPaths');
 
 const env=process.env.NODE_ENV;
 const handleStyleLoader=env==='production'?MiniCssExtractPlugin.loader:'style-loader';
@@ -16,10 +17,8 @@ module.exports ={
     resolve: {
         extensions: ['.ts','.tsx','.js','.jsx'],
         alias: {
-            "@leke/rc":path.resolve(__dirname,'../../packages/rc'),
-            "@leke/icons":path.resolve(__dirname,'../../packages/icons'),
-            "@leke/hooks":path.resolve(__dirname,'../../packages/hooks/src/index.ts'),
-            "@leke/store":path.resolve(__dirname,'../../packages/store/src/index.ts')
+            ...resolePaths(path.resolve(__dirname,'../../')),
+            "@leke/rc":path.resolve(__dirname,'../../packages/rc')
         }
     },
     module: {
