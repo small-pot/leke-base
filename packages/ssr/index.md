@@ -59,7 +59,9 @@ module.exports={
 | proxy | 跨域代理配置，[配置详情](https://www.npmjs.com/package/http-proxy-middleware)| object | _ |
 | browsers | 根据提供的浏览器进行js补丁与css前缀补全| Array | \[ "last 2 versions","ie >= 11" \] |
 | babel | 额外增加的babel配置，例如按需加载插件| object \| (env:"client" \| "server")=>object | _ |
-|postcssConfig| 自定义postcss-loader的配置，[配置详情](https://www.npmjs.com/package/postcss-loader)|object|css前缀补全|
+| postcssConfig | 自定义postcss-loader的配置，[配置详情](https://www.npmjs.com/package/postcss-loader)|object|css前缀补全|
+| alias | webpack中的alias | object | _ |
+| modifyVars | less主题定制 | object | _ |
 
 ## entry
 ```js
@@ -101,5 +103,10 @@ PageComponent.getInitialData=async function (http,req,res) {
     };
 };
 export default PageComponent;
+```
+## SSR模块引用
+```
+<script src=`${publicPath}${path}?type=module&&rootId=${rootId}`></script>
+//rootId为挂载dom的Id
 ```
 

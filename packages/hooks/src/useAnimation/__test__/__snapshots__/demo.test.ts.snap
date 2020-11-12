@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test basics.md 1`] = `
+<div>
+  <div
+    class="leke-ball-box"
+  >
+    <figure
+      class="leke-ball rotate-box"
+      style="left: 0px; top: 0px;"
+    >
+      <span
+        class="shadow"
+      />
+    </figure>
+  </div>
+</div>
+`;

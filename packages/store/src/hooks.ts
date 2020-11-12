@@ -52,7 +52,7 @@ export const useData=<T=any>(selector:(data)=>T,compare=shallowEqual):T=>{
             const index=subscription.indexOf(update);
             subscription.splice(index,1);
         };
-    },[forceUpdate]);  //eslint-disable-line react-hooks/exhaustive-deps
+    },[forceUpdate,getData,stateRef]);  //eslint-disable-line react-hooks/exhaustive-deps
 
     return stateRef.current;
 };

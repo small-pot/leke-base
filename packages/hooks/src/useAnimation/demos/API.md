@@ -2,13 +2,13 @@
 ```
 const countRef = useRef(null)
 
-useAnimation({//加入资料袋动画
+useAnimation({
     ref:countRef,
     visible:visible,
     timeout:2000,
     enterClass: 'show-box',
     onAfterEnter(){
-        //动画结束后执行
+        //结束后执行
     }
 })
 

@@ -26,7 +26,7 @@ function App(){
                 }else if(key==='icons'){
                     Promise.all([
                         import('@leke/icons'),
-                        import('@leke/icons/index.md')
+                        import('../../packages/icons/index.md')
                     ]).then(([icons,md])=>{
                         setIcons(icons);
                         setMds([md]);
