@@ -10,7 +10,7 @@ module.exports = {
         ...resolvePaths('<rootDir>'),
         '\\.(css|less)$': 'identity-obj-proxy'
     },
-    setupFilesAfterEnv:["<rootDir>/jest.setup.js"],
+    setupFiles:["<rootDir>/jest.setup.js"],
     moduleFileExtensions: ['ts','tsx','js','jsx','md'],
     collectCoverageFrom: [
         "!**/node_modules/**",

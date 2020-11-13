@@ -12143,17 +12143,10 @@ webpack-log@^2.0.0:
     ansi-colors "^3.0.0"
     uuid "^3.3.2"
 
-webpack-merge@^4.1.2:
-  version "4.2.2"
-  resolved "http://192.168.20.146:4873/webpack-merge/-/webpack-merge-4.2.2.tgz#a27c52ea783d1398afd2087f547d7b9d2f43634d"
-  integrity sha1-onxS6ng9E5iv0gh/VH17nS9DY00=
-  dependencies:
-    lodash "^4.17.15"
-
-webpack-merge@^5.1.4:
-  version "5.3.0"
-  resolved "http://192.168.20.146:4873/webpack-merge/-/webpack-merge-5.3.0.tgz#a80df44d35fabace680bf430a19fda9ec49ed8eb"
-  integrity sha1-qA30TTX6us5oC/QwoZ/ansSe2Os=
+webpack-merge@^5.4.0:
+  version "5.4.0"
+  resolved "http://192.168.20.146:4873/webpack-merge/-/webpack-merge-5.4.0.tgz#81bef0a7d23fc1e6c24b06ad8bf22ddeb533a3a3"
+  integrity sha1-gb7wp9I/webCSwati/It3rUzo6M=
   dependencies:
     clone-deep "^4.0.1"
     wildcard "^2.0.0"

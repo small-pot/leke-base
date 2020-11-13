@@ -24,7 +24,6 @@
     "dev:website": "cd website && npm run dev",
     "dev": "npm-run-all --serial build:icons dev:website",
     "test": "jest --cache false",
-    "test:update": "jest --cache false -u",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.md",
     "fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.md",
     "tsc": "tsc --noEmit --jsx react"

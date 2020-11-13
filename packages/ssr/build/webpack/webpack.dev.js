@@ -1,20 +1,19 @@
 const webpack=require("webpack");
 const baseWebpackConfig=require('./webpack.base.config');
-const merge=require('webpack-merge');
-const path=require('path');
+const {merge}=require('webpack-merge');
 const MiniCssExtractPlugin=require("mini-css-extract-plugin");
 const CaseSensitivePathsPlugin=require('case-sensitive-paths-webpack-plugin');
 const ResourcePlugin=require('./resource-plugin');
 const getRules=require('./getRules');
-const {resolveEntry}=require('../resolveConfig');
+const {resolveEntry,webpackConfig}=require('../resolveConfig');
 
 const entry=resolveEntry('webpack-hot-middleware/client?path=/ssr/__hot&reload=true&noInfo=true');
 entry.unshift('core-js');
-const webpackConfig =merge(baseWebpackConfig,{
+const config =merge(baseWebpackConfig,{
     mode:'development',
     entry: {app:entry},
     module: {
-        rules: getRules('client')
+        rules: getRules()
     },
     optimization: {
         splitChunks: {
@@ -43,4 +42,7 @@ const webpackConfig =merge(baseWebpackConfig,{
         new CaseSensitivePathsPlugin()//强制检验路径,防止大小写路径名报错
     ]
 });
-module.exports=webpackConfig;
+if(typeof webpackConfig==='function'){
+    webpackConfig(config);
+}
+module.exports=config;
