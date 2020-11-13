@@ -2,8 +2,7 @@
   "name": "@leke/ssr",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/server-start.js",
-  "module": "lib/client-start.js",
+  "main": "index.js",
   "scripts": {
     "build": "rimraf lib  && gulp"
   },
@@ -16,7 +15,8 @@
     "package.json",
     "build",
     "lib",
-    "bin.js"
+    "bin.js",
+    "index.js"
   ],
   "dependencies": {
     "@babel/core": "^7.10.2",

@@ -33,6 +33,9 @@ const config =merge(baseWebpackConfig,{
         }
     },
     plugins: [
+        new webpack.DefinePlugin({
+            "process.env.WEB": JSON.stringify(true)
+        }),
         new MiniCssExtractPlugin({
             filename: "css/[name].css",
             ignoreOrder: true

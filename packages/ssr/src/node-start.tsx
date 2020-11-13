@@ -1,9 +1,9 @@
 import React from 'react';
 import {renderToString} from "react-dom/server";
 import {createHttp} from "@leke/http";
-const {proxy={}}=require('../build/resolveConfig');
 import {configType} from './types';
 export {SSRPage} from './types';
+const proxy=(process as any).proxy||{};
 
 function getAssets (manifest,chunkName,entrypoints='app') {
     const {publicPath,namedChunkGroups}=manifest;
@@ -127,16 +127,8 @@ export default function start(config:configType) {
             const getInitialData=getComponentProperty(component,'getInitialData');
             if(typeof getInitialData==='function'){
                 const http=createHttp({
-                    headers:{Cookie:req.headers.cookie},
-                    requestInterceptor(config){
-                        for(let key in proxy){
-                            if(config.url.indexOf(key)===0){
-                                config.url=proxy[key].target+config.url;
-                                return config;
-                            }
-                        }
-                        return config;
-                    }
+                    headers:{Cookie:req.headers.cookie||''},
+                    baseURL:'https://webapp.leke.cn'
                 });
                 Object.assign(data,await getInitialData(http,req,res));
             }

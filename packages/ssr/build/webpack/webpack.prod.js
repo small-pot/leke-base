@@ -1,3 +1,4 @@
+const webpack=require("webpack");
 const baseWebpackConfig=require('./webpack.base.config');
 const {merge}=require('webpack-merge');
 const MiniCssExtractPlugin=require("mini-css-extract-plugin");
@@ -44,6 +45,9 @@ const config = merge(baseWebpackConfig, {
         rules: getRules()
     },
     plugins: [
+        new webpack.DefinePlugin({
+            "process.env.WEB": JSON.stringify(true)
+        }),
         new MiniCssExtractPlugin({
             filename: "css/[name].[contenthash].css",
             ignoreOrder: true
