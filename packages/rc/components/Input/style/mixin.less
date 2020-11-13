@@ -1,0 +1,11 @@
+
+.hover(@color: @input-hover-border-color) {
+  border-color: @color;
+  border-right-width: @border-width-base !important;
+}
+
+.focus(@color: @input-focus-border-color){
+  .hover();
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, .2);
+}

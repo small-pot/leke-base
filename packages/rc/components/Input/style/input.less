@@ -1,0 +1,30 @@
+.@{prefix-cls}-input{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-width: 0;
+  padding: @input-padding-vertical-base @input-padding-horizontal-base;
+  color: @input-color;
+  font-size: @font-size-base;
+  line-height: @line-height-base;
+  background-color: @input-bg;
+  background-image: none;
+  border: @border-width-base @border-style-base @input-border-color;
+  border-radius: @border-radius-base;
+  transition: all 0.3s;
+  box-sizing: border-box;
+  &:hover{
+    .hover()
+  }
+  &:focus{
+    .focus()
+  }
+
+  &-lg {
+    padding: @input-padding-vertical-large @input-padding-horizontal-large;
+  }
+
+  &-sm {
+    padding: @input-padding-vertical-small @input-padding-horizontal-small;
+  }
+}
