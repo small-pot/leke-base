@@ -127,7 +127,7 @@ export default function useAnimation(params:useAnimationProps) {
             }
             if(typeof onAfterLeave==='function' || afterLeaveClass){
                 setTimeout(()=>{
-                    classNames(className.current,afterLeaveClass);
+                    el.className=classNames(className.current,afterLeaveClass);
                     typeof onAfterLeave==='function'&&onAfterLeave(el);
                 },timeout);
             }

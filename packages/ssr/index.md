@@ -30,24 +30,25 @@ module.exports={
         "last 2 versions",
         "ie >= 11"
     ],
-    babel:function (env) {
-        if(env==='client'){
-            return {
-                plugins:[
-                    ["import",
-                        {
-                            libraryName: "@leke/rc",
-                            libraryDirectory: "es",
-                            camel2DashComponentName: false,
-                            style(name) {
-                                return `${name}/index.less`.replace('/es/','/style/');
-                            }
+    babelConfig (config,target) {
+        if(target==='web'){
+            config.plugins.push(
+                ["import",
+                    {
+                        libraryName: "@leke/rc",
+                        libraryDirectory: "es",
+                        camel2DashComponentName: false,
+                        style(name) {
+                            return `${name}/index.less`.replace('/es/','/style/');
                         }
-                    ]
+                    }
                 ]
-            };
+            );
         }
-    }
+    },
+    webpackConfig(config){},
+    postcssConfig(config){},
+    modifyVars:{}
 };
 ```
 
@@ -58,9 +59,9 @@ module.exports={
 | entry | 入口文件路径| string | _ |
 | proxy | 跨域代理配置，[配置详情](https://www.npmjs.com/package/http-proxy-middleware)| object | _ |
 | browsers | 根据提供的浏览器进行js补丁与css前缀补全| Array | \[ "last 2 versions","ie >= 11" \] |
-| babel | 额外增加的babel配置，例如按需加载插件| object \| (env:"client" \| "server")=>object | _ |
-| postcssConfig | 自定义postcss-loader的配置，[配置详情](https://www.npmjs.com/package/postcss-loader)|object|css前缀补全|
-| alias | webpack中的alias | object | _ |
+| babelConfig | 自定义babel-loader配置 | (config, target:"web" \| "node")=>void | _ |
+| postcssConfig | 自定义postcss-loader的配置，[配置详情](https://www.npmjs.com/package/postcss-loader) | (config)=>void | _ |
+| webpackConfig | 自定义webpack配置 | (config)=>void | _ |
 | modifyVars | less主题定制 | object | _ |
 
 ## entry

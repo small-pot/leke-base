@@ -1,40 +1,30 @@
-const {clientStyleConfig, serverStyleConfig} = require('./styleConfig');
+const {webStyleConfig, nodeStyleConfig} = require('./styleConfig');
 const getBabelConfig = require("../babel");
 //const exclude = /node_modules(\/|\\)(?!@leke\/ssr)/
 const exclude = /node_modules/;
 const isProd = process.env.NODE_ENV === 'production';
 const name = isProd ? 'img/[name]_[hash].[ext]' : 'img/[name].[ext]';
-module.exports = function (env = 'client') {
+module.exports = function (target = 'web') {
     const rules = [
         {
-            test: /\.(png|jpe?g|gif|svg|mp3)(\?.*)?$/,
-            loader: 'file-loader',
-            options: {
-                name,
-                emitFile: env === 'client'
-            }
-        },
-        {
-            test: /\.tsx?$/,
+            test: /\.(ts|tsx|js|jsx)?$/,
             use: [
                 {
                     loader: "babel-loader",
-                    options: getBabelConfig(env, true)
+                    options: getBabelConfig(target)
                 },
 
             ],
             exclude
         },
         {
-            test: /\.(js|jsx)$/,
-            use: [
-                {
-                    loader: "babel-loader",
-                    options: getBabelConfig(env, false)
-                },
-            ],
-            exclude
+            test: /\.(png|jpe?g|gif|svg|mp3)(\?.*)?$/,
+            loader: 'file-loader',
+            options: {
+                name,
+                emitFile: target === 'web'
+            }
         }
     ];
-    return rules.concat(env === 'client' ? clientStyleConfig : serverStyleConfig);
+    return rules.concat(target === 'web' ? webStyleConfig : nodeStyleConfig);
 };
