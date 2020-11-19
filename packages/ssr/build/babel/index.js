@@ -25,7 +25,6 @@ module.exports= function (target='web') {
         presets.push([
             "@babel/preset-env",
             {
-                loose: true,
                 targets:{
                     node:'current'
                 }
