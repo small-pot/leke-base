@@ -66,9 +66,29 @@ module.exports={
 
 ## entry
 ```js
+import React from "react";
 import start from "@leke/ssr";
+import {createHttp} from "@leke/http";
+
+const headContent=(
+    <>
+        <meta charSet="utf-8" />
+        <meta httpEquiv="Cache-Control" content="no-cache" />
+        <link type="image/x-icon" rel="shortcut icon" href="https://static.leke.cn/images/common/favicon.ico" />
+    </>
+);
+
 export default start({
     publicPath:'/test',
+    headContent:headContent,
+    createRequest(req){
+        const {ticket}=req.cookies;
+        const Cookie=ticket?`ticket=${ticket}`:'';
+        return createHttp({
+            headers:{Cookie},
+            baseURL:'https://webapp.leke.cn'
+        });
+    },
     routes:[
         {
             path:'/demo',
@@ -82,8 +102,10 @@ export default start({
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
 | publicPath | 访问路径公共前缀 | string | _ |
+| headContent | html页面head中内容 | ReactNode \| (req)=>ReactNode | _ |
 | path | 访问的路径应为publicPath+path | string | _ |
 | getComponent | 按需加载PageComponent | ()=>Promise<SSRpage\> | _ |
+| createRequest | node端请求工具配置，通常需要配置cookie等，将作为getInitialData的第一个参数 | (req)=>any | _ | 
 
 ## PageComponent
 ```tsx

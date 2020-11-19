@@ -1,9 +1,7 @@
 import React from 'react';
 import {renderToString} from "react-dom/server";
-import {createHttp} from "@leke/http";
 import {configType} from './types';
 export {SSRPage} from './types';
-const proxy=(process as any).proxy||{};
 
 function getAssets (manifest,chunkName,entrypoints='app') {
     const {publicPath,namedChunkGroups}=manifest;
@@ -111,7 +109,7 @@ export default function start(config:configType) {
             </>
         );
     };
-    const {publicPath}=config;
+    const {publicPath,createRequest}=config;
     return async function (req, res, next,manifest) {
         if(publicPath&&req.path.indexOf(publicPath)!==0){
             return next();
@@ -126,11 +124,11 @@ export default function start(config:configType) {
             const data={router:routerConfig};
             const getInitialData=getComponentProperty(component,'getInitialData');
             if(typeof getInitialData==='function'){
-                const http=createHttp({
-                    headers:{Cookie:req.headers.cookie||''},
-                    baseURL:'https://webapp.leke.cn'
-                });
-                Object.assign(data,await getInitialData(http,req,res));
+                if(typeof createRequest==="function"){
+                    Object.assign(data,await getInitialData(createRequest(req),req,res));
+                }else{
+                    Object.assign(data,await getInitialData(req,res));
+                }
             }
             const {css,scripts}=getAssets(manifest,__webpack_chunkname_);
             if(routerConfig.type==='page'){

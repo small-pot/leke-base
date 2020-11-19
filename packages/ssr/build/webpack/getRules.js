@@ -1,6 +1,6 @@
 const {webStyleConfig, nodeStyleConfig} = require('./styleConfig');
 const getBabelConfig = require("../babel");
-//const exclude = /node_modules(\/|\\)(?!@leke\/ssr)/
+// const exclude = /node_modules(\/|\\)(?!@leke\/ssr)/
 const exclude = /node_modules/;
 const isProd = process.env.NODE_ENV === 'production';
 const name = isProd ? 'img/[name]_[hash].[ext]' : 'img/[name].[ext]';
