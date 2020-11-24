@@ -7,7 +7,7 @@ export default function(){
     return(
         <Dropdown 
             trigger={<p>focus me</p>}
-            popup={<div style={{width:200,height:200,border:'1px solid #ccc',background:'#fff'}}>popup</div>}
+            popup={<div style={{height:200}}>popup</div>}
         />
     );
 }

@@ -52,8 +52,9 @@ export default function Dropdown(props:dropdownProps) {
     if(visible&&!portalContainerRef.current&&typeof window==='object'){
         portalContainerRef.current=getPopupContainer(triggerRef.current);
     }
-    const enterClassName=placement.indexOf('bottom')===0?'leke-slide-down':'leke-slide-up';
-    const leaveClassName=placement.indexOf('bottom')===0?'leke-slide-up':'leke-slide-down';
+    const toBottom=placement.indexOf('bottom')===0;
+    const enterClassName=toBottom?'leke-slide-down':'leke-slide-up';
+    const leaveClassName=toBottom?'leke-slide-up':'leke-slide-down';
     useAnimation({
         ref:popupRef,
         open:visible,
@@ -130,8 +131,8 @@ export default function Dropdown(props:dropdownProps) {
     };
     const popupProps:childProps={
         ref:popupRef,
-        className:classNames('leke-dropdown',popupClassName),
-        style:popupStyle
+        className:classNames('leke-dropdown',toBottom?'leke-dropdown-direction-down':'leke-dropdown-direction-up',popupClassName),
+        style:Object.assign({minWidth:triggerRef.current?triggerRef.current.offsetWidth:null},popupStyle)
     };
     if(triggeredEvent.indexOf('focus')!==-1){
         triggerProps.onFocus=show;
