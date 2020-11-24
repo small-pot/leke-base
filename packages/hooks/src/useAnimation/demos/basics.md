@@ -1,49 +1,66 @@
-## 事例1
+## 事例
 
 ```jsx
 import React, {useRef, useState} from 'react';
 import {useAnimation} from '@leke/hooks';
 
-let time=null;
 export default function() {
     const ref = useRef(null);
-    const [visible,setVisible] = useState(true);
+    const [open,setOpen] = useState(true);
     useAnimation({
         ref,
-        visible,
-        timeout:2000,
-        enterClass: 'rotate-box',
-        onBeforeEnter(node){
-            const start=ref.current;
-            if(!start){
-                return;
-            }
-            start.style['left'] = 0;
-            start.style['top'] = 0;
-        },
-        onEnter(node){
-            const start=ref.current;
-            let deg = 0;
-            time = setInterval(()=>{
-                const left=node.style.left;
-                const top=node.style.top;
-                deg+=20;
-                node.style['left'] = parseInt(left)+2+'px';
-                node.style['top'] = Math.sin(deg*Math.PI/360)*10+'px';
-            },20);
-        },
-        onAfterEnter(){
-            time&&clearInterval(time);
-            setVisible(false);
-        },
-        onLeave(node){
-            setVisible(true);
-        },
+        open,
+        enterClassName: 'rotate-enter',
+        leaveClassName: 'rotate-leave',
+        onEnd(bool){
+            setOpen(!bool);
+        }
     });
     return (
-        <div className='leke-ball-box'>
-            <figure ref={ref} className='leke-ball' ><span className="shadow"></span></figure>    
+        <div className='demo-container'>
+            <div ref={ref} className='demo-line'></div>
         </div>
     );
+}
+```
+```css
+.demo-container{
+    width: 420px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.demo-line{
+    width: 100px;
+    height:2px;
+    background-color: #ccc;
+    transform-origin: 0 0; 
+}
+.rotate-enter{
+    animation-duration:1.5s;
+    animation-timing-function: linear;
+    animation-name:rotate-enter;
+}
+.rotate-leave{
+    animation-duration:1.5s;
+    animation-timing-function: linear;
+    animation-name:rotate-leave;
+}
+@keyframes rotate-enter {
+  0%{
+    transform: rotate(0);
+  }
+  100%{
+    transform: rotate(180deg);
+  }
+}
+@keyframes rotate-leave {
+  0%{
+    transform: rotate(180deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
 }
 ```
