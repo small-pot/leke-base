@@ -135,8 +135,11 @@ export default function Dropdown(props:dropdownProps) {
     };
     if(triggeredEvent.indexOf('focus')!==-1){
         triggerProps.onFocus=show;
-        triggerProps.onBlur=hide;
-        triggerProps.tabIndex=-1;
+        triggerProps.onBlur=()=>{
+            triggerRef.current.blur();
+            hide();
+        };
+        triggerProps.tabIndex=1;
         popupProps.onMouseDown=(e)=>e.preventDefault();
     }
     if(triggeredEvent.indexOf('hover')!==-1){
