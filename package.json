@@ -18,12 +18,12 @@
     "build:hooks": "cd packages/hooks && npm run build",
     "build:rc": "cd packages/rc && npm run build",
     "build:store": "cd packages/store && npm run build",
+    "build:ssr": "cd packages/ssr && npm run build",
     "build:website": "cd website && npm run build",
     "build": "npm-run-all --serial build:icons build:hooks build:rc",
     "dev:website": "cd website && npm run dev",
     "dev": "npm-run-all --serial build:icons dev:website",
     "test": "jest --cache false",
-    "test:update": "jest --cache false -u",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.md",
     "fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.md",
     "tsc": "tsc --noEmit --jsx react"

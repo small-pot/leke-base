@@ -22,10 +22,15 @@ body{
 .main{
   display: flex;
 }
-.left-tab{
+.left-container{
   width:260px;
   height: calc(100vh - 50px);
   overflow-y: auto;
+  position: relative;
+}
+.left-tab{
+  width:260px;
+  position: fixed;
   .tab-item{
     height:40px;
     line-height: 40px;
@@ -37,10 +42,10 @@ body{
       height:100%;
     }
     &:hover{
-      color: @color;
+      color: @base-color;
     }
     &.current{
-      color: @color;
+      color: @base-color;
       background-color: #d2f0ed;
     }
   }
@@ -63,12 +68,13 @@ body{
   }
 }
 .router-container{
-  width: calc(100% - 260px);
-  height: calc(100vh - 50px);
+  flex: 1;
   border-left:1px solid #f0f0f0;
   box-sizing: border-box;
   padding:0 50px 50px 50px;
-  overflow-y: auto;
+  h2{
+    margin-top:50px;
+  }
 }
 .leke-icon{
   line-height: 0;
@@ -87,7 +93,7 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 200;
+  z-index: 1000;
   .nav{
     display: flex;
   }
@@ -98,13 +104,13 @@ body{
     padding-left: 15px;
     padding-right: 15px;
     &:hover{
-      color: @color;
+      color: @base-color;
     }
     &+a{
       margin-left: 12px;
     }
     &.current{
-      color: @color;
+      color: @base-color;
       background-color: #d2f0ed;
     }
   }

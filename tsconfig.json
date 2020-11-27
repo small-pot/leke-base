@@ -11,13 +11,13 @@
     "baseUrl": ".",
     "declaration": true,
     "paths":{
-      "@leke/icons": ["./packages/icons"],
-      "@leke/rc": ["./packages/rc/components"],
-      "@leke/hooks": ["./packages/hooks/src/index.ts"],
-      "@leke/gulp-compile": ["./packages/gulp-compile"],
-      "@leke/store": ["./packages/store/src"],
-      "@leke/http": ["./packages/http/src"],
-      "testUtil": ["./testUtil/index.ts"]
+      "@leke/icons": ["packages/icons"],
+      "@leke/rc": ["packages/rc/components/index.ts"],
+      "@leke/hooks": ["packages/hooks/src/index.ts"],
+      "@leke/gulp-compile": ["packages/gulp-compile/index.js"],
+      "@leke/store": ["packages/store/src/index.ts"],
+      "@leke/http": ["packages/http/src/index.ts"],
+      "testUtil": ["testUtil/index.ts"]
     }
   },
   "exclude": [

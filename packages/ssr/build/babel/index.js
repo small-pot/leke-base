@@ -1,28 +1,12 @@
 const path=require('path');
-const {cssModules,browsers,babel}=require('../resolveConfig');
+const {cssModules,browsers,babelConfig}=require('../resolveConfig');
 
-function merge (opt1,opt2){
-    const keys={};
-    opt1.forEach(item=>{
-        const key=Array.isArray(item)?item[0]:item;
-        if(!keys[key]){
-            keys[key]=true;
-        }
-    });
-    opt2.forEach(item=>{
-        const key=Array.isArray(item)?item[0]:item;
-        if(!keys[key]){
-            keys[key]=true;
-            opt1.push(item);
-        }
-    });
-}
-module.exports= function (env='client', isTs=false) {
-    const presets=["@babel/preset-react"];
+module.exports= function (target='web') {
+    const presets=["@babel/preset-react","@babel/preset-typescript"];
     const plugins=[
         "@babel/plugin-proposal-class-properties"
     ];
-    if(env==='client'){
+    if(target==='web'){
         presets.push([
             "@babel/preset-env",
             {
@@ -41,7 +25,6 @@ module.exports= function (env='client', isTs=false) {
         presets.push([
             "@babel/preset-env",
             {
-                loose: true,
                 targets:{
                     node:'current'
                 }
@@ -53,13 +36,14 @@ module.exports= function (env='client', isTs=false) {
     if(process.env.NODE_ENV==='production'){
         plugins.push("babel-plugin-transform-react-remove-prop-types");
     }
-    if(isTs){
-        presets.push('@babel/preset-typescript');
+    const config={
+        cacheDirectory:true,
+        babelrc:false,
+        presets,
+        plugins
+    };
+    if(typeof babelConfig==='function'){
+        babelConfig(config,target);
     }
-    const resolveConfig=typeof babel==='function'?babel(env):babel;
-    if(Object.prototype.toString.call(resolveConfig)==="[object Object]"){
-        merge(presets,resolveConfig.presets||[]);
-        merge(plugins,resolveConfig.plugins||[]);
-    }
-    return Object.assign({cacheDirectory:true},resolveConfig,{babelrc:false,presets,plugins});
+    return config;
 };

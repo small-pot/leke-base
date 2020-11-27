@@ -1,10 +1,9 @@
 const baseWebpackConfig=require('./webpack.base.config');
-const merge=require('webpack-merge');
-const path=require('path');
+const {merge}=require('webpack-merge');
 const getRules=require('./getRules');
-const {resolveEntry}=require('../resolveConfig');
+const {resolveEntry,webpackConfig}=require('../resolveConfig');
 
-const webpackConfig = merge(baseWebpackConfig,{
+const config = merge(baseWebpackConfig,{
     mode:'production',
     entry: {
         app:resolveEntry()
@@ -19,9 +18,12 @@ const webpackConfig = merge(baseWebpackConfig,{
         __filename:true
     },
     module: {
-        rules: getRules('server')
+        rules: getRules('node')
     },
     target: "node",  // 指定node运行环境
     externals: ['react','react-dom','axios','qs']
 });
-module.exports=webpackConfig;
+if(typeof webpackConfig==='function'){
+    webpackConfig(config);
+}
+module.exports=config;
