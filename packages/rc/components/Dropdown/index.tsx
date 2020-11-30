@@ -1,4 +1,4 @@
-import React, {ReactNode, CSSProperties, useLayoutEffect, useRef, useEffect} from 'react';
+import React, {ReactNode, CSSProperties, useLayoutEffect, useRef} from 'react';
 import {createPortal} from 'react-dom';
 import classNames from 'classnames';
 import {useAnimation,useControl} from '@leke/hooks';
@@ -6,7 +6,7 @@ import {useAnimation,useControl} from '@leke/hooks';
 function getPosition(trigger:HTMLElement,container:HTMLElement) {
     let left=0,top=0;
     let offsetElement=trigger;
-    while (offsetElement!==container){
+    while (offsetElement&&offsetElement!==container){
         left+=offsetElement.offsetLeft;
         top+=offsetElement.offsetTop;
         offsetElement=offsetElement.offsetParent as HTMLElement;
@@ -18,7 +18,18 @@ function getPosition(trigger:HTMLElement,container:HTMLElement) {
         right:left+trigger.offsetWidth
     };
 }
-
+function contains (container:HTMLElement,target:HTMLElement){
+    if(typeof container.contains==='function'){
+        return container.contains(target);
+    }
+    while (target&&target!==document.body){
+        if (target === container){
+            return true;
+        }
+        target = target.parentElement;
+    }
+    return false;
+}
 export interface dropdownProps {
     visible?:boolean,
     onVisibleChange?:(boolean)=>void,
@@ -37,6 +48,7 @@ export interface childProps {
     tabIndex?:number,
     className:string,
     style?:CSSProperties,
+    onClick?:(e)=>void,
     onFocus?:(e)=>void,
     onMouseDown?:(e)=>void,
     onMouseEnter?:(e)=>void,
@@ -53,14 +65,15 @@ export default function Dropdown(props:dropdownProps) {
         portalContainerRef.current=getPopupContainer(triggerRef.current);
     }
     const toBottom=placement.indexOf('bottom')===0;
-    const enterClassName=toBottom?'leke-slide-down':'leke-slide-up';
-    const leaveClassName=toBottom?'leke-slide-up':'leke-slide-down';
+    const leaveClassName='leke-slide-close';
     useAnimation({
         ref:popupRef,
         open:visible,
-        enterClassName,
-        leaveClassName,
-        afterLeaveClassName:'leke-hide'
+        classNames:{
+            enter:'leke-slide-open',
+            leave:leaveClassName,
+            leaveEnd:'leke-hide'
+        }
     });
     useLayoutEffect(()=>{
         if(!visible){
@@ -137,10 +150,13 @@ export default function Dropdown(props:dropdownProps) {
     if(triggeredEvent.indexOf('focus')!==-1){
         triggerProps.onFocus=show;
         triggerProps.onBlur=()=>{
-            triggerRef.current.blur();
+            const activeElement=document.activeElement as HTMLElement;
+            if(contains(triggerRef.current,activeElement)){
+                activeElement.blur();
+            }
             hide();
         };
-        triggerProps.tabIndex=1;
+        triggerProps.tabIndex=-1;
         popupProps.onMouseDown=(e)=>e.preventDefault();
     }
     if(triggeredEvent.indexOf('hover')!==-1){

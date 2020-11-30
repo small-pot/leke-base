@@ -1,6 +1,6 @@
 @import "../../less/animation.less";
 @import "../../less/theme.less";
-@keyframes slide-down {
+@keyframes slide-open {
   0%{
     transform: scaleY(0.8);
     opacity: 0;
@@ -10,7 +10,7 @@
     opacity: 1;
   }
 }
-@keyframes slide-up {
+@keyframes slide-close {
   0%{
     transform: scaleY(1);
     opacity: 1;
@@ -20,17 +20,15 @@
     opacity: 0;
   }
 }
-.leke-slide-down,.leke-slide-up{
+.leke-slide-open,.leke-slide-close{
   animation-duration:350ms;
   animation-timing-function:cubic-bezier(0.23,1,0.32,1);
 }
-.leke-slide-down{
-  transform-origin: 0 0;
-  animation-name:slide-down;
+.leke-slide-open{
+  animation-name:slide-open;
 }
-.leke-slide-up{
-  transform-origin: 100% 0;
-  animation-name:slide-up;
+.leke-slide-close{
+  animation-name:slide-close;
 }
 .leke-trigger{
   display: inline-block;
@@ -44,9 +42,11 @@
 }
 .leke-dropdown-direction-down{
   box-shadow: @shadow-down;
+  transform-origin: 0 0;
 }
 .leke-dropdown-direction-up{
   box-shadow: @shadow-up;
+  transform-origin: 0 100%;
 }
 .leke-hide{
   display: none;

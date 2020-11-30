@@ -1,14 +1,17 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import {useRef, RefObject, useLayoutEffect} from "react";
-import classNames from 'classnames';
+import setClassName from 'classnames';
 interface useAnimationProps{
     ref:RefObject<HTMLElement>,
     open:boolean,
-    enterClassName?:string,
-    afterEnterClassName?:string,
-    leaveClassName?:string,
-    afterLeaveClassName?:string,
-    onEnd?:(visible:boolean,el:HTMLElement)=>void
+    classNames:{
+        enter?:string,
+        enterEnd?:string,
+        leave?:string,
+        leaveEnd?:string
+    },
+    onEnterEnd?:(el:HTMLElement)=>void,
+    onLeaveEnd?:(el:HTMLElement)=>void,
 }
 function getAnimationEventName() {
     const el=document.body;
@@ -25,14 +28,12 @@ export default function useAnimation(params:useAnimationProps) {
     const {
         ref,
         open,
-        enterClassName,
-        afterEnterClassName,
-        leaveClassName,
-        afterLeaveClassName,
-        onEnd
+        classNames,
+        onEnterEnd,
+        onLeaveEnd
     }=params;
     const classNameRef=useRef(null);
-    const noDepProps={enterClassName,leaveClassName,afterEnterClassName,afterLeaveClassName,onEnd};
+    const noDepProps={classNames,onEnterEnd,onLeaveEnd};
     const propsRef=useRef(noDepProps);
     propsRef.current=noDepProps;
     useLayoutEffect(()=>{
@@ -40,15 +41,20 @@ export default function useAnimation(params:useAnimationProps) {
         if(!el){
             return;
         }
-        const {enterClassName,leaveClassName,afterEnterClassName,afterLeaveClassName,onEnd}=propsRef.current;
+        const {classNames:{enter,enterEnd,leave,leaveEnd},onEnterEnd,onLeaveEnd}=propsRef.current;
         if(classNameRef.current===null){
             classNameRef.current=el.className||'';
         }
-        el.className=classNames(classNameRef.current,open?enterClassName:leaveClassName);
+        el.className=setClassName(classNameRef.current,open?enter:leave);
         const eventName=getAnimationEventName();
         function eventCallback(){
-            el.className=classNames(classNameRef.current,open?afterEnterClassName:afterLeaveClassName);
-            typeof onEnd==='function'&&onEnd(open,el);
+            if(open){
+                el.className=setClassName(classNameRef.current,enterEnd);
+                typeof onEnterEnd==='function'&&onEnterEnd(el);
+            }else{
+                el.className=setClassName(classNameRef.current,leaveEnd);
+                typeof onLeaveEnd==='function'&&onLeaveEnd(el);
+            }
             el.removeEventListener(eventName,eventCallback);
         }
         el.addEventListener(eventName,eventCallback);

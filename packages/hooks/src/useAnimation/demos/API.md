@@ -5,10 +5,11 @@ const countRef = useRef(null)
 useAnimation({
     ref:countRef,
     visible:visible,
-    timeout:2000,
-    enterClass: 'show-box',
-    onAfterEnter(){
-        //结束后执行
+    classNames:{
+        enter:'enter-className',
+        enterEnd:'enterEnd-className',
+        leave:'leave-className',
+        leaveEnd:'leaveEdn-className'
     }
 })
 
@@ -18,9 +19,11 @@ useAnimation({
 | --- | --- | --- | --- | --- | 
 | ref | 需要绑定动画的元素 | RefObject<HTMLElement> | _ | 是 |
 | open | 进入动画/退出动画 | boolean | _ | 是 |
-| enterClassName | 进入动画类名 | string | - | 否 |
-| afterEnterClassName | 进入动画结束后类名 | string | - | 否 |
-| leaveClassName | 退出动画类名 | string | - | 否 |
-| afterLeaveClassName | 退出动画结束后类名 | string | - | 否 | 
+| enter | 进入动画类名 | string | - | 否 |
+| enterEnd | 进入动画结束后类名 | string | - | 否 |
+| leave | 退出动画类名 | string | - | 否 |
+| leaveEnd | 退出动画结束后类名 | string | - | 否 | 
+| onEnterEnd | 监听进入动画结束事件 | (el:HTMLElement)=>void | - | 否 | 
+| onLeaveEnd | 监听退出动画结束事件 | (el:HTMLElement)=>void | - | 否 | 
 
 

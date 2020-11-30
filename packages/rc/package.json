@@ -15,7 +15,9 @@
     "style",
     "less"
   ],
-  "devDependencies": {},
+  "devDependencies": {
+
+  },
   "peerDependencies": {
     "@leke/hooks": ">=1.0.0",
     "@leke/icons": ">=1.0.0",

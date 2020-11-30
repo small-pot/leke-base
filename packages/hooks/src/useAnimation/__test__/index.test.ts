@@ -1,22 +1,26 @@
 import { renderHook } from '@testing-library/react-hooks';
 import useAnimation from '..';
 
-test('useAnimation enterClassName',async ()=>{
+test('enter',async ()=>{
     const el=document.createElement('div');
     const props={
         ref:{current:el},
         open:true,
-        enterClassName:'enter'
+        classNames:{
+            enter:'enter'
+        }
     };
     renderHook(() => useAnimation(props));
     expect(el.className).toBe('enter');
 });
-test('useAnimation leaveClassName',async ()=>{
+test('leave',async ()=>{
     const el=document.createElement('div');
     const props={
         ref:{current:el},
         open:false,
-        leaveClassName:'leave'
+        classNames:{
+            leave:'leave'
+        }
     };
     renderHook(() => useAnimation(props));
     expect(el.className).toBe('leave');

@@ -4,6 +4,7 @@ dist
 lib
 es
 coverage
+rc/components/style
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
