@@ -2,6 +2,7 @@ import React, {useCallback,useState} from 'react';
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coy } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { jsx, javascript,css } from "react-syntax-highlighter/dist/esm/languages/prism";
+import gfm from 'remark-gfm';
 import './index.less';
 import ReactMarkdown from "react-markdown";
 import {Down} from "@leke/icons";
@@ -58,6 +59,7 @@ export default function ({source,JSXComponent,css}:propTypes) {
     },[JSXComponent,css]);
     return (
         <ReactMarkdown
+            plugins={[gfm]}
             source={source}
             escapeHtml={false}
             renderers={{

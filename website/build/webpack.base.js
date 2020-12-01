@@ -12,9 +12,10 @@ module.exports ={
         app:path.resolve(__dirname, '../src/index.tsx')
     },
     output: {
-        path: path.resolve(__dirname, '.../dist')
+        path: path.resolve(__dirname, '../dist')
     },
     resolve: {
+        fallback: { "path": false },
         extensions: ['.ts','.tsx','.js','.jsx'],
         alias: {
             ...resolePaths(path.resolve(__dirname,'../../')),
@@ -23,6 +24,16 @@ module.exports ={
     },
     module: {
         rules:[
+            {
+                test: /node_modules\/vfile\/core\.js/,
+                use: [{
+                    loader: 'imports-loader',
+                    options: {
+                        type: 'commonjs',
+                        imports: ['single process/browser process'],
+                    },
+                }],
+            },
             {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',
