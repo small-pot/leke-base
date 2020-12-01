@@ -1,17 +1,19 @@
 import React from 'react';
+import classNames from "classnames";
 import {omit} from './utils';
 type SizeType = 'small' | 'middle' | 'large' | undefined;
 
 export interface InputProps {
     className?:string,
-    type?:'text' | 'number' | 'password',
+    disabled?:boolean,
     size?: SizeType,
+    type?:'text' | 'number' | 'password',
     onChange?:React.ChangeEventHandler<HTMLInputElement>
 }
 
 
 const Input = (props:InputProps) => {
-    const {className,type,size,onChange} = props;
+    const {className,disabled,size,type,onChange} = props;
 
     React.useEffect(() => {
         const o = omit(props,['className','type','onChange','onFocus','onBlur']);
@@ -25,19 +27,18 @@ const Input = (props:InputProps) => {
         console.log(e);
     };
 
-    const getInputClassName = (prefix) => {
-        const defaultCls = [className,`${prefix}`];
-        if (size==="small") {
-            defaultCls.push(`${prefix}-sm`);
-        }else if (size==="large") {
-            defaultCls.push(`${prefix}-lg`);
-        }
-        return defaultCls.join(' ');
+    const getInputClassName = (prefix,disabled) => {
+        const inputClassName = classNames(className,`${prefix}`,{
+            [`${prefix}-sm`]:size==="small",
+            [`${prefix}-lg`]:size==="large",
+            [`${prefix}-disabled`]:disabled
+        });
+        return inputClassName;
     };
     return (
         <input
             {...omit(props,['className','type','onChange','onFocus','onBlur'])}
-            className={getInputClassName('leke-input')}
+            className={getInputClassName('leke-input',disabled)}
             type={type}
             onChange={onChange}
             onFocus={onFocus}
