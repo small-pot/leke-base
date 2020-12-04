@@ -3,7 +3,7 @@
  * @LastEditors: liguodi
  * @Description: Alert组件接口定义
  * @Date: 2020-12-03 11:38:25
- * @LastEditTime: 2020-12-04 11:19:24
+ * @LastEditTime: 2020-12-04 14:38:01
  */
 export interface IAlertProps {
   // 允许用户传入自己的className
@@ -39,7 +39,14 @@ export interface IAlertProps {
   // 宽度 fullScreen-> 占满所在容器
   width?: 'fullScreen' | number;
   // 关闭Alert后
-  afterClose?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  afterClose?: () => void;
   // 点击messageBtn
   onClickMessageBtn?: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
+}
+
+export interface IAlertState {
+  // 动画状态控制
+  isStartAnimation: boolean;
+  // 关闭状态控制
+  closed: boolean;
 }
