@@ -3,26 +3,26 @@
  * @LastEditors: liguodi
  * @Description: Alert组件
  * @Date: 2020-12-03 11:38:17
- * @LastEditTime: 2020-12-04 15:46:07
+ * @LastEditTime: 2020-12-04 16:42:08
  */
 import React, { FC, useState, useRef, useEffect, useMemo } from "react";
 import { IAlertProps, IAlertState } from "./type";
 import { useAnimation } from "@leke/hooks";
 import classNames from "classnames";
-import { Notice } from "@leke/icons";
+import { CheckCircleFill, CloseCircleFill, ExclamationcCircleFill, InfoCircleFill, Close } from "@leke/icons";
 const prefixCls = "leke-alert";
 
 // 通过type获取对应的图表
 const getIconByType = (type: IAlertProps["type"]) => {
     switch (type) {
     case "success":
-        return <Notice />;
+        return <CheckCircleFill />;
     case "info":
-        return <Notice />;
+        return <InfoCircleFill />;
     case "error":
-        return <Notice />;
+        return <CloseCircleFill />;
     case "warning":
-        return <Notice />;
+        return <ExclamationcCircleFill />;
     default:
         return null;
     }
@@ -137,7 +137,7 @@ const Alert: FC<IAlertProps> = ({
         });
         return isShowCloseIcon ? (
             <div className={closeIconBoxClass} onClick={handleClose}>
-                {renderCloseIcon ? renderCloseIcon : <Notice />}
+                {renderCloseIcon ? renderCloseIcon : <Close />}
             </div>
         ) : null;
     };
