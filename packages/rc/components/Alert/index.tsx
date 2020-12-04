@@ -3,7 +3,7 @@
  * @LastEditors: liguodi
  * @Description: Alert组件
  * @Date: 2020-12-03 11:38:17
- * @LastEditTime: 2020-12-04 16:42:08
+ * @LastEditTime: 2020-12-04 19:27:04
  */
 import React, { FC, useState, useRef, useEffect, useMemo } from "react";
 import { IAlertProps, IAlertState } from "./type";
@@ -24,7 +24,22 @@ const getIconByType = (type: IAlertProps["type"]) => {
     case "warning":
         return <ExclamationcCircleFill />;
     default:
-        return null;
+        return <InfoCircleFill />;
+    }
+};
+// 通过type获取对应的图表
+const getClassByType = (type: IAlertProps["type"]) => {
+    switch (type) {
+    case "success":
+        return type;
+    case "info":
+        return type;
+    case "error":
+        return type;
+    case "warning":
+        return type;
+    default:
+        return 'info';
     }
 };
 
@@ -145,7 +160,7 @@ const Alert: FC<IAlertProps> = ({
     // 样式className
     const wrapClassName = classNames(
         `${prefixCls}-container`,
-        `${prefixCls}-container-${type}`,
+        `${prefixCls}-container-${getClassByType(type)}`,
         {
             [`${prefixCls}-has-title-container`]: isHasTitle,
         },
@@ -172,7 +187,7 @@ const Alert: FC<IAlertProps> = ({
 Alert.displayName = "Alert";
 
 Alert.defaultProps = {
-    type: "success",
+    type: "info",
     isShowCloseIcon: false,
     isOmitTitle: false,
     isOmitMessage: false,

@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test logged.md 1`] = `
+<div>
+  <div
+    class="leke-miniHeader"
+  >
+    <div
+      class="leke-miniHeader-content"
+    >
+      <div
+        class="leke-miniHeader-left"
+      >
+        <img
+          class="leke-miniHeader-logo"
+          src="https://static.leke.cn/images/common/logo/mini-header-logo-new-2.png"
+        />
+      </div>
+      <div
+        class="leke-miniHeader-right"
+      >
+        <a
+          class="leke-miniHeader-message"
+          href="https://webapp.leke.cn/notice-web/notice.html#/"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <i
+            class="leke-icon icon-notice"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 1024 1024"
+              width="1em"
+            >
+              <path
+                d="M915.6 791.514l-74.17-124.67V397.383c0-56.417-24.724-122.04-63.914-173.591-39.847-52.472-95.738-93.635-157.416-115.728-.394-.132-.789-.263-1.052-.395-1.447-.394-6.707-1.972-14.334-4.076v-9.074c0-48.79-42.74-89.952-94.03-89.952s-92.187 41.162-92.187 89.952v8.416c-7.233 1.973-11.704 3.288-12.23 3.55l-.789.264c-62.598 21.567-119.41 62.598-160.046 115.596-39.847 51.946-65.491 118.095-65.491 175.17v269.46L100.772 800.72c-9.994 16.57-9.863 37.085.132 53.656 9.995 16.438 34.324 33.008 54.445 33.008h196.079c11.704 72.461 80.746 121.909 160.177 121.909s146.633-49.448 158.337-121.909H865.89c31.167 0 64.044-30.378 64.044-60.1 0-13.413-5.128-25.906-14.334-35.77M511.605 54.54c23.804 0 43.267 15.518 44.45 37.874-.657-.131-28.142-4.734-45.239-4.734-13.413 0-35.244 2.893-43.66 4.34 1.446-22.225 20.778-37.48 44.45-37.48m0 905.437c-52.604 0-100.079-25.776-111.257-72.593h220.54c-11.047 46.949-56.812 72.593-109.284 72.593m91.925-805.359c106.128 38.269 188.846 144.265 188.846 242.765v269.461c0 3.945-1.71 9.206.395 12.625l82.061 137.295c2.236 3.682 5.26 6.575 8.943 8.548-3.156-1.973-2.367-.131-2.367 1.973 0 4.208-10.915 11.046-15.387 11.046H155.35c-2.894 0-11.047-4.865-12.362-7.101-.658-1.052-1.052-2.499-1.052-3.814 0-1.446.394-2.761 1.052-3.813L228.993 679.6c2.105-3.42-.131-8.68-.131-12.625V397.383c0-100.078 88.768-196.21 192.66-244.08 35.507-14.598 49.842-16.307 89.689-16.307 37.611 0 57.6 2.762 92.319 17.622zm0 0"
+              />
+            </svg>
+          </i>
+          <span>
+            消息
+          </span>
+          <span
+            class="leke-miniHeader-count"
+          >
+            5
+          </span>
+        </a>
+        <span
+          class="leke-trigger leke-miniHeader-user"
+        >
+          <a
+            class="leke-miniHeader-portrait"
+            href="https://tutor.leke.cn/auth/common/user/myDetail.htm"
+          >
+            <img
+              alt=""
+              src="https://file.leke.cn//group6/M00/84/43/wKjIM13eBZOAHdU5AADUSvLg-4k993.png"
+            />
+          </a>
+          <span
+            class="leke-miniHeader-userName"
+          >
+            李丽
+          </span>
+          <i
+            class="leke-icon leke-icon-down-fill"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 1024 1024"
+              width="1em"
+            >
+              <defs>
+                <style />
+              </defs>
+              <path
+                d="M951.865 186.823c74.752 0 92.501 43.236 39.708 95.915L581.746 771.982c-53.02 52.68-80.555 52.68-133.575 0L37.888 282.624c-52.68-52.68-34.93-95.915 39.708-95.915h874.269v.114z"
+              />
+            </svg>
+          </i>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`test notLogged.md 1`] = `
+<div>
+  <div
+    class="leke-miniHeader"
+  >
+    <div
+      class="leke-miniHeader-content"
+    >
+      <div
+        class="leke-miniHeader-left"
+      >
+        <img
+          class="leke-miniHeader-logo"
+          src="https://static.leke.cn/images/common/logo/mini-header-logo-new-2.png"
+        />
+      </div>
+      <div
+        class="leke-miniHeader-login"
+      >
+        <a
+          class="leke-miniHeader-login-btn"
+          href="https://cas.leke.cn/login?service="
+        >
+          登录
+        </a>
+        <span>
+           | 
+        </span>
+        <a
+          class="leke-miniHeader-register-btn"
+          href="https://tutor.leke.cn/unauth/user/register.htm"
+        >
+          注册
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
