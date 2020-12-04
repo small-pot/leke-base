@@ -1,0 +1,135 @@
+.leke-alert {
+
+  // 设置Alert的布局
+  &-container {
+    box-sizing: border-box;
+    display: flex;
+    transition: all .3s;
+    align-items: center;
+  }
+
+  &-title-message-container {
+    align-items: flex-start;
+  }
+
+  // 设置布局的边框
+  /* 设置边框 */
+  &-success-border {
+    border: 1px solid #64D0C1;
+    background-color: #E6F6F1;
+
+  }
+
+  &-success-border &-icon-box span {
+    color: #1FB5AB;
+    vertical-align: initial;
+  }
+
+  &-info-border {
+    border: 1px solid #99D1FF;
+    background-color: #F0FAFF;
+  }
+
+  &-info-border &-icon-box span {
+    color: #479FFF;
+    vertical-align: initial;
+  }
+
+  &-warning-border {
+    border: 1px solid #FFC552;
+    background-color: #FFF9E6;
+  }
+
+  &-warning-border &-icon-box span {
+    color: #FF9900;
+    vertical-align: initial;
+  }
+
+  &-error-border {
+    border: 1px solid #FF9E99;
+    background-color: #FEF2F0;
+  }
+
+  &-error-border &-icon-box span {
+    color: #FF4848;
+    vertical-align: initial;
+  }
+
+  &-none-border {
+    border: 1px solid #b1b1b1;
+    background-color: #f9f9f9;
+  }
+
+  &-none-border &-icon-box span {
+    color: #9e9e9e;
+    vertical-align: initial;
+  }
+
+  /* 设置关闭按钮样式 */
+  &-close-box {
+    font-size: 12px;
+  }
+
+  &-close-box>span {
+    cursor: pointer;
+    vertical-align: initial;
+  }
+
+  &-close-simple-box {
+    margin-left: 6px;
+  }
+
+  &-close-common-box {
+    margin-left: 6px;
+  }
+
+  /* 内容区 */
+  &-context {
+    flex: 1;
+    width: 0;
+  }
+
+  .title {
+    margin: 0;
+    font-weight: bold;
+    font-size: 16px;
+    color: #262626;
+    line-height: 22px;
+    margin-bottom: 8px;
+  }
+
+  .message {
+    margin: 0;
+    font-size: 14px;
+    color: #262626;
+    line-height: 22px;
+  }
+
+  .ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .message-text-btn {
+    color: #1FB5AB;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+
+  /* 设置关闭按钮样式 */
+  &-icon-simple-box {
+    font-size: 16px;
+    margin-right: 8px;
+  }
+
+  &-icon-common-box {
+    font-size: 18px;
+    margin-right: 12px;
+  }
+
+  /* 设置操作选项 */
+  &-action-box {
+    margin-left: 6px;
+  }
+}

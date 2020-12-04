@@ -3,6 +3,7 @@ export default {
     keys:[
         'icons',
         'MiniHeader',
-        'Dropdown'
+        'Dropdown',
+        'Alert'
     ]
 };
