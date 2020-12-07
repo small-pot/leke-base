@@ -3,7 +3,7 @@
  * @LastEditors: liguodi
  * @Description: Alert组件
  * @Date: 2020-12-03 11:38:17
- * @LastEditTime: 2020-12-04 19:27:04
+ * @LastEditTime: 2020-12-04 19:41:54
  */
 import React, { FC, useState, useRef, useEffect, useMemo } from "react";
 import { IAlertProps, IAlertState } from "./type";
