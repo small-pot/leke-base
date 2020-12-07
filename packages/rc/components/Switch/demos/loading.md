@@ -10,12 +10,12 @@ export default function(){
     };
     return(
         <>
-            <div>
-                <Switch loading={loading}/>
-            </div>
-            <div>
-                <button onClick={onToggle}>toggle loading</button>
-            </div>
+            <Switch defaultChecked loading={loading}/>
+            <br />
+            <Switch size="small" loading={loading}/>
+            <br />
+            <br />
+            <button onClick={onToggle}>toggle loading</button>
         </>
     );
 }

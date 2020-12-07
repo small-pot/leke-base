@@ -5,7 +5,11 @@ import {Switch} from '@leke/rc';
 
 export default function(){
     return(
-        <Switch autoFocus/>
+        <>
+            <Switch autoFocus defaultChecked/>
+            <br />
+            <Switch size="small"/>
+        </>
     );
 }
 ```

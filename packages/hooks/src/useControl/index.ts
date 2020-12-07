@@ -1,7 +1,8 @@
 import {useCallback, useState} from 'react';
 export default function useControl<T=any>(value?:T,onChange?:(v:T)=>void) {
     const [val,setVal]=useState(value);
-    const callback=useCallback((newVal)=>{
+    const callback = useCallback((newVal) => {
+        
         setVal(newVal);
         if(typeof onChange==='function'){
             onChange(newVal);

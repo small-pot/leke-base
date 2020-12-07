@@ -10,10 +10,12 @@ export default function(){
     };
     return(
         <>
-            <Switch disabled={disabled}/>
-            <div>
-                <button onClick={onToggle}>toggle disabled</button>
-            </div>
+            <Switch disabled={disabled} defaultChecked/>
+            <br />
+            <Switch disabled={disabled} size="small"/>
+            <br />
+            <br />
+            <button onClick={onToggle}>toggle disabled</button>
         </>
     );
 }

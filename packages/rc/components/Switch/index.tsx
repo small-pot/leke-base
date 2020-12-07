@@ -1,8 +1,7 @@
-import React, { FC, forwardRef, memo, ReactNode, useCallback, useEffect, useState } from "react";
+import React, { FC, memo, ReactNode, useCallback } from "react";
 import classNames from "classnames";
-import { useAnimation, useControl } from "@leke/hooks";
+import { useControl } from "@leke/hooks";
 import { Loading } from "@leke/icons";
-
 interface SwitchProps {
   autoFocus?:boolean;
   checked?:boolean;
@@ -14,13 +13,12 @@ interface SwitchProps {
   onKeyDown?: React.KeyboardEventHandler<HTMLButtonElement>;
   size?:'default' | 'small';
   unCheckedChildren?:string;
-  onChange?:(isChecked, e) =>void;
+  onChange?:(isChecked, e?) =>void;
   onClick?:(isChecked, e) =>void;
 }
 
-const Switch: FC<SwitchProps> = memo(({ autoFocus, checked, defaultChecked, disabled, className, loading,checkedChildren, unCheckedChildren, onChange, onClick, onKeyDown }) => {
-    // const [isChecked, setIsChecked] = useControl<any>(checked);
-    const [isChecked, setIsChecked] = useState(defaultChecked);
+const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked, defaultChecked, disabled, className, loading, checkedChildren, unCheckedChildren, onChange, onClick, onKeyDown }) => {
+    const [isChecked = defaultChecked, setIsChecked] = useControl(checked,onChange);
     disabled = loading || disabled;
   
     const onToggle = useCallback((
@@ -31,12 +29,11 @@ const Switch: FC<SwitchProps> = memo(({ autoFocus, checked, defaultChecked, disa
 
         if (!disabled) {
             mergedChecked = newChecked;
-            setIsChecked(mergedChecked);
-            onChange?.(mergedChecked, event);
+            setIsChecked?.(mergedChecked, event);
         }
   
         return mergedChecked;
-    }, [isChecked, disabled, onChange]);
+    }, [isChecked, disabled, setIsChecked]);
     
     const onHandler = useCallback((e) => {
         const ret = onToggle(!isChecked, e);
@@ -53,16 +50,16 @@ const Switch: FC<SwitchProps> = memo(({ autoFocus, checked, defaultChecked, disa
         }
         onKeyDown?.(e);
     };
-
-    useEffect(() => {
-        setIsChecked(checked);
-    }, [checked]);
     
     const switchProps = {
         autoFocus,
         onClick: onHandler,
         onKeyDown: onInternalKeyDown,
-        className: classNames("leke-switch", className, isChecked && "leke-switch-chceked", disabled && "leke-switch-disabled"),
+        className: classNames("leke-switch", {
+            ['leke-switch-small']: size === 'small',
+            ['leke-switch-chceked']: isChecked,
+            ['leke-switch-disabled']: disabled,
+        }, className),
     };
 
     return (
@@ -83,11 +80,10 @@ const Switch: FC<SwitchProps> = memo(({ autoFocus, checked, defaultChecked, disa
 
 Switch.defaultProps = {
     autoFocus: false,
-    checked:false,
     defaultChecked:false,
     disabled:false,
     loading:false,
-    size:'default',
+    size: 'default',
 };
 
 export default Switch;
