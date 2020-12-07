@@ -14,7 +14,7 @@ describe('MiniHeader ', function() {
         expect(document.body.querySelectorAll('.leke-miniHeader-role-list li').length).toBe(roleLength+3);
         userInfo.roleName='学生';
         userInfo.schoolId=-1;
-        userInfo.avatar='';
+        userInfo.avatar='/a';
         rerender(<UserInfo userInfo={userInfo}/>);
         expect(document.body.querySelectorAll('.leke-miniHeader-role-list li').length).toBe(roleLength+2);
     });
@@ -25,7 +25,8 @@ describe('MiniHeader ', function() {
         await waitFor(()=>getByText(messageCount.toString()));
     });
     it('test logo',async function () {
-        const {container} = render(<MiniHeader logo={null} userInfo={null} />);
+        const userInfo = await getUserInfo();
+        const {container} = render(<MiniHeader showLogo={false} userInfo={userInfo} messageCount={1} />);
         expect(container.querySelector('.leke-miniHeader-left img')).toBe(null);
     });
 });

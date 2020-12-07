@@ -10,7 +10,7 @@ const defaultHeaderObj = {
 };
 
 const userCenter='https://tutor.leke.cn/auth/common/user/myDetail.htm';
-const fileUrl='https://file.leke.cn/';
+const fileUrl='https://file.leke.cn';
 const defaultLogoutUrl='https://cas.leke.cn/logout';
 const learnCenterUrl='https://cas.leke.cn/changeLearnCenter';
 const changeRole='https://cas.leke.cn/changeRole?ticket=null';

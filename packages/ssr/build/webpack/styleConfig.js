@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin=require('mini-css-extract-plugin');
 const isProduction=process.env.NODE_ENV==='production';
 const {cssModules,modifyVars,postcssConfig,browsers}=require('../resolveConfig');
+const postcssPresetEnv=require('postcss-preset-env');
 
 const modulesOption={
     modules:{
@@ -11,13 +12,7 @@ const modulesOption={
 const config={
     postcssOptions: {
         plugins: [
-            [
-                'postcss-preset-env',
-                {
-                    browsers,
-                    autoprefixer:{grid: true}
-                }
-            ],
+            postcssPresetEnv({browsers,autoprefixer:{}})
         ],
     }
 };
