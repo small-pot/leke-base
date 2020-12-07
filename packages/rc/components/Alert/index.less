@@ -93,12 +93,6 @@
   // 操作选项容器
   &-action-box {
     margin-left: 8px;
-    .@{alertPreFixCls}-action-item {
-      margin-bottom: 4px;
-      &:last-child {
-        margin: 0;
-      }
-    }
   }
 
   /* 内容区 */
@@ -111,18 +105,10 @@
     font-weight: bold;
     color: @alert-text-color;
     margin-bottom: 8px;
-
-    &.ellipsis {
-      .ellipsis();
-    }
   }
   &-message {
     font-size: @alert-message-font-size;
     color: @alert-text-color;
     line-height: 22px;
-
-    &.@{alertPreFixCls}-message-ellipsis {
-      .ellipsis();
-    }
   }
 }

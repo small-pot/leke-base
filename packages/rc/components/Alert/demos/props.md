@@ -1,15 +1,12 @@
 ## props
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- |
-| type | Alert的类型 | 枚举success,info,warning,error | success |
-| isShowCloseIcon | 是否展示关闭icon | boolean | false |
-| renderCloseIcon | 替换关闭icon | ReactNode | undefined |
-| title | 标题 | string | undefined |
-| isOmitTitle | 是否缩略标题 | boolean | false |
-| message | Alert消息 | string\|ReactNode | undefined |
-| isOmitMessage | 是否缩略message | boolean | false |
+| className | 自定义alert的class | string | undefined |
+| style | css样式 | CSSProperties | undefined |
+| type | Alert的类型 | 枚举 success \| info \| warning \|error | info |
+| closeIcon | 不传入时使用默认配置的close图标，传入null可清除图标 | ReactNode | undefined |
+| title | 标题 | ReactNode | undefined |
+| message | Alert消息 | ReactNode | undefined |
 | action | 可扩展用户的自定义操作选项 | ReactNode | undefined |
-| isShowIcon | 是否展示icon | boolean | false |
-| renderIcon | 替换icon | ReactNode | undefined
-| isShowBorder | 是否展示边框 注意：不展示边框时，默认去掉圆角 | boolean | true |
+| icon | 不传入时使用默认配置的图标，传入null可清除图标 | ReactNode | undefined |
 | afterClose | 关闭Alert后 | () => void | undefined |

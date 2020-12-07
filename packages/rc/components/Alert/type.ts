@@ -3,7 +3,7 @@
  * @LastEditors: liguodi
  * @Description: Alert组件接口定义
  * @Date: 2020-12-03 11:38:25
- * @LastEditTime: 2020-12-07 13:39:45
+ * @LastEditTime: 2020-12-07 15:18:55
  */
 export interface IAlertProps {
   // 允许用户传入自己的className
@@ -12,26 +12,16 @@ export interface IAlertProps {
   style?: React.CSSProperties;
   // 类型
   type?: 'success' | 'info' | 'warning' | 'error';
-  // 是否展示关闭icon
-  isShowCloseIcon?: boolean;
-  // 替换closeIcon
-  renderCloseIcon?: React.ReactNode;
+  // 配置closeIcon
+  closeIcon?: React.ReactNode;
   // 标题
-  title?: string;
-  // 是否省略标题
-  isOmitTitle?: boolean;
+  title?: React.ReactNode;
   // 提示信息
-  message?: string | React.ReactNode;
+  message?: React.ReactNode;
   // 扩展的操作选项操作
   action?: React.ReactNode;
-  // 是否省略消息
-  isOmitMessage?: boolean;
-  // 是否展示icon
-  isShowIcon?: boolean;
-  // 替换icon
-  renderIcon?: React.ReactNode;
-  // 是否展示边框
-  isShowBorder?: boolean;
+  // 配置icon
+  icon?: React.ReactNode;
   // 关闭Alert后
   afterClose?: () => void;
 }

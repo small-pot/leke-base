@@ -3,13 +3,19 @@
  * @LastEditors: liguodi
  * @Description: Alert组件
  * @Date: 2020-12-03 11:38:17
- * @LastEditTime: 2020-12-07 13:44:09
+ * @LastEditTime: 2020-12-07 15:37:55
  */
-import React, { FC, useState, useRef, useEffect, useMemo } from "react";
+import React, { FC, useState, useRef, useMemo } from "react";
 import { IAlertProps, IAlertState } from "./type";
 import { useAnimation } from "@leke/hooks";
 import classNames from "classnames";
-import { CheckCircleFill, CloseCircleFill, ExclamationcCircleFill, InfoCircleFill, Close } from "@leke/icons";
+import {
+    CheckCircleFill,
+    CloseCircleFill,
+    ExclamationcCircleFill,
+    InfoCircleFill,
+    Close,
+} from "@leke/icons";
 const prefixCls = "leke-alert";
 
 // 通过type获取对应的图表
@@ -39,7 +45,7 @@ const getClassByType = (type: IAlertProps["type"]) => {
     case "warning":
         return type;
     default:
-        return 'info';
+        return "info";
     }
 };
 
@@ -47,16 +53,11 @@ const Alert: FC<IAlertProps> = ({
     className,
     style,
     type,
-    isShowCloseIcon,
-    renderCloseIcon,
+    closeIcon,
     title,
-    isOmitTitle,
     message,
     action,
-    isOmitMessage,
-    isShowIcon,
-    renderIcon,
-    isShowBorder,
+    icon,
     children,
     afterClose,
 }) => {
@@ -64,12 +65,9 @@ const Alert: FC<IAlertProps> = ({
         isStartAnimation: true,
         closed: false,
     });
-    // Alert元素
     const wrapRef = useRef<HTMLDivElement>(null);
-    // 是否存在title message
     const isHasTitle = useMemo(() => typeof title !== "undefined", [title]);
     const isHasMessage = useMemo(() => typeof message !== "undefined", [message]);
-    // 点击close时使用过渡动画
     useAnimation({
         ref: wrapRef,
         open: isStartAnimation,
@@ -91,9 +89,9 @@ const Alert: FC<IAlertProps> = ({
         const iconBoxClass = classNames(`${prefixCls}-icon-box`, {
             [`${prefixCls}-has-title-icon-box`]: isHasTitle,
         });
-        return isShowIcon ? (
+        return icon !== null ? (
             <div className={iconBoxClass}>
-                {renderIcon ? renderIcon : getIconByType(type)}
+                {typeof icon === "undefined" ? getIconByType(type) : icon}
             </div>
         ) : null;
     };
@@ -102,22 +100,17 @@ const Alert: FC<IAlertProps> = ({
     const renderActioneNode = () => {
         return action ? (
             <div className={`${prefixCls}-action-box`}>
-                {React.Children.map(action, (item) => {
-                    return <div className={`${prefixCls}-action-item`}>{item}</div>;
-                })}
+                {action}
             </div>
         ) : null;
     };
 
-
     // 渲染消息内容与标题
     const renderContextNode = () => {
-        const titleClass = classNames(`${prefixCls}-title`,{['ellipsis'] : isOmitTitle});
-        const messageClass = classNames(`${prefixCls}-message`, {[`${prefixCls}-message-ellipsis`] : isOmitMessage});
         return (
             <div className={`${prefixCls}-context`}>
-                {isHasTitle && (<div className={titleClass}>{title}</div>)}
-                {isHasMessage && (<div className={messageClass}>{message}</div>)}
+                {isHasTitle && <div className={`${prefixCls}-title`}>{title}</div>}
+                {isHasMessage && <div className={`${prefixCls}-message`}>{message}</div>}
                 {children}
             </div>
         );
@@ -128,9 +121,9 @@ const Alert: FC<IAlertProps> = ({
         const closeIconBoxClass = classNames(`${prefixCls}-close-box`, {
             [`${prefixCls}-has-title-close-box`]: isHasTitle,
         });
-        return isShowCloseIcon ? (
+        return closeIcon !== null ? (
             <div className={closeIconBoxClass} onClick={handleClose}>
-                {renderCloseIcon ? renderCloseIcon : <Close />}
+                {typeof closeIcon === 'undefined' ? <Close /> : closeIcon}
             </div>
         ) : null;
     };
@@ -145,14 +138,8 @@ const Alert: FC<IAlertProps> = ({
         className
     );
 
-    // 内联
-    const wrapStyle: React.CSSProperties = {
-        borderRadius: !isShowBorder ? 0 : undefined,
-        ...style,
-    };
-
     return !closed ? (
-        <div ref={wrapRef} style={wrapStyle} className={wrapClassName}>
+        <div ref={wrapRef} style={style} className={wrapClassName}>
             {renderIconNode()}
             {renderContextNode()}
             {renderActioneNode()}
@@ -165,11 +152,6 @@ Alert.displayName = "Alert";
 
 Alert.defaultProps = {
     type: "info",
-    isShowCloseIcon: false,
-    isOmitTitle: false,
-    isOmitMessage: false,
-    isShowIcon: false,
-    isShowBorder: true,
 };
 
 export default Alert;
