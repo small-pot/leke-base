@@ -11,11 +11,7 @@ exports[`test basics.md 1`] = `
       <div
         class="leke-alert-message"
       >
-        <span
-          class="text"
-        >
-          这是一个很短的提示
-        </span>
+        这是一个很短的提示
       </div>
     </div>
   </div>
@@ -53,11 +49,18 @@ exports[`test example1.md 1`] = `
         <div
           class="leke-alert-message"
         >
-          <span
-            class="text"
-          >
-            这是一个很短的提示
-          </span>
+          这是一个很短的提示
+        </div>
+      </div>
+      <div
+        class="leke-alert-action-box"
+      >
+        <div
+          class="leke-alert-action-item"
+        >
+          <button>
+            123123
+          </button>
         </div>
       </div>
       <div
@@ -108,11 +111,7 @@ exports[`test example1.md 1`] = `
         <div
           class="leke-alert-message"
         >
-          <span
-            class="text"
-          >
-            这是一个很短的提示
-          </span>
+          这是一个很短的提示
         </div>
       </div>
       <div
@@ -163,11 +162,7 @@ exports[`test example1.md 1`] = `
         <div
           class="leke-alert-message"
         >
-          <span
-            class="text"
-          >
-            这是一个很短的提示
-          </span>
+          这是一个很短的提示
         </div>
       </div>
       <div
@@ -218,11 +213,7 @@ exports[`test example1.md 1`] = `
         <div
           class="leke-alert-message"
         >
-          <span
-            class="text"
-          >
-            这是一个很短的提示
-          </span>
+          这是一个很短的提示
         </div>
       </div>
       <div
@@ -285,17 +276,13 @@ exports[`test example2.md 1`] = `
         <div
           class="leke-alert-message"
         >
-          <span
-            class="text"
-          >
-            这是一个很短的提示这是一个很短的提示这是一个很短的提示这是一
+          这是一个很短的提示这是一个很短的提示这是一个很短的提示这是一
                     个很短的提示这是一个很短的提示这是一个很短的提示这是一个很短
                     的提示这是一个很短的提示这是一个很短的提示这是一个很短的提示
                     这是一个很短的提示这是一个很短的提示这是一个很短的提示这是
                     一个很短的提示这是一个很短的提示这是一个很短的提示这是一个
                     很短的提示这是一个很短的提示这是一个很短的提示这是一个很
                     短的提示这是一个很短的提示
-          </span>
         </div>
       </div>
       <div
@@ -351,16 +338,7 @@ exports[`test example2.md 1`] = `
         <div
           class="leke-alert-message"
         >
-          <span
-            class="text"
-          >
-            这是一个很短的提示这是
-          </span>
-          <span
-            class="leke-alert-message-text-btn"
-          >
-            你好的按钮
-          </span>
+          这是一个很短的提示这是
         </div>
       </div>
       <div
@@ -416,10 +394,7 @@ exports[`test example2.md 1`] = `
         <div
           class="leke-alert-message"
         >
-          <span
-            class="text"
-          >
-            
+          
                     这是一个很短的提示这是一个很短的提示这是一个很短的提示这
                     是一个很短的提示这是一个很短的提示这是一个很短的提示这是
                     一个很短的提示这是一个很短的提示这是一个很短的提示这是
@@ -429,7 +404,6 @@ exports[`test example2.md 1`] = `
                     很短的提示这是一个很短的提示这是一个很短的提示这是一
                     个很短的提示这是一个很短的提示
                   
-          </span>
         </div>
       </div>
       <div
@@ -483,17 +457,13 @@ exports[`test example2.md 1`] = `
           这是一个标题
         </div>
         <div
-          class="leke-alert-message"
+          class="leke-alert-message leke-alert-message-ellipsis"
         >
-          <span
-            class="text"
-          >
-            这是一个很短的提示这是一个很短的提示这是一个很短的
+          这是一个很短的提示这是一个很短的提示这是一个很短的
                     提示这是一个很短的提示这是一个很短的提示这是一个很短的
                     提示这是一个很短的提示这是一个很短的提示这是一个很短的提
                     示这是一个很短的提示这是一个很短的提示这是一个很短
                     的提示这是一个很短的提示
-          </span>
         </div>
       </div>
       <div
@@ -525,7 +495,6 @@ exports[`test example3.md 1`] = `
   <div>
     <div
       class="leke-alert-container leke-alert-container-success leke-alert-has-title-container"
-      style="width: 600px;"
     >
       <div
         class="leke-alert-icon-box leke-alert-has-title-icon-box"
@@ -560,22 +529,13 @@ exports[`test example3.md 1`] = `
         <div
           class="leke-alert-message"
         >
-          <span
-            class="text"
-          >
-            这是一个很短的提示这是一个很短的提示这是一个很短的提示这是一
+          这是一个很短的提示这是一个很短的提示这是一个很短的提示这是一
                     个很短的提示这是一个很短的提示这是一个很短的提示这是一个很短
                     的提示这是一个很短的提示这是一个很短的提示这是一个很短的提示
                     这是一个很短的提示这是一个很短的提示这是一个很短的提示这是
                     一个很短的提示这是一个很短的提示这是一个很短的提示这是一个
                     很短的提示这是一个很短的提示这是一个很短的提示这是一个很
                     短的提示这是一个很短的提示
-          </span>
-          <span
-            class="leke-alert-message-text-btn"
-          >
-            我的按钮
-          </span>
         </div>
       </div>
       <div

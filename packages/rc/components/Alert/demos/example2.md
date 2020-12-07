@@ -3,7 +3,7 @@
  * @LastEditors: liguodi
  * @Description: 文件头部描述
  * @Date: 2020-12-04 11:26:25
- * @LastEditTime: 2020-12-04 15:59:04
+ * @LastEditTime: 2020-12-07 13:45:13
 -->
 
 # 展示标题与长 message
@@ -64,6 +64,7 @@ export default function () {
                 isShowIcon
                 isShowCloseIcon
                 type={`warning`}
+                isOmitMessage
                 message={
                     `这是一个很短的提示这是一个很短的提示这是一个很短的
                     提示这是一个很短的提示这是一个很短的提示这是一个很短的

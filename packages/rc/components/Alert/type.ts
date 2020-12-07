@@ -3,7 +3,7 @@
  * @LastEditors: liguodi
  * @Description: Alert组件接口定义
  * @Date: 2020-12-03 11:38:25
- * @LastEditTime: 2020-12-04 14:38:01
+ * @LastEditTime: 2020-12-07 13:39:45
  */
 export interface IAlertProps {
   // 允许用户传入自己的className
@@ -21,13 +21,9 @@ export interface IAlertProps {
   // 是否省略标题
   isOmitTitle?: boolean;
   // 提示信息
-  message?: string;
+  message?: string | React.ReactNode;
   // 扩展的操作选项操作
   action?: React.ReactNode;
-  // 消息按钮
-  messageBtnText?: string;
-  // 消息内按钮颜色
-  messagebtnColor?: string;
   // 是否省略消息
   isOmitMessage?: boolean;
   // 是否展示icon
@@ -36,12 +32,8 @@ export interface IAlertProps {
   renderIcon?: React.ReactNode;
   // 是否展示边框
   isShowBorder?: boolean;
-  // 宽度 fullScreen-> 占满所在容器
-  width?: 'fullScreen' | number;
   // 关闭Alert后
   afterClose?: () => void;
-  // 点击messageBtn
-  onClickMessageBtn?: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
 }
 
 export interface IAlertState {

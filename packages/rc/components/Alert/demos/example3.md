@@ -3,7 +3,7 @@
  * @LastEditors: liguodi
  * @Description: 文件头部描述
  * @Date: 2020-12-04 11:26:25
- * @LastEditTime: 2020-12-04 16:53:55
+ * @LastEditTime: 2020-12-07 13:37:01
 -->
 
 # 属性全部设置
@@ -24,7 +24,6 @@ export default function () {
     return (
         <div>
             <Alert
-                width={600}
                 title={`设置标题设置标题设置标题设置标题设置标题设置标题设置标题设置标题设置标题设置标题设置标题设置标题`}
                 isShowIcon
                 renderIcon={<DownFill />}

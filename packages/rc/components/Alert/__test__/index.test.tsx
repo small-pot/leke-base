@@ -1,16 +1,16 @@
 import React from "react";
 import Alert from "../";
 import '@testing-library/jest-dom/extend-expect';
-import {render} from '@testing-library/react';
+import {render, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-// const delayFn = (time) => {
-//     return new Promise((reslove) => {
-//         setTimeout(() => {
-//             reslove();
-//         }, time);
-//     });
-// };
+const delayFn = async (time) => {
+    return new Promise((reslove) => {
+        setTimeout(() => {
+            reslove();
+        }, time);
+    });
+};
 
 describe('Alert ', function() {
     it('test default',async function () {
@@ -20,21 +20,25 @@ describe('Alert ', function() {
             />
         );
         const wrap = container.querySelector('.leke-alert-container');
-        const message = wrap.getElementsByClassName('text')[0].textContent;
+        const message = wrap.getElementsByClassName('leke-alert-message')[0].textContent;
         expect(message).toContain('hello world');
     });
 
-    it('could be closed',async function () {
-        const afterClose = jest.fn();
-        const {container} = render(
-            <Alert
-                message={"hello world"}
-                isShowCloseIcon
-                afterClose={afterClose}
-                type={"success"}
-            />
-        );
-        const closeEle = container.querySelector('.leke-alert-close-box');
-        userEvent.click(closeEle);
-    });
+    // it('could be closed',async function () {
+    //     const {container} = render(
+    //         <Alert
+    //             className={"my-test-alert"}
+    //             message={"hello world"}
+    //             isShowCloseIcon
+    //             type={"success"}
+    //         />
+    //     );
+    //     const closeEle = container.getElementsByClassName('leke-alert-close-box')[0];
+    //     userEvent.click(closeEle);
+    //     const findWrap1 = document.getElementsByClassName('my-test-alert');
+    //     expect(findWrap1.length).toBe(1);
+    //     await delayFn(500);
+    //     const findWrap2 = document.getElementsByClassName('my-test-alert');
+    //     expect(findWrap2.length).toBe(0);
+    // });
 });

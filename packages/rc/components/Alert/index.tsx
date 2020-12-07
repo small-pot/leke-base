@@ -3,7 +3,7 @@
  * @LastEditors: liguodi
  * @Description: Alert组件
  * @Date: 2020-12-03 11:38:17
- * @LastEditTime: 2020-12-04 19:41:54
+ * @LastEditTime: 2020-12-07 13:44:09
  */
 import React, { FC, useState, useRef, useEffect, useMemo } from "react";
 import { IAlertProps, IAlertState } from "./type";
@@ -53,16 +53,12 @@ const Alert: FC<IAlertProps> = ({
     isOmitTitle,
     message,
     action,
-    messageBtnText,
-    messagebtnColor,
     isOmitMessage,
     isShowIcon,
     renderIcon,
     isShowBorder,
-    width,
     children,
     afterClose,
-    onClickMessageBtn,
 }) => {
     const [{ closed, isStartAnimation }, setState] = useState<IAlertState>({
         isStartAnimation: true,
@@ -70,10 +66,9 @@ const Alert: FC<IAlertProps> = ({
     });
     // Alert元素
     const wrapRef = useRef<HTMLDivElement>(null);
-    // 是否存在title message messageBtn
+    // 是否存在title message
     const isHasTitle = useMemo(() => typeof title !== "undefined", [title]);
     const isHasMessage = useMemo(() => typeof message !== "undefined", [message]);
-    const isHasMessageBtn = useMemo(() => typeof messageBtnText !== "undefined", [messageBtnText]);
     // 点击close时使用过渡动画
     useAnimation({
         ref: wrapRef,
@@ -114,18 +109,6 @@ const Alert: FC<IAlertProps> = ({
         ) : null;
     };
 
-    // 渲染messageBtn
-    const renderMessageBtnNode = () => {
-        return isHasMessageBtn ? (
-            <span
-                onClick={onClickMessageBtn}
-                style={{ color: messagebtnColor }}
-                className={`${prefixCls}-message-text-btn`}
-            >
-                {messageBtnText}
-            </span>
-        ) : null;
-    };
 
     // 渲染消息内容与标题
     const renderContextNode = () => {
@@ -134,12 +117,7 @@ const Alert: FC<IAlertProps> = ({
         return (
             <div className={`${prefixCls}-context`}>
                 {isHasTitle && (<div className={titleClass}>{title}</div>)}
-                {isHasMessage && (
-                    <div className={messageClass}>
-                        <span className="text">{message}</span>
-                        {renderMessageBtnNode()}
-                    </div>
-                )}
+                {isHasMessage && (<div className={messageClass}>{message}</div>)}
                 {children}
             </div>
         );
@@ -169,7 +147,6 @@ const Alert: FC<IAlertProps> = ({
 
     // 内联
     const wrapStyle: React.CSSProperties = {
-        width: width !== "fullScreen" ? width : undefined,
         borderRadius: !isShowBorder ? 0 : undefined,
         ...style,
     };
@@ -193,7 +170,6 @@ Alert.defaultProps = {
     isOmitMessage: false,
     isShowIcon: false,
     isShowBorder: true,
-    width: "fullScreen",
 };
 
 export default Alert;
