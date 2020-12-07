@@ -25,7 +25,8 @@ describe('MiniHeader ', function() {
         await waitFor(()=>getByText(messageCount.toString()));
     });
     it('test logo',async function () {
-        const {container} = render(<MiniHeader logo={null} userInfo={null} />);
+        const userInfo = await getUserInfo();
+        const {container} = render(<MiniHeader showLogo={false} userInfo={userInfo} />);
         expect(container.querySelector('.leke-miniHeader-left img')).toBe(null);
     });
 });
