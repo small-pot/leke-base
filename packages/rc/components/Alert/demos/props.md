@@ -6,8 +6,8 @@
 | renderCloseIcon | 替换关闭icon | ReactNode | undefined |
 | title | 标题 | string | undefined |
 | isOmitTitle | 是否缩略标题 | boolean | false |
-| message | Alert消息 | string | undefined |
-| isOmitMessage | 是否缩略message | string\|ReactNode | undefined |
+| message | Alert消息 | string\|ReactNode | undefined |
+| isOmitMessage | 是否缩略message | boolean | false |
 | action | 可扩展用户的自定义操作选项 | ReactNode | undefined |
 | isShowIcon | 是否展示icon | boolean | false |
 | renderIcon | 替换icon | ReactNode | undefined
