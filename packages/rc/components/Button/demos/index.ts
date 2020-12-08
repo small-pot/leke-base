@@ -7,5 +7,6 @@ export default [
     require('./buttonBlock.md'),
     require('./buttonDisabled.md'),
     require('./buttonDanger.md'),
+    require('./props.md'),
 ];
 

@@ -3,12 +3,18 @@
 ```jsx
 import React, {useState} from 'react';
 import {Button} from '@leke/rc';
-import './index.less';
-import DownloadOutlined from '../downloadOutlined';
+import {Upload} from '@leke/icons';
 
 export default function(){
     const [loadings,setLoadings] = useState([false,false]);
 
+    const DownloadOutlined = () =>{
+        return (
+            <span style={{verticalAlign:'text-top'}}>
+                <Upload />
+            </span>
+        );
+    };
 
     const handleClick = (index) => {
         const newLoadings = [...loadings];
@@ -34,5 +40,11 @@ export default function(){
             icon={<DownloadOutlined />} />
         <Button type='primary' className='leke-demo-container' loading={loadings[1]} onClick={() => handleClick(1)}>按钮</Button>
     </>;
+}
+```
+```css
+.leke-demo-container{
+    margin-right: 8px;
+    margin-bottom: 12px;
 }
 ```

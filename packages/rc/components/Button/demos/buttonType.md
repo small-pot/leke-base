@@ -3,7 +3,6 @@
 ```jsx
 import React from 'react';
 import {Button} from '@leke/rc';
-import './index.less';
 
 export default function(){
     return  <>
@@ -13,5 +12,11 @@ export default function(){
         <Button type='dashed' className='leke-demo-container'>按钮</Button>
         <Button type='link' className='leke-demo-container'>按钮</Button>
     </>;
+}
+```
+```css
+.leke-demo-container{
+    margin-right: 8px;
+    margin-bottom: 12px;
 }
 ```

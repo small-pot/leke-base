@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import { ButtonShape, ButtonSize, ButtonType } from './type';
-import LoadingIcon from './loading';
 
 export type Props = {
     children?: ReactNode;
@@ -36,6 +35,10 @@ const Button = (props: Props) => {
         'leke-btnBackgroundGhost': ghost,
         'leke-btnDisabled':lekeDisabled,
     });
+
+    const LoadingIcon = () => {
+        return <div className="leke-btn-loading-icon" />;
+    };
 
     const iconNode = loading ? <LoadingIcon /> : icon  ? icon : null;
 

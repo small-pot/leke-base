@@ -3,11 +3,18 @@
 ```jsx
 import React,{useState} from 'react';
 import {Button} from '@leke/rc';
-import './index.less';
-import DownloadOutlined from '../downloadOutlined';
+import {Upload} from '@leke/icons';
 
 export default function(){
     const [size,setSize] = useState('middle');
+
+    const DownloadOutlined = () =>{
+        return (
+            <span style={{verticalAlign:'text-top'}}>
+                <Upload />
+            </span>
+        );
+    };
 
     return  <div>
         <div>
@@ -31,5 +38,11 @@ export default function(){
             <Button type='dashed' className='leke-demo-container' size={size} icon={<DownloadOutlined />} >下载</Button>
         </div>
     </div>;
+}
+```
+```css
+.leke-demo-container{
+    margin-right: 8px;
+    margin-bottom: 12px;
 }
 ```

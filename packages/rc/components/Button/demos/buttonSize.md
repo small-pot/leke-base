@@ -3,7 +3,6 @@
 ```jsx
 import React,{useState} from 'react';
 import {Button} from '@leke/rc';
-import './index.less';
 
 export default function(){
     const [size,setSize] = useState('middle');
@@ -22,5 +21,11 @@ export default function(){
             <Button type='link' className='leke-demo-container' size={size}>按钮</Button>
         </div>
     </>;
+}
+```
+```css
+.leke-demo-container{
+    margin-right: 8px;
+    margin-bottom: 12px;
 }
 ```
