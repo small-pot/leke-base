@@ -12,7 +12,7 @@ test('default',async ()=>{
 
 test('value',async ()=>{
     const {result}=renderHook(() => useControl(1));
-    expect(result.current[1]).toBe(undefined);
+    expect(typeof result.current[1]).toBe('function');
 });
 
 test('onChange',async ()=>{
