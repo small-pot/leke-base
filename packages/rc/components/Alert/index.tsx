@@ -3,7 +3,7 @@
  * @LastEditors: liguodi
  * @Description: Alert组件
  * @Date: 2020-12-03 11:38:17
- * @LastEditTime: 2020-12-07 15:37:55
+ * @LastEditTime: 2020-12-08 16:16:16
  */
 import React, { FC, useState, useRef, useMemo } from "react";
 import { IAlertProps, IAlertState } from "./type";
@@ -33,15 +33,12 @@ const getIconByType = (type: IAlertProps["type"]) => {
         return <InfoCircleFill />;
     }
 };
-// 通过type获取对应的图表
+// 通过type获取对应的type
 const getClassByType = (type: IAlertProps["type"]) => {
     switch (type) {
     case "success":
-        return type;
     case "info":
-        return type;
     case "error":
-        return type;
     case "warning":
         return type;
     default:
@@ -71,10 +68,8 @@ const Alert: FC<IAlertProps> = ({
     useAnimation({
         ref: wrapRef,
         open: isStartAnimation,
-        classNames: {
-            leave: `${prefixCls}-close`,
-        },
-        onLeaveEnd: (e) => {
+        exit: `${prefixCls}-close`,
+        onExited: () => {
             setState((prevState) => ({ ...prevState, closed: true }));
             afterClose?.();
         },
