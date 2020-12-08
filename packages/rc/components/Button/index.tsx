@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import { ButtonShape, ButtonSize, ButtonType } from './type';
+import LoadingIcon from './loading';
 
 export type Props = {
     children?: ReactNode;
@@ -11,33 +12,42 @@ export type Props = {
     size?:ButtonSize;
     shape?:ButtonShape;
     icon?:ReactNode;
+    loading?:boolean;
+    lekeDisabled?:boolean;
+    block?:boolean;
+    danger?:boolean;
+    warning?:boolean;
     onClick?: () => any;
 };
 
 const Button = (props: Props) => {
-    const { type, ghost, disabled, className,size,shape,icon,children, onClick: fn } = props;
+    const { type, ghost, disabled, className,size,shape,icon,children,loading,block,lekeDisabled,danger,warning, onClick: fn } = props;
 
     const classes = classNames(className, {
         'leke-btn': true,
-        [type ? `leke-${type}` : 'leke-default']: true,
+        'leke-btn-danger':danger,
+        'leke-btn-warning':warning,
+        [type ? `leke-btn-${type}` : 'leke-btn-default']: true,
         [shape ? `leke-btn-${shape}`:'' ]:true,
-        'leke-btn-icon-only':icon,
         [size ? `leke-btn-${size}`:'leke-btn-middle']:true,
+        'leke-btn-loading':loading,
+        'leke-btn-icon-only':icon,
+        'leke-btn-block':block,
         'leke-btnBackgroundGhost': ghost,
+        'leke-btnDisabled':lekeDisabled,
     });
 
-    const iconNode = icon  ? icon : null;
+    const iconNode = loading ? <LoadingIcon /> : icon  ? icon : null;
 
     const kids = children ? 
-        <span>{children}</span>
+        <span className={loading || icon ? "leke-btn-content" : ""}>{children}</span>
         : 
         null;
 
     return (
-        <button disabled={disabled} onClick={() => fn && fn()} className={classes}>
+        <button disabled={disabled || lekeDisabled} onClick={() => fn && fn()} className={classes}>
             {iconNode}
             {kids}
-            <img src='./assets/loading.svg' />
         </button>
     );
 };

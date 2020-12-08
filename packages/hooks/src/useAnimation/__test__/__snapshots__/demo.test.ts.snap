@@ -3,16 +3,11 @@
 exports[`test basics.md 1`] = `
 <div>
   <div
-    class="leke-ball-box"
+    class="demo-container"
   >
-    <figure
-      class="leke-ball rotate-box"
-      style="left: 0px; top: 0px;"
-    >
-      <span
-        class="shadow"
-      />
-    </figure>
+    <div
+      class="demo-line rotate-enter"
+    />
   </div>
 </div>
 `;

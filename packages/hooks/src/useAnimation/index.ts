@@ -1,136 +1,62 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import {useRef,useEffect,useLayoutEffect,RefObject} from "react";
-import classNames from 'classnames';
-interface useAnimationProps {
+import {useRef, RefObject, useLayoutEffect} from "react";
+import setClassName from 'classnames';
+interface useAnimationProps{
     ref:RefObject<HTMLElement>,
-    visible:boolean,
-    timeout?:number,
-    beforeEnterClass?:string,
-    enterClass?:string,
-    afterEnterClass?:string,
-    beforeLeaveClass?:string,
-    leaveClass?:string,
-    afterLeaveClass?:string,
-    onBeforeEnter?:(HTMLElement)=>void,
-    onEnter?:(HTMLElement)=>void,
-    onAfterEnter?:(HTMLElement)=>void,
-    onBeforeLeave?:(HTMLElement)=>void,
-    onLeave?:(HTMLElement)=>void,
-    onAfterLeave?:(HTMLElement)=>void
+    open:boolean,
+    classNames:{
+        enter?:string,
+        enterEnd?:string,
+        leave?:string,
+        leaveEnd?:string
+    },
+    onEnterEnd?:(el:HTMLElement)=>void,
+    onLeaveEnd?:(el:HTMLElement)=>void,
+}
+function getAnimationEventName() {
+    const el=document.body;
+    if(el.style['animation']!==undefined){
+        return 'animationend';
+    }
+    if(el.style['webkitAnimation']!==undefined){
+        return 'webkitAnimationEnd';
+    }
+    return 'animationend';
 }
 export default function useAnimation(params:useAnimationProps) {
     if(typeof window==='undefined') return;
     const {
         ref,
-        visible,
-        timeout=200,
-        beforeEnterClass,
-        enterClass,
-        afterEnterClass,
-        beforeLeaveClass,
-        leaveClass,
-        afterLeaveClass,
-        onBeforeEnter,
-        onEnter,
-        onAfterEnter,
-        onBeforeLeave,
-        onLeave,
-        onAfterLeave
+        open,
+        classNames,
+        onEnterEnd,
+        onLeaveEnd
     }=params;
-    const lifeCycle=useRef(null);
-    const className=useRef(null);
-    lifeCycle.current={
-        timeout,
-        beforeEnterClass,
-        enterClass,
-        afterEnterClass,
-        beforeLeaveClass,
-        leaveClass,
-        afterLeaveClass,
-        onBeforeEnter,
-        onEnter,
-        onAfterEnter,
-        onBeforeLeave,
-        onLeave,
-        onAfterLeave
-    };
-    
+    const classNameRef=useRef(null);
+    const noDepProps={classNames,onEnterEnd,onLeaveEnd};
+    const propsRef=useRef(noDepProps);
+    propsRef.current=noDepProps;
     useLayoutEffect(()=>{
         const el=ref.current;
         if(!el){
             return;
         }
-        className.current=el.className||'';
-    },[ref]);
-    useLayoutEffect(()=>{
-        const el=ref.current;
-        if(!el){
-            return;
+        const {classNames:{enter,enterEnd,leave,leaveEnd},onEnterEnd,onLeaveEnd}=propsRef.current;
+        if(classNameRef.current===null){
+            classNameRef.current=el.className||'';
         }
-        if(className.current===null){
-            className.current=el.className||'';
+        el.className=setClassName(classNameRef.current,open?enter:leave);
+        const eventName=getAnimationEventName();
+        function eventCallback(){
+            if(open){
+                el.className=setClassName(classNameRef.current,enterEnd);
+                typeof onEnterEnd==='function'&&onEnterEnd(el);
+            }else{
+                el.className=setClassName(classNameRef.current,leaveEnd);
+                typeof onLeaveEnd==='function'&&onLeaveEnd(el);
+            }
+            el.removeEventListener(eventName,eventCallback);
         }
-        const {beforeEnterClass,onBeforeEnter,beforeLeaveClass,onBeforeLeave}=lifeCycle.current;
-        if(visible){
-            if(beforeEnterClass){
-                el.className=classNames(className.current,beforeEnterClass);
-            }
-            if(typeof onBeforeEnter==='function'){
-                onBeforeEnter(el);
-            }
-        }else{
-            if(beforeLeaveClass){
-                el.className=classNames(className.current,beforeLeaveClass);
-            }
-            if(typeof onBeforeLeave==='function'){
-                onBeforeLeave(el);
-            }
-        }
-    },[visible,ref]);
-    useEffect(()=>{
-        const el=ref.current;
-        const {
-            timeout,
-            enterClass,
-            onEnter,
-            leaveClass,
-            onLeave,
-            afterEnterClass='',
-            onAfterEnter,
-            afterLeaveClass='',
-            onAfterLeave
-        }=lifeCycle.current;
-        if(!el){
-            return;
-        }
-        if(visible){
-            if(enterClass){
-                el.className=classNames(className.current,enterClass);
-            }
-            if(typeof onEnter==='function'){
-                onEnter(el);
-            }
-            if(typeof onAfterEnter==='function' || afterEnterClass){
-                setTimeout(()=>{
-                    if(afterEnterClass){
-                        el.className=classNames(className.current,afterEnterClass);
-                    }
-                    typeof onAfterEnter==='function'&&onAfterEnter(el);
-                },timeout);
-            }
-        }else{
-            if(leaveClass){
-                el.className=classNames(className.current,leaveClass);
-            }
-            if(typeof onLeave==='function'){
-                onLeave(el);
-            }
-            if(typeof onAfterLeave==='function' || afterLeaveClass){
-                setTimeout(()=>{
-                    el.className=classNames(className.current,afterLeaveClass);
-                    typeof onAfterLeave==='function'&&onAfterLeave(el);
-                },timeout);
-            }
-        }
-    },[visible,ref]);
+        el.addEventListener(eventName,eventCallback);
+    },[open,ref]);
 }

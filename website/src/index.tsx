@@ -68,23 +68,25 @@ function App(){
         const routes=type==='component'?componentRoutes:type==='hooks'?hookRoutes:null;
         if(routes){
             return (
-                <ul className='left-tab'>
-                    <li className={classNames('tab-item',!key?'current':'')}>
-                        <a href={'#'+type}>安装与配置</a>
-                    </li>
-                    {routes.map(item=>(
-                        <li key={item.title} className='tab-group'>
-                            <span className='group-title'>{item.title}</span>
-                            <ul className='tab-list'>
-                                {item.keys.map(name=>(
-                                    <li key={name} className={classNames('tab-item',name===key?'current':'')}>
-                                        <a href={`#${type}/${name}`}>{name}</a>
-                                    </li>
-                                ))}
-                            </ul>
+                <div className='left-container'>
+                    <ul className='left-tab'>
+                        <li className={classNames('tab-item',!key?'current':'')}>
+                            <a href={'#'+type}>安装与配置</a>
                         </li>
-                    ))}
-                </ul>
+                        {routes.map(item=>(
+                            <li key={item.title} className='tab-group'>
+                                <span className='group-title'>{item.title}</span>
+                                <ul className='tab-list'>
+                                    {item.keys.map(name=>(
+                                        <li key={name} className={classNames('tab-item',name===key?'current':'')}>
+                                            <a href={`#${type}/${name}`}>{name}</a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             );
         }
         return null;
@@ -104,7 +106,7 @@ function App(){
             <div className='main'>
                 {leftTab}
                 <div className='router-container'>
-                    {mds.map((item,index)=><MarkdownView key={index} source={item.source} JSXComponent={item.default} />)}
+                    {mds.map((item,index)=><MarkdownView key={index} source={item.source} JSXComponent={item.default} css={item.css} />)}
                     {key==='icons'&& icons? <IconList icons={icons}/>:null}
                 </div>
             </div>
