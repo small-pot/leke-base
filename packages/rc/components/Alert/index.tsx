@@ -3,9 +3,9 @@
  * @LastEditors: liguodi
  * @Description: Alert组件
  * @Date: 2020-12-03 11:38:17
- * @LastEditTime: 2020-12-08 16:16:16
+ * @LastEditTime: 2020-12-08 17:19:23
  */
-import React, { FC, useState, useRef, useMemo } from "react";
+import React, { FC, useState, useRef, useMemo, useCallback } from "react";
 import { IAlertProps, IAlertState } from "./type";
 import { useAnimation } from "@leke/hooks";
 import classNames from "classnames";
@@ -75,12 +75,12 @@ const Alert: FC<IAlertProps> = ({
         },
     });
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         setState((prevState) => ({ ...prevState, isStartAnimation: false }));
-    };
+    }, []);
 
     // 渲染ICON
-    const renderIconNode = () => {
+    const renderIconNode = useMemo(() => {
         const iconBoxClass = classNames(`${prefixCls}-icon-box`, {
             [`${prefixCls}-has-title-icon-box`]: isHasTitle,
         });
@@ -89,19 +89,19 @@ const Alert: FC<IAlertProps> = ({
                 {typeof icon === "undefined" ? getIconByType(type) : icon}
             </div>
         ) : null;
-    };
+    }, [type, icon, isHasTitle]);
 
     // 渲染ACTION
-    const renderActioneNode = () => {
+    const renderActionNode = useMemo(() => {
         return action ? (
             <div className={`${prefixCls}-action-box`}>
                 {action}
             </div>
         ) : null;
-    };
+    }, [action]);
 
     // 渲染消息内容与标题
-    const renderContextNode = () => {
+    const renderContextNode = useMemo(() => {
         return (
             <div className={`${prefixCls}-context`}>
                 {isHasTitle && <div className={`${prefixCls}-title`}>{title}</div>}
@@ -109,10 +109,10 @@ const Alert: FC<IAlertProps> = ({
                 {children}
             </div>
         );
-    };
+    }, [title, message, children, isHasTitle, isHasMessage]);
 
     // 渲染CLOSEICON
-    const renderCloseIconNode = () => {
+    const renderCloseIconNode = useMemo(() => {
         const closeIconBoxClass = classNames(`${prefixCls}-close-box`, {
             [`${prefixCls}-has-title-close-box`]: isHasTitle,
         });
@@ -121,7 +121,7 @@ const Alert: FC<IAlertProps> = ({
                 {typeof closeIcon === 'undefined' ? <Close /> : closeIcon}
             </div>
         ) : null;
-    };
+    }, [closeIcon, handleClose, isHasTitle]);
 
     // 样式className
     const wrapClassName = classNames(
@@ -135,10 +135,10 @@ const Alert: FC<IAlertProps> = ({
 
     return !closed ? (
         <div ref={wrapRef} style={style} className={wrapClassName}>
-            {renderIconNode()}
-            {renderContextNode()}
-            {renderActioneNode()}
-            {renderCloseIconNode()}
+            {renderIconNode}
+            {renderContextNode}
+            {renderActionNode}
+            {renderCloseIconNode}
         </div>
     ) : null;
 };
