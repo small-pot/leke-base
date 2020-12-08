@@ -10,7 +10,7 @@ export default function(){
         <Button className='leke-demo-container'>按钮</Button>
         <Button type='normal' className='leke-demo-container'>按钮</Button>
         <Button type='dashed' className='leke-demo-container'>按钮</Button>
-        <Button type='link' className='leke-demo-container'>按钮</Button>
+        <Button type='text' className='leke-demo-container'>按钮</Button>
     </>;
 }
 ```

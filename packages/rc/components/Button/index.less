@@ -127,8 +127,8 @@
     &-normal{
         .btn-normal(@normal-color,@normal-hover-color,@normal-click-color)
     }
-    &-link {
-        .btn-link(@base-color,@hover-color,@click-color)
+    &-text {
+        .btn-text(@base-color,@hover-color,@click-color)
     }
     &-primary {
         .btn-primary(@base-color,@hover-color,@click-color)
@@ -136,8 +136,8 @@
     &-danger&-primary{
         .btn-dangerours('primary')
     }
-    &-danger&-link{
-        .btn-dangerours('link')
+    &-danger&-text{
+        .btn-dangerours('text')
     }
     &-danger&-dashed{
         .btn-dangerours('dashed')
@@ -148,8 +148,8 @@
     &-warning&-primary{
         .btn-warning('primary')
     }
-    &-warning&-link{
-        .btn-warning('link')
+    &-warning&-text{
+        .btn-warning('text')
     }
     &-warning&-dashed{
         .btn-warning('dashed')
@@ -222,8 +222,8 @@
     border: 1px dashed @leke-btn-disabled;
     .btnDisabled(@leke-btn-disabled);
 }
-.leke-btnDisabled.leke-btn-link[disabled]:hover,
-.leke-btnDisabled.leke-btn-link[disabled]{
+.leke-btnDisabled.leke-btn-text[disabled]:hover,
+.leke-btnDisabled.leke-btn-text[disabled]{
     .btnDisabled(@leke-btn-disabled);
 }
 
@@ -248,7 +248,7 @@
     border: 1px dashed #d9d9d9;
     .btnDisabled(#d9d9d9);
 }
-.leke-btn-link[disabled]:hover,
-.leke-btn-link[disabled]{
+.leke-btn-text[disabled]:hover,
+.leke-btn-text[disabled]{
     .btnDisabled(#d9d9d9);
 }

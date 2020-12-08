@@ -23,9 +23,9 @@ export default function(){
             <Button type='dashed' className='leke-demo-container' danger lekeDisabled>按钮</Button>
         </div>
         <div>
-            <Button type='link' className='leke-demo-container' danger>按钮</Button>
-            <Button type='link' className='leke-demo-container' danger disabled>按钮</Button>
-            <Button type='link' className='leke-demo-container' danger lekeDisabled>按钮</Button>
+            <Button type='text' className='leke-demo-container' danger>按钮</Button>
+            <Button type='text' className='leke-demo-container' danger disabled>按钮</Button>
+            <Button type='text' className='leke-demo-container' danger lekeDisabled>按钮</Button>
         </div>
         <div>警示/提醒按钮</div>
         <div>
@@ -44,9 +44,9 @@ export default function(){
             <Button type='dashed' className='leke-demo-container' warning lekeDisabled>按钮</Button>
         </div>
         <div>
-            <Button type='link' className='leke-demo-container' warning>按钮</Button>
-            <Button type='link' className='leke-demo-container' warning disabled>按钮</Button>
-            <Button type='link' className='leke-demo-container' warning lekeDisabled>按钮</Button>
+            <Button type='text' className='leke-demo-container' warning>按钮</Button>
+            <Button type='text' className='leke-demo-container' warning disabled>按钮</Button>
+            <Button type='text' className='leke-demo-container' warning lekeDisabled>按钮</Button>
         </div>
     </div>;
 }
