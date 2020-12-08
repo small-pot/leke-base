@@ -1,4 +1,10 @@
-import React, {ReactNode, CSSProperties, useLayoutEffect, useRef} from 'react';
+import React, {
+    ReactNode,
+    CSSProperties,
+    useLayoutEffect,
+    useRef,
+    useReducer
+} from 'react';
 import {createPortal} from 'react-dom';
 import classNames from 'classnames';
 import {useAnimation,useControl} from '@leke/hooks';
@@ -48,88 +54,73 @@ export interface childProps {
     tabIndex?:number,
     className:string,
     style?:CSSProperties,
-    onClick?:(e)=>void,
     onFocus?:(e)=>void,
     onMouseDown?:(e)=>void,
     onMouseEnter?:(e)=>void,
     onMouseLeave?:(e)=>void,
     onBlur?:(e)=>void
 }
+const enter='leke-slide-open';
+const exit='leke-slide-close';
+function mousedown(e) {
+    e.preventDefault();
+}
 export default function Dropdown(props:dropdownProps) {
     const {trigger,triggerClassName,triggerStyle,getPopupContainer,popup,popupClassName,popupStyle,placement,triggeredEvent}=props;
     const [visible,setVisible]=useControl(props.visible,props.onVisibleChange);
-    const portalContainerRef=useRef<HTMLElement>(null);
     const popupRef=useRef(null);
     const triggerRef=useRef(null);
-    if(visible&&!portalContainerRef.current&&typeof window==='object'){
-        portalContainerRef.current=getPopupContainer(triggerRef.current);
-    }
+    const [portalContainer,setPortalContainer]=useReducer(()=>getPopupContainer(triggerRef.current),null);
     const toBottom=placement.indexOf('bottom')===0;
-    const leaveClassName='leke-slide-close';
     useAnimation({
         ref:popupRef,
-        open:visible,
-        classNames:{
-            enter:'leke-slide-open',
-            leave:leaveClassName,
-            leaveEnd:'leke-hide'
-        }
+        open:portalContainer?visible:false,
+        enter,
+        exit,
+        exited:'leke-hide'
     });
     useLayoutEffect(()=>{
         if(!visible){
             return;
         }
-        const portalContainer=portalContainerRef.current;
-        if(portalContainer){
-            const triggerElement=triggerRef.current;
-            const container=popupRef.current;
-            if(portalContainer!==document.body&&window.getComputedStyle(portalContainer).position==='static'){
-                portalContainer.style.position='relative';
-            }
-            const {left,top,bottom,right}=getPosition(triggerElement,portalContainer);
-            const containerHeight=container.offsetHeight;
-            switch (placement) {
-            case "bottomLeft":
-                container.style.top = bottom + 'px';
-                container.style.bottom='';
-                container.style.left = left + 'px';
-                container.style.right='';
-                break;
-            case "bottomRight":
-                container.style.top = bottom + 'px';
-                container.style.bottom='';
-                container.style.left='';
-                container.style.right=portalContainer.offsetWidth-right+'px';
-                break;
-            case "bottomCenter":
-                container.style.top = bottom + 'px';
-                container.style.bottom='';
-                container.style.left = (triggerElement.offsetWidth-container.offsetWidth)/2+left + 'px';
-                container.style.right='';
-                break;
-            case "topLeft":
-                container.style.top = top  - containerHeight + 'px';
-                container.style.bottom='';
-                container.style.left = left + 'px';
-                container.style.right='';
-                break;
-            case "topRight":
-                container.style.top = top  - containerHeight + 'px';
-                container.style.bottom='';
-                container.style.left='';
-                container.style.right=portalContainer.offsetWidth-right+'px';
-                break;
-            case "topCenter":
-                container.style.top = top  - containerHeight + 'px';
-                container.style.bottom='';
-                container.style.left = (triggerElement.offsetWidth-container.offsetWidth)/2+left + 'px';
-                container.style.right='';
-                break;
-            }
+        if(!portalContainer){
+            return setPortalContainer();
         }
-    },[triggerRef,portalContainerRef,popupRef,visible,placement]);
+        const triggerElement=triggerRef.current;
+        const container=popupRef.current;
+        if(portalContainer!==document.body&&window.getComputedStyle(portalContainer).position==='static'){
+            portalContainer.style.position='relative';
+        }
+        const {left,top,bottom}=getPosition(triggerElement,portalContainer);
+        switch (placement) {
+        case "bottomLeft":
+            container.style.top = bottom + 'px';
+            container.style.left = left + 'px';
+            break;
+        case "bottomRight":
+            container.style.top = bottom + 'px';
+            container.style.left=left+triggerElement.offsetWidth-container.offsetWidth + 'px';
+            break;
+        case "bottomCenter":
+            container.style.top = bottom + 'px';
+            container.style.left = (triggerElement.offsetWidth-container.offsetWidth)/2+left + 'px';
+            break;
+        case "topLeft":
+            container.style.top = top  - container.offsetHeight + 'px';
+            container.style.left = left + 'px';
+            break;
+        case "topRight":
+            container.style.top = top  - container.offsetHeight + 'px';
+            container.style.left=left+triggerElement.offsetWidth-container.offsetWidth + 'px';
+            break;
+        case "topCenter":
+            container.style.top = top  - container.offsetHeight + 'px';
+            container.style.left = (triggerElement.offsetWidth-container.offsetWidth)/2+left + 'px';
+            break;
+        }
+    },[triggerRef,popupRef,visible,placement,portalContainer,setPortalContainer]);
     function show() {
-        if(popupRef.current&&popupRef.current.className.indexOf(leaveClassName)!==-1){
+        if(popupRef.current&&popupRef.current.className.indexOf(exit)!==-1){
             return;
         }
         setVisible(true);
@@ -157,7 +148,7 @@ export default function Dropdown(props:dropdownProps) {
             hide();
         };
         triggerProps.tabIndex=-1;
-        popupProps.onMouseDown=(e)=>e.preventDefault();
+        popupProps.onMouseDown=mousedown;
     }
     if(triggeredEvent.indexOf('hover')!==-1){
         triggerProps.onMouseEnter=show;
@@ -166,11 +157,11 @@ export default function Dropdown(props:dropdownProps) {
     return (
         <span {...triggerProps}>
             {trigger}
-            {portalContainerRef.current?createPortal(
+            {portalContainer?createPortal(
                 <div style={{position:'absolute',top:0,left:0,width:'100%'}}>
                     <div {...popupProps}>{popup}</div>
                 </div>,
-                portalContainerRef.current
+                portalContainer
             ):null}
         </span>
     );
