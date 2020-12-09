@@ -44,7 +44,7 @@ const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked, defaultChecked
         if (e.keyCode === 37) {
             // 左箭头控制
             onToggle(false, e);
-        } else if (e.which === 39) {
+        } else if (e.keyCode === 39) {
             // 右箭头控制
             onToggle(true, e);
         }
@@ -57,7 +57,7 @@ const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked, defaultChecked
         onKeyDown: onInternalKeyDown,
         className: classNames("leke-switch", {
             ['leke-switch-small']: size === 'small',
-            ['leke-switch-chceked']: isChecked,
+            ['leke-switch-checked']: isChecked,
             ['leke-switch-disabled']: disabled,
         }, className),
     };
