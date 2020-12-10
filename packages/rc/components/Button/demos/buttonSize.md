@@ -7,11 +7,22 @@ import {Button} from '@leke/rc';
 export default function(){
     const [size,setSize] = useState('middle');
 
+    const sizes = ['large','middle','small'];
+
     return  <>
         <div>
-            <Button className='leke-demo-container' onClick={()=> setSize('large')}>large</Button>
-            <Button className='leke-demo-container' onClick={()=> setSize('middle')}>middle</Button>
-            <Button className='leke-demo-container' onClick={()=> setSize('small')}>small</Button>
+            {
+                sizes.map((item,index)=> {
+                    return (
+                        <div 
+                            key={index} 
+                            className={size === item ? 'leke-demo-active' : 'leke-demo-sx'} 
+                            onClick={()=> setSize(item)}>
+                            {item}
+                        </div> 
+                    );
+                }) 
+            }
         </div>
         <div>
             <Button type='primary' className='leke-demo-container' size={size}>按钮</Button>
@@ -27,5 +38,26 @@ export default function(){
 .leke-demo-container{
     margin-right: 8px;
     margin-bottom: 12px;
+}
+.leke-demo-sx{
+    display:inline-block;
+    width:64px;
+    height:30px;
+    border:1px solid #d9d9d9;
+    cursor: pointer;
+    text-align:center;
+    line-height:30px;
+    margin-bottom:8px;
+}
+.leke-demo-active{
+    display:inline-block;
+    width:64px;
+    height:30px;
+    border:1px solid #1FB5AB;
+    color:#1FB5AB;
+    cursor: pointer;
+    text-align:center;
+    line-height:30px;
+    margin-bottom:8px;
 }
 ```

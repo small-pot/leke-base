@@ -46,7 +46,6 @@
         height: 32px;
         padding: 2.4px 0;
         font-size: 16px;
-        border-radius: 2px;
         vertical-align: -1px;
         &.leke-btn-large{
             width: 40px;
@@ -62,6 +61,9 @@
             width: 28px;
             height: 28px;
             font-size: 12px;
+        }
+        & .leke-btn-content{
+            margin-left: 8px;
         }
     }
     &-circle{
@@ -102,6 +104,9 @@
             content: "";
             pointer-events: none;
         }
+        & .leke-btn-content{
+            margin-left: 8px;
+        }
     }
     &-block{
         width: 100%;
@@ -116,7 +121,7 @@
         vertical-align: text-top;
     }
     &-content{
-        margin-left: 8px;
+        vertical-align: middle;
     }
     &-default{
         .btn-default(@base-color,@hover-color,@click-color);
@@ -175,7 +180,7 @@
     text-shadow: none;
 }
 .leke-btnBackgroundGhost.leke-btn-primary:hover {
-    opacity: 0.85;
+    background-color: #fff;
 }
 
 .leke-btnBackgroundGhost.leke-btn-default {
@@ -186,7 +191,8 @@
 }
 
 .leke-btnBackgroundGhost.leke-btn-default:hover {
-    opacity: 0.85;
+    color: @base-color;
+    background-color: #fff;
 }
 .leke-btnBackgroundGhost.leke-btn-dashed {
     background: transparent;
@@ -196,8 +202,9 @@
 }
 
 .leke-btnBackgroundGhost.leke-btn-dashed:hover {
-    color: #40c2b5;
-    border-color: #40c2b5;
+    color: @base-color;
+    border: none;
+    background-color: #fff;
 }
 
 .leke-abtnBackgroundGhost.leke-btn-primary[disabled],

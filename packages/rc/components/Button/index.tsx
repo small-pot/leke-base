@@ -43,7 +43,7 @@ const Button = (props: Props) => {
     const iconNode = loading ? <LoadingIcon /> : icon  ? icon : null;
 
     const kids = children ? 
-        <span className={loading || icon ? "leke-btn-content" : ""}>{children}</span>
+        <span className='leke-btn-content'>{children}</span>
         : 
         null;
 
