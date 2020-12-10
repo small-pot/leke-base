@@ -11,13 +11,10 @@ export interface InputProps {
     onChange?:React.ChangeEventHandler<HTMLInputElement>
 }
 
+function noop() {}
 
-const Input = (props:InputProps) => {
+const Input:React.FC<InputProps> = (props) => {
     const {className,disabled,size,type,onChange} = props;
-
-    React.useEffect(() => {
-        const o = omit(props,['className','type','onChange','onFocus','onBlur']);
-    }, [props]);
 
     const onBlur:React.FocusEventHandler  = e => {
         console.log(e);
@@ -48,8 +45,10 @@ const Input = (props:InputProps) => {
 };
 
 Input.defaultProps = {
+    disabled:false,
+    size:'middle',
     type:'text',
-    size:'middle'
+    onChange:noop,
 };
 
 export default Input;

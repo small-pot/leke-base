@@ -3,5 +3,6 @@ export default [
     require('./basic.md'),
     require('./size.md'),
     require('./disabled.md'),
+    require('./textarea.md'),
     require('./index-api.md'),
 ];
