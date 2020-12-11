@@ -68,8 +68,8 @@ const TextArea:React.FC<TextAreaProps> = (props) => {
     const onTextAreaChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
         if (hasMaxLength) {
             setInputVal(pre=>{
-                if (pre.length<maxLength) return e.target.value;
-                return pre;
+                if (e.target.value.length>maxLength) return pre;
+                return e.target.value;
             });
         }else{
             setInputVal(e.target.value);
@@ -79,7 +79,6 @@ const TextArea:React.FC<TextAreaProps> = (props) => {
 
     const textareaNode =(
         <textarea
-            data-testid="textarea"
             className={getTextAreaClassName()}
             ref={textareaRef}
             value={inputVal}
@@ -103,8 +102,8 @@ const TextArea:React.FC<TextAreaProps> = (props) => {
 };
 TextArea.defaultProps={
     autoSize:false,
-    maxLength:0,
     value:'',
+    // maxLength:200,
     onChange:(e)=>{},
     onResize:(rect)=>{}
 };
