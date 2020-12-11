@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from "classnames";
 import {omit} from './utils';
 
-type SizeType = 'small' | 'middle' | 'large' | undefined;
+export type SizeType = 'small' | 'middle' | 'large';
 
 export interface InputProps {
     className?:string,
@@ -19,7 +19,7 @@ function noop() {}
 const baseCls = 'leke-input';
 const Input:React.FC<InputProps> = (props) => {
     const {className,disabled,prefix,size,suffix,type,onChange} = props;
-
+    
     const getInputClassName:()=>string = () => {
         const inputClassName = classNames(className,`${baseCls}`,{
             [`${baseCls}-sm`]:size==="small",
@@ -29,25 +29,20 @@ const Input:React.FC<InputProps> = (props) => {
         return inputClassName;
     };
 
-    const onInputFocus:React.FocusEventHandler = (e) => {
-        
-    };
-
     const inputNode = (
         <input
             {...omit(props,['className','type','onChange'])}
             className={getInputClassName()}
             type={type}
             onChange={onChange}
-            onFocus={onInputFocus}
         />
     );
     if (suffix || prefix) {
         return(
             <span className={classNames(`${baseCls}-outer-wrap`,getInputClassName())}>
-                <span className="leke-input-prefix">{prefix}</span>
+                {prefix&&<span className="leke-input-prefix">{prefix}</span>}
                 {inputNode}
-                <span className="leke-input-suffix">{suffix}</span>
+                {suffix&&<span className="leke-input-suffix">{suffix}</span>}
             </span>
         );
     }

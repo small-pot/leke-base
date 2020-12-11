@@ -68,7 +68,9 @@ const TextArea:React.FC<TextAreaProps> = (props) => {
     const onTextAreaChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
         if (hasMaxLength) {
             setInputVal(pre=>{
-                if (e.target.value.length>maxLength) return pre;
+                if (e.target.value.length>maxLength) {
+                    return pre;
+                }
                 return e.target.value;
             });
         }else{
