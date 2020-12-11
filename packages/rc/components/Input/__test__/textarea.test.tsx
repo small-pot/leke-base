@@ -5,10 +5,14 @@ const { TextArea } = Input;
 const sleep = (timeout = 0) => new Promise(resolve => setTimeout(resolve, timeout));
 describe('TextArea',()=>{
     it('support input',async()=>{
-        render(<TextArea />);
+        const {rerender}=render(<TextArea />);
         const textarea = screen.getByRole('textbox');
         fireEvent.change(textarea, { target: { value: '1234' } });
         expect((textarea as HTMLTextAreaElement).value).toBe('1234');
+        rerender(<TextArea value="1" />);
+        expect((textarea as HTMLTextAreaElement).value).toBe('1');
+        rerender(<TextArea value="1" />);
+        expect((textarea as HTMLTextAreaElement).value).toBe('1');
     });
     it('support maxlength',async()=>{
         render(<TextArea maxLength={9}/>);

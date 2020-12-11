@@ -5,5 +5,6 @@ export default [
     require('./disabled.md'),
     require('./withIcon.md'),
     require('./textarea.md'),
+    require('./textarea-maxLength.md'),
     require('./index-api.md'),
 ];
