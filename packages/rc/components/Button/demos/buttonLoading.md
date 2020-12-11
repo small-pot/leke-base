@@ -10,7 +10,7 @@ export default function(){
 
     const DownloadOutlined = () =>{
         return (
-            <span className='leke-icon-content'>
+            <span className='leke-icon-loading'>
                 <Upload />
             </span>
         );
@@ -38,6 +38,12 @@ export default function(){
             loading={loadings[0]}
             onClick={() => handleClick(0)} 
             icon={<DownloadOutlined />} />
+        <Button 
+            type='primary' 
+            className='leke-demo-container' 
+            shape='circle' 
+            loading
+            icon={<DownloadOutlined />} />
         <Button type='primary' className='leke-demo-container' loading={loadings[1]} onClick={() => handleClick(1)}>按钮</Button>
     </>;
 }
@@ -47,7 +53,8 @@ export default function(){
     margin-right: 8px;
     margin-bottom: 12px;
 }
-.leke-icon-content i{
-    vertical-align: middle;
+.leke-icon-loading{
+    display:inline-block;
+    /* vertical-align:middle; */
 }
 ```

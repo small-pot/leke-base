@@ -18,7 +18,6 @@
 }
 
 .leke-btn {
-    line-height: 1.5;
     position: relative;
     display: inline-block;
     font-weight: 400;
@@ -46,7 +45,6 @@
         height: 32px;
         padding: 2.4px 0;
         font-size: 16px;
-        vertical-align: -1px;
         &.leke-btn-large{
             width: 40px;
             height: 40px;
@@ -118,10 +116,10 @@
         display: inline-block;
         background-size: cover;
         animation: spin 1s linear infinite;
-        vertical-align: text-top;
+        vertical-align: sub;
     }
     &-content{
-        vertical-align: middle;
+        // vertical-align: middle;
     }
     &-default{
         .btn-default(@base-color,@hover-color,@click-color);
@@ -217,7 +215,7 @@
 .leke-btnDisabled.leke-btn-primary[disabled]:hover,
 .leke-btnDisabled.leke-btn-primary[disabled]{
     background-color: @leke-btn-disabled;
-    .btnDisabled(#f1f1f1);
+    .btnDisabled(#fff);
 }
 .leke-btnDisabled.leke-btn-default[disabled]:hover,
 .leke-btnDisabled.leke-btn-default[disabled]{
@@ -238,7 +236,7 @@
 .leke-btn-primary[disabled]:hover,
 .leke-btn-primary[disabled]{
     background-color: #d9d9d9;
-    .btnDisabled(#f1f1f1);
+    .btnDisabled(#fff);
 }
 .leke-btn-default[disabled]:hover,
 .leke-btn-default[disabled]{

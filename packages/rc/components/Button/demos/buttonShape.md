@@ -11,7 +11,7 @@ export default function(){
 
     const DownloadOutlined = () =>{
         return (
-            <span className='leke-icon-content'>
+            <span className='leke-demo-icon'>
                 <Upload />
             </span>
         );
@@ -55,8 +55,14 @@ export default function(){
     margin-right: 8px;
     margin-bottom: 12px;
 }
-.leke-icon-content i{
-    vertical-align: middle;
+.leke-demo-icon{
+    display:inline-block;
+    vertical-align: text-bottom;
+    height:14px;
+}
+.leke-demo-icon i{
+    display:inline-block;
+    height:14px;
 }
 .leke-demo-sx{
     display:inline-block;

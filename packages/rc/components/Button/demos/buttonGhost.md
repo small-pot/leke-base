@@ -6,7 +6,7 @@ import {Button} from '@leke/rc';
 
 export default function(){
 
-    return  <div style={{background:'#0ba29a'}}>
+    return  <div className='leke-container'>
         <Button type='primary' className='leke-demo-container' ghost>按钮</Button>
         <Button className='leke-demo-container' ghost>按钮</Button>
         <Button type='dashed' className='leke-demo-container' ghost>按钮</Button>
@@ -14,6 +14,10 @@ export default function(){
 }
 ```
 ```css
+.leke-container{
+    background:#0ba29a;
+    padding:10px;
+}
 .leke-demo-container{
     margin-right: 8px;
     margin-bottom: 12px;
