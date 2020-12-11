@@ -51,7 +51,7 @@ exports[`Dropdown  test placement 4`] = `
 >
   <div
     class="leke-dropdown leke-dropdown-direction-down"
-    style="min-width: 0; top: 0px; right: 0px;"
+    style="min-width: 0; top: 0px; left: 0px;"
   >
     <div>
       popup
@@ -81,7 +81,7 @@ exports[`Dropdown  test placement 6`] = `
 >
   <div
     class="leke-dropdown leke-dropdown-direction-up"
-    style="min-width: 0; top: 0px; right: 0px;"
+    style="min-width: 0; top: 0px; left: 0px;"
   >
     <div>
       popup
