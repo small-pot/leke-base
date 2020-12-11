@@ -4,7 +4,7 @@ const {merge}=require('webpack-merge');
 
 module.exports=merge(baseConfig,{
     mode:'development',
-    devtool: '#cheap-module-eval-source-map',
+    devtool: 'eval-source-map',
     output: {
         filename:'js/[name].js',
         publicPath:'/'

@@ -27,15 +27,7 @@ import '@leke/rc/style/index.less'; //or '@leke/rc/style/index.css'
 ## 配置http请求工具
 ```js
 import {configure} from "@leke/rc";
-import axios from 'axios';
-const http=(opt)=>{
-    return axios(opt).then(res=>{
-        if(res.data.success){
-            return res.data.data;
-        }
-        return Promise.reject(null);       
-    });
-};
+import http from '@leke/http';
 configure({http});
 ```
 

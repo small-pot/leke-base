@@ -3,19 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
-  "module": "es/index.js",
   "scripts": {
-    "build": "rimraf es && rimraf lib && gulp"
+    "build": "rimraf lib && gulp"
   },
   "author": "",
   "license": "ISC",
   "files": [
     "package.json",
-    "lib",
-    "es"
+    "lib"
   ],
   "devDependencies": {},
   "dependencies": {
-    "axios": "^0.21.0"
+    "axios": "^0.21.0",
+    "qs": "^6.9.4"
   }
 }

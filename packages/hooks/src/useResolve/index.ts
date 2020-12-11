@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps,react-hooks/rules-of-hooks */
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 interface stateType<T> {
     data?:T,
@@ -7,23 +6,27 @@ interface stateType<T> {
     loading:boolean
 }
 export default function useResolve<T>(arg, dep:any[]=[]):stateType<T> {
+    const argRef=useRef(arg);
+    argRef.current=arg;
     const loading=typeof arg==='function';
-    if(!loading){
-        return {
-            data:arg,
-            loading
-        };
-    }
     const [state,setState]=useState<stateType<T>>({
-        loading
+        loading,
+        data:loading?undefined:arg
     });
     useEffect(()=>{
+        if(typeof argRef.current!=='function'){
+            return;
+        }
+        let unmount=false;
         setState({loading:true});
-        arg.apply(null,dep).then(res=>{
-            setState({data:res,loading:false});
+        argRef.current.apply(null,dep).then(res=>{
+            !unmount&&setState({data:res,loading:false});
         }).catch(error=>{
-            setState({error,loading:false});
+            !unmount&&setState({error,loading:false});
         });
-    },[...dep,setState]);
+        return ()=>{
+            unmount=true;
+        };
+    },[...dep,setState]); // eslint-disable-line  react-hooks/exhaustive-deps
     return state;
 }

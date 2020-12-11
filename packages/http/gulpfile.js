@@ -1,7 +1,4 @@
 const gulp = require('gulp');
 const {buildTs}=require('@leke/gulp-compile');
 const tsEntry='src/*.ts';
-exports.default = gulp.parallel(
-    ()=>buildTs({stream:gulp.src(tsEntry),outDir:'es',modules:false}),
-    ()=>buildTs({stream:gulp.src(tsEntry),outDir:'lib',modules:'commonjs'})
-);
+exports.default = ()=>buildTs({stream:gulp.src(tsEntry),outDir:'lib',modules:'commonjs'});
