@@ -10,14 +10,12 @@ export default function() {
     useAnimation({
         ref,
         open,
-        classNames:{
-            enter:'rotate-enter',
-            leave:'rotate-leave'
-        },
-        onEnterEnd(){
+        entering:'rotate-enter',
+        exiting:'rotate-leave',
+        onEntered(){
             setOpen(false);
         },
-        onLeaveEnd(){
+        onExited(){
             setOpen(true);
         }
     });
