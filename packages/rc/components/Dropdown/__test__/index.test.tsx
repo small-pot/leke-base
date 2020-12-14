@@ -5,11 +5,24 @@ import {render,screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 const defaultProps={
-    trigger:<div style={{width:200}}>trigger</div>,
+    children:<div style={{width:200}}>trigger</div>,
     popup:<div>popup</div>
 };
 describe('Dropdown ', function() {
-    it('test default',async function () {
+    it('test hover',async function () {
+        const {container} = render(
+            <Dropdown
+                {...defaultProps}
+                event={['hover']}
+            />
+        );
+        const trigger=container.querySelector('.leke-trigger');
+        userEvent.hover(trigger);
+        expect(screen.getByText('popup')).toBeVisible();
+        userEvent.unhover(trigger);
+        expect(screen.getByText('popup').parentElement).toHaveClass('leke-slide-close');
+    });
+    it('test focus',async function () {
         const {container} = render(
             <Dropdown
                 {...defaultProps}
@@ -20,19 +33,6 @@ describe('Dropdown ', function() {
         expect(trigger).toHaveFocus();
         expect(screen.getByText('popup')).toBeVisible();
         userEvent.click(document.body);
-        expect(screen.getByText('popup').parentElement).toHaveClass('leke-slide-close');
-    });
-    it('test hover',async function () {
-        const {container} = render(
-            <Dropdown
-                {...defaultProps}
-                triggeredEvent={['hover']}
-            />
-        );
-        const trigger=container.querySelector('.leke-trigger');
-        userEvent.hover(trigger);
-        expect(screen.getByText('popup')).toBeVisible();
-        userEvent.unhover(trigger);
         expect(screen.getByText('popup').parentElement).toHaveClass('leke-slide-close');
     });
     it('test placement',async function () {
