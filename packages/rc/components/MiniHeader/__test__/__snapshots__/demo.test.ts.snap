@@ -49,8 +49,8 @@ exports[`test logged.md 1`] = `
             5
           </span>
         </a>
-        <span
-          class="leke-trigger leke-miniHeader-user"
+        <div
+          class="leke-miniHeader-user"
         >
           <a
             class="leke-miniHeader-portrait"
@@ -84,7 +84,7 @@ exports[`test logged.md 1`] = `
               />
             </svg>
           </i>
-        </span>
+        </div>
       </div>
     </div>
   </div>

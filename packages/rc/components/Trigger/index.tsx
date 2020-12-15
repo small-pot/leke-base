@@ -89,7 +89,7 @@ export default function Trigger(props:triggerPropsType) {
             const childRef=(child as any).ref;
             if(typeof childRef==='function'){
                 childRef(node);
-            }else if(Object.prototype.toString.call(childRef)==='[Object object]'){
+            }else if(Object.prototype.toString.call(childRef)==='[object Object]'){
                 childRef.current=node;
             }
             triggerRef.current=node;
@@ -130,7 +130,8 @@ export default function Trigger(props:triggerPropsType) {
         ref:popupRef,
         open:portalContainer?visible:false,
         onEnter(){
-            if(portalContainer!==document.body&&window.getComputedStyle(portalContainer).position==='static'){
+            const {position}=window.getComputedStyle(portalContainer);
+            if(!position||position==='static'){
                 portalContainer.style.position='relative';
             }
             if(autoFill){

@@ -9,8 +9,9 @@ describe('MiniHeader ', function() {
     it('test UserInfo',async function () {
         const userInfo = await getUserInfo();
         const {container,rerender} = render(<UserInfo userInfo={userInfo}/>);
-        userEvent.click(container.querySelector('.leke-trigger'));
+        userEvent.hover(container.querySelector('.leke-miniHeader-user'));
         const roleLength=userInfo.roleSchoolList.length;
+        await waitFor(()=>screen.getByText('个人中心'));
         expect(document.body.querySelectorAll('.leke-miniHeader-role-list li').length).toBe(roleLength+3);
         userInfo.roleName='学生';
         userInfo.schoolId=-1;
