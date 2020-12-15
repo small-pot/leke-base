@@ -1,8 +1,7 @@
 import React from 'react';
 import classNames from "classnames";
 import {omit} from './utils';
-
-export type SizeType = 'small' | 'middle' | 'large';
+import { SizeType } from "./interface";
 
 export interface InputProps {
     className?:string,

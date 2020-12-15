@@ -1,15 +1,4 @@
 
-.reset(){
-  outline: none;
-  background: none;
-  border-width: 0;
-  border-style: none;
-  border-color: transparent;
-  border-image: none;
-  margin: 0;
-  padding: 0;
-}
-
 .hover(@color: @input-hover-border-color) {
   border-color: @color;
   border-right-width: @border-width-base !important;
@@ -29,5 +18,44 @@
 
   &:hover {
     .hover(@input-border-color);
+  }
+}
+
+.reset(){
+  outline: none;
+  background: none;
+  border-width: 0;
+  border-style: none;
+  border-color: transparent;
+  border-image: none;
+  margin: 0;
+  padding: 0;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  &[type="number"]{
+    -moz-appearance: textfield;
+  }
+}
+
+.base-input(){
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: @border-width-base @border-style-base @input-border-color;
+  border-radius: @border-radius-base;
+  padding: @input-padding-vertical-base @input-padding-horizontal-base;
+  &-lg {
+    padding: @input-padding-vertical-large @input-padding-horizontal-large;
+  }
+  &-sm {
+    padding: @input-padding-vertical-small @input-padding-horizontal-small;
+  }
+  
+  &-disabled{
+    .disabled()
   }
 }

@@ -1,0 +1,49 @@
+@baseCls:~'leke-input-number';
+
+.@{baseCls}{
+  .base-input();
+  display: flex;
+  .@{baseCls}-handle-wrap{
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    width: 25px;
+    border-left:1px solid #bfbfbf;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition:opacity 200ms;
+    .@{baseCls}-handle-up,.@{baseCls}-handle-down{
+      width: 100%;
+      height: 50%;
+      font-size: 12px;
+      text-align: center;
+      &-disabled{
+        opacity: 0.72;
+        cursor: not-allowed;
+        background-color: #f3f3f3;
+      }
+    }
+    .@{baseCls}-handle-up{
+      border-top: 1px solid #bfbfbf;
+      transform:rotate(180deg);
+    }
+  }
+  &-focus{
+    .focus();
+  }
+  &:hover{
+    .hover();
+    .@{baseCls}-handle-wrap{
+      opacity: 1;
+    }
+  }
+  .input-number{
+    .reset();
+    height: 22px;
+    width: 100%;
+  }
+}

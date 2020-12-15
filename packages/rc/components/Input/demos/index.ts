@@ -7,5 +7,6 @@ export default [
     require('./textarea.md'),
     require('./textarea-maxLength.md'),
     require('./textarea-autoSize.md'),
+    require('./input-number.md'),
     require('./index-api.md'),
 ];

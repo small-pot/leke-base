@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2020-11-13 16:33:54
- * @LastEditTime: 2020-12-10 14:41:26
+ * @LastEditTime: 2020-12-14 19:04:23
  */
 /**
  * @description: 去除对象上的指定属性
@@ -150,3 +150,17 @@ export function calculateNodeHeight(
     }
     return { height, minHeight, maxHeight, overflowY };
 }
+
+
+// 获取小数精度
+export const getPrecision:(value:number) => number = value => {
+    const valueString = String(value);
+    if (valueString.indexOf('e-') >= 0) {
+        return parseInt(valueString.slice(valueString.indexOf('e-') + 2), 10);
+    }
+    let precision = 0;
+    if (valueString.indexOf('.') >= 0) {
+        precision = valueString.length - valueString.indexOf('.') - 1;
+    }
+    return precision;
+};
