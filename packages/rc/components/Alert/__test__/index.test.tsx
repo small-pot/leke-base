@@ -29,7 +29,6 @@ describe('Alert ', function() {
         const closeEle = document.querySelector('.leke-alert-close-box');
         userEvent.click(closeEle);
         waitFor(() => {
-            console.log('123123');
             const findWrap = container.querySelector('.my-test-alert');
             expect(findWrap).toBeEmptyDOMElement();
             expect(afterClose).toHaveBeenCalled();
