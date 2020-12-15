@@ -20,7 +20,25 @@ module.exports=function getBabelConfig(modules){
             '@babel/plugin-transform-template-literals',
             '@babel/plugin-proposal-object-rest-spread',
             '@babel/plugin-proposal-class-properties',
-            ['@babel/plugin-proposal-decorators',{legacy:true}]
+            ['@babel/plugin-proposal-decorators',{legacy:true}],
+            ["import",
+                {
+                    libraryName: "@leke/icons",
+                    libraryDirectory: modules==='commonjs'?"lib":'es',
+                    camel2DashComponentName: false,
+                    style:false
+                },
+                '@leke/icons'
+            ],
+            ["import",
+                {
+                    libraryName: "@leke/hooks",
+                    libraryDirectory: modules==='commonjs'?"lib":'es',
+                    camel2DashComponentName: false,
+                    style:false
+                },
+                '@leke/hooks'
+            ]
         ]
     };
 };
