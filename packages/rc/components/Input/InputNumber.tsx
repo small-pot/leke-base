@@ -15,6 +15,7 @@ interface InputNumberProps{
   onBlur?:()=>void,
   onChange?:(val:string)=>void,
   onFocus?:()=>void,
+  parser?:(val:string)=>string,
   formatter?:(val:string)=>string
 }
 
@@ -23,10 +24,36 @@ const baseCls = 'leke-input-number';
 
 const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 2 ** 53 - 1;
 
+const defaultParser = (str:string)=>{
+    return str.replace(/[^\w.-]+/g, '');
+};
+
 const InputNumber:React.FC<InputNumberProps> = (props) => {
-    const {className,disabled,defaultValue,max:maxValue,min:minValue,step,size,value,onBlur,onFocus,onChange,formatter} = props;
+    const {
+        className,
+        disabled,
+        defaultValue,
+        max:maxValue,
+        min:minValue,
+        step,
+        size,
+        value,
+        onBlur,
+        onFocus,
+        onChange,
+        formatter,
+        parser
+    } = props;
+
     const [focus, setFocus] = React.useState(false);
     const [inputValue, setInputValue] = React.useState(()=>defaultValue?String(defaultValue):'');
+    const displayInputValue = React.useMemo(() => {
+        let formatValue = inputValue;
+        if (formatter) {
+            formatValue = formatter(formatValue);
+        }
+        return formatValue;
+    },[inputValue,formatter]);
     const maxPrecision = React.useMemo(() => {
         return Math.max(
             getPrecision(+value),
@@ -67,11 +94,11 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
         let _inputValue = Number.parseFloat(inputValue);
         if (type==='up') {
             // 当数字框为空时，用一个合适的值作为初始值
-            if (inputValue === '') return handleValueChange(String(Math.max(minValue,0)));
+            if (inputValue === '') return handleValueChange(String(Math.max(minValue,0)),true);
             if (+inputValue>=maxValue) return;
             _inputValue = +inputValue+step;
         }else if(type==='down'){
-            if (inputValue === '') return handleValueChange(String(Math.min(maxValue,100)));
+            if (inputValue === '') return handleValueChange(String(Math.min(maxValue,100)),true);
             if (+inputValue<=minValue) return;
             _inputValue = +inputValue-step;
         }
@@ -79,8 +106,7 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
     };
 
     const onInputChange:React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        
-        handleValueChange(Number.parseFloat(e.target.value)+'');
+        handleValueChange(parser(e.target.value));
     };
 
     const handleValueChange:(value:string,strict?:boolean)=>void = (value,strict=false) => {
@@ -95,11 +121,11 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
     };
 
     const getValidateValue:(value:any,min?:number,max?:number)=>string = (value,min=minValue,max=maxValue) => {
-        if (value==='') return '';
-        if(value<min) return String(min);
-        if(value>max) return String(max);
-
-        return Number.parseFloat(value)+'';
+        const validValue = Number.parseFloat(value);
+        if (Number.isNaN(validValue)) return '';
+        if(validValue<min) return String(min);
+        if(validValue>max) return String(max);
+        return String(validValue);
     };
 
     return(
@@ -123,10 +149,10 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
                 </span>
             </div>
             <input
-                {...omit(props,['className','placeholder','defaultValue','formatter','type','value','onBlur','onChange','onFocus'])}
+                {...omit(props,['className','placeholder','defaultValue','formatter','type','value','onBlur','onChange','onFocus','parser'])}
                 className='input-number'
                 type='text'
-                value={inputValue}
+                value={displayInputValue}
                 onChange={onInputChange}
                 onFocus={onInputNumberFocus}
                 onBlur={onInputNumberBlur}
@@ -136,10 +162,11 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
 };
 InputNumber.defaultProps={
     step:1.238,
-    defaultValue:33,
+    // defaultValue:'',
     max:MAX_SAFE_INTEGER,
     min:-MAX_SAFE_INTEGER,
-    formatter:(val)=>`${val}%`,
+    parser:defaultParser,
+    formatter:(val)=>`& ${val}`,
     onChange:(val)=>{console.log('onchange',val);}
 };
 
