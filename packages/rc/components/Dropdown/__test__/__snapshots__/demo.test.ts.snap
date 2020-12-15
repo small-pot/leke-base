@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test basics.md 1`] = `
+<div>
+  <span
+    class="leke-trigger"
+    tabindex="-1"
+  >
+    <p>
+      focus me
+    </p>
+  </span>
+</div>
+`;
+
+exports[`test hover.md 1`] = `
+<div>
+  <span
+    class="leke-trigger"
+  >
+    <p>
+      hover me
+    </p>
+  </span>
+</div>
+`;
+
+exports[`test placement.md 1`] = `
+<div>
+  <div
+    class="dropdown-demo"
+  >
+    <div>
+      <span
+        class="leke-trigger"
+        tabindex="-1"
+      >
+        <button>
+          bottomLeft
+        </button>
+      </span>
+      <span
+        class="leke-trigger"
+        tabindex="-1"
+      >
+        <button>
+          bottomCenter
+        </button>
+      </span>
+      <span
+        class="leke-trigger"
+        tabindex="-1"
+      >
+        <button>
+          bottomRight
+        </button>
+      </span>
+    </div>
+    <div
+      style="margin-top: 30px;"
+    >
+      <span
+        class="leke-trigger"
+        tabindex="-1"
+      >
+        <button>
+          topLeft
+        </button>
+      </span>
+      <span
+        class="leke-trigger"
+        tabindex="-1"
+      >
+        <button>
+          topCenter
+        </button>
+      </span>
+      <span
+        class="leke-trigger"
+        tabindex="-1"
+      >
+        <button>
+          topRight
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
+`;
