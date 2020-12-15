@@ -10,7 +10,7 @@ const defaultHeaderObj = {
 };
 
 const userCenter='https://tutor.leke.cn/auth/common/user/myDetail.htm';
-const fileUrl='https://file.leke.cn/';
+const fileUrl='https://file.leke.cn';
 const defaultLogoutUrl='https://cas.leke.cn/logout';
 const learnCenterUrl='https://cas.leke.cn/changeLearnCenter';
 const changeRole='https://cas.leke.cn/changeRole?ticket=null';
@@ -46,18 +46,8 @@ export default function UserInfo(props) {
     const logoutUrl=userInfo.schoolId===-1?`${defaultLogoutUrl}?service=sclass.leke.cn`:defaultLogoutUrl;
     return (
         <Dropdown
-            triggeredEvent={['hover']}
+            event={['hover']}
             placement='bottomCenter'
-            trigger={
-                <>
-                    <a href={userCenter} className='leke-miniHeader-portrait'>
-                        <img src={userImg} alt="" />
-                    </a>
-                    <span className='leke-miniHeader-userName'>{userInfo.userName || ''}</span>
-                    <DownFill className='leke-icon-down-fill' />
-                </>
-            }
-            triggerClassName='leke-miniHeader-user'
             popup={
                 <ul className='leke-miniHeader-role-list'>
                     <li className='leke-miniHeader-personal-center'>
@@ -76,6 +66,14 @@ export default function UserInfo(props) {
                     </li>
                 </ul>
             }
-        />
+        >
+            <div className='leke-miniHeader-user'>
+                <a href={userCenter} className='leke-miniHeader-portrait'>
+                    <img src={userImg} alt="" />
+                </a>
+                <span className='leke-miniHeader-userName'>{userInfo.userName || ''}</span>
+                <DownFill className='leke-icon-down-fill' />
+            </div>
+        </Dropdown>
     );
 }

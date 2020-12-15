@@ -4,6 +4,9 @@ export default {
         'icons',
         'MiniHeader',
         'Dropdown',
-        'Switch'
+        'Switch',
+        'Alert',
+        'Carousel',
+        'Trigger'
     ]
 };

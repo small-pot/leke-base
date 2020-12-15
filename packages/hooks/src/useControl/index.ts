@@ -1,4 +1,5 @@
 import {useCallback, useState} from 'react';
+function defaultCb(params:any) {}
 export default function useControl<T=any>(value?:T,onChange?:(v:T)=>void) {
     const [val,setVal]=useState(value);
     const callback = useCallback((newVal) => {
@@ -11,5 +12,5 @@ export default function useControl<T=any>(value?:T,onChange?:(v:T)=>void) {
     if(value===undefined){
         return [val,callback];
     }
-    return [value,onChange];
+    return [value,onChange||defaultCb];
 }
