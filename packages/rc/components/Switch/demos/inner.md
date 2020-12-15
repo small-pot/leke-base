@@ -2,14 +2,14 @@
 ```jsx
 import React,{useState} from 'react';
 import {Switch} from '@leke/rc';
-import { Check } from "@leke/icons";
+import { Check, Close } from "@leke/icons";
 
 export default function(){
     return(
         <div>
             <Switch defaultChecked checkedChildren="开启" unCheckedChildren="关闭"/>
             <br />
-            <Switch size="small" checkedChildren={<Check className="anticon" />} unCheckedChildren="X" />
+            <Switch size="small" checkedChildren={<Check className="anticon" />} unCheckedChildren={<Close className="anticon" />} />
         </div>
     );
 }
