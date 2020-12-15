@@ -8,44 +8,50 @@ export default function(){
         <div className='dropdown-demo'>
             <div>
                 <Dropdown 
-                    trigger={<button>bottomLeft</button>}
-                    popup={<div style={{height:200,width:150}}>popup</div>}
+                    popup={<div style={{height:150,width:100}}>popup</div>}
                     placement={'bottomLeft'}
-                />
+                >
+                    <button>bottomLeft</button>
+                </Dropdown>
                 <Dropdown 
-                    trigger={<button>bottomCenter</button>}
-                    popup={<div style={{height:200,width:150}}>popup</div>}
+                    popup={<div style={{height:150,width:100}}>popup</div>}
                     placement={'bottomCenter'}
-                />
+                >
+                    <button>bottomCenter</button>
+                </Dropdown>
                 <Dropdown 
-                    trigger={<button>bottomRight</button>}
-                    popup={<div style={{height:200,width:150}}>popup</div>}
+                    popup={<div style={{height:150,width:100}}>popup</div>}
                     placement={'bottomRight'}
-                />
+                >
+                    <button>bottomRight</button>
+                </Dropdown>
             </div>
             <div style={{marginTop:30}}>
                 <Dropdown 
-                    trigger={<button>topLeft</button>}
-                    popup={<div style={{height:200,width:150}}>popup</div>}
+                    popup={<div style={{height:150,width:100}}>popup</div>}
                     placement={'topLeft'}
-                />
+                >
+                    <button>topLeft</button>
+                </Dropdown>
                 <Dropdown 
-                    trigger={<button>topCenter</button>}
-                    popup={<div style={{height:200,width:150}}>popup</div>}
+                    popup={<div style={{height:150,width:100}}>popup</div>}
                     placement={'topCenter'}
-                />
+                >
+                    <button>topCenter</button>
+                </Dropdown>
                 <Dropdown 
-                    trigger={<button>topRight</button>}
-                    popup={<div style={{height:200,width:150}}>popup</div>}
+                    popup={<div style={{height:150,width:100}}>popup</div>}
                     placement={'topRight'}
-                />
+                >
+                    <button>topRight</button>
+                </Dropdown>
             </div>
         </div>
     );
 }
 ```
 ```css
-.dropdown-demo .leke-trigger{
+.dropdown-demo button{
     margin-right: 25px;
 }
 ```

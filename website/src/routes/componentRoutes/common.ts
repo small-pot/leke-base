@@ -5,6 +5,7 @@ export default {
         'MiniHeader',
         'Dropdown',
         'Alert',
-        'Carousel'
+        'Carousel',
+        'Trigger'
     ]
 };
