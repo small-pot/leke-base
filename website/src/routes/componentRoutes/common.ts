@@ -3,6 +3,7 @@ export default {
     keys:[
         'icons',
         'MiniHeader',
+        'Button',
         'Dropdown',
         'Alert',
         'Carousel',
