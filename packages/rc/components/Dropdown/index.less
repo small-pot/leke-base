@@ -1,0 +1,28 @@
+@import "../../less/theme.less";
+@import "../Trigger/index.less";
+@keyframes slide-open {
+  0%{
+    transform: scaleY(0.8);
+    opacity: 0;
+  }
+  100%{
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+@keyframes slide-close {
+  0%{
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100%{
+    transform: scaleY(0.8);
+    opacity: 0;
+  }
+}
+.leke-dropdown.leke-open{
+  animation-name: slide-open;
+}
+.leke-dropdown.leke-close{
+  animation-name: slide-close;
+}

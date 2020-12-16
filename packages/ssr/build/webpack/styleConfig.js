@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin=require('mini-css-extract-plugin');
 const isProduction=process.env.NODE_ENV==='production';
 const {cssModules,modifyVars,postcssConfig,browsers}=require('../resolveConfig');
+const postcssPresetEnv=require('postcss-preset-env');
 
 const modulesOption={
     modules:{
@@ -8,20 +9,18 @@ const modulesOption={
         auto:/^((?!node_modules).)+$/
     }
 };
-const postcss={loader:'postcss-loader',options:postcssConfig||{
+const config={
     postcssOptions: {
         plugins: [
-            [
-                'postcss-preset-env',
-                {
-                    browsers,
-                    autoprefixer:{grid: true}
-                }
-            ],
+            postcssPresetEnv({browsers,autoprefixer:{}})
         ],
     }
-}};
-const clientCSSConfig=[
+};
+if(typeof postcssConfig==='function'){
+    postcssConfig(config);
+}
+const postcss={loader:'postcss-loader',options:config};
+const webCSSConfig=[
     {
         loader: MiniCssExtractPlugin.loader,
         options:{hmr:!isProduction,reloadAll:true}
@@ -32,15 +31,15 @@ const clientCSSConfig=[
     },
     postcss
 ];
-const clientStyleConfig = [
+const webStyleConfig = [
     {
         test: /\.css$/,
-        use: clientCSSConfig
+        use: webCSSConfig
     },
     {
         test: /\.less$/,
         use: [
-            ...clientCSSConfig,
+            ...webCSSConfig,
             {
                 loader: "less-loader",
                 options: {
@@ -51,21 +50,21 @@ const clientStyleConfig = [
         ]
     }
 ];
-const severCssConfig=[
+const nodeCssConfig=[
     {
         loader: 'css-loader',
         options: {...modulesOption,onlyLocals: true}
     }
 ];
-const serverStyleConfig = [
+const nodeStyleConfig = [
     {
         test: /\.css$/,
-        use: severCssConfig
+        use: nodeCssConfig
     },
     {
         test: /\.less$/,
         use: [
-            ...severCssConfig,
+            ...nodeCssConfig,
             {
                 loader: "less-loader",
                 options: {
@@ -76,6 +75,6 @@ const serverStyleConfig = [
     }
 ];
 module.exports={
-    clientStyleConfig,
-    serverStyleConfig
+    webStyleConfig,
+    nodeStyleConfig
 };

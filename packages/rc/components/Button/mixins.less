@@ -1,0 +1,156 @@
+@btn-primary:'primary';
+// 失败按钮
+@danger-btn-color:#ff4848;
+@danger-btn-hover-color:#ff7571;
+@danger-btn-click-color:#d93337;
+@leke-danger-btn-disabled:#ffc8c2;
+//警示按钮
+@warning-btn-color:#ff9900;
+@warning-btn-hover-color:#ffb029;
+@warning-btn-click-color:#d97b00;
+@leke-warning-btn-disabled:#ffe7a3;
+
+.type(@width,@height,@fontSize){
+    min-width: @width;
+    height: @height;
+    font-size: @fontSize;
+}
+.btnDisabled(@color){
+    color: @color;
+    cursor: auto;
+}
+.btn-primary(@color,@hoverColor,@clickColor){
+    color: #fff;
+    border: none;
+    background-color: @color;
+    &:hover, 
+    &:focus{
+        background-color: @hoverColor;
+    }
+    &:active{
+        background-color: @clickColor;
+    }
+}
+.btn-default(@color,@hoverColor,@clickColor){
+    color: @color;
+    background: transparent;
+    border: 1px solid @color;
+    &:hover, 
+    &:focus{
+        color: @hoverColor;
+        border-color: @hoverColor;
+    }
+    &:active{
+        color: @clickColor;
+        border-color: @clickColor;
+    }
+}
+.btn-normal(@color,@hoverColor,@clickColor){
+    color: @color;
+    background: transparent;
+    border: solid 1px @color;
+    &:hover, 
+    &:focus{
+        color: @hoverColor;
+        border-color: @hoverColor;
+    }
+    &:active{
+        color: @clickColor;
+        border-color: @clickColor;
+    }
+}
+.btn-dashed(@color,@hoverColor,@clickColor){
+    color: @color;
+    background: transparent;
+    border: 1px dashed @color;
+    &:hover, 
+    &:focus{
+        color: @hoverColor;
+        border-color: @hoverColor;
+    }
+    &:active{
+        color: @clickColor;
+        border-color: @clickColor;
+    }
+}
+.btn-text(@color,@hoverColor,@clickColor){
+    color: @color;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    &:hover, 
+    &:focus{
+        color: @hoverColor;
+    }
+    &:active{
+        color: @clickColor;
+    }
+}
+.btn-dangerours(@type){
+    & when(@type = 'primary'){
+        .btn-primary(@danger-btn-color,@danger-btn-hover-color,@danger-btn-click-color);
+        &.leke-btnDisabled.leke-btn-primary[disabled]:hover,
+        &.leke-btnDisabled.leke-btn-primary[disabled]{
+            background-color: @leke-danger-btn-disabled;
+            .btnDisabled(#fff);
+        }
+    }
+    & when(@type = 'text'){
+        .btn-text(@danger-btn-color,@danger-btn-hover-color,@danger-btn-click-color);
+        &.leke-btnDisabled.leke-btn-text[disabled]:hover,
+        &.leke-btnDisabled.leke-btn-text[disabled]{
+            .btnDisabled(@leke-danger-btn-disabled);
+        }
+    }
+    & when(@type = 'dashed'){
+        .btn-dashed(@danger-btn-color,@danger-btn-hover-color,@danger-btn-click-color);
+        &.leke-btnDisabled.leke-btn-dashed[disabled]:hover,
+        &.leke-btnDisabled.leke-btn-dashed[disabled]{
+            border: 1px dashed @leke-danger-btn-disabled;
+            .btnDisabled(@leke-danger-btn-disabled);
+        }
+    }
+    & when(@type = 'default'){
+        .btn-default(@danger-btn-color,@danger-btn-hover-color,@danger-btn-click-color);
+        &.leke-btnDisabled.leke-btn-default[disabled]:hover,
+        &.leke-btnDisabled.leke-btn-default[disabled]{
+            border: 1px solid @leke-danger-btn-disabled;
+            .btnDisabled(@leke-danger-btn-disabled);
+        }
+    }
+}
+.btn-warning(@type){
+    & when(@type = 'primary'){
+        .btn-primary(@warning-btn-color,@warning-btn-hover-color,@warning-btn-click-color);
+        &.leke-btnDisabled.leke-btn-primary[disabled]:hover,
+        &.leke-btnDisabled.leke-btn-primary[disabled]{
+            background-color: @leke-warning-btn-disabled;
+            .btnDisabled(#fff);
+        }
+    }
+    & when(@type = 'text'){
+        .btn-text(@warning-btn-color,@warning-btn-hover-color,@warning-btn-click-color);
+        &.leke-btnDisabled.leke-btn-text[disabled]:hover,
+        &.leke-btnDisabled.leke-btn-text[disabled]{
+            .btnDisabled(@leke-warning-btn-disabled);
+        }
+    }
+    & when(@type = 'dashed'){
+        .btn-dashed(@warning-btn-color,@warning-btn-hover-color,@warning-btn-click-color);
+        &.leke-btnDisabled.leke-btn-dashed[disabled]:hover,
+        &.leke-btnDisabled.leke-btn-dashed[disabled]{
+            border: 1px dashed @leke-warning-btn-disabled;
+            .btnDisabled(@leke-warning-btn-disabled);
+        }
+    }
+    & when(@type = 'default'){
+        .btn-default(@warning-btn-color,@warning-btn-hover-color,@warning-btn-click-color);
+        &.leke-btnDisabled.leke-btn-default[disabled]:hover,
+        &.leke-btnDisabled.leke-btn-default[disabled]{
+            border: 1px solid @leke-warning-btn-disabled;
+            .btnDisabled(@leke-warning-btn-disabled);
+        }
+    }
+}
+
+

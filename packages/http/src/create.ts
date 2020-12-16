@@ -1,4 +1,5 @@
 import axios,{AxiosRequestConfig,AxiosResponse} from 'axios';
+import qs from 'qs';
 
 function validateStatus(){
     return true;
@@ -19,7 +20,7 @@ export default function createHttp (opt?:createOption) {
     http.interceptors.request.use(function (config:httpRequest) {
         if(config.reset){
             config.headers['Content-Type']='application/x-www-form-urlencoded';
-            config.data=JSON.stringify(config.data);
+            config.data=qs.stringify(config.data);
         }
         if(typeof window==='undefined'){
             config.validateStatus=validateStatus;

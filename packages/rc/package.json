@@ -1,6 +1,6 @@
 {
   "name": "@leke/rc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "lib/index.js",
   "module": "es/index.js",
   "author": "guoquankai@cnstrong.cn",
@@ -15,15 +15,15 @@
     "style",
     "less"
   ],
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "peerDependencies": {
-    "@leke/icons": ">=1.0.0",
     "@leke/hooks": ">=1.0.0",
+    "@leke/icons": ">=1.0.0",
     "react": ">=16.8.6",
     "react-dom": ">=16.8.6"
   },
   "dependencies": {
-    "classnames": "^2.2.6"
+    "classnames": "^2.2.6",
+    "omit.js": "^2.0.2"
   }
 }

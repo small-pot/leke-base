@@ -36,5 +36,6 @@ export interface routeType{
 export interface configType {
     publicPath?:string,
     headContent?:headContentType,
+    createRequest?:(Request)=>any,
     routes:routeType[]
 }

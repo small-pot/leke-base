@@ -1,11 +1,10 @@
 const baseWebpackConfig=require('./webpack.base.config');
-const merge=require('webpack-merge');
-const path=require('path');
+const {merge}=require('webpack-merge');
 const nodeExternals=require("webpack-node-externals");
 const getRules=require('./getRules');
-const {resolveEntry}=require('../resolveConfig');
+const {resolveEntry,webpackConfig}=require('../resolveConfig');
 
-const webpackConfig = merge(baseWebpackConfig,{
+const config = merge(baseWebpackConfig,{
     mode:'development',
     entry: {
         app: resolveEntry()
@@ -25,7 +24,10 @@ const webpackConfig = merge(baseWebpackConfig,{
     target: "node",  // 指定node运行环境
     externals: [nodeExternals()],  // 不绑定node模块，保留为 require()
     module: {
-        rules:getRules('server')
+        rules:getRules('node')
     }
 });
-module.exports=webpackConfig;
+if(typeof webpackConfig==='function'){
+    webpackConfig(config);
+}
+module.exports=config;

@@ -19,7 +19,7 @@ function Login() {
     );
 }
 export interface MiniHeaderProps {
-    logo:string|null|false|undefined,
+    showLogo:boolean,
     userInfo ?:userInfoTypes,
     messageCount ?:number
 }
@@ -43,44 +43,46 @@ function getHeaderState(userInfo?:userInfoTypes,messageCount?:number) {
     return {userInfo,messageCount};
 }
 export default function MiniHeader(props:MiniHeaderProps) {
-    const {logo} = props;
+    const {showLogo} = props;
     const {data,loading} = useResolve<{userInfo:userInfoTypes,messageCount:number}>(getHeaderState(props.userInfo,props.messageCount));
-
-    return (
+    if(loading){
+        return <div className='leke-miniHeader'><div className="leke-miniHeader-content"></div></div>;
+    }
+    if(data&&data.userInfo){
+        return(
+            <div className='leke-miniHeader'>
+                <div className="leke-miniHeader-content">
+                    <div className='leke-miniHeader-left'>
+                        {showLogo?<img src={data.userInfo.schoolLogoUrl||'https://static.leke.cn/images/common/logo/mini-header-logo-new-2.png'} className='leke-miniHeader-logo' />:null}
+                    </div>
+                    <div className='leke-miniHeader-right'>
+                        <a
+                            href='https://webapp.leke.cn/notice-web/notice.html#/'
+                            target="_blank"
+                            rel="noreferrer"
+                            className='leke-miniHeader-message'
+                        >
+                            <Notice className='icon-notice' />
+                            <span>消息</span>
+                            {data.messageCount ? <span className='leke-miniHeader-count' >{Math.min(data.messageCount,99)}</span>:null}
+                        </a>
+                        <UserInfo userInfo={data.userInfo} />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    return(
         <div className='leke-miniHeader'>
             <div className="leke-miniHeader-content">
-                <div className='leke-miniHeader-left'>
-                    {logo?<img src={logo} className='leke-miniHeader-logo' />:null}
-                </div>
-                {(()=>{
-                    if(loading){
-                        return null;
-                    }
-                    if(data&&data.userInfo){
-                        return(
-                            <div className='leke-miniHeader-right'>
-                                <a
-                                    href='https://webapp.leke.cn/notice-web/notice.html#/'
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className='leke-miniHeader-message'
-                                >
-                                    <Notice className='icon-notice' />
-                                    <span>消息</span>
-                                    {data.messageCount ? <span className='leke-miniHeader-count' >{Math.min(data.messageCount,99)}</span>:null}
-                                </a>
-                                <UserInfo userInfo={data.userInfo} />
-                            </div>
-                        );
-                    }
-                    return <Login />;
-                })()}
+                <div className='leke-miniHeader-left'></div>
+                <Login />
             </div>
         </div>
     );
 }
 MiniHeader.defaultProps={
-    logo:'https://static.leke.cn/images/common/logo/mini-header-logo-new-2.png'
+    showLogo:true
 };
 
 

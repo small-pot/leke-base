@@ -1,7 +1,7 @@
 const webpack=require("webpack");
 const path=require('path');
 const isPro=process.env.NODE_ENV==='production';
-const {alias,publicPath,NODE_ENV}=require('../resolveConfig');
+const {alias,publicPath}=require('../resolveConfig');
 module.exports={
     devtool:isPro?false:'#cheap-module-eval-source-map',
     output: {
@@ -15,7 +15,7 @@ module.exports={
     },
     plugins: [
         new webpack.DefinePlugin({
-            "process.env.NODE_ENV": JSON.stringify(NODE_ENV)
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
         })
     ]
 };

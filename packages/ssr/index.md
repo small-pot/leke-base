@@ -30,24 +30,25 @@ module.exports={
         "last 2 versions",
         "ie >= 11"
     ],
-    babel:function (env) {
-        if(env==='client'){
-            return {
-                plugins:[
-                    ["import",
-                        {
-                            libraryName: "@leke/rc",
-                            libraryDirectory: "es",
-                            camel2DashComponentName: false,
-                            style(name) {
-                                return `${name}/index.less`.replace('/es/','/style/');
-                            }
+    babelConfig (config,target) {
+        if(target==='web'){
+            config.plugins.push(
+                ["import",
+                    {
+                        libraryName: "@leke/rc",
+                        libraryDirectory: "es",
+                        camel2DashComponentName: false,
+                        style(name) {
+                            return `${name}/index.less`.replace('/es/','/style/');
                         }
-                    ]
+                    }
                 ]
-            };
+            );
         }
-    }
+    },
+    webpackConfig(config){},
+    postcssConfig(config){},
+    modifyVars:{}
 };
 ```
 
@@ -58,16 +59,36 @@ module.exports={
 | entry | 入口文件路径| string | _ |
 | proxy | 跨域代理配置，[配置详情](https://www.npmjs.com/package/http-proxy-middleware)| object | _ |
 | browsers | 根据提供的浏览器进行js补丁与css前缀补全| Array | \[ "last 2 versions","ie >= 11" \] |
-| babel | 额外增加的babel配置，例如按需加载插件| object \| (env:"client" \| "server")=>object | _ |
-| postcssConfig | 自定义postcss-loader的配置，[配置详情](https://www.npmjs.com/package/postcss-loader)|object|css前缀补全|
-| alias | webpack中的alias | object | _ |
+| babelConfig | 自定义babel-loader配置 | (config, target:"web" \| "node")=>void | _ |
+| postcssConfig | 自定义postcss-loader的配置，[配置详情](https://www.npmjs.com/package/postcss-loader) | (config)=>void | _ |
+| webpackConfig | 自定义webpack配置 | (config)=>void | _ |
 | modifyVars | less主题定制 | object | _ |
 
 ## entry
 ```js
+import React from "react";
 import start from "@leke/ssr";
+import {createHttp} from "@leke/http";
+
+const headContent=(
+    <>
+        <meta charSet="utf-8" />
+        <meta httpEquiv="Cache-Control" content="no-cache" />
+        <link type="image/x-icon" rel="shortcut icon" href="https://static.leke.cn/images/common/favicon.ico" />
+    </>
+);
+
 export default start({
     publicPath:'/test',
+    headContent:headContent,
+    createRequest(req){
+        const {ticket}=req.cookies;
+        const Cookie=ticket?`ticket=${ticket}`:'';
+        return createHttp({
+            headers:{Cookie},
+            baseURL:'https://webapp.leke.cn'
+        });
+    },
     routes:[
         {
             path:'/demo',
@@ -81,8 +102,10 @@ export default start({
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
 | publicPath | 访问路径公共前缀 | string | _ |
+| headContent | html页面head中内容 | ReactNode \| (req)=>ReactNode | _ |
 | path | 访问的路径应为publicPath+path | string | _ |
 | getComponent | 按需加载PageComponent | ()=>Promise<SSRpage\> | _ |
+| createRequest | node端请求工具配置，通常需要配置cookie等，将作为getInitialData的第一个参数 | (req)=>any | _ | 
 
 ## PageComponent
 ```tsx

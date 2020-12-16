@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test basics.md 1`] = `
+<div>
+  <a>
+    focus me
+  </a>
+</div>
+`;
+
+exports[`test hover.md 1`] = `
+<div>
+  <a>
+    hover me
+  </a>
+</div>
+`;
+
+exports[`test placement.md 1`] = `
+<div>
+  <div
+    class="dropdown-demo"
+  >
+    <div>
+      <button>
+        bottomLeft
+      </button>
+      <button>
+        bottomCenter
+      </button>
+      <button>
+        bottomRight
+      </button>
+    </div>
+    <div
+      style="margin-top: 30px;"
+    >
+      <button>
+        topLeft
+      </button>
+      <button>
+        topCenter
+      </button>
+      <button>
+        topRight
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -1,16 +1,16 @@
+const webpack=require("webpack");
 const baseWebpackConfig=require('./webpack.base.config');
-const merge=require('webpack-merge');
-const path=require('path');
+const {merge}=require('webpack-merge');
 const MiniCssExtractPlugin=require("mini-css-extract-plugin");
 const ResourcePlugin=require('./resource-plugin');
 const UglifyJsPlugin=require('uglifyjs-webpack-plugin');
 const OptimizeCssAssetsPlugin=require('optimize-css-assets-webpack-plugin');
 const getRules=require('./getRules');
-const {resolveEntry}=require('../resolveConfig');
+const {resolveEntry,webpackConfig}=require('../resolveConfig');
 
 const entry=resolveEntry();
 entry.unshift('core-js');
-const buildConfig = merge(baseWebpackConfig, {
+const config = merge(baseWebpackConfig, {
     mode: 'production',
     entry: {app:entry},
     output: {
@@ -42,9 +42,12 @@ const buildConfig = merge(baseWebpackConfig, {
         ]
     },
     module: {
-        rules: getRules('client')
+        rules: getRules()
     },
     plugins: [
+        new webpack.DefinePlugin({
+            "process.env.WEB": JSON.stringify(true)
+        }),
         new MiniCssExtractPlugin({
             filename: "css/[name].[contenthash].css",
             ignoreOrder: true
@@ -52,4 +55,7 @@ const buildConfig = merge(baseWebpackConfig, {
         new ResourcePlugin()
     ]
 });
-module.exports=buildConfig;
+if(typeof webpackConfig==='function'){
+    webpackConfig(config);
+}
+module.exports=config;
