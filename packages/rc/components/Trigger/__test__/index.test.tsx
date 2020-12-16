@@ -14,7 +14,7 @@ describe('Trigger ', function() {
         const {getByText} = render(
             <Trigger
                 {...defaultProps}
-                autoFill={true}
+                autoSize={true}
             />
         );
         const trigger=getByText('trigger');
@@ -43,7 +43,7 @@ describe('Trigger ', function() {
         const {getByText} = render(
             <Trigger
                 {...defaultProps}
-                autoFill={true}
+                autoSize={true}
                 placement={'leftTop'}
                 getPopupContainer={getPopupContainer}
             />

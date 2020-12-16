@@ -10,7 +10,7 @@ export default function Dropdown(props:dropdownPropsType) {
         <Trigger
             {...props}
             popupClassName={classNames('leke-dropdown',props.popupClassName)}
-            autoFill={true}
+            autoSize={true}
         />
     );
 }
