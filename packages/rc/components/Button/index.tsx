@@ -1,43 +1,39 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, forwardRef } from 'react';
 import classNames from 'classnames';
-import { ButtonShape, ButtonSize, ButtonType } from './type';
+import { ButtonShape, ButtonSize, ButtonType,ButtonHTMLType } from './type';
 
-export type Props = {
+type BaseButtonProps = {
     children?: ReactNode;
     type?: ButtonType;
-    ghost?: boolean;
     disabled?: boolean;
     className?: string;
     size?:ButtonSize;
     shape?:ButtonShape;
     icon?:ReactNode;
+    ghost?:boolean;
     loading?:boolean;
-    lekeDisabled?:boolean;
-    block?:boolean;
-    danger?:boolean;
-    warning?:boolean;
-    onClick?: () => any;
-};
+}
 
-const Button = (props: Props) => {
-    const { type, ghost, disabled, className,size,shape,icon,children,loading,block,lekeDisabled,danger,warning, onClick: fn } = props;
+export type ButtonProps = {
+    htmlType?:ButtonHTMLType;
+} & BaseButtonProps & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>,'type'>
+
+
+const Button = (props: ButtonProps,ref) => {
+    const { type, disabled, className,size,shape,icon,children,loading,ghost,htmlType, ...otherProps} = props;
 
     const classes = classNames(className, {
         'leke-btn': true,
-        'leke-btn-danger':danger,
-        'leke-btn-warning':warning,
         [type ? `leke-btn-${type}` : 'leke-btn-default']: true,
         [shape ? `leke-btn-${shape}`:'' ]:true,
         [size ? `leke-btn-${size}`:'leke-btn-middle']:true,
         'leke-btn-loading':loading,
         'leke-btn-icon-only':icon,
-        'leke-btn-block':block,
         'leke-btnBackgroundGhost': ghost,
-        'leke-btnDisabled':lekeDisabled,
     });
 
     const LoadingIcon = () => {
-        return <div className="leke-btn-loading-icon" />;
+        return <div className="leke-btn-loading-icon"></div>;
     };
 
     const iconNode = loading ? <LoadingIcon /> : icon  ? icon : null;
@@ -48,11 +44,13 @@ const Button = (props: Props) => {
         null;
 
     return (
-        <button disabled={disabled || lekeDisabled} onClick={() => fn && fn()} className={classes}>
+        <button ref={ref} type={htmlType} disabled={disabled} className={classes} {...otherProps}>
             {iconNode}
             {kids}
         </button>
     );
 };
 
-export default Button;
+const WrappedButton = forwardRef(Button);
+
+export default WrappedButton;

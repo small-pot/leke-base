@@ -27,24 +27,8 @@ describe('Button ', function() {
         render(<Button icon={container} loading/>);
         expect(document.body).toMatchSnapshot();
     });
-    it('button render block', () => {
-        render(<Button block/>);
-        expect(document.body).toMatchSnapshot();
-    });
     it('button render ghost', () => {
         render(<Button ghost/>);
-        expect(document.body).toMatchSnapshot();
-    });
-    it('button render lekeDisabled', () => {
-        render(<Button lekeDisabled/>);
-        expect(document.body).toMatchSnapshot();
-    });
-    it('button render danger', () => {
-        render(<Button danger/>);
-        expect(document.body).toMatchSnapshot();
-    });
-    it('button render warning', () => {
-        render(<Button warning/>);
         expect(document.body).toMatchSnapshot();
     });
     it('button should be called', () => {
