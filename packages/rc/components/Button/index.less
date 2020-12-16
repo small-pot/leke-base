@@ -112,7 +112,7 @@
     &-loading-icon{
         width: 18px;
         height: 18px;
-        background:url('./assets/loading.svg');
+        background: url('../../../icons/svg/buttonLoading.svg');
         display: inline-block;
         background-size: cover;
         animation: spin 1s linear infinite;
@@ -135,30 +135,6 @@
     }
     &-primary {
         .btn-primary(@base-color,@hover-color,@click-color)
-    }
-    &-danger&-primary{
-        .btn-dangerours('primary')
-    }
-    &-danger&-text{
-        .btn-dangerours('text')
-    }
-    &-danger&-dashed{
-        .btn-dangerours('dashed')
-    }
-    &-danger&-default{
-        .btn-dangerours('default')
-    }
-    &-warning&-primary{
-        .btn-warning('primary')
-    }
-    &-warning&-text{
-        .btn-warning('text')
-    }
-    &-warning&-dashed{
-        .btn-warning('dashed')
-    }
-    &-warning&-default{
-        .btn-warning('default')
     }
 }
 .leke-content{
@@ -211,27 +187,6 @@
     color: #cccccc;
     cursor: auto;
 }
-
-.leke-btnDisabled.leke-btn-primary[disabled]:hover,
-.leke-btnDisabled.leke-btn-primary[disabled]{
-    background-color: @leke-btn-disabled;
-    .btnDisabled(#fff);
-}
-.leke-btnDisabled.leke-btn-default[disabled]:hover,
-.leke-btnDisabled.leke-btn-default[disabled]{
-    border: 1px solid @leke-btn-disabled;
-    .btnDisabled(@leke-btn-disabled);
-}
-.leke-btnDisabled.leke-btn-dashed[disabled]:hover,
-.leke-btnDisabled.leke-btn-dashed[disabled]{
-    border: 1px dashed @leke-btn-disabled;
-    .btnDisabled(@leke-btn-disabled);
-}
-.leke-btnDisabled.leke-btn-text[disabled]:hover,
-.leke-btnDisabled.leke-btn-text[disabled]{
-    .btnDisabled(@leke-btn-disabled);
-}
-
 
 .leke-btn-primary[disabled]:hover,
 .leke-btn-primary[disabled]{
