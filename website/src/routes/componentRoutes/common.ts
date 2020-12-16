@@ -3,6 +3,5 @@ export default {
     keys:[
         'icons',
         'MiniHeader',
-        'Input'
     ]
 };
