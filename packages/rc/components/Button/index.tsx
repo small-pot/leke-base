@@ -33,7 +33,7 @@ const Button = (props: ButtonProps,ref) => {
     });
 
     const LoadingIcon = () => {
-        return <div className="leke-btn-loading-icon" />;
+        return <div className="leke-btn-loading-icon"></div>;
     };
 
     const iconNode = loading ? <LoadingIcon /> : icon  ? icon : null;
