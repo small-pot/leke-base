@@ -7,6 +7,7 @@ export default {
         'Dropdown',
         'Alert',
         'Carousel',
-        'Trigger'
+        'Trigger',
+        'Tag'
     ]
 };
