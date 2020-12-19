@@ -1,9 +1,12 @@
-## 标签展示
+## 默认标签
 ```jsx
 import React from 'react';
 import {Tag} from '@leke/rc';
-
 export default function(){
-    return  <Tag />;
+    return  (
+        <>
+            <Tag />
+        </>
+    );
 }
 ```
