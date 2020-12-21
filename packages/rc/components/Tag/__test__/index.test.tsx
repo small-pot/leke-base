@@ -2,7 +2,7 @@ import React from "react";
 import Tag from "../index";
 import {Stop, Close} from "@leke/icons";
 import '@testing-library/jest-dom/extend-expect';
-import {render, fireEvent, waitForDomChange} from '@testing-library/react';
+import {render, fireEvent, waitFor} from '@testing-library/react';
 
 describe('Tag ', function() {
     it('test text attribute',()=>{
@@ -19,16 +19,14 @@ describe('Tag ', function() {
         const {container} = render(<Tag icon={<Stop/>} />);
         expect(container.querySelector('.leke-tag-icon')).not.toBe(null);
     });
-    it('test closeIcon & onClose attribute',()=>{
+    it('test closeIcon & onClose attribute',async ()=>{
         const onClose = jest.fn();
         const {container} = render(<Tag closeIcon={<Close/>} onClose={onClose}/>);
         const $closeIcon = container.querySelector('.leke-tag-closeicon');
         expect($closeIcon).not.toBe(null);
         fireEvent.click($closeIcon);
-        waitForDomChange({container}).then(()=>{
-            expect(onClose).toHaveBeenCalled();
-            expect(container.querySelector('.leke-tag')).toBe(null);
-        });
+        await waitFor(()=>{expect(container.querySelector('.leke-tag')).toBe(null);});
+        expect(onClose).toHaveBeenCalled();
     });
     it('test default tag',()=>{
         const {container} = render(<Tag />);
