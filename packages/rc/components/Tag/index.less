@@ -6,16 +6,12 @@
     display: inline-flex;
     border-radius: 2px;
     padding: 0 8px;
-    line-height: 22px;
+    height: 22px;
     align-items: center;
+    justify-content: center;
     margin: 4px 4px;
     cursor: default;
-    &:hover{
-        border: 1px solid #40C2B5;
-    }
-    &:active{
-        border: 1px solid #118F8B;
-    }
+    border: 1px solid transparent;
     span{
         display: inline-flex;
     }
@@ -32,7 +28,7 @@
 }
 
 .preset-color(@color,@background-color,@border-color){
-    border: 1px solid @border-color;
+    border-color: @border-color;
     background-color: @background-color;
     color: @color;
 }

@@ -28,6 +28,13 @@ describe('Tag ', function() {
         await waitFor(()=>{expect(container.querySelector('.leke-tag')).toBe(null);});
         expect(onClose).toHaveBeenCalled();
     });
+    it('test onClick attribute',async ()=>{
+        const onClick = jest.fn();
+        const {container} = render(<Tag closeIcon={<Close/>} onClick={onClick}/>);
+        const $lekeTag = container.querySelector('.leke-tag');
+        fireEvent.click($lekeTag);
+        expect(onClick).toHaveBeenCalled();
+    });
     it('test default tag',()=>{
         const {container} = render(<Tag />);
         expect(container.querySelector('.leke-tag-text')).toHaveTextContent('你好呀');

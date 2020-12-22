@@ -11,15 +11,17 @@ interface Props {
     icon?: ReactNode;
     closeIcon?: ReactNode;
     onClose?: ()=>void;
+    onClick?: ()=>void;
 }
 const PRESET = [
     'default','seablue','lekegreen','brighteyes','hotred','lime','auroragreen','geekblue','saucepurple','magenta','volcano','marigold','sunrise',
     'bluefill','greenfill','orangefill','redfill'
 ];
 
-const Tag: React.FC<Props> = ({text,className,icon,closeIcon,onClose}) => {
+const Tag: React.FC<Props> = ({text,className,icon,closeIcon,onClose,onClick}) => {
     const [visible,setVisible] = useState(true);
-    const handleClick = useCallback(()=>{
+    const handleClick = useCallback((e)=>{
+        e.stopPropagation();
         setVisible(false);
         onClose && onClose();
     },[onClose]);
@@ -32,7 +34,7 @@ const Tag: React.FC<Props> = ({text,className,icon,closeIcon,onClose}) => {
     const memoClassName = useMemo(()=>{
         return PRESET.includes(className) ? `leke-tag-${className}` : className;
     },[className]);
-    return visible ? <div className={`leke-tag ${memoClassName}`}>
+    return visible ? <div className={`leke-tag ${memoClassName}`} onClick={onClick}>
         {memoIcon}<span className='leke-tag-text'>{text}</span>{memoCloseIcon}
     </div> : null;
 };

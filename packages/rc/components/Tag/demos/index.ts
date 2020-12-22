@@ -3,5 +3,8 @@ export default [
     require('./tag1.md'),
     require('./tag2.md'),
     require('./tag3.md'),
+    require('./tag4.md'),
+    require('./tag5.md'),
+    require('./tag6.md'),
     require('./props.md')
 ];

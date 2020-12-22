@@ -6,3 +6,4 @@
 | icon | 标签左侧图标 | ReactNode | - | 
 | closeIcon | 标签右侧关闭图标 | ReactNode | - | 
 | onClose | 标签关闭时的回调 | ()=>void | - | 
+| onClick | 标签点击时的回调 | ()=>void | - | 

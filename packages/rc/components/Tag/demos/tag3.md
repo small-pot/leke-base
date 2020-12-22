@@ -6,7 +6,8 @@ import {Close} from '@leke/icons';
 export default function(){
     return  (
         <>
-            <Tag className='seablue' closeIcon={<Close/>} text='可关闭' onClose={()=>{alert('已关勿扰')}}/>
+            <Tag className='seablue' closeIcon={<Close/>} text='可关闭'/>
+            <Tag className='seablue' closeIcon={<Close/>} text='可关闭带回调' onClose={()=>{console.log('已关勿扰')}}/>
         </>
     );
 }
