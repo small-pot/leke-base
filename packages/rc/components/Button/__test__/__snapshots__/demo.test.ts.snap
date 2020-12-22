@@ -6,46 +6,46 @@ exports[`test buttonBlock.md 1`] = `
     style="width: 400px;"
   >
     <button
-      class="leke-demo-container leke-btn leke-btn-primary  leke-btn-middle leke-btn-block"
+      class="leke-demo-container leke-demo-block leke-btn leke-btn-primary  leke-btn-middle"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
     </button>
     <button
-      class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle leke-btn-block"
+      class="leke-demo-container leke-demo-block leke-btn leke-btn-default  leke-btn-middle"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
     </button>
     <button
-      class="leke-demo-container leke-btn leke-btn-normal  leke-btn-middle leke-btn-block"
+      class="leke-demo-container leke-demo-block leke-btn leke-btn-normal  leke-btn-middle"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
     </button>
     <button
-      class="leke-demo-container leke-btn leke-btn-dashed  leke-btn-middle leke-btn-block"
+      class="leke-demo-container leke-demo-block leke-btn leke-btn-dashed  leke-btn-middle"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
     </button>
     <button
-      class="leke-demo-container leke-btn leke-btn-link  leke-btn-middle leke-btn-block"
+      class="leke-demo-container leke-demo-block leke-btn leke-btn-text  leke-btn-middle"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
@@ -62,30 +62,30 @@ exports[`test buttonDanger.md 1`] = `
     </div>
     <div>
       <button
-        class="leke-demo-container leke-btn leke-btn-danger leke-btn-primary  leke-btn-middle"
+        class="leke-demo-container leke-demo-danger-primary leke-btn leke-btn-primary  leke-btn-middle"
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-danger leke-btn-primary  leke-btn-middle"
+        class="leke-demo-container leke-btn leke-btn-primary  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-danger leke-btn-primary  leke-btn-middle leke-btnDisabled"
+        class="leke-demo-container leke-demo-danger-primary-disabled leke-btn leke-btn-primary  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
@@ -93,30 +93,30 @@ exports[`test buttonDanger.md 1`] = `
     </div>
     <div>
       <button
-        class="leke-demo-container leke-btn leke-btn-danger leke-btn-default  leke-btn-middle"
+        class="leke-demo-container leke-demo-danger-default leke-btn leke-btn-default  leke-btn-middle"
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-danger leke-btn-default  leke-btn-middle"
+        class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-danger leke-btn-default  leke-btn-middle leke-btnDisabled"
+        class="leke-demo-container leke-demo-danger-default-disabled leke-btn leke-btn-default  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
@@ -124,30 +124,30 @@ exports[`test buttonDanger.md 1`] = `
     </div>
     <div>
       <button
-        class="leke-demo-container leke-btn leke-btn-danger leke-btn-dashed  leke-btn-middle"
+        class="leke-demo-container leke-demo-danger-dashed leke-btn leke-btn-dashed  leke-btn-middle"
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-danger leke-btn-dashed  leke-btn-middle"
+        class="leke-demo-container leke-btn leke-btn-dashed  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-danger leke-btn-dashed  leke-btn-middle leke-btnDisabled"
+        class="leke-demo-container leke-demo-danger-dashed-dashed leke-btn leke-btn-dashed  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
@@ -155,30 +155,30 @@ exports[`test buttonDanger.md 1`] = `
     </div>
     <div>
       <button
-        class="leke-demo-container leke-btn leke-btn-danger leke-btn-link  leke-btn-middle"
+        class="leke-demo-container leke-demo-danger-text leke-btn leke-btn-text  leke-btn-middle"
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-danger leke-btn-link  leke-btn-middle"
+        class="leke-demo-container leke-btn leke-btn-text  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-danger leke-btn-link  leke-btn-middle leke-btnDisabled"
+        class="leke-demo-container leke-demo-danger-text-disabled leke-btn leke-btn-text  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
@@ -189,30 +189,30 @@ exports[`test buttonDanger.md 1`] = `
     </div>
     <div>
       <button
-        class="leke-demo-container leke-btn leke-btn-warning leke-btn-primary  leke-btn-middle"
+        class="leke-demo-container leke-demo-warning-primary leke-btn leke-btn-primary  leke-btn-middle"
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-warning leke-btn-primary  leke-btn-middle"
+        class="leke-demo-container leke-btn leke-btn-primary  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-warning leke-btn-primary  leke-btn-middle leke-btnDisabled"
+        class="leke-demo-container leke-demo-warning-primary-disabled leke-btn leke-btn-primary  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
@@ -220,30 +220,30 @@ exports[`test buttonDanger.md 1`] = `
     </div>
     <div>
       <button
-        class="leke-demo-container leke-btn leke-btn-warning leke-btn-default  leke-btn-middle"
+        class="leke-demo-container leke-demo-warning-default leke-btn leke-btn-default  leke-btn-middle"
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-warning leke-btn-default  leke-btn-middle"
+        class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-warning leke-btn-default  leke-btn-middle leke-btnDisabled"
+        class="leke-demo-container leke-demo-warning-default-disabled leke-btn leke-btn-default  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
@@ -251,30 +251,30 @@ exports[`test buttonDanger.md 1`] = `
     </div>
     <div>
       <button
-        class="leke-demo-container leke-btn leke-btn-warning leke-btn-dashed  leke-btn-middle"
+        class="leke-demo-container leke-demo-warning-dashed leke-btn leke-btn-dashed  leke-btn-middle"
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-warning leke-btn-dashed  leke-btn-middle"
+        class="leke-demo-container leke-btn leke-btn-dashed  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-warning leke-btn-dashed  leke-btn-middle leke-btnDisabled"
+        class="leke-demo-container leke-demo-warning-dashed-disabled leke-btn leke-btn-dashed  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
@@ -282,30 +282,30 @@ exports[`test buttonDanger.md 1`] = `
     </div>
     <div>
       <button
-        class="leke-demo-container leke-btn leke-btn-warning leke-btn-link  leke-btn-middle"
+        class="leke-demo-container leke-demo-warning-text leke-btn leke-btn-text  leke-btn-middle"
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-warning leke-btn-link  leke-btn-middle"
+        class="leke-demo-container leke-btn leke-btn-text  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-warning leke-btn-link  leke-btn-middle leke-btnDisabled"
+        class="leke-demo-container leke-demo-warning-text-disabled leke-btn leke-btn-text  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮
         </span>
@@ -324,7 +324,7 @@ exports[`test buttonDisabled.md 1`] = `
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮(disabled)
         </span>
@@ -334,7 +334,7 @@ exports[`test buttonDisabled.md 1`] = `
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮(disabled)
         </span>
@@ -344,7 +344,7 @@ exports[`test buttonDisabled.md 1`] = `
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮(disabled)
         </span>
@@ -354,17 +354,17 @@ exports[`test buttonDisabled.md 1`] = `
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮(disabled)
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-link  leke-btn-middle"
+        class="leke-demo-container leke-btn leke-btn-text  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮(disabled)
         </span>
@@ -372,41 +372,41 @@ exports[`test buttonDisabled.md 1`] = `
     </div>
     <div>
       <button
-        class="leke-demo-container leke-btn leke-btn-primary  leke-btn-middle leke-btnDisabled"
+        class="leke-demo-container leke-demo-disabled-primary leke-btn leke-btn-primary  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮(lekeDisabled)
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle leke-btnDisabled"
+        class="leke-demo-container leke-demo-disabled-default leke-btn leke-btn-default  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮(lekeDisabled)
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-dashed  leke-btn-middle leke-btnDisabled"
+        class="leke-demo-container leke-demo-disabled-dashed leke-btn leke-btn-dashed  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮(lekeDisabled)
         </span>
       </button>
       <button
-        class="leke-demo-container leke-btn leke-btn-link  leke-btn-middle leke-btnDisabled"
+        class="leke-demo-container leke-demo-disabled-text leke-btn leke-btn-text  leke-btn-middle"
         disabled=""
       >
         <span
-          class=""
+          class="leke-btn-content"
         >
           按钮(lekeDisabled)
         </span>
@@ -419,13 +419,13 @@ exports[`test buttonDisabled.md 1`] = `
 exports[`test buttonGhost.md 1`] = `
 <div>
   <div
-    style="background: rgb(11, 162, 154);"
+    class="leke-container"
   >
     <button
       class="leke-demo-container leke-btn leke-btn-primary  leke-btn-middle leke-btnBackgroundGhost"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
@@ -434,7 +434,7 @@ exports[`test buttonGhost.md 1`] = `
       class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle leke-btnBackgroundGhost"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
@@ -443,7 +443,7 @@ exports[`test buttonGhost.md 1`] = `
       class="leke-demo-container leke-btn leke-btn-dashed  leke-btn-middle leke-btnBackgroundGhost"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
@@ -470,7 +470,7 @@ exports[`test buttonLoading.md 1`] = `
     class="leke-demo-container leke-btn leke-btn-primary leke-btn-circle leke-btn-middle leke-btn-icon-only"
   >
     <span
-      style="vertical-align: text-top;"
+      class="leke-icon-loading"
     >
       <i
         class="leke-icon"
@@ -496,10 +496,17 @@ exports[`test buttonLoading.md 1`] = `
     </span>
   </button>
   <button
+    class="leke-demo-container leke-btn leke-btn-primary leke-btn-circle leke-btn-middle leke-btn-loading leke-btn-icon-only"
+  >
+    <div
+      class="leke-btn-loading-icon"
+    />
+  </button>
+  <button
     class="leke-demo-container leke-btn leke-btn-primary  leke-btn-middle"
   >
     <span
-      class=""
+      class="leke-btn-content"
     >
       按钮
     </span>
@@ -511,40 +518,28 @@ exports[`test buttonShape.md 1`] = `
 <div>
   <div>
     <div>
-      <button
-        class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle"
+      <div
+        class="leke-demo-sx"
       >
-        <span
-          class=""
-        >
-          large
-        </span>
-      </button>
-      <button
-        class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle"
+        large
+      </div>
+      <div
+        class="leke-demo-active"
       >
-        <span
-          class=""
-        >
-          middle
-        </span>
-      </button>
-      <button
-        class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle"
+        middle
+      </div>
+      <div
+        class="leke-demo-sx"
       >
-        <span
-          class=""
-        >
-          small
-        </span>
-      </button>
+        small
+      </div>
     </div>
     <div>
       <button
         class="leke-demo-container leke-btn leke-btn-primary  leke-btn-middle leke-btn-icon-only"
       >
         <span
-          style="vertical-align: text-top;"
+          class="leke-demo-icon"
         >
           <i
             class="leke-icon"
@@ -573,7 +568,7 @@ exports[`test buttonShape.md 1`] = `
         class="leke-demo-container leke-btn leke-btn-primary leke-btn-circle leke-btn-middle leke-btn-icon-only"
       >
         <span
-          style="vertical-align: text-top;"
+          class="leke-demo-icon"
         >
           <i
             class="leke-icon"
@@ -602,7 +597,7 @@ exports[`test buttonShape.md 1`] = `
         class="leke-demo-container leke-btn leke-btn-primary  leke-btn-middle leke-btn-icon-only"
       >
         <span
-          style="vertical-align: text-top;"
+          class="leke-demo-icon"
         >
           <i
             class="leke-icon"
@@ -638,7 +633,7 @@ exports[`test buttonShape.md 1`] = `
         class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle leke-btn-icon-only"
       >
         <span
-          style="vertical-align: text-top;"
+          class="leke-demo-icon"
         >
           <i
             class="leke-icon"
@@ -667,7 +662,7 @@ exports[`test buttonShape.md 1`] = `
         class="leke-demo-container leke-btn leke-btn-default leke-btn-circle leke-btn-middle leke-btn-icon-only"
       >
         <span
-          style="vertical-align: text-top;"
+          class="leke-demo-icon"
         >
           <i
             class="leke-icon"
@@ -696,7 +691,7 @@ exports[`test buttonShape.md 1`] = `
         class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle leke-btn-icon-only"
       >
         <span
-          style="vertical-align: text-top;"
+          class="leke-demo-icon"
         >
           <i
             class="leke-icon"
@@ -732,7 +727,7 @@ exports[`test buttonShape.md 1`] = `
         class="leke-demo-container leke-btn leke-btn-dashed  leke-btn-middle leke-btn-icon-only"
       >
         <span
-          style="vertical-align: text-top;"
+          class="leke-demo-icon"
         >
           <i
             class="leke-icon"
@@ -761,7 +756,7 @@ exports[`test buttonShape.md 1`] = `
         class="leke-demo-container leke-btn leke-btn-dashed leke-btn-circle leke-btn-middle leke-btn-icon-only"
       >
         <span
-          style="vertical-align: text-top;"
+          class="leke-demo-icon"
         >
           <i
             class="leke-icon"
@@ -790,7 +785,7 @@ exports[`test buttonShape.md 1`] = `
         class="leke-demo-container leke-btn leke-btn-dashed  leke-btn-middle leke-btn-icon-only"
       >
         <span
-          style="vertical-align: text-top;"
+          class="leke-demo-icon"
         >
           <i
             class="leke-icon"
@@ -828,40 +823,28 @@ exports[`test buttonShape.md 1`] = `
 exports[`test buttonSize.md 1`] = `
 <div>
   <div>
-    <button
-      class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle"
+    <div
+      class="leke-demo-sx"
     >
-      <span
-        class=""
-      >
-        large
-      </span>
-    </button>
-    <button
-      class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle"
+      large
+    </div>
+    <div
+      class="leke-demo-active"
     >
-      <span
-        class=""
-      >
-        middle
-      </span>
-    </button>
-    <button
-      class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle"
+      middle
+    </div>
+    <div
+      class="leke-demo-sx"
     >
-      <span
-        class=""
-      >
-        small
-      </span>
-    </button>
+      small
+    </div>
   </div>
   <div>
     <button
       class="leke-demo-container leke-btn leke-btn-primary  leke-btn-middle"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
@@ -870,7 +853,7 @@ exports[`test buttonSize.md 1`] = `
       class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
@@ -879,7 +862,7 @@ exports[`test buttonSize.md 1`] = `
       class="leke-demo-container leke-btn leke-btn-normal  leke-btn-middle"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
@@ -888,16 +871,16 @@ exports[`test buttonSize.md 1`] = `
       class="leke-demo-container leke-btn leke-btn-dashed  leke-btn-middle"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
     </button>
     <button
-      class="leke-demo-container leke-btn leke-btn-link  leke-btn-middle"
+      class="leke-demo-container leke-btn leke-btn-text  leke-btn-middle"
     >
       <span
-        class=""
+        class="leke-btn-content"
       >
         按钮
       </span>
@@ -912,7 +895,7 @@ exports[`test buttonType.md 1`] = `
     class="leke-demo-container leke-btn leke-btn-primary  leke-btn-middle"
   >
     <span
-      class=""
+      class="leke-btn-content"
     >
       按钮
     </span>
@@ -921,7 +904,7 @@ exports[`test buttonType.md 1`] = `
     class="leke-demo-container leke-btn leke-btn-default  leke-btn-middle"
   >
     <span
-      class=""
+      class="leke-btn-content"
     >
       按钮
     </span>
@@ -930,7 +913,7 @@ exports[`test buttonType.md 1`] = `
     class="leke-demo-container leke-btn leke-btn-normal  leke-btn-middle"
   >
     <span
-      class=""
+      class="leke-btn-content"
     >
       按钮
     </span>
@@ -939,16 +922,16 @@ exports[`test buttonType.md 1`] = `
     class="leke-demo-container leke-btn leke-btn-dashed  leke-btn-middle"
   >
     <span
-      class=""
+      class="leke-btn-content"
     >
       按钮
     </span>
   </button>
   <button
-    class="leke-demo-container leke-btn leke-btn-link  leke-btn-middle"
+    class="leke-demo-container leke-btn leke-btn-text  leke-btn-middle"
   >
     <span
-      class=""
+      class="leke-btn-content"
     >
       按钮
     </span>
