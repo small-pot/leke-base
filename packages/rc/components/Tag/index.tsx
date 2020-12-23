@@ -23,11 +23,20 @@ const PRE_CLASSNAME = 'leke-tag';
 const Tag: React.FC<Props> = ({text,className,icon,closeIcon,onClose,onClick}) => {
     const [open,setOpen] = useState(true);
     const ref = useRef(null);
+    const tagPointer = ref.current;
     useAnimation({
         ref,
         open,
-        exit:`${PRE_CLASSNAME}-ani`,
-        exited: `${PRE_CLASSNAME}-close`
+        type:'transition',
+        exited: `${PRE_CLASSNAME}-close`,
+        onExit: ()=>{
+            tagPointer.style.width = tagPointer.offsetWidth + 'px';
+        },
+        onExiting: ()=>{
+            tagPointer.style.width = '0px';
+            tagPointer.style.transform = 'scale(0,0)';
+        }
+
     });
     const handleClick = useCallback((e)=>{
         e.stopPropagation();
@@ -43,8 +52,10 @@ const Tag: React.FC<Props> = ({text,className,icon,closeIcon,onClose,onClick}) =
     const memoClassName = useMemo(()=>{
         return PRESET.indexOf(className) >= 0 ? `${PRE_CLASSNAME}-${className}` : className;
     },[className]);
-    return <div className={`${PRE_CLASSNAME} ${memoClassName}`} onClick={onClick} ref={ref}>
-        {memoIcon}<span className={`${PRE_CLASSNAME}-text`}>{text}</span>{memoCloseIcon}
+    return <div ref={ref} className={`${PRE_CLASSNAME}-ani`}>
+        <div className={`${PRE_CLASSNAME} ${memoClassName}`} onClick={onClick}>
+            {memoIcon}<span className={`${PRE_CLASSNAME}-text`}>{text}</span>{memoCloseIcon}
+        </div>
     </div>;
 };
 Tag.defaultProps = {
