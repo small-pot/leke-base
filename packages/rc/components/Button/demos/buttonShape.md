@@ -33,9 +33,9 @@ export default function(){
             }
         </div>
         <div>
-            <Button type='primary' className='leke-demo-container' size={size} icon={<DownloadOutlined />} />
-            <Button type='primary' className='leke-demo-container' size={size} shape='circle' icon={<DownloadOutlined />} />
-            <Button type='primary' className='leke-demo-container' size={size} icon={<DownloadOutlined />} >下载</Button>
+            <Button type='main' className='leke-demo-container' size={size} icon={<DownloadOutlined />} />
+            <Button type='main' className='leke-demo-container' size={size} shape='circle' icon={<DownloadOutlined />} />
+            <Button type='main' className='leke-demo-container' size={size} icon={<DownloadOutlined />} >下载</Button>
         </div>
         <div>
             <Button className='leke-demo-container' size={size} icon={<DownloadOutlined />} />

@@ -1,4 +1,4 @@
-declare const ButtonTypes: ['default', 'primary', 'ghost', 'dashed', 'link', 'text','normal'];
+declare const ButtonTypes: ['main','default','secondary','dashed','link'];
 export declare type ButtonType = typeof ButtonTypes[number];
 declare const ButtonSizes:['large','middle','small'];
 export declare type ButtonSize = typeof ButtonSizes[number];
