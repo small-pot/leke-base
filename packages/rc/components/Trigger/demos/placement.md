@@ -1,7 +1,10 @@
-## 下拉不同位置
+---    
+title: placement
+description: placement参数可以规定弹层出现的位置
+---
 ```jsx
 import React from 'react';
-import {Trigger} from '@leke/rc';
+import {Trigger,Button} from '@leke/rc';
 
 export default function(){
     return(
@@ -11,19 +14,19 @@ export default function(){
                     popup={<div style={{height:50,width:50}}>popup</div>}
                     placement={'bottomLeft'}
                 >
-                    <button>bottomLeft</button>
+                    <Button>bottomLeft</Button>
                 </Trigger>
                 <Trigger 
                     popup={<div style={{height:50,width:50}}>popup</div>}
                     placement={'bottomCenter'}
                 >
-                    <button>bottomCenter</button>
+                    <Button>bottomCenter</Button>
                 </Trigger>
                 <Trigger 
                     popup={<div style={{height:50,width:50}}>popup</div>}
                     placement={'bottomRight'}
                 >
-                    <button>bottomRight</button>
+                    <Button>bottomRight</Button>
                 </Trigger>
             </div>
             <div style={{display:'flex',justifyContent: 'space-between'}}>
@@ -32,19 +35,19 @@ export default function(){
                         popup={<div style={{height:50,width:50}}>popup</div>}
                         placement={'leftTop'}
                     >
-                        <button>leftTop</button>
+                        <Button>leftTop</Button>
                     </Trigger>
                     <Trigger 
                         popup={<div style={{height:50,width:50}}>popup</div>}
                         placement={'leftCenter'}
                     >
-                        <button>leftCenter</button>
+                        <Button>leftCenter</Button>
                     </Trigger>
                     <Trigger 
                         popup={<div style={{height:50,width:50}}>popup</div>}
                         placement={'leftBottom'}
                     >
-                        <button>leftBottom</button>
+                        <Button>leftBottom</Button>
                     </Trigger>                
                 </div>
                 <div className='trigger-demo-block'>
@@ -52,19 +55,19 @@ export default function(){
                         popup={<div style={{height:50,width:50}}>popup</div>}
                         placement={'rightTop'}
                     >
-                        <button>rightTop</button>
+                        <Button>rightTop</Button>
                     </Trigger>
                     <Trigger 
                         popup={<div style={{height:50,width:50}}>popup</div>}
                         placement={'rightCenter'}
                     >
-                        <button>rightCenter</button>
+                        <Button>rightCenter</Button>
                     </Trigger>
                     <Trigger 
                         popup={<div style={{height:50,width:50}}>popup</div>}
                         placement={'rightBottom'}
                     >
-                        <button>rightBottom</button>
+                        <Button>rightBottom</Button>
                     </Trigger>                
                 </div>
             </div>
@@ -73,19 +76,19 @@ export default function(){
                     popup={<div style={{height:50,width:50}}>popup</div>}
                     placement={'topLeft'}
                 >
-                    <button>topLeft</button>
+                    <Button>topLeft</Button>
                 </Trigger>
                 <Trigger 
                     popup={<div style={{height:50,width:50}}>popup</div>}
                     placement={'topCenter'}
                 >
-                    <button>topCenter</button>
+                    <Button>topCenter</Button>
                 </Trigger>
                 <Trigger 
                     popup={<div style={{height:50,width:50}}>popup</div>}
                     placement={'topRight'}
                 >
-                    <button>topRight</button>
+                    <Button>topRight</Button>
                 </Trigger>
             </div>
         </div>
@@ -107,7 +110,7 @@ export default function(){
 .trigger-demo .trigger-demo-block button+button{
      margin-top: 20px;
 }
-.trigger-demo button{
+.trigger-demo Button{
     margin-right: 25px;
 }
 ```

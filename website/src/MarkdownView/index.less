@@ -1,4 +1,7 @@
 .markdown-section{
+  &+.markdown-section{
+    margin-top:30px;
+  }
   table{
     border-collapse: collapse;
     border-spacing: 0;
@@ -12,6 +15,9 @@
     border-bottom:1px solid #f0f0f0;
     padding:12px;
     text-align: left;
+  }
+  h1,h2{
+    margin: 30px 0;
   }
   a{
     color:#1890ff;
@@ -33,6 +39,9 @@
     .demo,.demo-description{
       padding:0 28px;
       margin: 25px 0;
+      a{
+        color:inherit;
+      }
     }
     .demo-title{
       display: flex;

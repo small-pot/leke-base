@@ -1,13 +1,37 @@
 export default {
     title:'公共',
-    keys:[
-        'icons',
-        'MiniHeader',
-        'Button',
-        'Dropdown',
-        'Alert',
-        'Carousel',
-        'Trigger',
-        'Tag'
+    routes:[
+        {
+            key:'icons',
+            title:'图标'
+        },
+        {
+            key:'MiniHeader',
+            title:'业务头部'
+        },
+        {
+            key:'Button',
+            title:'按钮'
+        },
+        {
+            key:'Dropdown',
+            title:'下拉菜单'
+        },
+        {
+            key:'Alert',
+            title:'警告提示'
+        },
+        {
+            key:'Carousel',
+            title:'轮播'
+        },
+        {
+            key:'Trigger',
+            title:'触发器'
+        },
+        {
+            key:'Tag',
+            title:'标签'
+        }
     ]
 };

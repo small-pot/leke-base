@@ -70,6 +70,7 @@ function App(){
             return (
                 <div className='left-container'>
                     <ul className='left-tab'>
+                        <span className='group-title'>开发指南</span>
                         <li className={classNames('tab-item',!key?'current':'')}>
                             <a href={'#'+type}>安装与配置</a>
                         </li>
@@ -77,9 +78,12 @@ function App(){
                             <li key={item.title} className='tab-group'>
                                 <span className='group-title'>{item.title}</span>
                                 <ul className='tab-list'>
-                                    {item.keys.map(name=>(
-                                        <li key={name} className={classNames('tab-item',name===key?'current':'')}>
-                                            <a href={`#${type}/${name}`}>{name}</a>
+                                    {item.routes.map((route:{key:string,title?:string})=>(
+                                        <li key={route.key} className={classNames('tab-item',route.key===key?'current':'')}>
+                                            <a href={`#${type}/${route.key}`}>
+                                                <span>{route.key}</span>
+                                                {route.title?<span className='tab-item-name'>{route.title}</span>:null}
+                                            </a>
                                         </li>
                                     ))}
                                 </ul>
