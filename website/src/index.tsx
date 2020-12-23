@@ -106,7 +106,7 @@ function App(){
             <div className='main'>
                 {leftTab}
                 <div className='router-container'>
-                    {mds.map((item,index)=><MarkdownView key={index} source={item.source} JSXComponent={item.default} css={item.css} />)}
+                    {mds.map((item,index)=><MarkdownView key={index} {...item}  />)}
                     {key==='icons'&& icons? <IconList icons={icons}/>:null}
                 </div>
             </div>

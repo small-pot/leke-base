@@ -1,5 +1,10 @@
-# Dropdown 下拉菜单
-## 基本用法
+# Trigger 触发器
+
+---    
+title: 基本
+description: 123
+---
+
 ```jsx
 import React from 'react';
 import {Trigger} from '@leke/rc';

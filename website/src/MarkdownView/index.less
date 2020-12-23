@@ -1,11 +1,7 @@
-.demo{
-  padding: 32px 20px;
-}
-.router-container{
+.markdown-section{
   table{
     border-collapse: collapse;
     border-spacing: 0;
-    border:1px solid #f0f0f0;
     width: 100%;
   }
   thead{
@@ -18,11 +14,12 @@
     text-align: left;
   }
   a{
-    color:#1890ff
+    color:#1890ff;
   }
   pre{
-    background-color: #fff!important;
-    border:1px solid #f0f0f0;
+    margin: 25px 0!important;
+    border:1px solid #bfbfbf!important;
+    background-color: #fafafa!important;
     +pre{
       border-top:0;
     }
@@ -30,37 +27,62 @@
       padding:16px 32px!important;
     }
   }
-}
-.jsx-block{
-  a{
-    color:inherit;
-  }
-  .demo{
-    border:1px solid #f0f0f0;
-  }
-  .code-btn-group{
-    text-align: center;
-    border-left:1px solid #f0f0f0;
-    border-right:1px solid #f0f0f0;
-    border-bottom:1px solid #f0f0f0;
-    padding-top:10px;
-    padding-bottom: 10px;
-    color:#333;
-    .show-code-btn{
-      cursor: pointer;
+  .jsx-block{
+    border-radius: 4px;
+    border:1px solid #bfbfbf;
+    .demo,.demo-description{
+      padding:0 28px;
+      margin: 25px 0;
     }
-    .icon-down{
-      margin-left:6px;
-      display: inline-block;
-      line-height: 0;
-      transition: transform 0.3s;
-      vertical-align: -0.125em;
+    .demo-title{
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+      .text{
+        color:#000;
+        font-size:16px;
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+      .line{
+        display: block;
+        height:1px;
+        background-color: #bfbfbf;
+      }
+      .line-left{
+        width: 88px;
+      }
+      .line-right{
+        flex:1;
+      }
     }
-  }
-  .code-highlighter{
-    font-size: 14px;
-    pre{
-      margin: 0!important;
+    .code-btn-group{
+      border-top:1px dashed #979797;
+      text-align: center;
+      padding-top:10px;
+      padding-bottom: 10px;
+      color:#8c8c8c;
+      .show-code-btn{
+        cursor: pointer;
+      }
+      .icon-down{
+        font-size: 12px;
+        margin-left:6px;
+        display: inline-block;
+        line-height: 0;
+        transition: transform 0.3s;
+        vertical-align: -0.125em;
+      }
+    }
+    .code-highlighter{
+      border-top:1px dashed #bfbfbf;
+      transition: height 300ms;
+      overflow: hidden;
+      font-size: 14px;
+      pre{
+        border:0!important;
+        margin:0!important;
+      }
     }
   }
 }
