@@ -5,22 +5,22 @@ import {Tag} from '@leke/rc';
 export default function(){
     return  (
         <>
-            <Tag className='seablue' />
-            <Tag className='lekegreen' />
-            <Tag className='brighteyes' />
-            <Tag className='hotred' />
-            <Tag className='lime' />
-            <Tag className='auroragreen' />
-            <Tag className='geekblue' />
-            <Tag className='saucepurple' />
-            <Tag className='magenta' />
-            <Tag className='volcano' />
-            <Tag className='marigold' />
-            <Tag className='sunrise' />
-            <Tag className='bluefill' />
-            <Tag className='greenfill' />
-            <Tag className='orangefill' />
-            <Tag className='redfill' />
+            <Tag text='你好呀' className='seablue' />
+            <Tag text='你好呀' className='lekegreen' />
+            <Tag text='你好呀' className='brighteyes' />
+            <Tag text='你好呀' className='hotred' />
+            <Tag text='你好呀' className='lime' />
+            <Tag text='你好呀' className='auroragreen' />
+            <Tag text='你好呀' className='geekblue' />
+            <Tag text='你好呀' className='saucepurple' />
+            <Tag text='你好呀' className='magenta' />
+            <Tag text='你好呀' className='volcano' />
+            <Tag text='你好呀' className='marigold' />
+            <Tag text='你好呀' className='sunrise' />
+            <Tag text='你好呀' className='bluefill' />
+            <Tag text='你好呀' className='greenfill' />
+            <Tag text='你好呀' className='orangefill' />
+            <Tag text='你好呀' className='redfill' />
         </>
     );
 }

@@ -3,10 +3,11 @@
  * @Date: 2020/11/13 20:22
  * @Description: 标签
  */
-import React, {ReactNode,useState,useCallback,useMemo} from 'react';
+import React, {ReactNode,useState,useCallback,useMemo,useRef} from 'react';
+import {useAnimation} from '@leke/hooks';
 
 interface Props {
-    text?: string;
+    text: string;
     className?: string;
     icon?: ReactNode;
     closeIcon?: ReactNode;
@@ -20,10 +21,21 @@ const PRESET = [
 
 const Tag: React.FC<Props> = ({text,className,icon,closeIcon,onClose,onClick}) => {
     const [visible,setVisible] = useState(true);
+    const [open,setOpen] = useState(true);
+    const ref = useRef(null);
+    useAnimation({
+        ref,
+        open,
+        exit:'leke-tag-close',
+        onExited(){
+            setVisible(false);
+        }
+    });
     const handleClick = useCallback((e)=>{
         e.stopPropagation();
-        setVisible(false);
+        setOpen(false);
         onClose && onClose();
+
     },[onClose]);
     const memoCloseIcon = useMemo(()=>{
         return closeIcon ? <span className='leke-tag-closeicon' onClick={handleClick}>{closeIcon}</span> : null;
@@ -32,14 +44,13 @@ const Tag: React.FC<Props> = ({text,className,icon,closeIcon,onClose,onClick}) =
         return icon ? <span className='leke-tag-icon'>{icon}</span> : null;
     },[icon]);
     const memoClassName = useMemo(()=>{
-        return PRESET.includes(className) ? `leke-tag-${className}` : className;
+        return PRESET.indexOf(className) >= 0 ? `leke-tag-${className}` : className;
     },[className]);
-    return visible ? <div className={`leke-tag ${memoClassName}`} onClick={onClick}>
+    return visible ? <div className={`leke-tag ${memoClassName}`} onClick={onClick} ref={ref}>
         {memoIcon}<span className='leke-tag-text'>{text}</span>{memoCloseIcon}
     </div> : null;
 };
 Tag.defaultProps = {
-    text: '你好呀',
     className: 'default'
 };
 export default React.memo(Tag);

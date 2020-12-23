@@ -5,7 +5,7 @@ import {Tag} from '@leke/rc';
 export default function(){
     return  (
         <>
-            <Tag />
+            <Tag text='你好呀' />
         </>
     );
 }

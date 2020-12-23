@@ -49,3 +49,19 @@
 .@{name}-greenfill{.preset-color(#FFFFFF,#1FB5AB,#1FB5AB)}
 .@{name}-orangefill{.preset-color(#FFFFFF,#FF9900,#FF9900)}
 .@{name}-redfill{.preset-color(#FFFFFF,#FF4848,#FF4848)}
+
+@keyframes ani-close {
+    0%{
+        transform: scaleY(1);
+        opacity: 1;
+    }
+    100%{
+        transform: scaleY(0.6);
+        opacity: 0;
+    }
+}
+.@{name}-close{
+    animation-name: ani-close;
+    animation-duration: 300ms;
+    animation-timing-function:cubic-bezier(0.23,1,0.32,1);
+}

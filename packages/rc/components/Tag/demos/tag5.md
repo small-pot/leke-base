@@ -5,7 +5,7 @@ import {Tag} from '@leke/rc';
 export default function(){
     return  (
         <>
-            <Tag className='hover-style' text='变形标签' />
+            <Tag className='hover-style' text='hover态标签' />
         </>
     );
 }
