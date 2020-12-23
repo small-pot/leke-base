@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 
 describe('Button ', function() {
     it('button render type', () => {
-        render(<Button type='primary' />);
+        render(<Button type='main' />);
         expect(document.body).toMatchSnapshot();
     });
     it('button render size', () => {
