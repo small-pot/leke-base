@@ -18,37 +18,34 @@ const PRESET = [
     'default','seablue','lekegreen','brighteyes','hotred','lime','auroragreen','geekblue','saucepurple','magenta','volcano','marigold','sunrise',
     'bluefill','greenfill','orangefill','redfill'
 ];
+const PRE_CLASSNAME = 'leke-tag';
 
 const Tag: React.FC<Props> = ({text,className,icon,closeIcon,onClose,onClick}) => {
-    const [visible,setVisible] = useState(true);
     const [open,setOpen] = useState(true);
     const ref = useRef(null);
     useAnimation({
         ref,
         open,
-        exit:'leke-tag-close',
-        onExited(){
-            setVisible(false);
-        }
+        exit:`${PRE_CLASSNAME}-ani`,
+        exited: `${PRE_CLASSNAME}-close`
     });
     const handleClick = useCallback((e)=>{
         e.stopPropagation();
         setOpen(false);
         onClose && onClose();
-
     },[onClose]);
     const memoCloseIcon = useMemo(()=>{
-        return closeIcon ? <span className='leke-tag-closeicon' onClick={handleClick}>{closeIcon}</span> : null;
+        return closeIcon ? <span className={`${PRE_CLASSNAME}-closeicon`} onClick={handleClick}>{closeIcon}</span> : null;
     },[closeIcon,handleClick]);
     const memoIcon = useMemo(()=>{
-        return icon ? <span className='leke-tag-icon'>{icon}</span> : null;
+        return icon ? <span className={`${PRE_CLASSNAME}-icon`}>{icon}</span> : null;
     },[icon]);
     const memoClassName = useMemo(()=>{
-        return PRESET.indexOf(className) >= 0 ? `leke-tag-${className}` : className;
+        return PRESET.indexOf(className) >= 0 ? `${PRE_CLASSNAME}-${className}` : className;
     },[className]);
-    return visible ? <div className={`leke-tag ${memoClassName}`} onClick={onClick} ref={ref}>
-        {memoIcon}<span className='leke-tag-text'>{text}</span>{memoCloseIcon}
-    </div> : null;
+    return <div className={`${PRE_CLASSNAME} ${memoClassName}`} onClick={onClick} ref={ref}>
+        {memoIcon}<span className={`${PRE_CLASSNAME}-text`}>{text}</span>{memoCloseIcon}
+    </div>;
 };
 Tag.defaultProps = {
     className: 'default'
