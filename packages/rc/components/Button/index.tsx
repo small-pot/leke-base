@@ -1,3 +1,8 @@
+/**
+ * @Author: gulingxin@cnstrong.cn
+ * @Date: 2020/12/23 11:15
+ * @Description: 按钮
+ */
 import React, { ReactNode, forwardRef } from 'react';
 import classNames from 'classnames';
 import { ButtonShape, ButtonSize, ButtonType,ButtonHTMLType } from './type';
@@ -10,7 +15,6 @@ type BaseButtonProps = {
     size?:ButtonSize;
     shape?:ButtonShape;
     icon?:ReactNode;
-    ghost?:boolean;
     loading?:boolean;
 }
 
@@ -20,16 +24,15 @@ export type ButtonProps = {
 
 
 const Button = (props: ButtonProps,ref) => {
-    const { type, disabled, className,size,shape,icon,children,loading,ghost,htmlType, ...otherProps} = props;
+    const { type = 'default', disabled, className,size = 'middle',shape,icon,children,loading,htmlType, ...otherProps} = props;
 
     const classes = classNames(className, {
         'leke-btn': true,
-        [type ? `leke-btn-${type}` : 'leke-btn-default']: true,
-        [shape ? `leke-btn-${shape}`:'' ]:true,
-        [size ? `leke-btn-${size}`:'leke-btn-middle']:true,
+        [`leke-btn-${type}`]: type,
+        [`leke-btn-${shape}`]:shape,
+        [`leke-btn-${size}`]:size,
         'leke-btn-loading':loading,
         'leke-btn-icon-only':icon,
-        'leke-btnBackgroundGhost': ghost,
     });
 
     const LoadingIcon = () => {
@@ -51,6 +54,4 @@ const Button = (props: ButtonProps,ref) => {
     );
 };
 
-const WrappedButton = forwardRef(Button);
-
-export default WrappedButton;
+export default forwardRef(Button);
