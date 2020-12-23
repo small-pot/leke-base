@@ -26,9 +26,9 @@ describe('Tag ', function() {
         expect($closeIcon).not.toBe(null);
         fireEvent.click($closeIcon);
         waitFor(()=>{
-            expect(container.querySelector('.leke-tag')).toBe(null);
-            expect(onClose).toHaveBeenCalled();
+            expect(container.querySelector('.leke-tag-ani')).toHaveClass('leke-tag-close');
         });
+        expect(onClose).toHaveBeenCalled();
     });
     it('test onClick attribute',async ()=>{
         const onClick = jest.fn();
