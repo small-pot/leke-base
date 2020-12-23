@@ -4,53 +4,40 @@ import classNames from 'classnames';
 interface SlideProps{
     children:React.ReactElement<HTMLElement>[],
     currentIndex:number,
-    direction:'left'|'right'|'up'|'down',
+    vertical:boolean,
     className:string
 }
-export default function Slide({children,currentIndex,direction,className}:SlideProps) {
-    const dataRef=useRef({oldIndex:currentIndex,height:0,});
-
-    const property=useMemo(()=>{
-        return (direction==='up'||direction==='down')?'height':'width';
-    },[direction]);
+export default function Slide({children,currentIndex,vertical,className}:SlideProps) {
+    const dataRef=useRef({oldIndex:currentIndex,height:0});
 
     const modifyChildren=useMemo(()=>{
         return React.Children.map(children,(child,index)=>{
             return React.cloneElement(child,{
-                style:Object.assign({},child.props.style,{width:'100%',height:'100%',[property]:100/children.length+'%'}),
+                style:Object.assign({},child.props.style,{width:'100%',height:'100%',[vertical?'height':'width']:100/children.length+'%'}),
                 key:index,
                 className:classNames(
                     'leke-carousel-item',
                     child.props.className
                 )});
         });
-    },[children,property]);
+    },[children,vertical]);
     const length=modifyChildren.length;
 
     const wrapStyle:React.CSSProperties=useMemo(()=>{
         let left=null;
         let top=null;
         const {height}=dataRef.current;
-        switch (direction) {
-        case "up":
+        if(vertical){
             top=-currentIndex*height;
-            break;
-        case "down":
-            top=currentIndex*height;
-            break;
-        case "left":
+        }else {
             left=-currentIndex*100+'%';
-            break;
-        case "right":
-            left=currentIndex*100+'%';
-            break;
         }
         return {
-            [property]:(length*100)+'%',
+            [vertical?'height':'width']:(length*100)+'%',
             left,
             top
         };
-    },[currentIndex,length,direction,property,dataRef]);
+    },[currentIndex,length,vertical,dataRef]);
 
     dataRef.current.oldIndex=currentIndex;
     const refCallback=useCallback((node)=>{

@@ -131,7 +131,7 @@ export default function Trigger(props:triggerPropsType) {
         open:portalContainer?visible:false,
         onEnter(){
             const {position}=window.getComputedStyle(portalContainer);
-            if(!position||position==='static'){
+            if(portalContainer!==document.body&&(!position||position==='static')){
                 portalContainer.style.position='relative';
             }
             if(autoSize){

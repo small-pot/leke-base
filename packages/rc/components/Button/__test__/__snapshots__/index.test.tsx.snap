@@ -1,25 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button  button render block 1`] = `
-<body>
-  <div>
-    <button
-      class="leke-btn leke-btn-default  leke-btn-middle leke-btn-block"
-    />
-  </div>
-</body>
-`;
-
-exports[`Button  button render danger 1`] = `
-<body>
-  <div>
-    <button
-      class="leke-btn leke-btn-danger leke-btn-default  leke-btn-middle"
-    />
-  </div>
-</body>
-`;
-
 exports[`Button  button render disabled 1`] = `
 <body>
   <div>
@@ -36,17 +16,6 @@ exports[`Button  button render ghost 1`] = `
   <div>
     <button
       class="leke-btn leke-btn-default  leke-btn-middle leke-btnBackgroundGhost"
-    />
-  </div>
-</body>
-`;
-
-exports[`Button  button render lekeDisabled 1`] = `
-<body>
-  <div>
-    <button
-      class="leke-btn leke-btn-default  leke-btn-middle leke-btnDisabled"
-      disabled=""
     />
   </div>
 </body>
@@ -96,16 +65,6 @@ exports[`Button  button render type 1`] = `
   <div>
     <button
       class="leke-btn leke-btn-primary  leke-btn-middle"
-    />
-  </div>
-</body>
-`;
-
-exports[`Button  button render warning 1`] = `
-<body>
-  <div>
-    <button
-      class="leke-btn leke-btn-warning leke-btn-default  leke-btn-middle"
     />
   </div>
 </body>

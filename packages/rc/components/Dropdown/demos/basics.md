@@ -8,7 +8,7 @@ export default function(){
     return(
         <Dropdown 
             popup={<div style={{width:150,height:100}}>popup</div>}
-        ><a>focus me</a></Dropdown>
+        ><a>hover me</a></Dropdown>
     );
 }
 ```

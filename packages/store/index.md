@@ -36,7 +36,7 @@ function selector(state){
     };
 }
 function compare(prev,next) {
-    return prev.visible!==next.visible;   //当visible发生变化时更新数据
+    return prev.visible===next.visible;   //当visible发生变化时更新数据
 }
 const {text,visible}=useData(selector,compare);
 ```
