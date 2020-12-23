@@ -1,9 +1,9 @@
 @import "../../less/theme.less";
 @import "./mixins.less";
 
-@normal-color:#8c8c8c;
-@normal-hover-color:#bfbfbf;
-@normal-click-color:#595959;
+@secondary-color:#8c8c8c;
+@secondary-hover-color:#bfbfbf;
+@secondary-click-color:#595959;
 @leke-btn-disabled:#bbe9df;
 
 // 警示按钮
@@ -120,14 +120,14 @@
     &-dashed{
         .btn-dashed(@base-color,@hover-color,@click-color)
     }
-    &-normal{
-        .btn-normal(@normal-color,@normal-hover-color,@normal-click-color)
+    &-secondary{
+        .btn-secondary(@secondary-color,@secondary-hover-color,@secondary-click-color)
     }
-    &-text {
-        .btn-text(@base-color,@hover-color,@click-color)
+    &-link {
+        .btn-link(@base-color,@hover-color,@click-color)
     }
-    &-primary {
-        .btn-primary(@base-color,@hover-color,@click-color)
+    &-main {
+        .btn-main(@base-color,@hover-color,@click-color)
     }
 }
 .leke-btn-loading-icon,
@@ -157,13 +157,13 @@
     color: #fff;
     border-color: #fff;
 }
-.leke-btnBackgroundGhost.leke-btn-primary {
+.leke-btnBackgroundGhost.leke-btn-main {
     background: #bbe9df;
     border: none;
     color: @base-color;
     text-shadow: none;
 }
-.leke-btnBackgroundGhost.leke-btn-primary:hover {
+.leke-btnBackgroundGhost.leke-btn-main:hover {
     background-color: #fff;
 }
 
@@ -191,15 +191,15 @@
     background-color: #fff;
 }
 
-.leke-abtnBackgroundGhost.leke-btn-primary[disabled],
-.leke-abtnBackgroundGhost.leke-btn-primary[disabled]:hover {
+.leke-abtnBackgroundGhost.leke-btn-main[disabled],
+.leke-abtnBackgroundGhost.leke-btn-main[disabled]:hover {
     background-color:#fff;
     color: #cccccc;
     cursor: not-allowed;
 }
 
-.leke-btn-primary[disabled]:hover,
-.leke-btn-primary[disabled]{
+.leke-btn-main[disabled]:hover,
+.leke-btn-main[disabled]{
     background-color: #d9d9d9;
     .btnDisabled(#fff);
 }
@@ -208,8 +208,8 @@
     border: 1px solid #d9d9d9;
     .btnDisabled(#d9d9d9);
 }
-.leke-btn-normal[disabled]:hover,
-.leke-btn-normal[disabled]{
+.leke-btn-secondary[disabled]:hover,
+.leke-btn-secondary[disabled]{
     border: 1px solid #d9d9d9;
     .btnDisabled(#d9d9d9);
 }
@@ -218,7 +218,7 @@
     border: 1px dashed #d9d9d9;
     .btnDisabled(#d9d9d9);
 }
-.leke-btn-text[disabled]:hover,
-.leke-btn-text[disabled]{
+.leke-btn-link[disabled]:hover,
+.leke-btn-link[disabled]{
     .btnDisabled(#d9d9d9);
 }

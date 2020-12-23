@@ -8,8 +8,8 @@ export default function(){
     return  <div>
         <div>危险/失败按钮</div>
         <div>
-            <Button type='primary' className='leke-demo-container leke-demo-danger-primary'>按钮</Button>
-            <Button type='primary' className='leke-demo-container' disabled>按钮</Button>
+            <Button type='main' className='leke-demo-container leke-demo-danger-primary'>按钮</Button>
+            <Button type='main' className='leke-demo-container' disabled>按钮</Button>
         </div>
         <div>
             <Button className='leke-demo-container leke-demo-danger-default'>按钮</Button>
@@ -20,13 +20,13 @@ export default function(){
             <Button type='dashed' className='leke-demo-container' disabled>按钮</Button>
         </div>
         <div>
-            <Button type='text' className='leke-demo-container leke-demo-danger-text'>按钮</Button>
-            <Button type='text' className='leke-demo-container' disabled>按钮</Button>
+            <Button type='link' className='leke-demo-container leke-demo-danger-text'>按钮</Button>
+            <Button type='link' className='leke-demo-container' disabled>按钮</Button>
         </div>
         <div>警示/提醒按钮</div>
         <div>
-            <Button type='primary' className='leke-demo-container leke-demo-warning-primary'>按钮</Button>
-            <Button type='primary' className='leke-demo-container' disabled>按钮</Button>
+            <Button type='main' className='leke-demo-container leke-demo-warning-primary'>按钮</Button>
+            <Button type='main' className='leke-demo-container' disabled>按钮</Button>
         </div>
         <div>
             <Button className='leke-demo-container leke-demo-warning-default'>按钮</Button>
@@ -37,8 +37,8 @@ export default function(){
             <Button type='dashed' className='leke-demo-container' disabled>按钮</Button>
         </div>
         <div>
-            <Button type='text' className='leke-demo-container leke-demo-warning-text'>按钮</Button>
-            <Button type='text' className='leke-demo-container' disabled>按钮</Button>
+            <Button type='link' className='leke-demo-container leke-demo-warning-text'>按钮</Button>
+            <Button type='link' className='leke-demo-container' disabled>按钮</Button>
         </div>
     </div>;
 }
