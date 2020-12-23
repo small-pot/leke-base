@@ -7,8 +7,8 @@ export default function(){
     return(
         <Dropdown 
             popup={<div style={{height:200}}>popup</div>}
-            event={['hover']}
-        ><a >hover me</a></Dropdown>
+            event={['focus']}
+        ><a >focus me</a></Dropdown>
     );
 }
 ```
