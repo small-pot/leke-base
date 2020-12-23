@@ -27,10 +27,6 @@ describe('Button ', function() {
         render(<Button icon={container} loading/>);
         expect(document.body).toMatchSnapshot();
     });
-    it('button render ghost', () => {
-        render(<Button ghost/>);
-        expect(document.body).toMatchSnapshot();
-    });
     it('button should be called', () => {
         const onClick = jest.fn();
         render( <Button onClick={onClick} >点击</Button>);
