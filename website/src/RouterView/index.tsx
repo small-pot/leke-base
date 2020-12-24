@@ -19,7 +19,7 @@ export default function View ({type,name}) {
 
     return (
         <div className='router-container'>
-            {!loading&&(type==='rc'||type==='hooks')?<DemosNav mds={data}/>:null}
+            {!loading&&(type==='rc'||type==='hooks')&&name?<DemosNav mds={data}/>:null}
             {data?
                 <div className='markdown-list'>
                     {data.map((item,index)=><MarkdownView key={index} {...item}  />)}
