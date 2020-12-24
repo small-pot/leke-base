@@ -69,7 +69,7 @@ export default function DemosNav (props:types) {
     },[demoList,setCurrentIndex]);
     function click(index) {
         window.cancelAnimationFrame(frameId);
-        const el=document.querySelectorAll('.markdown-section')[index];
+        const el=document.querySelectorAll('.nav-section')[index];
         disableRef.current=true;
         animateScrollTo(el,()=>{
             disableRef.current=false;
