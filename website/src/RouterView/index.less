@@ -1,0 +1,77 @@
+@import "../../../packages/rc/less/theme.less";
+.demos-nav{
+  position: fixed;
+  top:110px;
+  right:60px;
+  width:100px;
+  .demos-nav-title{
+    color: #262626;
+    font-size: 16px;
+    cursor: default;
+    margin-bottom: 10px;
+  }
+  ul{
+    border-left: solid 1px @border-color;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.85);
+  }
+  li{
+    padding: 10px 0 10px 10px;
+    cursor: pointer;
+    &.current{
+      position: relative;
+      color:@base-color;
+      &:before{
+        position: absolute;
+        left:-4px;
+        top:12px;
+        content: "";
+        width: 7px;
+        height: 7px;
+        background-color: #ffffff;
+        border: solid 1px @base-color;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+.router-container{
+  flex: 1;
+  border-left:1px solid #f0f0f0;
+  box-sizing: border-box;
+  padding:0 220px 50px 50px;
+  h1{
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  h2{
+    margin-top:50px;
+    margin-bottom: 20px;
+  }
+  h3,h4,h5,h6{
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+.icon-list{
+  display: flex;
+  flex-wrap:wrap ;
+  width: 100%;
+  li{
+    text-align: center;
+    width: 12.5%;
+    padding-top:12px;
+    padding-bottom: 12px;
+    &:hover{
+      color:@base-color;
+      background-color: #d2f0ed;
+      border-radius: @radius;
+    }
+    .leke-icon{
+      font-size: 30px;
+    }
+    p{
+      margin-top: 12px;
+    }
+  }
+}

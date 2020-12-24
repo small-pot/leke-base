@@ -2,14 +2,6 @@ export default {
     title:'公共',
     routes:[
         {
-            key:'icons',
-            title:'图标'
-        },
-        {
-            key:'MiniHeader',
-            title:'业务头部'
-        },
-        {
             key:'Button',
             title:'按钮'
         },
@@ -32,6 +24,10 @@ export default {
         {
             key:'Tag',
             title:'标签'
+        },
+        {
+            key:'MiniHeader',
+            title:'业务头部'
         }
     ]
 };

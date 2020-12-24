@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coy } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { jsx, javascript,css } from "react-syntax-highlighter/dist/esm/languages/prism";
@@ -7,6 +7,7 @@ import './index.less';
 import ReactMarkdown from "react-markdown";
 import {DownFill} from "@leke/icons";
 import {useAnimation} from '@leke/hooks';
+import classNames from 'classnames';
 
 SyntaxHighlighter.registerLanguage("jsx", jsx);
 SyntaxHighlighter.registerLanguage("javascript", javascript);
@@ -100,7 +101,8 @@ export default function (props:propTypes) {
         );
     }
     return (
-        <section className='markdown-section'>
+        <section className={classNames('markdown-section',title?'nav-section':'')}>
+            {!JSXComponent&&title?<h2>{title}</h2>:null}
             <ReactMarkdown
                 plugins={[gfm]}
                 source={source}
