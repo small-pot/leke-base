@@ -34,6 +34,7 @@ const Tag: React.FC<Props> = ({text,className,icon,closeIcon,onClose,onClick}) =
         },
         onExiting: ()=>{
             tagPointer.style.width = '0px';
+            tagPointer.style.padding = '0px';
             tagPointer.style.transform = 'scale(0,0)';
         }
 
@@ -52,10 +53,11 @@ const Tag: React.FC<Props> = ({text,className,icon,closeIcon,onClose,onClick}) =
     const memoClassName = useMemo(()=>{
         return PRESET.indexOf(className) >= 0 ? `${PRE_CLASSNAME}-${className}` : className;
     },[className]);
-    return <div ref={ref} className={`${PRE_CLASSNAME}-ani`}>
-        <div className={`${PRE_CLASSNAME} ${memoClassName}`} onClick={onClick}>
-            {memoIcon}<span className={`${PRE_CLASSNAME}-text`}>{text}</span>{memoCloseIcon}
-        </div>
+    const memoAniClassName = useMemo(()=>{
+        return closeIcon ? `${PRE_CLASSNAME}-ani` : '';
+    },[closeIcon]);
+    return <div className={`${PRE_CLASSNAME} ${memoClassName} ${memoAniClassName}`} onClick={onClick} ref={ref}>
+        {memoIcon}<span className={`${PRE_CLASSNAME}-text`}>{text}</span>{memoCloseIcon}
     </div>;
 };
 Tag.defaultProps = {

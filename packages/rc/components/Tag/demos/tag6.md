@@ -68,6 +68,7 @@ export default function(){
     font-size: 12px;
     color: #FFFFFF;
     padding: 0;
+    justify-content: center;
 }
 .trans-style-eight{
     width: 20px;
@@ -77,6 +78,7 @@ export default function(){
     font-size: 12px;
     color: #FFFFFF;
     padding: 0;
+    justify-content: center;
 }
 .trans-style-nine{
     width: 20px;
@@ -86,6 +88,7 @@ export default function(){
     font-size: 12px;
     color: #FFFFFF;
     padding: 0;
+    justify-content: center;
 }
 .trans-style-ten{
     background: #F0F0F0;

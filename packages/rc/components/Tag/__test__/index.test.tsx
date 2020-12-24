@@ -23,10 +23,12 @@ describe('Tag ', function() {
         const onClose = jest.fn();
         const {container} = render(<Tag text='你好呀' closeIcon={<Close/>} onClose={onClose}/>);
         const $closeIcon = container.querySelector('.leke-tag-closeicon');
+        const $lekeTag = container.querySelector('.leke-tag');
         expect($closeIcon).not.toBe(null);
+        expect($lekeTag).toHaveClass('leke-tag-ani');
         fireEvent.click($closeIcon);
         waitFor(()=>{
-            expect(container.querySelector('.leke-tag-ani')).toHaveClass('leke-tag-close');
+            expect($lekeTag).toHaveClass('leke-tag-close');
         });
         expect(onClose).toHaveBeenCalled();
     });
