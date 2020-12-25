@@ -100,7 +100,8 @@ export default function Trigger(props:triggerPropsType) {
             childProps.onFocus?.(e);
             setVisible(true);
         };
-        cloneProps.onBlur=()=>{
+        cloneProps.onBlur=(e)=>{
+            childProps.onBlur?.(e);
             const activeElement=document.activeElement as HTMLElement;
             if(contains(triggerRef.current,activeElement)){
                 activeElement.blur();
