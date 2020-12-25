@@ -1,5 +1,5 @@
 export default {
-    title:'公共',
+    title:'通用',
     routes:[
         {
             key:'Button',
@@ -24,10 +24,6 @@ export default {
         {
             key:'Tag',
             title:'标签'
-        },
-        {
-            key:'MiniHeader',
-            title:'业务头部'
         }
     ]
 };
