@@ -12,7 +12,9 @@ configure({http});
 function getHash() {
     return window.location.hash.replace(/^#/,'');
 }
-
+if(!getHash()){
+    window.location.href='#rc';
+}
 function App(){
     const [hash,setHash]=useState(getHash());
     useEffect(()=>{
