@@ -1,4 +1,8 @@
-## 受控组件
+---    
+title: 受控组件
+description: 传入checked和onChange控制状态
+---
+
 ```jsx
 import React,{useState} from 'react';
 import {Switch} from '@leke/rc';

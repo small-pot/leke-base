@@ -35,7 +35,7 @@ export interface triggerPropsType {
     popupClassName?:string,
     getPopupContainer?:(HTMLElement)=>HTMLElement,
     placement:placementType,
-    autoFill?:boolean
+    autoSize?:boolean
 }
 const enter='leke-open';
 const exit='leke-close';
@@ -55,7 +55,7 @@ function contains (container:HTMLElement,target:HTMLElement){
     return false;
 }
 export default function Trigger(props:triggerPropsType) {
-    const {children,event,popup,popupStyle,popupClassName,getPopupContainer,placement,autoFill}=props;
+    const {children,event,popup,popupStyle,popupClassName,getPopupContainer,placement,autoSize}=props;
     const [visible,setShow]=useControl(props.visible,props.onVisibleChange);
     const triggerRef=useRef<HTMLElement>(null);
     const popupRef=useRef<HTMLDivElement>(null);
@@ -100,7 +100,8 @@ export default function Trigger(props:triggerPropsType) {
             childProps.onFocus?.(e);
             setVisible(true);
         };
-        cloneProps.onBlur=()=>{
+        cloneProps.onBlur=(e)=>{
+            childProps.onBlur?.(e);
             const activeElement=document.activeElement as HTMLElement;
             if(contains(triggerRef.current,activeElement)){
                 activeElement.blur();
@@ -131,10 +132,10 @@ export default function Trigger(props:triggerPropsType) {
         open:portalContainer?visible:false,
         onEnter(){
             const {position}=window.getComputedStyle(portalContainer);
-            if(!position||position==='static'){
+            if(portalContainer!==document.body&&(!position||position==='static')){
                 portalContainer.style.position='relative';
             }
-            if(autoFill){
+            if(autoSize){
                 if(placement.indexOf('bottom')===0||placement.indexOf('top')===0){
                     popupRef.current.style.minWidth=triggerRef.current.offsetWidth+'px';
                 }else{

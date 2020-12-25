@@ -1,7 +1,11 @@
-## 加载中
+---
+title: 加载中
+description: 加载中样式此时开关不可操作
+---
+
 ```jsx
 import React,{useState} from 'react';
-import {Switch} from '@leke/rc';
+import {Switch,Button} from '@leke/rc';
 
 export default function(){
     const [loading,setLoading] = useState(true);
@@ -15,7 +19,7 @@ export default function(){
             <Switch size="small" loading={loading}/>
             <br />
             <br />
-            <button onClick={onToggle}>toggle loading</button>
+            <Button onClick={onToggle} type='main'>toggle loading</Button>
         </>
     );
 }

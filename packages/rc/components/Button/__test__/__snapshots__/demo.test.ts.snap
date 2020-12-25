@@ -1,0 +1,824 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test buttonBlock.md 1`] = `
+<div>
+  <div
+    style="width: 400px;"
+  >
+    <button
+      class="leke-demo-container leke-demo-block leke-btn leke-btn-main leke-btn-middle"
+    >
+      <span
+        class="leke-btn-content"
+      >
+        按钮
+      </span>
+    </button>
+    <button
+      class="leke-demo-container leke-demo-block leke-btn leke-btn-default leke-btn-middle"
+    >
+      <span
+        class="leke-btn-content"
+      >
+        按钮
+      </span>
+    </button>
+    <button
+      class="leke-demo-container leke-demo-block leke-btn leke-btn-secondary leke-btn-middle"
+    >
+      <span
+        class="leke-btn-content"
+      >
+        按钮
+      </span>
+    </button>
+    <button
+      class="leke-demo-container leke-demo-block leke-btn leke-btn-dashed leke-btn-middle"
+    >
+      <span
+        class="leke-btn-content"
+      >
+        按钮
+      </span>
+    </button>
+    <button
+      class="leke-demo-container leke-demo-block leke-btn leke-btn-link leke-btn-middle"
+    >
+      <span
+        class="leke-btn-content"
+      >
+        按钮
+      </span>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`test buttonDanger.md 1`] = `
+<div>
+  <div>
+    <div>
+      危险/失败按钮
+    </div>
+    <div>
+      <button
+        class="leke-demo-container leke-demo-danger-primary leke-btn leke-btn-main leke-btn-middle"
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-main leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+    </div>
+    <div>
+      <button
+        class="leke-demo-container leke-demo-danger-default leke-btn leke-btn-default leke-btn-middle"
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-default leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+    </div>
+    <div>
+      <button
+        class="leke-demo-container leke-demo-danger-dashed leke-btn leke-btn-dashed leke-btn-middle"
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-dashed leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+    </div>
+    <div>
+      <button
+        class="leke-demo-container leke-demo-danger-text leke-btn leke-btn-link leke-btn-middle"
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-link leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+    </div>
+    <div>
+      警示/提醒按钮
+    </div>
+    <div>
+      <button
+        class="leke-demo-container leke-demo-warning-primary leke-btn leke-btn-main leke-btn-middle"
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-main leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+    </div>
+    <div>
+      <button
+        class="leke-demo-container leke-demo-warning-default leke-btn leke-btn-default leke-btn-middle"
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-default leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+    </div>
+    <div>
+      <button
+        class="leke-demo-container leke-demo-warning-dashed leke-btn leke-btn-dashed leke-btn-middle"
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-dashed leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+    </div>
+    <div>
+      <button
+        class="leke-demo-container leke-demo-warning-text leke-btn leke-btn-link leke-btn-middle"
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-link leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`test buttonDisabled.md 1`] = `
+<div>
+  <div>
+    <div>
+      <button
+        class="leke-demo-container leke-btn leke-btn-main leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮(disabled)
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-default leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮(disabled)
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-secondary leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮(disabled)
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-dashed leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮(disabled)
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-link leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮(disabled)
+        </span>
+      </button>
+    </div>
+    <div>
+      <button
+        class="leke-demo-container leke-demo-disabled-main leke-btn leke-btn-main leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮(lekeDisabled)
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-demo-disabled-default leke-btn leke-btn-default leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮(lekeDisabled)
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-demo-disabled-dashed leke-btn leke-btn-dashed leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮(lekeDisabled)
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-demo-disabled-link leke-btn leke-btn-link leke-btn-middle"
+        disabled=""
+      >
+        <span
+          class="leke-btn-content"
+        >
+          按钮(lekeDisabled)
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`test buttonLoading.md 1`] = `
+<div>
+  <button
+    class="leke-demo-container leke-btn leke-btn-main leke-btn-middle leke-btn-loading"
+  >
+    <div
+      class="leke-btn-loading-icon"
+    />
+    <span
+      class="leke-btn-content"
+    >
+      按钮
+    </span>
+  </button>
+  <button
+    class="leke-demo-container leke-btn leke-btn-main leke-btn-circle leke-btn-middle leke-btn-icon-only"
+  >
+    <span
+      class="leke-icon-loading"
+    >
+      <i
+        class="leke-icon"
+      >
+        <svg
+          aria-hidden="true"
+          fill="currentColor"
+          height="1em"
+          viewBox="0 0 1024 1024"
+          width="1em"
+        >
+          <defs>
+            <style />
+          </defs>
+          <path
+            d="M948.126 575.853v290.75H75.874v-290.75H8.778V933.7h1006.444V575.853z"
+          />
+          <path
+            d="M316.75 366.513c2.684 0 5.48-.783 7.94-2.237l153.762-94.605v421.588h67.096V269.223l154.657 95.053c2.46 1.454 5.144 2.237 7.94 2.237 4.25 0 8.387-1.79 11.294-5.032 4.809-5.48 5.032-13.643.56-19.458L524.635 96.003c-3.019-3.802-7.604-5.815-12.3-5.703-4.697-.112-9.282 1.901-12.301 5.703l-195.139 246.02c-4.585 5.703-4.361 13.866.56 19.458a15.183 15.183 0 0011.294 5.032z"
+          />
+        </svg>
+      </i>
+    </span>
+  </button>
+  <button
+    class="leke-demo-container leke-btn leke-btn-main leke-btn-circle leke-btn-middle leke-btn-loading leke-btn-icon-only"
+  >
+    <div
+      class="leke-btn-loading-icon"
+    />
+  </button>
+  <button
+    class="leke-demo-container leke-btn leke-btn-main leke-btn-middle"
+  >
+    <span
+      class="leke-btn-content"
+    >
+      按钮
+    </span>
+  </button>
+</div>
+`;
+
+exports[`test buttonShape.md 1`] = `
+<div>
+  <div>
+    <div>
+      <div
+        class="leke-demo-sx"
+      >
+        large
+      </div>
+      <div
+        class="leke-demo-active"
+      >
+        middle
+      </div>
+      <div
+        class="leke-demo-sx"
+      >
+        small
+      </div>
+    </div>
+    <div>
+      <button
+        class="leke-demo-container leke-btn leke-btn-main leke-btn-middle leke-btn-icon-only"
+      >
+        <span
+          class="leke-demo-icon"
+        >
+          <i
+            class="leke-icon"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 1024 1024"
+              width="1em"
+            >
+              <defs>
+                <style />
+              </defs>
+              <path
+                d="M948.126 575.853v290.75H75.874v-290.75H8.778V933.7h1006.444V575.853z"
+              />
+              <path
+                d="M316.75 366.513c2.684 0 5.48-.783 7.94-2.237l153.762-94.605v421.588h67.096V269.223l154.657 95.053c2.46 1.454 5.144 2.237 7.94 2.237 4.25 0 8.387-1.79 11.294-5.032 4.809-5.48 5.032-13.643.56-19.458L524.635 96.003c-3.019-3.802-7.604-5.815-12.3-5.703-4.697-.112-9.282 1.901-12.301 5.703l-195.139 246.02c-4.585 5.703-4.361 13.866.56 19.458a15.183 15.183 0 0011.294 5.032z"
+              />
+            </svg>
+          </i>
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-main leke-btn-circle leke-btn-middle leke-btn-icon-only"
+      >
+        <span
+          class="leke-demo-icon"
+        >
+          <i
+            class="leke-icon"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 1024 1024"
+              width="1em"
+            >
+              <defs>
+                <style />
+              </defs>
+              <path
+                d="M948.126 575.853v290.75H75.874v-290.75H8.778V933.7h1006.444V575.853z"
+              />
+              <path
+                d="M316.75 366.513c2.684 0 5.48-.783 7.94-2.237l153.762-94.605v421.588h67.096V269.223l154.657 95.053c2.46 1.454 5.144 2.237 7.94 2.237 4.25 0 8.387-1.79 11.294-5.032 4.809-5.48 5.032-13.643.56-19.458L524.635 96.003c-3.019-3.802-7.604-5.815-12.3-5.703-4.697-.112-9.282 1.901-12.301 5.703l-195.139 246.02c-4.585 5.703-4.361 13.866.56 19.458a15.183 15.183 0 0011.294 5.032z"
+              />
+            </svg>
+          </i>
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-main leke-btn-middle leke-btn-icon-only"
+      >
+        <span
+          class="leke-demo-icon"
+        >
+          <i
+            class="leke-icon"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 1024 1024"
+              width="1em"
+            >
+              <defs>
+                <style />
+              </defs>
+              <path
+                d="M948.126 575.853v290.75H75.874v-290.75H8.778V933.7h1006.444V575.853z"
+              />
+              <path
+                d="M316.75 366.513c2.684 0 5.48-.783 7.94-2.237l153.762-94.605v421.588h67.096V269.223l154.657 95.053c2.46 1.454 5.144 2.237 7.94 2.237 4.25 0 8.387-1.79 11.294-5.032 4.809-5.48 5.032-13.643.56-19.458L524.635 96.003c-3.019-3.802-7.604-5.815-12.3-5.703-4.697-.112-9.282 1.901-12.301 5.703l-195.139 246.02c-4.585 5.703-4.361 13.866.56 19.458a15.183 15.183 0 0011.294 5.032z"
+              />
+            </svg>
+          </i>
+        </span>
+        <span
+          class="leke-btn-content"
+        >
+          下载
+        </span>
+      </button>
+    </div>
+    <div>
+      <button
+        class="leke-demo-container leke-btn leke-btn-default leke-btn-middle leke-btn-icon-only"
+      >
+        <span
+          class="leke-demo-icon"
+        >
+          <i
+            class="leke-icon"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 1024 1024"
+              width="1em"
+            >
+              <defs>
+                <style />
+              </defs>
+              <path
+                d="M948.126 575.853v290.75H75.874v-290.75H8.778V933.7h1006.444V575.853z"
+              />
+              <path
+                d="M316.75 366.513c2.684 0 5.48-.783 7.94-2.237l153.762-94.605v421.588h67.096V269.223l154.657 95.053c2.46 1.454 5.144 2.237 7.94 2.237 4.25 0 8.387-1.79 11.294-5.032 4.809-5.48 5.032-13.643.56-19.458L524.635 96.003c-3.019-3.802-7.604-5.815-12.3-5.703-4.697-.112-9.282 1.901-12.301 5.703l-195.139 246.02c-4.585 5.703-4.361 13.866.56 19.458a15.183 15.183 0 0011.294 5.032z"
+              />
+            </svg>
+          </i>
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-default leke-btn-circle leke-btn-middle leke-btn-icon-only"
+      >
+        <span
+          class="leke-demo-icon"
+        >
+          <i
+            class="leke-icon"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 1024 1024"
+              width="1em"
+            >
+              <defs>
+                <style />
+              </defs>
+              <path
+                d="M948.126 575.853v290.75H75.874v-290.75H8.778V933.7h1006.444V575.853z"
+              />
+              <path
+                d="M316.75 366.513c2.684 0 5.48-.783 7.94-2.237l153.762-94.605v421.588h67.096V269.223l154.657 95.053c2.46 1.454 5.144 2.237 7.94 2.237 4.25 0 8.387-1.79 11.294-5.032 4.809-5.48 5.032-13.643.56-19.458L524.635 96.003c-3.019-3.802-7.604-5.815-12.3-5.703-4.697-.112-9.282 1.901-12.301 5.703l-195.139 246.02c-4.585 5.703-4.361 13.866.56 19.458a15.183 15.183 0 0011.294 5.032z"
+              />
+            </svg>
+          </i>
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-default leke-btn-middle leke-btn-icon-only"
+      >
+        <span
+          class="leke-demo-icon"
+        >
+          <i
+            class="leke-icon"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 1024 1024"
+              width="1em"
+            >
+              <defs>
+                <style />
+              </defs>
+              <path
+                d="M948.126 575.853v290.75H75.874v-290.75H8.778V933.7h1006.444V575.853z"
+              />
+              <path
+                d="M316.75 366.513c2.684 0 5.48-.783 7.94-2.237l153.762-94.605v421.588h67.096V269.223l154.657 95.053c2.46 1.454 5.144 2.237 7.94 2.237 4.25 0 8.387-1.79 11.294-5.032 4.809-5.48 5.032-13.643.56-19.458L524.635 96.003c-3.019-3.802-7.604-5.815-12.3-5.703-4.697-.112-9.282 1.901-12.301 5.703l-195.139 246.02c-4.585 5.703-4.361 13.866.56 19.458a15.183 15.183 0 0011.294 5.032z"
+              />
+            </svg>
+          </i>
+        </span>
+        <span
+          class="leke-btn-content"
+        >
+          下载
+        </span>
+      </button>
+    </div>
+    <div>
+      <button
+        class="leke-demo-container leke-btn leke-btn-dashed leke-btn-middle leke-btn-icon-only"
+      >
+        <span
+          class="leke-demo-icon"
+        >
+          <i
+            class="leke-icon"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 1024 1024"
+              width="1em"
+            >
+              <defs>
+                <style />
+              </defs>
+              <path
+                d="M948.126 575.853v290.75H75.874v-290.75H8.778V933.7h1006.444V575.853z"
+              />
+              <path
+                d="M316.75 366.513c2.684 0 5.48-.783 7.94-2.237l153.762-94.605v421.588h67.096V269.223l154.657 95.053c2.46 1.454 5.144 2.237 7.94 2.237 4.25 0 8.387-1.79 11.294-5.032 4.809-5.48 5.032-13.643.56-19.458L524.635 96.003c-3.019-3.802-7.604-5.815-12.3-5.703-4.697-.112-9.282 1.901-12.301 5.703l-195.139 246.02c-4.585 5.703-4.361 13.866.56 19.458a15.183 15.183 0 0011.294 5.032z"
+              />
+            </svg>
+          </i>
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-dashed leke-btn-circle leke-btn-middle leke-btn-icon-only"
+      >
+        <span
+          class="leke-demo-icon"
+        >
+          <i
+            class="leke-icon"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 1024 1024"
+              width="1em"
+            >
+              <defs>
+                <style />
+              </defs>
+              <path
+                d="M948.126 575.853v290.75H75.874v-290.75H8.778V933.7h1006.444V575.853z"
+              />
+              <path
+                d="M316.75 366.513c2.684 0 5.48-.783 7.94-2.237l153.762-94.605v421.588h67.096V269.223l154.657 95.053c2.46 1.454 5.144 2.237 7.94 2.237 4.25 0 8.387-1.79 11.294-5.032 4.809-5.48 5.032-13.643.56-19.458L524.635 96.003c-3.019-3.802-7.604-5.815-12.3-5.703-4.697-.112-9.282 1.901-12.301 5.703l-195.139 246.02c-4.585 5.703-4.361 13.866.56 19.458a15.183 15.183 0 0011.294 5.032z"
+              />
+            </svg>
+          </i>
+        </span>
+      </button>
+      <button
+        class="leke-demo-container leke-btn leke-btn-dashed leke-btn-middle leke-btn-icon-only"
+      >
+        <span
+          class="leke-demo-icon"
+        >
+          <i
+            class="leke-icon"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 1024 1024"
+              width="1em"
+            >
+              <defs>
+                <style />
+              </defs>
+              <path
+                d="M948.126 575.853v290.75H75.874v-290.75H8.778V933.7h1006.444V575.853z"
+              />
+              <path
+                d="M316.75 366.513c2.684 0 5.48-.783 7.94-2.237l153.762-94.605v421.588h67.096V269.223l154.657 95.053c2.46 1.454 5.144 2.237 7.94 2.237 4.25 0 8.387-1.79 11.294-5.032 4.809-5.48 5.032-13.643.56-19.458L524.635 96.003c-3.019-3.802-7.604-5.815-12.3-5.703-4.697-.112-9.282 1.901-12.301 5.703l-195.139 246.02c-4.585 5.703-4.361 13.866.56 19.458a15.183 15.183 0 0011.294 5.032z"
+              />
+            </svg>
+          </i>
+        </span>
+        <span
+          class="leke-btn-content"
+        >
+          下载
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`test buttonSize.md 1`] = `
+<div>
+  <div>
+    <div
+      class="leke-demo-sx"
+    >
+      large
+    </div>
+    <div
+      class="leke-demo-active"
+    >
+      middle
+    </div>
+    <div
+      class="leke-demo-sx"
+    >
+      small
+    </div>
+  </div>
+  <div>
+    <button
+      class="leke-demo-container leke-btn leke-btn-main leke-btn-middle"
+    >
+      <span
+        class="leke-btn-content"
+      >
+        按钮
+      </span>
+    </button>
+    <button
+      class="leke-demo-container leke-btn leke-btn-default leke-btn-middle"
+    >
+      <span
+        class="leke-btn-content"
+      >
+        按钮
+      </span>
+    </button>
+    <button
+      class="leke-demo-container leke-btn leke-btn-secondary leke-btn-middle"
+    >
+      <span
+        class="leke-btn-content"
+      >
+        按钮
+      </span>
+    </button>
+    <button
+      class="leke-demo-container leke-btn leke-btn-dashed leke-btn-middle"
+    >
+      <span
+        class="leke-btn-content"
+      >
+        按钮
+      </span>
+    </button>
+    <button
+      class="leke-demo-container leke-btn leke-btn-link leke-btn-middle"
+    >
+      <span
+        class="leke-btn-content"
+      >
+        按钮
+      </span>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`test buttonType.md 1`] = `
+<div>
+  <button
+    class="leke-demo-container leke-btn leke-btn-main leke-btn-middle"
+  >
+    <span
+      class="leke-btn-content"
+    >
+      主按钮（main）
+    </span>
+  </button>
+  <button
+    class="leke-demo-container leke-btn leke-btn-default leke-btn-middle"
+  >
+    <span
+      class="leke-btn-content"
+    >
+      默认按钮（default）
+    </span>
+  </button>
+  <button
+    class="leke-demo-container leke-btn leke-btn-secondary leke-btn-middle"
+  >
+    <span
+      class="leke-btn-content"
+    >
+      次按钮（secondary）
+    </span>
+  </button>
+  <button
+    class="leke-demo-container leke-btn leke-btn-dashed leke-btn-middle"
+  >
+    <span
+      class="leke-btn-content"
+    >
+      虚线按钮（dashed）
+    </span>
+  </button>
+  <button
+    class="leke-demo-container leke-btn leke-btn-link leke-btn-middle"
+  >
+    <span
+      class="leke-btn-content"
+    >
+      文字按钮（link）
+    </span>
+  </button>
+</div>
+`;

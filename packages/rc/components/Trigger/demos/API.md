@@ -1,4 +1,7 @@
-## props
+---    
+title: API
+---
+
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
 | visible | 是否显示弹层 | boolean | _ |
@@ -9,4 +12,4 @@
 | popupClassName | 弹层类名 | string | _ |
 | placement | 弹出位置 | "bottomLeft" \| "bottomCenter" \| "bottomRight" \| "topLeft" \| "topCenter" \| "topRight" \| "leftTop" \| "leftCenter" \| "leftBottom" \| "rightTop" \| "rightCenter" \| "rightBottom" \| "bottomLeft" |
 | event | 触发下拉的行为 | Array<"focus" \| "hover"> | \["hover"\] |
-| autoFill | 是否根据触发器自动填充minWidth或者minHeight | boolean | _ |
+| autoSize | 是否根据触发器自动设置minWidth或者minHeight | boolean | _ |

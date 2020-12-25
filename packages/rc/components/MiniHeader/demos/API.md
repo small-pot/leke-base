@@ -1,4 +1,7 @@
-## props
+---    
+title: API
+---
+
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
 | showLogo | 是否显示logo | boolean | true |

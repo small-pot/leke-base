@@ -1,4 +1,6 @@
-# API
+---    
+title: API
+---
 ```
 const {data,error,loading} = useResolve(value , dep);
 ```

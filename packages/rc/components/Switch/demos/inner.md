@@ -1,4 +1,8 @@
-## 文本和图标
+---
+title: 文本和图标
+description: 可增加文本或任意元素显示
+---
+
 ```jsx
 import React,{useState} from 'react';
 import {Switch} from '@leke/rc';
