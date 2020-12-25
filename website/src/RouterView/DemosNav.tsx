@@ -46,10 +46,10 @@ export default function DemosNav (props:types) {
     },[mds]);
     useEffect(()=>{
         let timer=null;
-        window.addEventListener('scroll',()=>{
+        function scroll(){
             if(disableRef.current){
                 if(timer){
-                    clearInterval(timer);
+                    clearTimeout(timer);
                     timer=null;
                 }
             }else if(!timer){
@@ -58,12 +58,14 @@ export default function DemosNav (props:types) {
                     setCurrentIndex(queryIndex());
                 },100);
             }
-        });
+        }
+        window.addEventListener('scroll',scroll);
         setCurrentIndex(queryIndex());
         return ()=>{
+            window.removeEventListener('scroll',scroll);
             window.cancelAnimationFrame(frameId);
             if(timer){
-                clearInterval(timer);
+                clearTimeout(timer);
             }
         };
     },[demoList,setCurrentIndex]);

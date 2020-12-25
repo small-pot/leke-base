@@ -1,3 +1,4 @@
+@import "../../../packages/rc/less/theme.less";
 .markdown-section{
   &+.markdown-section{
     margin-top:30px;
@@ -17,32 +18,33 @@
     text-align: left;
   }
   h1,h2{
-    margin: 30px 0;
+    margin-top: 30px;
+    margin-bottom: 10px;
   }
   a{
     color:#1890ff;
   }
+  >ul li+li{
+    margin-top:10px;
+  }
   pre{
-    margin: 25px 0!important;
-    border:1px solid #bfbfbf!important;
+    margin: 30px 0!important;
+    border:1px solid @border-color!important;
     background-color: #fafafa!important;
-    +pre{
-      border-top:0;
-    }
-    >code{
-      padding:16px 32px!important;
+  }
+  code{
+    padding:16px 32px!important;
+  }
+  .demo,.demo-description{
+    padding:0 28px;
+    margin: 25px 0;
+    a{
+      color:inherit;
     }
   }
   .jsx-block{
     border-radius: 4px;
-    border:1px solid #bfbfbf;
-    .demo,.demo-description{
-      padding:0 28px;
-      margin: 25px 0;
-      a{
-        color:inherit;
-      }
-    }
+    border:1px solid @border-color;
     .demo-title{
       display: flex;
       align-items: center;
@@ -56,7 +58,7 @@
       .line{
         display: block;
         height:1px;
-        background-color: #bfbfbf;
+        background-color: @border-color;
       }
       .line-left{
         width: 88px;
@@ -84,13 +86,16 @@
       }
     }
     .code-highlighter{
-      border-top:1px dashed #bfbfbf;
+      border-top:1px dashed @border-color;
       transition: height 300ms;
       overflow: hidden;
       font-size: 14px;
       pre{
         border:0!important;
         margin:0!important;
+        &+pre{
+          border-top:1px dashed @border-color!important;
+        }
       }
     }
   }

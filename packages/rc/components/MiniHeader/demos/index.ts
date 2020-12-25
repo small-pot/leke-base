@@ -1,7 +1,8 @@
 export default [
-    require('./logged.md'),
-    require('./notLogged.md'),
-    require('./props.md')
+    require('./introduction.md'),
+    require('./basics.md'),
+    require('./custom.md'),
+    require('./API.md')
 ];
 export {default as mock} from './mock';
 

@@ -28,14 +28,15 @@ function App(){
     return(
         <>
             <div className='header'>
-                <div className='logo'>
-                </div>
-                <div className='nav'>
-                    <a href="#rc" className={classNames(type==='rc'?'current':'')}>组件</a>
-                    <a href="#hooks" className={classNames(type==='hooks'?'current':'')}>hooks</a>
-                    <a href="#icons" className={classNames(type==='icons'?'current':'')}>icons</a>
-                    <a href="#ssr" className={classNames(type==='ssr'?'current':'')}>SSR脚手架</a>
-                    <a href="#store" className={classNames(type==='store'?'current':'')}>store</a>
+                <div className='header-inner'>
+                    <div className='logo'></div>
+                    <div className='nav'>
+                        <a href="#rc" className={classNames(type==='rc'?'current':'')}>组件</a>
+                        <a href="#hooks" className={classNames(type==='hooks'?'current':'')}>hooks</a>
+                        <a href="#icons" className={classNames(type==='icons'?'current':'')}>icons</a>
+                        <a href="#ssr" className={classNames(type==='ssr'?'current':'')}>SSR脚手架</a>
+                        <a href="#store" className={classNames(type==='store'?'current':'')}>store</a>
+                    </div>
                 </div>
             </div>
             <div className='main'>
