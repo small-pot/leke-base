@@ -1,4 +1,7 @@
-## props
+---
+title: API
+---
+
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- |
 | className | 自定义alert的class | string | undefined |
