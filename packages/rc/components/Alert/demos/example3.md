@@ -1,66 +1,43 @@
-<!--
- * @Author: liguodi
- * @LastEditors: liguodi
- * @Description: 文件头部描述
- * @Date: 2020-12-04 11:26:25
- * @LastEditTime: 2020-12-07 16:13:48
--->
-
-## 配置action
+---
+title: 自定义关闭
+description: 替换关闭按钮icon，设置自定义的操作按钮
+---
 
 ```jsx
-import React from "react";
-import { Alert } from "@leke/rc";
-import { Remove, DownFill } from "@leke/icons";
-const afterClose = () => {
-    /* eslint-disable no-alert */
-    alert('我关闭了');
-};
-export default function () {
+import React from 'react';
+import { Alert, Button } from '@leke/rc';
+
+export default function() {
     return (
         <div>
             <Alert
-                title={'这是一个标题'}
-                type={`success`}
-                afterClose={afterClose}
-                message={
-                    `这是一个很短的提示这是一个很短的提示这是一个很短的提示这是一
-                    个很短的提示这是一个很短的提示这是一个很短的提示这是一个很短
-                    的提示这是一个很短的提示这是一个很短的提示这是一个很短的提示
-                    这是一个很短的提示这是一个很短的提示这是一个很短的提示这是
-                    一个很短的提示这是一个很短的提示这是一个很短的提示这是一个
-                    很短的提示这是一个很短的提示这是一个很短的提示这是一个很
-                    短的提示这是一个很短的提示`
-                }
-                action={
-                    <>
-                        <button key={1}>12321312</button>
-                        <button key={2}>12321312</button>
-                        <button key={3}>12321312</button>
-                        <button key={4}>12321312</button>
-                    </>
-                }
+                type={'info'}
+                message={'这是一条普通消息'}
+                action={<Button className={'leke-remove-padding'} type='link' size={'small'}>撤销</Button>}
             />
             <Alert
-                title={'这是一个标题'}
-                afterClose={afterClose}
-                message={`这是一个很短的提示`}
-                action={
-                    <div style={{display: 'flex', flexDirection: 'column'}}>
-                        <button key={1}>12321312</button>
-                        <button key={2}>12321312</button>
-                        <button key={3}>12321312</button>
-                        <button key={4}>12321312</button>
-                    </div>
-                }
+                type={'success'}
+                message={'恭喜！你所提交的信息已经审核通过，如有问题请联系客服。'}
+                action={<Button className={'leke-remove-padding'} type='link' size={'small'}>查看详情</Button>}
             />
             <Alert
-                message={`这是一个很短的提示`}
-                action={
-                    <button key={4}>12321312</button>
-                }
+                type={'error'}
+                message={'这是一条普通消息'}
+                action={<Button className={'leke-remove-padding'} type='link' size={'small'}>前往设置</Button>}
+            />
+            <Alert
+                type={'warning'}
+                message={'这是一条警告消息'}
+                closeIcon={<Button className={'leke-remove-padding'} type='link' size={'small'}>我知道了</Button>}
             />
         </div>
+        
     );
+}
+```
+```css
+.leke-remove-padding {
+  padding: 0;
+  min-width: initial;
 }
 ```

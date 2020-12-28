@@ -6,10 +6,11 @@
  * @LastEditTime: 2020-12-07 16:16:12
  */
 export default [
-    require('./basics.md'),
+    require('./introduction.md'),
     require('./example1.md'),
     require('./example2.md'),
     require('./example3.md'),
     require('./example4.md'),
+    require('./example5.md'),
     require('./props.md')
 ];
