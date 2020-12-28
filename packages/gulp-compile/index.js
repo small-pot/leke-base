@@ -40,6 +40,5 @@ exports.buildJs=function ({stream,outDir,modules}) {
 };
 
 exports.buildLess=function ({stream,outDir}) {
-    const lessStream=dest(stream,outDir);
-    return dest(lessStream.pipe(gulpLess()),outDir);
+    return dest(stream.pipe(gulpLess()),outDir);
 };

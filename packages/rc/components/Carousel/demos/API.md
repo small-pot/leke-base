@@ -1,4 +1,6 @@
-## props
+---    
+title: API
+---
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
 | autoplay | 是否自动切换 | boolean | true |
@@ -10,7 +12,7 @@
 | direction | type="slide"时，规定切换面板的动画方向 | "left"\|"right"\|"up"\|"down" | "left" |
 | beforeChange | 切换面板之前的回调 | function(from, to) | _ |
 
-## ref Api
+## ref
 | 属性 | 说明 | 类型 |
 | --- | --- | --- |
 | dom | 容器的dom节点 | HTMLDivElement |

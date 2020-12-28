@@ -1,4 +1,7 @@
-## hover
+---    
+title: 使用聚焦状态
+description: 当元素获取焦点时显示弹层
+---
 ```jsx
 import React from 'react';
 import {Trigger} from '@leke/rc';

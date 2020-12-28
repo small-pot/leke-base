@@ -2,26 +2,19 @@
 
 exports[`test basics.md 1`] = `
 <div>
-  <span
-    class="leke-trigger"
-    tabindex="-1"
-  >
-    <p>
-      focus me
-    </p>
-  </span>
+  <a>
+    hover me
+  </a>
 </div>
 `;
 
-exports[`test hover.md 1`] = `
+exports[`test focus.md 1`] = `
 <div>
-  <span
-    class="leke-trigger"
+  <a
+    tabindex="-1"
   >
-    <p>
-      hover me
-    </p>
-  </span>
+    focus me
+  </a>
 </div>
 `;
 
@@ -31,58 +24,28 @@ exports[`test placement.md 1`] = `
     class="dropdown-demo"
   >
     <div>
-      <span
-        class="leke-trigger"
-        tabindex="-1"
-      >
-        <button>
-          bottomLeft
-        </button>
-      </span>
-      <span
-        class="leke-trigger"
-        tabindex="-1"
-      >
-        <button>
-          bottomCenter
-        </button>
-      </span>
-      <span
-        class="leke-trigger"
-        tabindex="-1"
-      >
-        <button>
-          bottomRight
-        </button>
-      </span>
+      <button>
+        bottomLeft
+      </button>
+      <button>
+        bottomCenter
+      </button>
+      <button>
+        bottomRight
+      </button>
     </div>
     <div
       style="margin-top: 30px;"
     >
-      <span
-        class="leke-trigger"
-        tabindex="-1"
-      >
-        <button>
-          topLeft
-        </button>
-      </span>
-      <span
-        class="leke-trigger"
-        tabindex="-1"
-      >
-        <button>
-          topCenter
-        </button>
-      </span>
-      <span
-        class="leke-trigger"
-        tabindex="-1"
-      >
-        <button>
-          topRight
-        </button>
-      </span>
+      <button>
+        topLeft
+      </button>
+      <button>
+        topCenter
+      </button>
+      <button>
+        topRight
+      </button>
     </div>
   </div>
 </div>
