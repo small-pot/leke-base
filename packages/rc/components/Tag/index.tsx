@@ -3,7 +3,7 @@
  * @Date: 2020/11/13 20:22
  * @Description: 标签
  */
-import React, {ReactNode,useState,useCallback,useMemo,useRef} from 'react';
+import React, {ReactNode,useState,useCallback,useRef} from 'react';
 import {useAnimation} from '@leke/hooks';
 
 interface Props {
@@ -44,20 +44,12 @@ const Tag: React.FC<Props> = ({text,className,icon,closeIcon,onClose,onClick}) =
         setOpen(false);
         onClose && onClose();
     },[onClose]);
-    const memoCloseIcon = useMemo(()=>{
-        return closeIcon ? <span className={`${PRE_CLASSNAME}-closeicon`} onClick={handleClick}>{closeIcon}</span> : null;
-    },[closeIcon,handleClick]);
-    const memoIcon = useMemo(()=>{
-        return icon ? <span className={`${PRE_CLASSNAME}-icon`}>{icon}</span> : null;
-    },[icon]);
-    const memoClassName = useMemo(()=>{
-        return PRESET.indexOf(className) >= 0 ? `${PRE_CLASSNAME}-${className}` : className;
-    },[className]);
-    const memoAniClassName = useMemo(()=>{
-        return closeIcon ? `${PRE_CLASSNAME}-ani` : '';
-    },[closeIcon]);
-    return <div className={`${PRE_CLASSNAME} ${memoClassName} ${memoAniClassName}`} onClick={onClick} ref={ref}>
-        {memoIcon}<span className={`${PRE_CLASSNAME}-text`}>{text}</span>{memoCloseIcon}
+    const CloseIcon = closeIcon ? <span className={`${PRE_CLASSNAME}-closeicon`} onClick={handleClick}>{closeIcon}</span> : null;
+    const Icon = icon ? <span className={`${PRE_CLASSNAME}-icon`}>{icon}</span> : null;
+    const ClassName = PRESET.indexOf(className) >= 0 ? `${PRE_CLASSNAME}-${className}` : className;
+    const AniClassName = closeIcon ? `${PRE_CLASSNAME}-ani` : '';
+    return <div className={`${PRE_CLASSNAME} ${ClassName} ${AniClassName}`} onClick={onClick} ref={ref}>
+        {Icon}<span className={`${PRE_CLASSNAME}-text`}>{text}</span>{CloseIcon}
     </div>;
 };
 Tag.defaultProps = {
