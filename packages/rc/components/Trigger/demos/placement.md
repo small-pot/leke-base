@@ -1,6 +1,6 @@
 ---    
-title: placement
-description: placement参数可以规定弹层出现的位置
+title: 弹出位置
+description: 支持 12 个弹出位置
 ---
 ```jsx
 import React from 'react';

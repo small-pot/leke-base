@@ -1,4 +1,7 @@
-# API
+---    
+title: API
+---
+
 ```
 const countRef = useRef(null)
 
@@ -21,7 +24,7 @@ useAnimation({
 })
 
 ```
-## params
+
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | ref | 需要绑定动画的元素 | RefObject\<HTMLElement\> | _ |

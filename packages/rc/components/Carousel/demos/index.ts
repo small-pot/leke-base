@@ -1,7 +1,8 @@
 export default [
+    require('./introduction.md'),
     require('./basics.md'),
     require('./fade.md'),
     require('./direction.md'),
-    require('./props.md')
+    require('./API.md')
 ];
 

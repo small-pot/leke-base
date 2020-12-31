@@ -1,14 +1,6 @@
 export default {
-    title:'公共',
+    title:'通用',
     routes:[
-        {
-            key:'icons',
-            title:'图标'
-        },
-        {
-            key:'MiniHeader',
-            title:'业务头部'
-        },
         {
             key:'Button',
             title:'按钮'

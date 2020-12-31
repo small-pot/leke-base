@@ -8,7 +8,7 @@ exports[`test basics.md 1`] = `
 </div>
 `;
 
-exports[`test hover.md 1`] = `
+exports[`test focus.md 1`] = `
 <div>
   <a
     tabindex="-1"

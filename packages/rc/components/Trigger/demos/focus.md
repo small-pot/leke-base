@@ -1,5 +1,5 @@
 ---    
-title: focus状态
+title: 使用聚焦状态
 description: 当元素获取焦点时显示弹层
 ---
 ```jsx
