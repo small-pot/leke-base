@@ -1,4 +1,6 @@
-## 可关闭标签
+---    
+title: 可关闭标签
+---
 ```jsx
 import React from 'react';
 import {Tag} from '@leke/rc';

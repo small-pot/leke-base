@@ -1,4 +1,6 @@
-## 默认标签
+---    
+title: 默认标签
+---
 ```jsx
 import React from 'react';
 import {Tag} from '@leke/rc';

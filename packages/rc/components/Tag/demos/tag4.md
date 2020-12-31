@@ -1,4 +1,6 @@
-## 标签选中态
+---    
+title: 标签选中态
+---
 ```jsx
 import React, {useState} from 'react';
 import {Tag} from '@leke/rc';

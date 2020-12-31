@@ -1,4 +1,6 @@
-## 多彩标签
+---    
+title: 多彩标签
+---
 ```jsx
 import React from 'react';
 import {Tag} from '@leke/rc';

@@ -1,4 +1,6 @@
-## 预设状态标签
+---    
+title: 预设状态标签
+---
 ```jsx
 import React from 'react';
 import {Tag} from '@leke/rc';

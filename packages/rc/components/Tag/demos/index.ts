@@ -6,5 +6,5 @@ export default [
     require('./tag4.md'),
     require('./tag5.md'),
     require('./tag6.md'),
-    require('./props.md')
+    require('./API.md')
 ];
