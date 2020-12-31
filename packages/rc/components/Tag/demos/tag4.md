@@ -11,7 +11,7 @@ export default function(){
     };
     return  (
         <>
-            <Tag className={chosen ? 'chosen-style' : 'seablue'}  text='选中态' onClick={handleClick}/>
+            <Tag colorType='seablue' className={chosen ? 'chosen-style' : ''} text='选中态' onClick={handleClick}/>
         </>
     );
 }

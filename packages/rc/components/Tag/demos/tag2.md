@@ -10,19 +10,19 @@ export default function(){
         <>
             纯文字：
             <br/><br/>
-            <Tag className='seablue' text='进行中'/>
-            <Tag className='lekegreen' text='已完成'/>
-            <Tag className='brighteyes' text='警告'/>
-            <Tag className='hotred' text='失败'/>
-            <Tag className='default' text='未完成'/>
+            <Tag colorType='seablue' text='进行中'/>
+            <Tag colorType='lekegreen' text='已完成'/>
+            <Tag colorType='brighteyes' text='警告'/>
+            <Tag colorType='hotred' text='失败'/>
+            <Tag colorType='default' text='未完成'/>
             <br/><br/>
             图标+文字：
             <br/><br/>
-            <Tag className='seablue' icon={<Stop/>} text='进行中'/>
-            <Tag className='lekegreen' icon={<Success/>} text='已完成'/>
-            <Tag className='brighteyes' icon={<Warn/>} text='警告'/>
-            <Tag className='hotred' icon={<Fail/>} text='失败'/>
-            <Tag className='default' icon={<Stop/>} text='未完成'/>
+            <Tag colorType='seablue' icon={<Stop/>} text='进行中'/>
+            <Tag colorType='lekegreen' icon={<Success/>} text='已完成'/>
+            <Tag colorType='brighteyes' icon={<Warn/>} text='警告'/>
+            <Tag colorType='hotred' icon={<Fail/>} text='失败'/>
+            <Tag colorType='default' icon={<Stop/>} text='未完成'/>
 
         </>
     );

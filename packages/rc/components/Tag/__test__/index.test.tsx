@@ -9,8 +9,8 @@ describe('Tag ', function() {
         const {container} = render(<Tag text='我是tag' />);
         expect(container.querySelector('.leke-tag-text')).toHaveTextContent('我是tag');
     });
-    it('test className attribute',()=>{
-        const {container,rerender} = render(<Tag text='你好呀' className='bluefill' />);
+    it('test colorType attribute',()=>{
+        const {container,rerender} = render(<Tag text='你好呀' colorType='bluefill' />);
         expect(container.querySelector('.leke-tag')).toHaveClass('leke-tag-bluefill');
         rerender(<Tag text='你好呀' className='yourclass' />);
         expect(container.querySelector('.leke-tag')).toHaveClass('yourclass');
@@ -19,30 +19,26 @@ describe('Tag ', function() {
         const {container} = render(<Tag text='你好呀' icon={<Stop/>} />);
         expect(container.querySelector('.leke-tag-icon')).not.toBe(null);
     });
-    it('test closeIcon & onClose attribute',()=>{
+    it('test closable & onClose attribute',()=>{
         const onClose = jest.fn();
-        const {container} = render(<Tag text='你好呀' closeIcon={<Close/>} onClose={onClose}/>);
+        const {container} = render(<Tag text='你好呀' closable={true} onClose={onClose}/>);
         const $closeIcon = container.querySelector('.leke-tag-closeicon');
         const $lekeTag = container.querySelector('.leke-tag');
         expect($closeIcon).not.toBe(null);
-        expect($lekeTag).toHaveClass('leke-tag-ani');
         fireEvent.click($closeIcon);
         waitFor(()=>{
             expect($lekeTag).toHaveClass('leke-tag-close');
         });
         expect(onClose).toHaveBeenCalled();
     });
-    it('test onClick attribute',async ()=>{
+    it('test visible attribute',async ()=>{
         const onClick = jest.fn();
-        const {container} = render(<Tag text='你好呀' closeIcon={<Close/>} onClick={onClick}/>);
-        const $lekeTag = container.querySelector('.leke-tag');
-        fireEvent.click($lekeTag);
-        expect(onClick).toHaveBeenCalled();
+        const {container} = render(<Tag text='你好呀' visible={false}/>);
+        expect(container.querySelector('.leke-tag')).toHaveClass('leke-tag-close');
     });
     it('test default tag',()=>{
         const {container} = render(<Tag text='你好呀' />);
         expect(container.querySelector('.leke-tag-text')).toHaveTextContent('你好呀');
-        expect(container.querySelector('.leke-tag')).toHaveClass('leke-tag-default');
         expect(container.querySelector('.leke-tag-icon')).toBe(null);
         expect(container.querySelector('.leke-tag-closeicon')).toBe(null);
     });
