@@ -16,7 +16,7 @@
 span.leke-radio + * {
     padding-left: 8px;
 }
-.leke-radio-input{
+.leke-radio-input,.leke-button-input{
     position: absolute;
     padding: 0;
     margin: 0;
@@ -50,14 +50,115 @@ span.leke-radio + * {
         transform: translate(-50%,-50%);
     }
 }
-.leke-radio-disabled{
+.leke-radio-wrapper-disabled{
     .leke-radio-inner{
-        width: 16px;
-        height: 16px;
         background: #F0F0F0;
         border: 1px solid #D9D9D9;
     }
     .leke-radio-inner::after{
         background: #D9D9D9;
+    }
+    &:hover {
+        cursor: not-allowed;
+    }
+    &:hover .leke-radio-inner{
+        border-color: #D9D9D9
+    }
+}
+//button
+.leke-button-wrapper{
+    position: relative;
+    display: inline-block;
+    height: 32px;
+    margin: 0;
+    padding: 0 15px;
+    color:#444;
+    font-size: 14px;
+    line-height: 30px;
+    background: #fff;
+    border-color: #d9d9d9;
+    border-style: solid;
+    border-width: 1.02px 1px 1px 0;
+    cursor: pointer;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    &:hover{
+        color: #1FB5AB;
+    }
+    &::before{
+        content: "";
+    }
+}
+.leke-button-wrapper:first-child {
+    border-left: 1px solid #d9d9d9;
+    border-radius: 2px 0 0 2px;
+}
+.leke-button-wrapper-checked{
+    position: relative;
+    color: #1FB5AB;
+    border-color: #1FB5AB;
+    &::before{
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        display: block;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+        width: 1px;
+        height: 100%;
+        padding: 1px 0;
+        background-color: #1FB5AB;
+        -webkit-transition: background-color .3s;
+        transition: background-color .3s;
+        content: "";
+    }
+}
+.leke-button-wrapper-disabled{
+    color: #8C8C8C;
+    background: #F0F0F0;
+    border-color:#D9D9D9;
+    &:hover {
+        color: #8C8C8C;
+        cursor: not-allowed;
+    }
+    &::before{
+        content: none;
+    }
+}
+.leke-button-wrapper-checked.leke-button-wrapper-disabled{
+    color: #8C8C8C;
+    background: #D9D9D9;
+    border-color: #D9D9D9;
+}
+
+// size
+.leke-group-large{
+    .leke-button-wrapper{
+        padding: 0 24px;
+        height: 40px;
+        line-height: 40px;
+    }
+}
+.leke-group-middle{
+    .leke-button-wrapper{
+        padding: 0 20px;
+        height: 32px;
+        line-height: 32px;
+    }
+}
+.leke-group-small{
+    .leke-button-wrapper{
+        padding: 0 18px;
+        height: 24px;
+        line-height: 24px;
+    }
+}
+
+//buttonstyle
+.leke-group-solid{
+    .leke-button-wrapper-checked:not(.leke-button-wrapper-disabled) {
+        color: #fff;
+        background: #1FB5AB;
+        border-color: #1FB5AB;
     }
 }

@@ -24,7 +24,6 @@ const InternalRadio: React.ForwardRefRenderFunction<HTMLElement, RadioProps> = (
     radioProps.onChange = onChange;
     radioProps.checked = props.value === context.value;
     radioProps.disabled = props.disabled || context.disabled;
-    radioProps.defaultChecked = props.defaultChecked || 0
   }
   const wrapperClassString = classNames(
     `${prefixCls}-wrapper`,
@@ -34,7 +33,6 @@ const InternalRadio: React.ForwardRefRenderFunction<HTMLElement, RadioProps> = (
     },
     className,
   );
-  console.log(context)
   return (
       <label
         className={wrapperClassString}

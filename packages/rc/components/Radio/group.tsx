@@ -1,20 +1,34 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import Radio from './radio';
 import { RadioGroupProps, RadioChangeEvent, RadioGroupButtonStyle } from './interface';
 import { RadioGroupContextProvider } from './context';
 
-function useControlledState (defaultStateValue,option) {
-  const { value } = option;
-  let val = value || defaultStateValue;
-  function setValue(val){
-    val = val;
-  }
-  return [ val, setValue]
-}
+// function useControlledState (defaultStateValue,option) {
+//   let { value } = option;
+//   let val = value || defaultStateValue;
+//   function setValue(val){
+//     val = val;
+//   }
+//   return [ val, setValue]
+// }
 
+function useControlledState (defaultStateValue,option) {
+  if(option.value){
+    let value = option.value;
+    function setValue(val){
+      value = val;
+    }
+    return [ value, setValue]
+  }else{
+    const [ value, setValue ] = React.useState(defaultStateValue);
+    return [ value, setValue ]
+  }
+  
+}
 const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>((props, ref) => {
   
-  const [value, setValue] = useControlledState(props.defaultValue, {
+  let [value, setValue] = useControlledState(props.defaultValue, {
     value: props.value,
   });
 
@@ -34,18 +48,23 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>((props, ref
   const renderGroup = () => {
     const {
       prefixCls,
+      className = '',
       options,
       optionType,
+      buttonStyle,
       disabled,
       children,
+      size,
       style,
       id,
       onMouseEnter,
       onMouseLeave,
     } = props;
+    const mergedSize = size || 'middle';
+    const groupPrefixCls = prefixCls || 'leke-group';
     let childrenToRender = children;
     if (options && options.length > 0) {
-      const optionsPrefixCls = optionType === 'button' ? `${prefixCls}-button` : prefixCls;
+      const optionsPrefixCls = optionType === 'button' ? `${groupPrefixCls}-button` : groupPrefixCls;
       childrenToRender = options.map(option => {
         if (typeof option === 'string') {
           // 此处类型自动推导为 string
@@ -76,8 +95,17 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>((props, ref
         );
       });
     }
+    const classString = classNames(
+      groupPrefixCls,
+      `${groupPrefixCls}-${buttonStyle}`,
+      {
+        [`${groupPrefixCls}-${mergedSize}`]: mergedSize,
+      },
+      className,
+    );
     return (
       <div
+        className={classString}
         style={style}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
@@ -88,7 +116,6 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>((props, ref
       </div>
     );
   };
-
   return (
     <RadioGroupContextProvider
       value={{

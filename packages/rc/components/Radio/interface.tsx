@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 export type SizeType = 'small' | 'middle' | 'large' | undefined;
+
 export interface AbstractCheckboxGroupProps {
     prefixCls?: string;
     className?: string;
@@ -36,7 +38,7 @@ export interface RadioGroupProps extends AbstractCheckboxGroupProps {
   defaultValue?: any;
   value?: any;
   onChange?: (e: RadioChangeEvent) => void;
-  size?: any;
+  size?: SizeType;
   onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
   onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
   name?: string;
