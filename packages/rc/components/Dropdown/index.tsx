@@ -6,12 +6,13 @@ export interface dropdownPropsType extends Omit<triggerPropsType, 'autoSize'|'pl
     placement?:'bottomLeft'|'bottomCenter'|'bottomRight'|'topLeft'|'topCenter'|'topRight',
 }
 const Dropdown = React.forwardRef<refType,dropdownPropsType>(function (props,ref) {
+    const {popupClassName,...otherProps}=props;
     return (
         <Trigger
             ref={ref}
-            {...props}
-            popupClassName={classNames('leke-dropdown',props.popupClassName)}
+            popupClassName={classNames('leke-dropdown',popupClassName)}
             autoSize={true}
+            {...otherProps}
         />
     );
 });

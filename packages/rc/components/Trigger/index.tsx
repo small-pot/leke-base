@@ -2,7 +2,7 @@ import React, {
     CSSProperties,
     useLayoutEffect,
     useRef,
-    useReducer, useMemo, useImperativeHandle
+    useReducer, useImperativeHandle
 } from 'react';
 import classNames from 'classnames';
 import {useAnimation,useControl} from '@leke/hooks';
@@ -75,24 +75,7 @@ const Trigger=React.forwardRef<refType,triggerPropsType>(function (props,ref) {
     const childProps:childPropsType=child.props;
     const includeFocus=eventType.indexOf('focus')!==-1;
     const includeHover=eventType.indexOf('hover')!==-1;
-    const setShow=useMemo(()=>{
-        let timer=null;
-        let show;
-        return (val,callback?)=>{
-            if(timer){
-                clearTimeout(timer);
-                timer=null;
-            }
-            timer=setTimeout(()=>{
-                if(show!==val){
-                    show=val;
-                    setVisible(val);
-                }
-                callback&&callback();
-                timer=null;
-            },50);
-        };
-    },[setVisible]);
+
     useImperativeHandle(ref,()=>{
         return {
             resetPosition(){
