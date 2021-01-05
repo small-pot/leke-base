@@ -24,6 +24,10 @@ export default {
         {
             key:'Tag',
             title:'标签'
+        },
+        {
+            key:'Select',
+            title:'选择器'
         }
     ]
 };

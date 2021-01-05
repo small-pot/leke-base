@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 import configure from "../../packages/rc/components/configure";
 import http from './http';
-import classNames from 'classnames';
 import RouterView from './RouterView';
 import LeftTab from "./LeftTab";
+import Header from "./Header";
 import './index.less';
 
 configure({http});
@@ -29,18 +29,7 @@ function App(){
     const [type,name]=hash.split('/');
     return(
         <>
-            <div className='header'>
-                <div className='header-inner'>
-                    <div className='logo'></div>
-                    <div className='nav'>
-                        <a href="#rc" className={classNames(type==='rc'?'current':'')}>组件</a>
-                        <a href="#hooks" className={classNames(type==='hooks'?'current':'')}>hooks</a>
-                        <a href="#icons" className={classNames(type==='icons'?'current':'')}>icons</a>
-                        <a href="#ssr" className={classNames(type==='ssr'?'current':'')}>SSR脚手架</a>
-                        <a href="#store" className={classNames(type==='store'?'current':'')}>store</a>
-                    </div>
-                </div>
-            </div>
+            <Header type={type}/>
             <div className='main'>
                 <LeftTab type={type} name={name} />
                 <RouterView type={type} name={name} />

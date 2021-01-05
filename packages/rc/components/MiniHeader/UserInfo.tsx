@@ -30,10 +30,10 @@ function RoleSchoolList({userInfo}) {
 }
 function LearnCenter ({userInfo}) {
     if ( userInfo.roleName !== '学生' ) {
-        const active = userInfo.isLearnCenter && 'c-right_list--active' || '';
+        const active = userInfo.isLearnCenter ? 'leke-role-current' : '';
         return <li className={active}>
             <a href={learnCenterUrl}>
-                <div className='leke-indent'></div>
+                <div className='leke-indent'>{active?<Check />:null}</div>
                 学习中心
             </a>
         </li>;
@@ -46,7 +46,6 @@ export default function UserInfo(props) {
     const logoutUrl=userInfo.schoolId===-1?`${defaultLogoutUrl}?service=sclass.leke.cn`:defaultLogoutUrl;
     return (
         <Dropdown
-            event={['hover']}
             placement='bottomCenter'
             popup={
                 <ul className='leke-miniHeader-role-list'>

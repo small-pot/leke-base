@@ -2,12 +2,12 @@ import React, {
     CSSProperties,
     useLayoutEffect,
     useRef,
-    useReducer, useMemo, ReactElement
+    useReducer, useMemo, useImperativeHandle
 } from 'react';
-import {createPortal} from 'react-dom';
 import classNames from 'classnames';
 import {useAnimation,useControl} from '@leke/hooks';
 import {setPopupPosition,placementType} from './util';
+import Popup from './Popup';
 
 export interface childPropsType {
     ref?:React.RefObject<HTMLElement>|React.RefCallback<HTMLElement>,
@@ -29,13 +29,14 @@ export interface triggerPropsType {
     visible?:boolean,
     onVisibleChange?:(boolean)=>void,
     children:React.ReactElement<HTMLElement>,
-    event?:('focus'|'hover')[],
-    popup:ReactElement,
+    eventType?:Array<'focus'|'hover'>,
+    popup:React.ReactNode,
     popupStyle?:CSSProperties,
     popupClassName?:string,
     getPopupContainer?:(HTMLElement)=>HTMLElement,
-    placement:placementType,
-    autoSize?:boolean
+    placement?:placementType,
+    autoSize?:boolean,
+    disabled?:boolean
 }
 const enter='leke-open';
 const exit='leke-close';
@@ -54,18 +55,30 @@ function contains (container:HTMLElement,target:HTMLElement){
     }
     return false;
 }
-export default function Trigger(props:triggerPropsType) {
-    const {children,event,popup,popupStyle,popupClassName,getPopupContainer,placement,autoSize}=props;
-    const [visible,setShow]=useControl(props.visible,props.onVisibleChange);
+export interface refType {
+    resetPosition:()=>void,
+    blur:()=>void
+}
+function elementBlur(el) {
+    const activeElement=document.activeElement as HTMLElement;
+    if(contains(el,activeElement)){
+        activeElement.blur();
+    }
+}
+const Trigger=React.forwardRef<refType,triggerPropsType>(function (props,ref) {
+    const {children,eventType,popup,popupStyle,popupClassName,getPopupContainer,placement,autoSize,disabled}=props;
+    const [visible,setVisible]=useControl(props.visible,props.onVisibleChange,false);
     const triggerRef=useRef<HTMLElement>(null);
     const popupRef=useRef<HTMLDivElement>(null);
     const [portalContainer,setPortalContainer]=useReducer(()=>getPopupContainer(triggerRef.current),null);
     const child=React.Children.only(children);
     const childProps:childPropsType=child.props;
-    const setVisible=useMemo(()=>{
+    const includeFocus=eventType.indexOf('focus')!==-1;
+    const includeHover=eventType.indexOf('hover')!==-1;
+    const setShow=useMemo(()=>{
         let timer=null;
         let show;
-        return (val)=>{
+        return (val,callback?)=>{
             if(timer){
                 clearTimeout(timer);
                 timer=null;
@@ -73,16 +86,31 @@ export default function Trigger(props:triggerPropsType) {
             timer=setTimeout(()=>{
                 if(show!==val){
                     show=val;
-                    setShow(val);
+                    setVisible(val);
                 }
+                callback&&callback();
                 timer=null;
             },50);
         };
-    },[setShow]);
+    },[setVisible]);
+    useImperativeHandle(ref,()=>{
+        return {
+            resetPosition(){
+                if(popupRef.current&&triggerRef.current&&portalContainer){
+                    setPopupPosition(popupRef.current,triggerRef.current,portalContainer,placement);
+                }
+            },
+            blur(){
+                if(includeFocus){
+                    elementBlur(triggerRef.current);
+                }
+            }
+        };
+    },[triggerRef,popupRef,portalContainer,includeFocus,placement]);
     const popupProps:popupPropsType={
         ref:popupRef,
         style:popupStyle,
-        className:classNames('leke-popup',`leke-popup-${placement}`,popupClassName)
+        className:classNames('leke-popup',`leke-popup-${placement}`,visible?'leke-popup-open':'',popupClassName)
     };
     const cloneProps:childPropsType={
         ref(node){
@@ -95,37 +123,38 @@ export default function Trigger(props:triggerPropsType) {
             triggerRef.current=node;
         }
     };
-    if(event.indexOf('focus')!==-1){
-        cloneProps.onFocus=(e)=>{
-            childProps.onFocus?.(e);
-            setVisible(true);
-        };
-        cloneProps.onBlur=(e)=>{
-            childProps.onBlur?.(e);
-            const activeElement=document.activeElement as HTMLElement;
-            if(contains(triggerRef.current,activeElement)){
-                activeElement.blur();
-            }
-            setVisible(false);
-        };
-        cloneProps.tabIndex=-1;
-        popupProps.onMouseDown=mousedown;
-    }
-    if(event.indexOf('hover')!==-1){
-        cloneProps.onMouseEnter=(e)=>{
-            childProps.onMouseEnter?.(e);
-            setVisible(true);
-        };
-        cloneProps.onMouseLeave=(e)=>{
-            childProps.onMouseLeave?.(e);
-            setVisible(false);
-        };
-        popupProps.onMouseEnter=(e)=>{
-            setVisible(true);
-        };
-        popupProps.onMouseLeave=(e)=>{
-            setVisible(false);
-        };
+    if(!disabled){
+        if(includeFocus){
+            cloneProps.onFocus=(e)=>{
+                !visible&&setVisible(true);
+                childProps.onFocus?.(e);
+            };
+            cloneProps.onBlur=(e)=>{
+                visible&&setVisible(false);
+                if(e.target===document.activeElement){
+                    e.target.blur();
+                }
+                childProps.onBlur?.(e);
+            };
+            cloneProps.tabIndex=-1;
+            popupProps.onMouseDown=mousedown;
+        }
+        if(includeHover){
+            cloneProps.onMouseEnter=(e)=>{
+                !visible&&setVisible(true);
+                childProps.onMouseEnter?.(e);
+            };
+            cloneProps.onMouseLeave=(e)=>{
+                visible&&setVisible(false);
+                childProps.onMouseLeave?.(e);
+            };
+            popupProps.onMouseEnter=(e)=>{
+                setVisible(true);
+            };
+            popupProps.onMouseLeave=(e)=>{
+                setVisible(false);
+            };
+        }
     }
     useAnimation({
         ref:popupRef,
@@ -159,17 +188,17 @@ export default function Trigger(props:triggerPropsType) {
     return(
         <>
             {React.cloneElement(child,cloneProps)}
-            {portalContainer?createPortal(
-                <div style={{position:'absolute',top:0,left:0,width:'100%'}}>
+            {portalContainer?
+                <Popup portalContainer={portalContainer} visible={visible}>
                     <div {...popupProps}>{popup}</div>
-                </div>,
-                portalContainer
-            ):null}
+                </Popup>
+                :null}
         </>
     );
-}
+});
 Trigger.defaultProps={
     placement:'bottomLeft',
     getPopupContainer:()=>document.body,
-    event:['hover']
+    eventType:['hover']
 };
+export default Trigger;
