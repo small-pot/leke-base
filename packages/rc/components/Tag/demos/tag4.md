@@ -1,4 +1,6 @@
-## 标签选中态
+---    
+title: 标签选中态
+---
 ```jsx
 import React, {useState} from 'react';
 import {Tag} from '@leke/rc';
@@ -9,7 +11,7 @@ export default function(){
     };
     return  (
         <>
-            <Tag className={chosen ? 'chosen-style' : 'seablue'}  text='选中态' onClick={handleClick}/>
+            <Tag colorType='seablue' className={chosen ? 'chosen-style' : ''} text='选中态' onClick={handleClick}/>
         </>
     );
 }
