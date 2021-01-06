@@ -1,10 +1,16 @@
 import React, { useMemo, useRef, useState} from 'react';
-import classNames from 'classnames';
-import {componentRoutes,hookRoutes} from "../routes";
+import {rc,hooks} from "../routes";
 import Select from "@leke/rc/components/Select";
 import "@leke/rc/components/Select/index.less";
 import './index.less';
 
+const navList=[
+    {key:'rc',title:'组件'},
+    {key:'hooks',title:'hooks'},
+    {key:'icons',title:'icons'},
+    {key:'store',title:'store'},
+    {key:'AV',title:'音视频'}
+]
 function filter(opt,text) {
     return opt.key.toLowerCase().indexOf(text)>-1||(opt.title&&opt.title.indexOf(text)>-1);
 }
@@ -12,7 +18,7 @@ export default function Header({type}){
     const [visible,setVisible]=useState(false);
     const ref=useRef<HTMLDivElement>(null);
     const options=useMemo(()=>{
-        const list=type==='rc'?componentRoutes:type==='hooks'?hookRoutes:[];
+        const list=type==='rc'?rc:type==='hooks'?hooks:[];
         return list.reduce((result,opt)=>{
             result.push(...opt.routes);
             return result;
@@ -57,11 +63,7 @@ export default function Header({type}){
                         :null}
                 </div>
                 <div className='nav'>
-                    <a href="#rc" className={classNames(type==='rc'?'current':'')}>组件</a>
-                    <a href="#hooks" className={classNames(type==='hooks'?'current':'')}>hooks</a>
-                    <a href="#icons" className={classNames(type==='icons'?'current':'')}>icons</a>
-                    <a href="#ssr" className={classNames(type==='ssr'?'current':'')}>SSR脚手架</a>
-                    <a href="#store" className={classNames(type==='store'?'current':'')}>store</a>
+                    {navList.map(item=><a key={item.key} href={`#${item.key}`} className={type===item.key?'current':''}>{item.title}</a>)}
                 </div>
             </div>
         </div>

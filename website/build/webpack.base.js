@@ -12,7 +12,7 @@ module.exports ={
     output: {
         path: path.resolve(__dirname, '../dist')
     },
-    target:['web','es5'],
+    //target:['web','es5'],
     resolve: {
         fallback: { "path": false },
         extensions: ['.ts','.tsx','.js','.jsx'],

@@ -16,7 +16,12 @@ function getMds(type,name) {
             return res.default;
         });
     }
-    return import(`../../../packages/hooks/src/${name}/demos/index`).then(res=>res.default);
+    if(type==='hooks'){
+        return import(`../../../packages/hooks/src/${name}/demos/index`).then(res=>res.default);
+    }
+    if(type==='AV'){
+        return import(`../../../packages/AV/src/${name}/demos/index`).then(res=>res.default);
+    }
 }
 export default function View ({type,name}) {
     const {data,loading}=useResolve<any[]>(getMds,[type,name]);
