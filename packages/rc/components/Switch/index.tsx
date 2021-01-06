@@ -18,34 +18,34 @@ interface SwitchProps {
   onKeyDown?: React.KeyboardEventHandler<HTMLButtonElement>;
   size?:'default' | 'small';
   unCheckedChildren?:string;
-  onChange?:(isChecked, e?) =>void;
-  onClick?:(isChecked, e) =>void;
+  onChange?:(checked, e?) =>void;
+  onClick?:(checked, e) =>void;
 }
 
-const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked, defaultChecked, disabled, className, loading, checkedChildren, unCheckedChildren, onChange, onClick, onKeyDown }) => {
-    const [isChecked = defaultChecked, setIsChecked] = useControl(checked,onChange);
+const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked: checkedProp, defaultChecked, disabled, className, loading, checkedChildren, unCheckedChildren, onChange, onClick, onKeyDown }) => {
+    const [checked, setChecked] = useControl(checkedProp,onChange,defaultChecked);
     disabled = loading || disabled;
   
-    const onToggle = useCallback((
+    function onToggle(
         newChecked: boolean,
         event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>
-    ) => {
-        let mergedChecked = isChecked;
+    ) {
+        let mergedChecked = checked;
 
         if (!disabled) {
             mergedChecked = newChecked;
-            setIsChecked?.(mergedChecked, event);
+            setChecked?.(mergedChecked, event);
         }
   
         return mergedChecked;
-    }, [isChecked, disabled, setIsChecked]);
+    };
     
-    const onHandler = useCallback((e) => {
-        const ret = onToggle(!isChecked, e);
+    function onHandler(e) {
+        const ret = onToggle(!checked, e);
         onClick?.(ret, e);
-    }, [isChecked,onToggle,onClick]);
+    };
 
-    const onInternalKeyDown = (e) => {
+    function onInternalKeyDown(e) {
         if (e.keyCode === 37) {
             // 左箭头控制
             onToggle(false, e);
@@ -62,7 +62,7 @@ const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked, defaultChecked
         onKeyDown: onInternalKeyDown,
         className: classNames("leke-switch", {
             ['leke-switch-small']: size === 'small',
-            ['leke-switch-checked']: isChecked,
+            ['leke-switch-checked']: checked,
             ['leke-switch-disabled']: disabled,
         }, className),
     };
@@ -77,7 +77,7 @@ const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked, defaultChecked
                 }
             </div>
             <span className="leke-switch-inner">
-                {isChecked ? checkedChildren : unCheckedChildren}
+                {checked ? checkedChildren : unCheckedChildren}
             </span>
         </button>
     );
