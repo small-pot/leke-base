@@ -8,8 +8,8 @@ import {Tag} from '@leke/rc';
 export default function(){
     const [visible,setVisible] = useState(true);
     const handleClose = ()=>{
-       setVisible(false);
-       console.log('已关勿扰');
+        setVisible(false);
+        console.log('已关勿扰');
     };
     return  (
         <>

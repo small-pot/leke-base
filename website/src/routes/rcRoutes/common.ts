@@ -26,6 +26,10 @@ export default {
             title:'标签'
         },
         {
+            key: 'Switch',
+            title: '开关'
+        },
+        {
             key:'Select',
             title:'选择器'
         }

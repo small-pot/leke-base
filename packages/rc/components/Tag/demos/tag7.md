@@ -11,8 +11,8 @@ export default function(){
     const ref = useRef(null);
     const tagPointer = ref.current;
     const handleClose = ()=>{
-       setOpen(false);
-       console.log('已关勿扰');
+        setOpen(false);
+        console.log('已关勿扰');
     };
     useAnimation({
         ref,
