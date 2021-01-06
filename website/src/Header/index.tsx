@@ -8,6 +8,7 @@ const navList=[
     {key:'rc',title:'组件'},
     {key:'hooks',title:'hooks'},
     {key:'icons',title:'icons'},
+    {key:'ssr',title:'SSR脚手架'},
     {key:'store',title:'store'},
     {key:'AV',title:'音视频'}
 ]
