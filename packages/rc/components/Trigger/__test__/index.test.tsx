@@ -59,7 +59,7 @@ describe('Trigger ', function() {
         const {getByText} = render(
             <Trigger
                 {...defaultProps}
-                event={['focus']}
+                eventType={['focus']}
             />
         );
         const trigger=getByText('trigger');

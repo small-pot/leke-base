@@ -111,7 +111,7 @@ export default function start(config:configType) {
     };
     const {publicPath,createRequest}=config;
     return async function (req, res, next,manifest) {
-        if(publicPath&&req.path.indexOf(publicPath)!==0){
+        if(publicPath&&!new RegExp('^'+publicPath+'(/|$)').test(req.path)){
             return next();
         }
         const route=getRoute(req.path);

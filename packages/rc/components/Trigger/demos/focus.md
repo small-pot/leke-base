@@ -10,7 +10,7 @@ export default function(){
     return(
         <Trigger 
             popup={<div style={{height:50,width:50}}>popup</div>}
-            event={['focus']}
+            eventType={['focus']}
         >
             <a>focus me</a>
         </Trigger>

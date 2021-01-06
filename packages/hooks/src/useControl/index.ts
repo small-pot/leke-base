@@ -1,16 +1,15 @@
 import {useCallback, useState} from 'react';
-function defaultCb(params:any) {}
-export default function useControl<T=any>(value?:T,onChange?:(v:T)=>void) {
-    const [val,setVal]=useState(value);
-    const callback = useCallback((newVal) => {
-        
-        setVal(newVal);
+function defaultChange() {}
+export default function useControl<T=any>(value?:T,onChange?:any,defaultValue?:T):[T,any] {
+    const [val,setVal]=useState<T>(defaultValue);
+    const change=useCallback((newVal,...arg)=>{
         if(typeof onChange==='function'){
-            onChange(newVal);
+            onChange(newVal,...arg);
         }
+        setVal(newVal);
     },[setVal,onChange]);
-    if(value===undefined){
-        return [val,callback];
+    if(value!==undefined){
+        return [value,onChange||defaultChange];
     }
-    return [value,onChange||defaultCb];
+    return [val,change];
 }

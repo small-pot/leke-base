@@ -1,13 +1,19 @@
-## 可关闭标签
+---    
+title: 可关闭标签
+---
 ```jsx
-import React from 'react';
+import React, {useState} from 'react';
 import {Tag} from '@leke/rc';
-import {Close} from '@leke/icons';
+
 export default function(){
+    const [visible,setVisible] = useState(true);
+    const handleClose = ()=>{
+        setVisible(false);
+        console.log('已关勿扰');
+    };
     return  (
         <>
-            <Tag className='seablue' closeIcon={<Close/>} text='可关闭'/>
-            <Tag className='seablue' closeIcon={<Close/>} text='可关闭带回调' onClose={()=>{console.log('已关勿扰');}}/>
+            <Tag colorType='seablue' closable={true} text='可关闭' onClose={handleClose} visible={visible}/>
         </>
     );
 }
