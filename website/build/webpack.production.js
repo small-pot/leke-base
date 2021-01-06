@@ -7,7 +7,7 @@ const buildConfig = merge(baseWebpackConfig, {
     mode: 'production',
     output: {
         filename:'js/[name].[chunkhash].js',
-        publicPath:'/leke-base'
+        publicPath:'/leke-base/'
     },
     optimization: {
         minimize:true,
