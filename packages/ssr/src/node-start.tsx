@@ -109,7 +109,7 @@ export default function start(config:configType) {
             </>
         );
     };
-    const {publicPath,createRequest}=config;
+    const {publicPath,createRequest,errorInterceptor}=config;
     return async function (req, res, next,manifest) {
         if(publicPath&&!new RegExp('^'+publicPath+'(/|$)').test(req.path)){
             return next();
@@ -146,7 +146,11 @@ export default function start(config:configType) {
                 res.end(getJsCode({data,css,scripts}));
             }
         } catch (e) {
-            next(e);
+            if(typeof errorInterceptor==='function'){
+                errorInterceptor(e,req,res,next)
+            }else{
+                next(e);
+            }
         }
     };
 }

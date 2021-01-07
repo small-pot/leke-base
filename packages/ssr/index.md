@@ -89,6 +89,19 @@ export default start({
             baseURL:'https://webapp.leke.cn'
         });
     },
+    errorInterceptor(error,req,res,next){
+        //错误拦截器,此方法拦截错误并处理，未处理的错误请执行next(error)
+        const status=error?error.status:null
+        switch (status) {
+            case 404:
+                res.redirect('https://repository.leke.cn/error/404.htm')
+                break;
+            //.....
+            default:
+                next(error)
+                break;
+        }
+    },
     routes:[
         {
             path:'/demo',
@@ -106,6 +119,7 @@ export default start({
 | path | 访问的路径应为publicPath+path | string | _ |
 | getComponent | 按需加载PageComponent | ()=>Promise<SSRpage\> | _ |
 | createRequest | node端请求工具配置，通常需要配置cookie等，将作为getInitialData的第一个参数 | (req)=>any | _ | 
+| errorInterceptor | 错误拦截器 | (error,req,res,next)=>void | _ |
 
 ## PageComponent
 ```tsx
