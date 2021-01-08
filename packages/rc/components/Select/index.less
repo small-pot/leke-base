@@ -76,67 +76,66 @@
       margin-left: 4px;
     }
   }
+  .leke-select-search{
+    position: relative;
+    height: 1.5em;
+    >input{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left:0;
+      top:0;
+      z-index: 10;
+      outline: none;
+      background-color: transparent;
+      border:0;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+      font-family: inherit;
+    }
+    .leke-select-search-content{
+      visibility: hidden;
+      overflow: hidden;
+      white-space: nowrap;
+      min-width: 4px;
+    }
+  }
 }
-.leke-select-popup{
+.leke-option-container{
   padding-top: 4px;
   padding-bottom: 4px;
-  .leke-option-container{
-    display: flex;
-    overflow: hidden;
-  }
+  display: flex;
+  overflow: hidden;
   .leke-option-list{
     flex: 1;
   }
   .leke-option-scrollBar{
     min-width: 8px;
   }
-  .leke-select-empty{
-    text-align: center;
-    color: #8C8C8C;
-    padding: 15px 0;
+  .leke-option{
+    box-sizing: border-box;
+    cursor: pointer;
+    min-height:32px;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+    transition: all 0.3s;
+    &:not(.leke-option-disabled):hover{
+      background-color: @hover-background-color;
+    }
+    &.leke-option-selected{
+      background-color: @click-background-color;
+    }
+    &.leke-option-disabled{
+      color: @disable-color;
+      cursor: default;
+    }
   }
 }
-.leke-option{
-  box-sizing: border-box;
-  cursor: pointer;
-  min-height:32px;
-  display: flex;
-  align-items: center;
-  padding-left: 16px;
-  padding-right: 16px;
-  &:not(.leke-option-disabled):hover{
-    background-color: @hover-background-color;
-  }
-  &.leke-option-selected{
-    background-color: @click-background-color;
-  }
-  &.leke-option-disabled{
-    color: @disable-color;
-    cursor: default;
-  }
-}
-.leke-select-search{
-  position: relative;
-  height: 1.5em;
-  >input{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left:0;
-    top:0;
-    z-index: 10;
-    outline: none;
-    background-color: transparent;
-    border:0;
-    padding: 0;
-    color: inherit;
-    font-size: inherit;
-    font-family: inherit;
-  }
-  .leke-select-search-content{
-    visibility: hidden;
-    overflow: hidden;
-    white-space: nowrap;
-    min-width: 4px;
-  }
+.leke-select-empty{
+  text-align: center;
+  color: #8C8C8C;
+  padding: 15px 0;
 }

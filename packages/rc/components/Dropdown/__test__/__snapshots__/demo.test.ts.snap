@@ -8,11 +8,9 @@ exports[`test basics.md 1`] = `
 </div>
 `;
 
-exports[`test focus.md 1`] = `
+exports[`test click.md 1`] = `
 <div>
-  <a
-    tabindex="-1"
-  >
+  <a>
     focus me
   </a>
 </div>

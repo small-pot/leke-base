@@ -11,11 +11,7 @@ title: API
 | popupStyle | 弹层样式 | CSSProperties | _ |
 | popupClassName | 弹层类名 | string | _ |
 | placement | 弹出位置 | "bottomLeft" \| "bottomCenter" \| "bottomRight" \| "topLeft" \| "topCenter" \| "topRight" \| "leftTop" \| "leftCenter" \| "leftBottom" \| "rightTop" \| "rightCenter" \| "rightBottom" \| "bottomLeft" |
-| eventType | 触发下拉的行为 | Array<"focus" \| "hover"> | \["hover"\] |
+| eventType | 触发下拉的行为 | Array<"focus" \| "hover" \| "click"> | \["hover"\] |
 | autoSize | 是否根据触发器自动设置minWidth或者minHeight | boolean | _ |
 
-## ref
-| 属性 | 说明 | 类型 |
-| --- | --- | --- |
-| resetPosition | 重新计算设置popup弹出的位置 | ()=>void | 
-| blur | 使trigger失去焦点 | ()=>void |
+

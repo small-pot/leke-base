@@ -33,8 +33,8 @@ export default function OptionList(props:OptionListPropsType) {
         }
     },[scrollBarRef,containerRef,haveScrollBar]);
     return(
-        <div ref={containerRef}  className='leke-option-container' style={{maxHeight:listHeight}}>
-            <div className='leke-option-list'>
+        <div ref={containerRef}  className='leke-option-container'>
+            <div className='leke-option-list' style={{maxHeight:listHeight}}>
                 {options.slice(start,end).map((item,index)=>renderItem(item,start+index))}
             </div>
             {haveScrollBar?

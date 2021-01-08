@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo, useRef, useState} from "react";
+import React, {useCallback, useMemo, useRef} from "react";
 import Dropdown,{dropdownPropsType} from "../Dropdown";
 import OptionList from './OptionList';
 import classNames from 'classnames';
@@ -24,6 +24,7 @@ export interface selectPropsType<T=any> extends Omit<dropdownPropsType, 'popup'|
     style?:React.CSSProperties,
     className?:string,
     showSearch?:boolean,
+    searchValue?:string,
     onSearch?:(v:string)=>void,
     filter?:(opt:T,v:string)=>void,
     empty?:React.ReactNode,
@@ -54,27 +55,25 @@ export default function Select(props:selectPropsType) {
         popupStyle,
         popupClassName,
         getPopupContainer,
-        onSearch,
         showSearch,
         filter,
         empty,
         icon,
         disabled
     }=props;
-    const triggerRef=useRef(null);
     const inputRef=useRef<HTMLInputElement>(null);
     const selectorRef=useRef<HTMLDivElement>(null);
     const selectedOptionsRef=useRef([]);
-    const [searchContent,setSearchContent]=useState('');
+    const [searchValue,setSearchValue]=useControl(props.searchValue,props.onSearch,'');
     const [visible,setVisible]=useControl(props.visible,props.onVisibleChange,false);
     const [value,onChange]=useControl<valueType>(props.value,props.onChange,props.defaultValue);
     const {label,value:valueKey,disabled:disabledKey}=Object.assign({},defaultFieldNames,fieldNames);
     const values=toArray(value);
     const list=useMemo(()=>{
         return options.filter(opt=>{
-            return typeof filter==='function'?filter(opt,searchContent):opt[label].indexOf(searchContent)>-1;
+            return typeof filter==='function'?filter(opt,searchValue):opt[label].indexOf(searchValue)>-1;
         });
-    },[options,searchContent,filter,label]);
+    },[options,searchValue,filter,label]);
 
     if(value!==undefined){
         selectedOptionsRef.current.splice(0,values.length);
@@ -87,9 +86,6 @@ export default function Select(props:selectPropsType) {
     }else{
         selectedOptionsRef.current=[];
     }
-    useLayoutEffect(()=>{
-        triggerRef.current.resetPosition();
-    },[value,searchContent,triggerRef]);
 
     function handle(item) {
         if(multiple){
@@ -103,11 +99,11 @@ export default function Select(props:selectPropsType) {
                 selectedOptionsRef.current.push(item);
             }
             onChange(newValues,selectedOptionsRef.current);
-            searchChange('');
+            setSearchValue('');
         }else if(item[valueKey]!==value){
             selectedOptionsRef.current=[item];
             onChange(item[valueKey],item);
-            triggerRef.current.blur();
+            inputRef.current.blur();
         }
     }
     function renderItem(item) {
@@ -123,7 +119,7 @@ export default function Select(props:selectPropsType) {
                     handle(item);
                 }}
             >
-                {typeof renderOption==='function'?renderOption(item,searchContent):item[label]}
+                {typeof renderOption==='function'?renderOption(item,searchValue):item[label]}
             </div>
         );
     }
@@ -143,7 +139,7 @@ export default function Select(props:selectPropsType) {
                 );
             });
         }
-        if(searchContent){
+        if(searchValue){
             return null;
         }
         if(selectedOptions.length===1){
@@ -152,11 +148,16 @@ export default function Select(props:selectPropsType) {
         }
         return <div className='leke-select-placeholder'>{placeholder}</div>;
     }
-    function searchChange(val) {
-        onSearch&&onSearch(val);
-        setSearchContent(val);
-    }
-    function onFocus() {
+
+    const onVisibleChange=useCallback((show)=>{
+        setVisible(show)
+        if(!show){
+            setSearchValue('')
+        }
+    },[setSearchValue,setVisible])
+
+    function onMouseDown(e) {
+        e.preventDefault()
         if(!inputRef.current){
             return;
         }
@@ -166,18 +167,17 @@ export default function Select(props:selectPropsType) {
         const searchBox:HTMLDivElement=selectorRef.current.querySelector('.leke-select-search-content');
         searchBox.style.maxWidth=selectorRef.current.offsetWidth+'px';
     }
-
+    const readOnly=!showSearch||disabled
     return(
         <Dropdown
-            ref={triggerRef}
             placement='bottomLeft'
             eventType={eventType}
             popupStyle={popupStyle}
             getPopupContainer={getPopupContainer}
             visible={visible}
-            onVisibleChange={setVisible}
+            onVisibleChange={onVisibleChange}
             disabled={disabled}
-            popupClassName={classNames('leke-select-popup',popupClassName)}
+            popupClassName={popupClassName}
             popup={
                 list.length?<OptionList
                     options={list}
@@ -190,21 +190,22 @@ export default function Select(props:selectPropsType) {
             <div
                 className={classNames('leke-select',visible?'leke-select-open':'',disabled?'leke-select-disabled':'',className)}
                 style={style}
-                onFocus={onFocus}
-                onBlur={()=>searchChange('')}
+                onMouseDown={onMouseDown}
             >
                 <div className='leke-select-flex'>
                     <div ref={selectorRef} className='leke-select-selector' style={{marginLeft:values.length&&multiple?4:''}}>
                         {renderSelector()}
-                        {showSearch&&!disabled?<div className='leke-select-search'>
+                        <div className='leke-select-search'>
                             <input
                                 ref={inputRef}
                                 type="text"
-                                value={searchContent}
-                                onChange={(e)=>searchChange(e.target.value)}
+                                value={searchValue}
+                                onChange={(e)=>setSearchValue(e.target.value)}
+                                readOnly={readOnly}
+                                style={{opacity:readOnly?'0':''}}
                             />
-                            <div className='leke-select-search-content'>{searchContent}</div>
-                        </div>:null}
+                            <div className='leke-select-search-content'>{searchValue}</div>
+                        </div>
                     </div>
                     {icon===undefined?<DownFill className='leke-icon-down'/>:icon}
                 </div>

@@ -2,7 +2,7 @@ import React, {
     CSSProperties,
     useLayoutEffect,
     useRef,
-    useReducer, useImperativeHandle
+    useReducer, useEffect, useCallback
 } from 'react';
 import classNames from 'classnames';
 import {useAnimation,useControl} from '@leke/hooks';
@@ -13,6 +13,7 @@ export interface childPropsType {
     ref?:React.RefObject<HTMLElement>|React.RefCallback<HTMLElement>,
     tabIndex?:number,
     onFocus?:(e)=>void,
+    onClick?:(e)=>void,
     onMouseEnter?:(e)=>void,
     onMouseLeave?:(e)=>void,
     onBlur?:(e)=>void
@@ -29,7 +30,7 @@ export interface triggerPropsType {
     visible?:boolean,
     onVisibleChange?:(boolean)=>void,
     children:React.ReactElement<HTMLElement>,
-    eventType?:Array<'focus'|'hover'>,
+    eventType?:Array<'focus'|'hover'|'click'>,
     popup:React.ReactNode,
     popupStyle?:CSSProperties,
     popupClassName?:string,
@@ -55,45 +56,24 @@ function contains (container:HTMLElement,target:HTMLElement){
     }
     return false;
 }
-export interface refType {
-    resetPosition:()=>void,
-    blur:()=>void
-}
-function elementBlur(el) {
-    const activeElement=document.activeElement as HTMLElement;
-    if(contains(el,activeElement)){
-        activeElement.blur();
-    }
-}
-const Trigger=React.forwardRef<refType,triggerPropsType>(function (props,ref) {
+
+function Trigger (props) {
     const {children,eventType,popup,popupStyle,popupClassName,getPopupContainer,placement,autoSize,disabled}=props;
     const [visible,setVisible]=useControl(props.visible,props.onVisibleChange,false);
     const triggerRef=useRef<HTMLElement>(null);
     const popupRef=useRef<HTMLDivElement>(null);
+    const timerRef=useRef(null)
     const [portalContainer,setPortalContainer]=useReducer(()=>getPopupContainer(triggerRef.current),null);
     const child=React.Children.only(children);
     const childProps:childPropsType=child.props;
+    const includeClick=eventType.indexOf('click')!==-1
     const includeFocus=eventType.indexOf('focus')!==-1;
     const includeHover=eventType.indexOf('hover')!==-1;
 
-    useImperativeHandle(ref,()=>{
-        return {
-            resetPosition(){
-                if(popupRef.current&&triggerRef.current&&portalContainer){
-                    setPopupPosition(popupRef.current,triggerRef.current,portalContainer,placement);
-                }
-            },
-            blur(){
-                if(includeFocus){
-                    elementBlur(triggerRef.current);
-                }
-            }
-        };
-    },[triggerRef,popupRef,portalContainer,includeFocus,placement]);
     const popupProps:popupPropsType={
         ref:popupRef,
         style:popupStyle,
-        className:classNames('leke-popup',`leke-popup-${placement}`,visible?'leke-popup-open':'',popupClassName)
+        className:classNames('leke-popup',`leke-popup-${placement}`,popupClassName)
     };
     const cloneProps:childPropsType={
         ref(node){
@@ -106,79 +86,99 @@ const Trigger=React.forwardRef<refType,triggerPropsType>(function (props,ref) {
             triggerRef.current=node;
         }
     };
+    const clearDelay=useCallback(()=>{
+        if(timerRef.current){
+            clearTimeout(timerRef.current)
+        }
+    },[])
+    const delaySetVisible=useCallback((v)=>{
+        clearDelay()
+        timerRef.current=setTimeout(()=>{
+            setVisible(v)
+        },50)
+    },[clearDelay,timerRef,setVisible])
     if(!disabled){
+        if(includeClick){
+            cloneProps.onClick=(e)=>{
+                delaySetVisible(true)
+                childProps.onClick?.(e);
+            };
+        }
         if(includeFocus){
             cloneProps.onFocus=(e)=>{
-                !visible&&setVisible(true);
+                delaySetVisible(true)
                 childProps.onFocus?.(e);
             };
             cloneProps.onBlur=(e)=>{
-                visible&&setVisible(false);
-                if(e.target===document.activeElement){
-                    e.target.blur();
-                }
+                delaySetVisible(false)
                 childProps.onBlur?.(e);
             };
-            cloneProps.tabIndex=-1;
             popupProps.onMouseDown=mousedown;
         }
         if(includeHover){
             cloneProps.onMouseEnter=(e)=>{
-                !visible&&setVisible(true);
                 childProps.onMouseEnter?.(e);
+                delaySetVisible(true)
             };
             cloneProps.onMouseLeave=(e)=>{
-                visible&&setVisible(false);
                 childProps.onMouseLeave?.(e);
+                delaySetVisible(false)
             };
-            popupProps.onMouseEnter=(e)=>{
-                setVisible(true);
-            };
-            popupProps.onMouseLeave=(e)=>{
-                setVisible(false);
+            popupProps.onMouseEnter=clearDelay;
+            popupProps.onMouseLeave=()=>{
+                delaySetVisible(false)
             };
         }
     }
     useAnimation({
         ref:popupRef,
         open:portalContainer?visible:false,
-        onEnter(){
-            const {position}=window.getComputedStyle(portalContainer);
-            if(portalContainer!==document.body&&(!position||position==='static')){
-                portalContainer.style.position='relative';
-            }
-            if(autoSize){
-                if(placement.indexOf('bottom')===0||placement.indexOf('top')===0){
-                    popupRef.current.style.minWidth=triggerRef.current.offsetWidth+'px';
-                }else{
-                    popupRef.current.style.minHeight=triggerRef.current.offsetHeight+'px';
-                }
-            }
-            setPopupPosition(popupRef.current,triggerRef.current,portalContainer,placement);
-        },
         enter,
         exit,
         exited:'leke-hide'
     });
     useLayoutEffect(()=>{
-        if(!visible){
-            return;
+        if(visible){
+            if(portalContainer){
+                if(autoSize){
+                    if(placement.indexOf('bottom')===0||placement.indexOf('top')===0){
+                        popupRef.current.style.minWidth=triggerRef.current.offsetWidth+'px';
+                    }else{
+                        popupRef.current.style.minHeight=triggerRef.current.offsetHeight+'px';
+                    }
+                }
+                setPopupPosition(popupRef.current,triggerRef.current,portalContainer,placement);
+            }else{
+                setPortalContainer()
+            }
         }
-        if(!portalContainer){
-            return setPortalContainer();
+    },[children,visible,triggerRef,popupRef,placement,portalContainer,setPortalContainer,autoSize])
+
+    useEffect(clearDelay,[clearDelay])
+
+    useEffect(()=>{
+        if(includeClick){
+            const click=(e)=>{
+                const {target}=e
+                if(popupRef.current&&!contains(triggerRef.current,target)&&!contains(popupRef.current,target)){
+                    delaySetVisible(false)
+                }
+            }
+            document.addEventListener('click',click)
+            return ()=>{
+                document.removeEventListener('click',click)
+            }
         }
-    },[triggerRef,popupRef,visible,placement,portalContainer,setPortalContainer]);
+    },[includeClick,delaySetVisible,triggerRef,popupRef])
     return(
         <>
             {React.cloneElement(child,cloneProps)}
-            {portalContainer?
-                <Popup portalContainer={portalContainer} visible={visible}>
-                    <div {...popupProps}>{popup}</div>
-                </Popup>
-                :null}
+            <Popup  portalContainer={portalContainer} visible={visible} >
+                <div {...popupProps}>{popup}</div>
+            </Popup>
         </>
     );
-});
+};
 Trigger.defaultProps={
     placement:'bottomLeft',
     getPopupContainer:()=>document.body,

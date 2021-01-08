@@ -17,6 +17,7 @@ if(!getHash()){
 }
 function App(){
     const [hash,setHash]=useState(getHash());
+
     useEffect(()=>{
         function hashChange(){
             setHash(getHash());

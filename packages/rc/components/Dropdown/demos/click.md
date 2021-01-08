@@ -1,6 +1,5 @@
 ---    
-title: 使用聚焦状态
-description: 当元素获取焦点时显示菜单
+title: 点击时弹出下拉菜单
 ---
 
 ```jsx
@@ -11,7 +10,7 @@ export default function(){
     return(
         <Dropdown 
             popup={<div style={{height:200}}>popup</div>}
-            event={['focus']}
+            eventType={['click']}
         ><a >focus me</a></Dropdown>
     );
 }
