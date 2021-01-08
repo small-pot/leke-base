@@ -13,14 +13,14 @@ title: API
 | popupStyle | 弹层样式 | CSSProperties | _ |
 | popupClassName | 弹层类名 | string | _ |
 | placement | 弹出位置 | "bottomLeft" \| "bottomCenter" \| "bottomRight" \| "topLeft" \| "topCenter" \| "topRight" | "bottomLeft" |
-| defaultValue | 指定默认选中的条目 | string \| string[] | number \| number[] | _ |
-| value | 指定当前选中的条目 | string \| string[] | number \| number[] | _ |
+| defaultValue | 指定默认选中的条目 | string \| string[] \| number \| number[] | _ |
+| value | 指定当前选中的条目 | string \| string[] \| number \| number[] | _ |
 | onChange | value变化时的回调 | (value,selectedOption)=>void  | _ |
 | placeholder | 选择框默认文本 | string  | _ |
 | multiple | 是否多选 | false | _ |
 | disabled | 是否禁用 | false | _ |
 | options | 选择器条目列表 | object[] | _ |
-| fieldNames | 指定条目中的value,label,disabled对应的key | {label?:string,value?:string,disabled?:string} | {label:label,value:value,disabled:disabled} |
+| fieldNames | 指定条目中的value,label,disabled对应的字段名 | {label?:string,value?:string,disabled?:string} | {label:label,value:value,disabled:disabled} |
 | renderOption | 自定义渲染条目内容 | (opt,searchValue)=>React.ReactNode | _ |
 | listHeight | 指定options渲染的最大高度 | number | 256 |
 | itemHeight | 指定单个条目的高度 | number | 32 |
