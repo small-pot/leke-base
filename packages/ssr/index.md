@@ -54,7 +54,7 @@ module.exports={
 
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
-| cssModules | 是否启用cssModules | boolean | false |
+| cssModules | 是否启用cssModules，[配置详情](https://www.npmjs.com/package/css-loader) | boolean \| object | false |
 | port | 开发服务器端口号 | number | 8989 |
 | entry | 入口文件路径| string | _ |
 | proxy | 跨域代理配置，[配置详情](https://www.npmjs.com/package/http-proxy-middleware)| object | _ |

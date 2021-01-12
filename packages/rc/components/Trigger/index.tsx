@@ -1,6 +1,5 @@
 import React, {
     CSSProperties,
-    useLayoutEffect,
     useRef,
     useReducer, useEffect, useCallback
 } from 'react';
@@ -56,7 +55,7 @@ function contains (container:HTMLElement,target:HTMLElement){
     }
     return false;
 }
-
+const useLayoutEffect=typeof window==='object'?React.useLayoutEffect:useEffect
 function Trigger (props) {
     const {children,eventType,popup,popupStyle,popupClassName,getPopupContainer,placement,autoSize,disabled}=props;
     const [visible,setVisible]=useControl(props.visible,props.onVisibleChange,false);

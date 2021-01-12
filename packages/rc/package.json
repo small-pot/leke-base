@@ -20,7 +20,7 @@
     "react-dom": ">=16.8.6"
   },
   "dependencies": {
-    "@leke/hooks": "1.0.3",
+    "@leke/hooks": "1.0.4",
     "@leke/icons": "1.0.3",
     "classnames": "^2.2.6",
     "omit.js": "^2.0.2"
