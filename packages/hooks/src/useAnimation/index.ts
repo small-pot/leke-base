@@ -1,56 +1,87 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import {useRef, RefObject, useLayoutEffect} from "react";
+import {useRef, RefObject, useLayoutEffect, useEffect} from "react";
 import classNames from 'classnames';
+import omit from 'omit.js';
 interface useAnimationProps{
     ref:RefObject<HTMLElement>,
+    type?:'transition'|'animation',
     open:boolean,
-    enterClassName?:string,
-    afterEnterClassName?:string,
-    leaveClassName?:string,
-    afterLeaveClassName?:string,
-    onEnd?:(visible:boolean,el:HTMLElement)=>void
+    enter?:string,
+    entering?:string,
+    entered?:string,
+    exit?:string,
+    exiting?:string,
+    exited?:string
+    onEnter?:()=>void,
+    onEntering?:()=>void,
+    onEntered?:()=>void,
+    onExit?:()=>void,
+    onExiting?:()=>void,
+    onExited?:()=>void,
 }
-function getAnimationEventName() {
+function getAnimationEventName(type='animation') {
     const el=document.body;
-    if(el.style['animation']!==undefined){
-        return 'animationend';
+    if(el.style[type]!==undefined){
+        return type+'end';
     }
-    if(el.style['webkitAnimation']!==undefined){
-        return 'webkitAnimationEnd';
+    const webkitName='webkit'+type.replace(/^[a-z]/,($0)=>$0.toUpperCase());
+    if(el.style[webkitName]!==undefined){
+        return webkitName+'End';
     }
-    return 'animationend';
+    return type+'end';
 }
 export default function useAnimation(params:useAnimationProps) {
-    if(typeof window==='undefined') return;
     const {
         ref,
         open,
-        enterClassName,
-        afterEnterClassName,
-        leaveClassName,
-        afterLeaveClassName,
-        onEnd
     }=params;
     const classNameRef=useRef(null);
-    const noDepProps={enterClassName,leaveClassName,afterEnterClassName,afterLeaveClassName,onEnd};
-    const propsRef=useRef(noDepProps);
-    propsRef.current=noDepProps;
+    const omitRef=useRef(null);
+    omitRef.current=omit(params,['ref','open']);
     useLayoutEffect(()=>{
         const el=ref.current;
         if(!el){
             return;
         }
-        const {enterClassName,leaveClassName,afterEnterClassName,afterLeaveClassName,onEnd}=propsRef.current;
         if(classNameRef.current===null){
             classNameRef.current=el.className||'';
         }
-        el.className=classNames(classNameRef.current,open?enterClassName:leaveClassName);
-        const eventName=getAnimationEventName();
+        const {enter,exit,onEnter,onExit}=omitRef.current;
+        if(open){
+            el.className=classNames(classNameRef.current,enter);
+            typeof onEnter==='function'&&onEnter();
+        }else{
+            el.className=classNames(classNameRef.current,exit);
+            typeof onExit==='function'&&onExit();
+        }
+    },[open,ref,omitRef]);
+    useEffect(()=>{
+        const el=ref.current;
+        if(!el){
+            return;
+        }
+        const {entering,entered,exiting,exited,onEntering,onEntered,onExiting,onExited,type}=omitRef.current;
+        if(open){
+            if(entering){
+                el.className=classNames(classNameRef.current,entering);
+            }
+            typeof onEntering==='function'&&onEntering();
+        }else{
+            if(exiting){
+                el.className=classNames(classNameRef.current,exiting);
+            }
+            typeof onExiting==='function'&&onExiting();
+        }
+        const eventName=getAnimationEventName(type);
         function eventCallback(){
-            el.className=classNames(classNameRef.current,open?afterEnterClassName:afterLeaveClassName);
-            typeof onEnd==='function'&&onEnd(open,el);
+            if(open){
+                el.className=classNames(classNameRef.current,entered);
+                typeof onEntered==='function'&&onEntered();
+            }else{
+                el.className=classNames(classNameRef.current,exited);
+                typeof onExited==='function'&&onExited(el);
+            }
             el.removeEventListener(eventName,eventCallback);
         }
         el.addEventListener(eventName,eventCallback);
-    },[open,ref]);
+    },[open,ref,omitRef]);
 }

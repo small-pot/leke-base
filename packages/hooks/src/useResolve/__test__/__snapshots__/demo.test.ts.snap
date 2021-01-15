@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test basics.md 1`] = `
+<div>
+  <div>
+    <p>
+      loading...
+    </p>
+    <button>
+      增加
+    </button>
+  </div>
+</div>
+`;
+
+exports[`test error.md 1`] = `
+<div>
+  <p>
+    loading...
+  </p>
+</div>
+`;
+
+exports[`test static.md 1`] = `
+<div>
+  <div>
+    <p>
+      hello world
+    </p>
+    <p>
+      false
+    </p>
+    <p>
+      undefined
+    </p>
+  </div>
+</div>
+`;

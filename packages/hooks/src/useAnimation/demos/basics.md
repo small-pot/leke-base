@@ -1,4 +1,6 @@
-## 事例
+---    
+title: 基本用法
+---
 
 ```jsx
 import React, {useRef, useState} from 'react';
@@ -10,10 +12,13 @@ export default function() {
     useAnimation({
         ref,
         open,
-        enterClassName: 'rotate-enter',
-        leaveClassName: 'rotate-leave',
-        onEnd(bool){
-            setOpen(!bool);
+        entering:'rotate-enter',
+        exiting:'rotate-leave',
+        onEntered(){
+            setOpen(false);
+        },
+        onExited(){
+            setOpen(true);
         }
     });
     return (

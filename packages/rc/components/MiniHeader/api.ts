@@ -10,6 +10,7 @@ export interface userInfoTypes {
     schoolId:number,
     schoolName:string,
     schoolNature:number,
+    schoolLogoUrl?:string,
     isLearnCenter:boolean,
     roleSchoolList:{roleId:number,roleName:string,schoolNature:number,schoolId:number}[]
 }

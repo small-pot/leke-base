@@ -1,4 +1,5 @@
 @import "../../less/theme.less";
+@import "../Dropdown/index.less";
 
 .leke-miniHeader{
     font-size: 12px;
@@ -64,84 +65,6 @@
         }
         .leke-icon-down-fill{
             color:#e3e4e8;
-            transition: transform 0.3s;
-        }
-        &:hover {
-            position: relative;
-            .leke-icon-down-fill{
-                transform: rotate(180deg);
-            }
-            .leke-miniHeader-role-list{
-                display: block;
-            }
-        }
-    }
-    .leke-miniHeader-role-list{
-        position: absolute;
-        background-color: #fff;
-        width: 140px;
-        right: -20px;
-        display: none;
-        z-index: 10;
-        top:45px;
-        border-radius: 0 0 4px 4px;
-        box-shadow: 0 2px 8px rgba(0,0,0,.2);
-        box-sizing: content-box;
-        font-size: 14px;
-        &:before{
-            position: absolute;
-            content: '';
-            display: block;
-            top: -6px;
-            left: 64px;
-            width: 14px;
-            height: 6px;
-            z-index: 11;
-            background: url('https://static.leke.cn/images/home/sizesan.png') no-repeat 0 0;
-        }
-        li{
-            padding:0 10px;
-            margin:10px 0;
-            box-sizing: border-box;
-            &:first-child{
-                border-bottom: #ececec 1px solid;
-                padding-bottom: 8px;
-                a{
-                    text-indent:31px;
-                }
-            }
-            &:last-child{
-                border-top: #ececec 1px solid;
-                padding-top: 8px;
-                a{
-                    text-indent:31px;
-                }
-            }
-            a{
-                display: flex;
-                height: 26px;
-                align-items: center;
-                width: 100%;
-                text-indent:18px;
-                border-radius: @radius;
-                &:hover{
-                    background-color: #d2f0ed;
-                    color: @base-color;
-                }
-            }
-            &.leke-role-current{
-                position: relative;
-                &:before{
-                    position: absolute;
-                    display: block;
-                    content: '';
-                    width:10px;
-                    height: 8px;
-                    left:14px;
-                    top:8px;
-                    background: url('https://static.leke.cn/images/home/check.png') no-repeat 100% 100%;
-                }
-            }
         }
     }
     .leke-miniHeader-login{
@@ -153,6 +76,50 @@
         span{
             margin-left:8px;
             margin-right: 8px;
+        }
+    }
+}
+.leke-miniHeader-role-list{
+    width: 140px;
+    box-sizing: content-box;
+    font-size: 14px;
+    color:@text-color;
+    li{
+        padding:0 10px;
+        margin:10px 0;
+        box-sizing: border-box;
+        display: flex;
+        &:first-child{
+            border-bottom: #ececec 1px solid;
+            padding-bottom: 8px;
+        }
+        &:last-child{
+            border-top: #ececec 1px solid;
+            padding-top: 8px;
+        }
+        a{
+            display: flex;
+            flex: 1;
+            height: 26px;
+            align-items: center;
+            width: 100%;
+            border-radius: @radius;
+            &:hover{
+                background-color: #d2f0ed;
+                color: @base-color;
+            }
+        }
+        .leke-indent{
+            width:31px;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+        }
+        &.leke-role-current{
+            a{
+                background-color: #d2f0ed;
+                color: @base-color;
+            }
         }
     }
 }
