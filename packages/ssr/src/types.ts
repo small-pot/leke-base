@@ -1,5 +1,5 @@
 import {ComponentClass, FunctionComponent, ReactNode} from "react";
-import {Request, Response} from "express";
+import {Request, Response,NextFunction} from "express";
 import {AxiosInstance} from 'axios';
 
 type headContentType=ReactNode|((req:Request)=>ReactNode)
@@ -36,6 +36,7 @@ export interface routeType{
 export interface configType {
     publicPath?:string,
     headContent?:headContentType,
-    createRequest?:(Request)=>any,
+    createRequest?:(req:Request)=>any,
+    errorInterceptor?:(error:any,req:Request,res:Response,next:NextFunction)=>void
     routes:routeType[]
 }

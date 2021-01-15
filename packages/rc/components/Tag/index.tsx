@@ -3,16 +3,17 @@
  * @Date: 2020/11/13 20:22
  * @Description: 标签
  */
-import React, {ReactNode,useState,useCallback,useMemo,useRef} from 'react';
-import {useAnimation} from '@leke/hooks';
+import React, {ReactNode,useCallback,AllHTMLAttributes} from 'react';
+import {Close} from '@leke/icons';
+import classNames from "classnames";
 
-interface Props {
+interface Props extends AllHTMLAttributes<HTMLDivElement>{
     text: string;
-    className?: string;
+    colorType?: string;
     icon?: ReactNode;
-    closeIcon?: ReactNode;
+    closable?: boolean;
     onClose?: ()=>void;
-    onClick?: ()=>void;
+    visible?: boolean;
 }
 const PRESET = [
     'default','seablue','lekegreen','brighteyes','hotred','lime','auroragreen','geekblue','saucepurple','magenta','volcano','marigold','sunrise',
@@ -20,45 +21,27 @@ const PRESET = [
 ];
 const PRE_CLASSNAME = 'leke-tag';
 
-const Tag: React.FC<Props> = ({text,className,icon,closeIcon,onClose,onClick}) => {
-    const [open,setOpen] = useState(true);
-    const ref = useRef(null);
-    const tagPointer = ref.current;
-    useAnimation({
-        ref,
-        open,
-        type:'transition',
-        exited: `${PRE_CLASSNAME}-close`,
-        onExit: ()=>{
-            tagPointer.style.width = tagPointer.offsetWidth + 'px';
-        },
-        onExiting: ()=>{
-            tagPointer.style.width = '0px';
-            tagPointer.style.transform = 'scale(0,0)';
-        }
-
-    });
+const Tag = React.forwardRef<HTMLDivElement,Props>((props,ref) => {
+    const {text,colorType,icon,closable,onClose,visible,className,...otherProps} = props;
     const handleClick = useCallback((e)=>{
         e.stopPropagation();
-        setOpen(false);
         onClose && onClose();
     },[onClose]);
-    const memoCloseIcon = useMemo(()=>{
-        return closeIcon ? <span className={`${PRE_CLASSNAME}-closeicon`} onClick={handleClick}>{closeIcon}</span> : null;
-    },[closeIcon,handleClick]);
-    const memoIcon = useMemo(()=>{
-        return icon ? <span className={`${PRE_CLASSNAME}-icon`}>{icon}</span> : null;
-    },[icon]);
-    const memoClassName = useMemo(()=>{
-        return PRESET.indexOf(className) >= 0 ? `${PRE_CLASSNAME}-${className}` : className;
-    },[className]);
-    return <div ref={ref} className={`${PRE_CLASSNAME}-ani`}>
-        <div className={`${PRE_CLASSNAME} ${memoClassName}`} onClick={onClick}>
-            {memoIcon}<span className={`${PRE_CLASSNAME}-text`}>{text}</span>{memoCloseIcon}
-        </div>
+    const CloseIcon = closable ? <span className={`${PRE_CLASSNAME}-closeicon`} onClick={handleClick}><Close/></span> : null;
+    const Icon = icon ? <span className={`${PRE_CLASSNAME}-icon`}>{icon}</span> : null;
+    const mixClassName = classNames(
+        PRE_CLASSNAME,
+        {
+            [`${PRE_CLASSNAME}-${colorType}`]: PRESET.indexOf(colorType) >= 0,
+            [`${PRE_CLASSNAME}-close`]: !visible
+        },
+        className
+    );
+    return <div className={mixClassName} ref={ref} {...otherProps}>
+        {Icon}<span className={`${PRE_CLASSNAME}-text`}>{text}</span>{CloseIcon}
     </div>;
-};
+});
 Tag.defaultProps = {
-    className: 'default'
+    visible: true
 };
 export default React.memo(Tag);

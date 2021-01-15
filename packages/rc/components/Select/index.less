@@ -1,0 +1,141 @@
+@import "../../less/theme.less";
+@import "../Dropdown/index.less";
+.leke-select{
+  display: inline-block;
+  box-sizing: border-box;
+  width: 114px;
+  outline: none;
+  border-radius: @radius;
+  border: 1px solid @border-color;
+  cursor: pointer;
+  transition: all 0.3s;
+  vertical-align: middle;
+  padding-right: 10px;
+  &.leke-select-open,&:hover{
+    border-color: @base-color;
+  }
+  &.leke-select-disabled{
+    color:@disable-color;
+    background-color: @hover-background-color;
+    cursor: default;
+    border-color: @disable-color;
+  }
+  &.leke-select-open{
+    .leke-select-text{
+      color:@border-color;
+    }
+  }
+  .leke-select-text{
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+  .leke-select-flex{
+    width: 100%;
+    min-height:30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .leke-select-selector{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex: 1;
+    margin-left: 12px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .leke-icon-down{
+    color:#D8D8D8;
+    font-size: 12px;
+    margin-left: 6px;
+  }
+  .leke-select-placeholder{
+    color:@border-color;
+    position: absolute;
+    white-space: nowrap;
+    flex: 1;
+  }
+  .leke-select-tag{
+    box-sizing: border-box;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    background-color: #F5F5F5;
+    border-radius: 2px;
+    border: 1px solid #F0F0F0;
+    font-size: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 2px 4px 2px 0;
+    .leke-select-tag-text{
+      color: #262626;
+    }
+    .leke-icon-close{
+      color: #323332;
+      margin-left: 4px;
+    }
+  }
+  .leke-select-search{
+    position: relative;
+    height: 1.5em;
+    >input{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left:0;
+      top:0;
+      z-index: 10;
+      outline: none;
+      background-color: transparent;
+      border:0;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+      font-family: inherit;
+    }
+    .leke-select-search-content{
+      visibility: hidden;
+      overflow: hidden;
+      white-space: nowrap;
+      min-width: 4px;
+    }
+  }
+}
+.leke-option-container{
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: flex;
+  overflow: hidden;
+  .leke-option-list{
+    flex: 1;
+  }
+  .leke-option-scrollBar{
+    min-width: 8px;
+  }
+  .leke-option{
+    box-sizing: border-box;
+    cursor: pointer;
+    min-height:32px;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+    transition: all 0.3s;
+    &:not(.leke-option-disabled):hover{
+      background-color: @hover-background-color;
+    }
+    &.leke-option-selected{
+      background-color: @click-background-color;
+    }
+    &.leke-option-disabled{
+      color: @disable-color;
+      cursor: default;
+    }
+  }
+}
+.leke-select-empty{
+  text-align: center;
+  color: #8C8C8C;
+  padding: 15px 0;
+}

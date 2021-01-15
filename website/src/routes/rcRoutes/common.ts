@@ -28,6 +28,14 @@ export default {
         {
             key:'Radio',
             title:'单选'
+        },
+        {
+            key: 'Switch',
+            title: '开关'
+        },
+        {
+            key:'Select',
+            title:'选择器'
         }
         
     ]

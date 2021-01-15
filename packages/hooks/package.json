@@ -1,6 +1,6 @@
 {
   "name": "@leke/hooks",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -14,7 +14,6 @@
     "lib",
     "es"
   ],
-  "devDependencies": {},
   "dependencies": {
     "omit.js": "^2.0.2"
   }

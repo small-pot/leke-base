@@ -6,12 +6,12 @@
     display: inline-flex;
     border-radius: 2px;
     padding: 0 8px;
-    height: 22px;
+    height: 24px;
     align-items: center;
-    justify-content: center;
     margin: 4px 4px;
     cursor: default;
     border: 1px solid transparent;
+    box-sizing: border-box;
     span{
         display: inline-flex;
     }
@@ -49,13 +49,6 @@
 .@{name}-greenfill{.preset-color(#FFFFFF,#1FB5AB,#1FB5AB)}
 .@{name}-orangefill{.preset-color(#FFFFFF,#FF9900,#FF9900)}
 .@{name}-redfill{.preset-color(#FFFFFF,#FF4848,#FF4848)}
-
-.@{name}-ani{
-    white-space: nowrap;
-    transition: all 0.2s;
-    display: inline-block;
-    overflow: hidden;
-}
 .@{name}-close{
     display: none;
 }

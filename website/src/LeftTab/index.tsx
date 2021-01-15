@@ -1,12 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
-import {componentRoutes,hookRoutes} from "../routes";
+import * as routes from "../routes";
 import './index.less';
 
 
 export default function LeftTab({type,name}){
-    const routes=type==='rc'?componentRoutes:type==='hooks'?hookRoutes:null;
-    if(!routes){
+    const typeRoutes=routes[type]
+    if(!typeRoutes){
         return null;
     }
     return (
@@ -16,7 +16,7 @@ export default function LeftTab({type,name}){
                 <li className={classNames('tab-item',!name?'current':'')}>
                     <a href={'#'+type}>安装与配置</a>
                 </li>
-                {routes.map(item=>(
+                {typeRoutes.map(item=>(
                     <li key={item.title} className='tab-group'>
                         <span className='group-title'>{item.title}</span>
                         <ul className='tab-list'>

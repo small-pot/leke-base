@@ -1,6 +1,5 @@
 ---    
-title: 使用聚焦状态
-description: 当元素获取焦点时显示弹层
+title: 点击时弹出下拉菜单
 ---
 ```jsx
 import React from 'react';
@@ -10,9 +9,9 @@ export default function(){
     return(
         <Trigger 
             popup={<div style={{height:50,width:50}}>popup</div>}
-            event={['focus']}
+            eventType={['click']}
         >
-            <a>focus me</a>
+            <a>click me</a>
         </Trigger>
     );
 }

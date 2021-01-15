@@ -21,5 +21,5 @@ module.exports=function (source) {
         source=source.replace(/---\s*\n([\s\S]*?)---/g,'');
     }
     code+=`export const source = ${JSON.stringify(source)};`;
-    return babel.transformSync(code,config).code;
+    return babel.transform(code,{filename:this.resourcePath,...config}).code;
 };

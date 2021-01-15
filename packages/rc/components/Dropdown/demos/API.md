@@ -11,4 +11,4 @@ title: API
 | popupStyle | 弹层样式 | CSSProperties | _ |
 | popupClassName | 弹层类名 | string | _ |
 | placement | 弹出位置 | "bottomLeft" \| "bottomCenter" \| "bottomRight" \| "topLeft" \| "topCenter" \| "topRight" | "bottomLeft" |
-| event | 触发下拉的行为 | Array<"focus" \| "hover"> | \["focus"\] |
+| event | 触发下拉的行为 | Array<"focus" \| "hover" \| "click"> | \["focus"\] |

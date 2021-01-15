@@ -1,0 +1,10 @@
+{
+  "name": "@leke/AV",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "rimraf es && rimraf lib && gulp"
+  },
+  "dependencies": {
+    
+  }
+}
