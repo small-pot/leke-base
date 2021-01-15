@@ -3,7 +3,7 @@
  * @description Switch开关组件
  * @updated ###### Fri Dec 25 15:25:10 PHT 2020
  */
-import React, { FC, memo, ReactNode, useCallback } from "react";
+import React, { FC, memo, ReactNode } from "react";
 import classNames from "classnames";
 import { useControl } from "@leke/hooks";
 import { Loading } from "@leke/icons";
