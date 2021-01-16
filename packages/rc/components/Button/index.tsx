@@ -54,6 +54,4 @@ const Button = (props: ButtonProps,ref) => {
     );
 };
 
-const WrappedButton = forwardRef(Button);
-
-export default WrappedButton;
+export default forwardRef(Button);

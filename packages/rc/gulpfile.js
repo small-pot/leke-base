@@ -25,8 +25,10 @@ function creatIndexStream(){
 exports.default = gulp.parallel(
     ()=>buildTs({stream:gulp.src(tsEntry),outDir:'es',modules:false}),
     ()=>buildTs({stream:gulp.src(tsEntry),outDir:'lib',modules:'commonjs'}),
-    ()=>gulp.src(lessEntry).pipe(gulp.dest('style')),
-    ()=>creatIndexStream().pipe(gulp.dest('style')),
+    gulp.series(
+        ()=>gulp.src(lessEntry).pipe(gulp.dest('style')),
+        ()=>creatIndexStream().pipe(gulp.dest('style')),
+    ),
     gulp.series(
         ()=>buildLess({stream:gulp.src(lessEntry),outDir:'style'}),
         ()=>buildLess({stream:creatIndexStream(),outDir:'style'})

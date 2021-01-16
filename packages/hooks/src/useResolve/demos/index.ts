@@ -1,6 +1,7 @@
 export default [
+    require('./introduction.md'),
     require('./basics.md'),
-    require('./promise.md'),
+    require('./static.md'),
     require('./error.md'),
     require('./API.md')
 ];

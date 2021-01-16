@@ -6,7 +6,9 @@ const postcssPresetEnv=require('postcss-preset-env');
 const modulesOption={
     modules:{
         localIdentName: '[local]_[hash:base64:5]',
-        auto:/^((?!node_modules).)+$/
+        auto(filename) {
+            return filename.indexOf('node_modules')===-1
+        }
     }
 };
 const config={
@@ -27,7 +29,7 @@ const webCSSConfig=[
     },
     {
         loader: 'css-loader',
-        options: Object.assign({},cssModules?modulesOption:null)
+        options: Object.assign({},cssModules===true?modulesOption:cssModules)
     },
     postcss
 ];

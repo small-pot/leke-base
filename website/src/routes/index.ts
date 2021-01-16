@@ -1,2 +1,3 @@
-export {default as componentRoutes} from './componentRoutes';
-export {default as hookRoutes} from './hookRoutes';
+export {default as rc} from './rcRoutes';
+export {default as hooks} from './hookRoutes';
+export {default as AV} from './AVRoutes';
