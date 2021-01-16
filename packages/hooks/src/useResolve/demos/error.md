@@ -1,4 +1,6 @@
-## error
+---    
+title: 获取错误信息
+---
 
 ```jsx
 import React from 'react';

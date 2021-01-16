@@ -4,18 +4,8 @@ exports[`Button  button render disabled 1`] = `
 <body>
   <div>
     <button
-      class="leke-btn leke-btn-default  leke-btn-middle"
+      class="leke-btn leke-btn-default leke-btn-middle"
       disabled=""
-    />
-  </div>
-</body>
-`;
-
-exports[`Button  button render ghost 1`] = `
-<body>
-  <div>
-    <button
-      class="leke-btn leke-btn-default  leke-btn-middle leke-btnBackgroundGhost"
     />
   </div>
 </body>
@@ -30,7 +20,7 @@ exports[`Button  button render loading 1`] = `
   </div>
   <div>
     <button
-      class="leke-btn leke-btn-default  leke-btn-middle leke-btn-loading leke-btn-icon-only"
+      class="leke-btn leke-btn-default leke-btn-middle leke-btn-loading leke-btn-icon-only"
     >
       <div
         class="leke-btn-loading-icon"
@@ -54,7 +44,7 @@ exports[`Button  button render size 1`] = `
 <body>
   <div>
     <button
-      class="leke-btn leke-btn-default  leke-btn-large"
+      class="leke-btn leke-btn-default leke-btn-large"
     />
   </div>
 </body>
@@ -64,7 +54,7 @@ exports[`Button  button render type 1`] = `
 <body>
   <div>
     <button
-      class="leke-btn leke-btn-primary  leke-btn-middle"
+      class="leke-btn leke-btn-main leke-btn-middle"
     />
   </div>
 </body>

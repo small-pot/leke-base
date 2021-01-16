@@ -1,4 +1,8 @@
-## 下拉不同位置
+---    
+title: 弹出位置
+description: 支持 6 个弹出位置
+---
+
 ```jsx
 import React from 'react';
 import {Dropdown} from '@leke/rc';

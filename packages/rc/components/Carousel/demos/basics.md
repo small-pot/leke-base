@@ -1,6 +1,7 @@
-# Carousel 轮播图
+---    
+title: 基本用法
+---
 
-## 基本用法
 ```jsx
 import React from 'react';
 import {Carousel} from '@leke/rc';
