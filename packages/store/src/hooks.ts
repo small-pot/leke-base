@@ -22,7 +22,6 @@ export function shallowEqual(objA, objB):boolean {
     return true;
 }
 
-export const useForceUpdate = () => useReducer(state => state+1, 0)[1];
 
 export const useStore=function<T=object> ():storeType<T> {
     return useContext(StoreContext);
@@ -31,30 +30,23 @@ const subscription=[];
 
 export const useData=<T=any>(selector:(data)=>T,compare=shallowEqual):T=>{
     const {getData}=useStore();
-    const stateRef=useRef<T>(undefined);
-
-    if(stateRef.current===undefined){
-        stateRef.current=selector(getData());
-    }
-    const forceUpdate=useForceUpdate();
+    const [state,setState]=useReducer((oldState)=>{
+        const newState=selector(getData())
+        if(!compare(oldState,newState)){
+            return newState;
+        }
+        return oldState
+    },selector(getData()))
 
     useEffect(()=>{
-        const update=()=>{
-            const newState=selector(getData());
-            const state=stateRef.current;
-            if(!compare(state,newState)){
-                stateRef.current=newState;
-                forceUpdate();
-            }
-        };
-        subscription.push(update);
+        subscription.push(setState);
         return ()=>{
-            const index=subscription.indexOf(update);
+            const index=subscription.indexOf(setState);
             subscription.splice(index,1);
         };
-    },[forceUpdate,getData,stateRef]);  //eslint-disable-line react-hooks/exhaustive-deps
+    },[setState]);
 
-    return stateRef.current;
+    return state;
 };
 
 export const useDispatch=<T=object>():setDataType<T>=>{

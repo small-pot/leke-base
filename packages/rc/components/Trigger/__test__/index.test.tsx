@@ -34,24 +34,17 @@ describe('Trigger ', function() {
             expect(popupContainer).toHaveClass('leke-close');
         });
     });
-    it('test vertical autoFill getPopupContainer',async function () {
-        const div=document.createElement('div');
-        const getPopupContainer=()=>{
-            document.body.appendChild(div);
-            return div;
-        };
+    it('test autoSize',async function () {
         const {getByText} = render(
             <Trigger
                 {...defaultProps}
                 autoSize={true}
                 placement={'leftTop'}
-                getPopupContainer={getPopupContainer}
             />
         );
         const trigger=getByText('trigger');
         userEvent.hover(trigger);
         await waitFor(()=>screen.getByText('popup'));
-        expect(div.style.position).toBe('relative');
         const popupContainer:HTMLDivElement=document.body.querySelector('.leke-popup');
         expect(popupContainer.style.minHeight).toBe(trigger.offsetHeight+'px');
     });
@@ -59,10 +52,26 @@ describe('Trigger ', function() {
         const {getByText} = render(
             <Trigger
                 {...defaultProps}
-                event={['focus']}
+                eventType={['click']}
             />
         );
         const trigger=getByText('trigger');
+        userEvent.click(trigger);
+        await waitFor(()=>screen.getByText('popup'));
+        userEvent.click(document.body);
+        act(()=>{
+            jest.runAllTimers();
+            expect(screen.getByText('popup').parentElement).toHaveClass('leke-close');
+        });
+    });
+    it('test click',async function () {
+        const {container} = render(
+            <Trigger
+                popup={<div>popup</div>}
+                eventType={['click']}
+            ><input type="text"/></Trigger>
+        );
+        const trigger=container.querySelector('input');
         userEvent.click(trigger);
         expect(trigger).toHaveFocus();
         await waitFor(()=>screen.getByText('popup'));

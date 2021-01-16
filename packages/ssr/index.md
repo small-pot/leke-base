@@ -54,7 +54,7 @@ module.exports={
 
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
-| cssModules | 是否启用cssModules | boolean | false |
+| cssModules | 是否启用cssModules，[配置详情](https://www.npmjs.com/package/css-loader) | boolean \| object | false |
 | port | 开发服务器端口号 | number | 8989 |
 | entry | 入口文件路径| string | _ |
 | proxy | 跨域代理配置，[配置详情](https://www.npmjs.com/package/http-proxy-middleware)| object | _ |
@@ -89,6 +89,19 @@ export default start({
             baseURL:'https://webapp.leke.cn'
         });
     },
+    errorInterceptor(error,req,res,next){
+        //错误拦截器,此方法拦截错误并处理，未处理的错误请执行next(error)
+        const status=error?error.status:null
+        switch (status) {
+            case 404:
+                res.redirect('https://repository.leke.cn/error/404.htm')
+                break;
+            //.....
+            default:
+                next(error)
+                break;
+        }
+    },
     routes:[
         {
             path:'/demo',
@@ -106,6 +119,7 @@ export default start({
 | path | 访问的路径应为publicPath+path | string | _ |
 | getComponent | 按需加载PageComponent | ()=>Promise<SSRpage\> | _ |
 | createRequest | node端请求工具配置，通常需要配置cookie等，将作为getInitialData的第一个参数 | (req)=>any | _ | 
+| errorInterceptor | 错误拦截器 | (error,req,res,next)=>void | _ |
 
 ## PageComponent
 ```tsx

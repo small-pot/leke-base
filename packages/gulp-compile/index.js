@@ -42,3 +42,5 @@ exports.buildJs=function ({stream,outDir,modules}) {
 exports.buildLess=function ({stream,outDir}) {
     return dest(stream.pipe(gulpLess()),outDir);
 };
+
+exports.getBabelConfig=getBabelConfig

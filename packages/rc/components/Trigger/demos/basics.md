@@ -1,5 +1,8 @@
-# Dropdown 下拉菜单
-## 基本用法
+---    
+title: 基本用法
+description: 默认状态鼠标移入就会显示弹层
+---
+
 ```jsx
 import React from 'react';
 import {Trigger} from '@leke/rc';

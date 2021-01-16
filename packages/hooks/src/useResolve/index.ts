@@ -18,7 +18,12 @@ export default function useResolve<T>(arg, dep:any[]=[]):stateType<T> {
             return;
         }
         let unmount=false;
-        setState({loading:true});
+        setState((oldState)=>{
+            return {
+                ...oldState,
+                loading:true
+            };
+        });
         argRef.current.apply(null,dep).then(res=>{
             !unmount&&setState({data:res,loading:false});
         }).catch(error=>{
