@@ -4,7 +4,6 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "scripts": {
-    "build:umd": "rimraf dist && rollup --config rollup.config.js",
     "build:modules": "rimraf style && rimraf es && rimraf lib && gulp",
     "build": "npm-run-all --parallel build:*"
   },

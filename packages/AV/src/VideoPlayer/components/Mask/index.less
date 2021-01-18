@@ -1,0 +1,32 @@
+.video-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    z-index: 2;
+
+    img {
+        image-rendering: -moz-crisp-edges;
+        /* Firefox */
+        image-rendering: -o-crisp-edges;
+        /* Opera */
+        image-rendering: -webkit-optimize-contrast;
+        /* Webkit (non-standard naming) */
+        image-rendering: crisp-edges;
+        -ms-interpolation-mode: nearest-neighbor;
+        /* IE (non-standard property) */
+    }
+
+    .paused-icon {
+        width: 10%;
+        position: absolute;
+        right: 2%;
+        bottom: 8%;
+        z-index: 3;
+        user-select: none;
+        pointer-events: none;
+    }
+}
