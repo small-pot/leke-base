@@ -1,0 +1,51 @@
+.failed-wrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    cursor: pointer;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+
+    .failed-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+
+        .failed-icon {
+            display: block;
+            margin: 0 auto 30px;
+            width: 100px;
+        }
+
+        p {
+            color: #fff;
+            font-size: 16px;
+        }
+
+        button {
+            display: block;
+            margin: 24px auto;
+            padding: 0;
+            outline: none;
+            border: none;
+            width: 84px;
+            height: 32px;
+            line-height: 32px;
+            background-color: #1fb5ab;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #fff;
+
+            &:hover {
+                background-color: #2dc4bd;
+            }
+        }
+    }
+}
