@@ -1,5 +1,4 @@
 import Component from '../component';
-import './index.less';
 
 class PlayerControl extends Component {
     control:any;

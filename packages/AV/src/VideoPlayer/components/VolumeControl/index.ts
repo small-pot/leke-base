@@ -1,6 +1,5 @@
 import Component from '../component';
 import Slider from '../Slider';
-import './index.less';
 
 class Control extends Component {
     control:any;

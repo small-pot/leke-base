@@ -1,5 +1,4 @@
 import * as Dom from '../../utils/dom';
-import './index.less';
 
 const initOptions = {
     vertical: false,

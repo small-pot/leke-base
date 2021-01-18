@@ -5,7 +5,6 @@ import ProcessControl from '../ProcessControl';
 import VolumeControl from '../VolumeControl';
 import FullControl from '../FullControl';
 import * as Dom from '../../utils/dom';
-import './index.less';
 
 class Control extends Component {
     control: any; 

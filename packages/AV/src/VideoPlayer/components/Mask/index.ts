@@ -1,5 +1,4 @@
 import Component from '../component';
-import './index.less';
 
 class Mask extends Component {
     mask:any;

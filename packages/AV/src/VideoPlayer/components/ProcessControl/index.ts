@@ -2,7 +2,6 @@ import Component from '../component';
 import Tooltip from './tooltip';
 import Slider from '../Slider';
 import { getTime } from '../../utils/share';
-import './index.less';
 
 class PlayerControl extends Component {
     tooltip:any;

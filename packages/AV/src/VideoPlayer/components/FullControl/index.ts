@@ -1,6 +1,5 @@
 import Component from '../component';
 import { addFullscreenListener,removeFullscreenListener } from '../../utils/share';
-import './index.less';
 
 class FullControl extends Component {
     control: any; 

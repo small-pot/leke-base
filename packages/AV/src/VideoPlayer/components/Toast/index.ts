@@ -1,5 +1,4 @@
 import Component from '../component';
-import './index.less';
 
 class Toast extends Component {
     constructor(el,video,event){

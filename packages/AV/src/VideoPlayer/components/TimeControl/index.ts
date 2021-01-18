@@ -1,6 +1,5 @@
 import Component from '../component';
 import { getTime } from '../../utils/share';
-import './index.less'; 
 
 class TimeControl extends Component {
     control:any;

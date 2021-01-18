@@ -1,5 +1,4 @@
 import Component from '../component';
-import './index.less';
 
 class Error extends Component {
     button: any; 
