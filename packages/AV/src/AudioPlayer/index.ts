@@ -2,12 +2,12 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-18 17:33:13
+ * @LastEditTime: 2021-01-18 17:58:24
  */
 
 import EventEmitter from './EventEmitter';
 import { str2dom,formatTime } from './utils';
-import './index.less';
+// import './index.less';
 
 interface AudioPlayerOptions{
   el: string,
