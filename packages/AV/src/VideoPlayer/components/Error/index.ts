@@ -13,7 +13,7 @@ class Error extends Component {
     render() {
         const error = this.createEl('div', {
             innerHTML: `<div class="failed-container">
-              <img class="failed-icon" src="${require('assets/failed.png')}" />
+              <img class="failed-icon" src="https://static.leke.cn/images/h5video/failed.png" />
               <p>抱歉，您访问的视频无法播放，您可以尝试以下方式</p>
               <button class='error-btn'>刷新一下</button>
             </div>`

@@ -1,5 +1,4 @@
 import Component from '../component';
-import './index.less';
 
 class Tooltip extends Component { 
     control:any;
