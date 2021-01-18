@@ -5,6 +5,6 @@
     "build": "rimraf es && rimraf lib && gulp"
   },
   "dependencies": {
-    
+    "hls.js": "^0.13.2"
   }
 }
