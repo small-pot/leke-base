@@ -11,6 +11,6 @@ exports.default = gulp.parallel(
         ()=>gulp.src(lessEntry).pipe(gulp.dest("style")).pipe(gulpLess()).pipe(gulp.dest("style")),
         ()=>gulp.src('src/*/*.less').pipe(gulp.dest("style")).pipe(gulpLess()).pipe(gulp.dest("style"))
     ),
-    // ()=>gulp.src('src/AudioPlayer/index.less').pipe(gulpLess()).pipe(rename('AudioPlayer.css')).pipe(gulp.dest("./dist")),
+    ()=>gulp.src('src/AudioPlayer/index.less').pipe(gulpLess()).pipe(rename('AudioPlayer.css')).pipe(gulp.dest("./dist")),
     ()=>gulp.src('src/VideoPlayer/index.less').pipe(gulpLess()).pipe(rename('VideoPlayer.css')).pipe(gulp.dest("./dist"))
 );
