@@ -50,6 +50,7 @@ class Player {
         this.loading = false;
         this.loadingTimer = null;
         this.closeLoading = () => { };
+        this.isFullscreen =false;
         this.init();
     }
 
