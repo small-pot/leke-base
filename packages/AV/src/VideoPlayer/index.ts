@@ -115,7 +115,7 @@ class Player {
     }
 
     renderVideo() {
-        const autoplay = this.options.autoplay ? this.browser === 'FF' ? false : true : false; // 火狐无法自动播放
+        const autoplay = this.options.autoPlay ? this.browser === 'FF' ? false : true : false; // 火狐无法自动播放
         const config:any = {
             src: this.options.src
         };
