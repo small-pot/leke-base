@@ -17,7 +17,7 @@ class FullControl extends Component {
 
     render() {
         this.control = this.createEl('div', {}, { class: 'video-fullscreen-container' });
-        this.icon = this.createEl('i', {}, { class: 'resource-iconfont icon-icon_quanping' });
+        this.icon = this.createEl('i', {}, { class: 'video-icon icon_quanping' });
         this.control.appendChild(this.icon);
         this.el.appendChild(this.control);
         return this.control;
@@ -32,11 +32,11 @@ class FullControl extends Component {
         });
         this.event.on('entryFullscreen', () => {
             this.isFullscreen = true;
-            this.icon.className = 'resource-iconfont icon-icon_tuichuquanping';
+            this.icon.className = 'video-icon icon_tuichuquanping';
         });
         this.event.on('exitFullscreen', () => {
             this.isFullscreen = false;
-            this.icon.className = 'resource-iconfont icon-icon_quanping';
+            this.icon.className = 'video-icon icon_quanping';
         });
 
         // 监听退出

@@ -2,12 +2,21 @@
   "name": "@leke/AV",
   "version": "1.0.0",
   "main": "lib/index.js",
-  "module": "es/index.js",
+  "module": "index.esm.js",
+  "types": "types",
   "scripts": {
     "build:umd": "rimraf dist && webpack --config webpack.config.js",
-    "build:module": "rimraf es && rimraf lib && rimraf style && gulp",
+    "build:less": "rimraf es && rimraf lib && rimraf style && gulp",
     "build": "npm-run-all --parallel build:*"
   },
+  "license": "ISC",
+  "files": [
+    "package.json",
+    "index.esm.js",
+    "index.cjs.js",
+    "style",
+    "dist"
+  ],
   "dependencies": {
     "hls.js": "^0.13.2"
   },

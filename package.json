@@ -20,6 +20,7 @@
     "build:components": "cd packages/rc && npm run build",
     "build:store": "cd packages/store && npm run build",
     "build:ssr": "cd packages/ssr && npm run build",
+    "build:AV": "cd packages/AV && npm run build",
     "build:website": "cd website && npm run build",
     "build:rc": "npm-run-all --serial build:icons build:hooks build:components",
     "dev:website": "cd website && npm run dev",
