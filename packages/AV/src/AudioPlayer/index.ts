@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-19 15:46:28
+ * @LastEditTime: 2021-01-19 17:32:00
  */
 
 import EventEmitter from './EventEmitter';
@@ -10,20 +10,20 @@ import { str2dom,formatTime } from './utils';
 // import './index.less';
 
 interface AudioPlayerOptions{
-  el: string,
-  source:string,
+  el: HTMLElement,
+  src:string,
   loop:boolean,
-  autoplay:boolean,
+  autoPlay:boolean,
   allowSeek:boolean,
   preload:'none' | 'metadata' | 'auto' | ''
   timeFormat?:(val:number)=>string
 }
 
 const defaultOps: AudioPlayerOptions = {
-    el: 'body',
-    source:'',
+    el: document.querySelector('body'),
+    src:'',
     loop:false,
-    autoplay:false,
+    autoPlay:false,
     allowSeek:true,
     preload:'metadata',
 };
@@ -98,7 +98,7 @@ class AudioPlayer extends EventEmitter  {
   }
 
   private init(){
-      const {el,source,autoplay,loop,preload} = this.options;
+      const {el,src,autoPlay,loop,preload} = this.options;
       const $audioContainer = str2dom(this.template)[0] as HTMLElement;
       this.$container = $audioContainer;
       this.$audio = $audioContainer.querySelector<HTMLAudioElement>('#audio')!;
@@ -107,7 +107,7 @@ class AudioPlayer extends EventEmitter  {
       this.$innerProgress = $audioContainer.querySelector<HTMLDivElement>('.progress-inner')!;
       this.$outerProgress = $audioContainer.querySelector<HTMLDivElement>('.progress-outer')!;
       this.$progressBtn = $audioContainer.querySelector<HTMLDivElement>('.progress-button')!;
-      if (autoplay) {
+      if (autoPlay) {
           this.playing = true;
           this.$audio.autoplay = true;
           this.$playBtn.classList.add('button-pause');
@@ -116,16 +116,15 @@ class AudioPlayer extends EventEmitter  {
           this.$playBtn.classList.add('button-start');
       }
 
-      if (source) {
-          this.load(source);
+      if (src) {
+          this.load(src);
       }
       this.$audio.loop=loop;
       this.$audio.preload=preload;
       this.bindEvent();
     
-      const $outerContainer = document.querySelector(el);
-      if ($outerContainer) {
-          $outerContainer.appendChild($audioContainer);
+      if (el) {
+          el.appendChild($audioContainer);
       }
     
   }

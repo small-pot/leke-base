@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-18 20:38:36
- * @LastEditTime: 2021-01-19 15:09:41
+ * @LastEditTime: 2021-01-19 17:33:49
 -->
 
 ## 代码演示
@@ -27,8 +27,8 @@
 <script>
   window.onload=function(){
     const audioPlayer = new AudioPlayer({
-      el:'#player',
-      source:'http://music.163.com/song/media/outer/url?id=493735012.mp3',
+      el:document.querySelector('#player'),
+      src:'http://music.163.com/song/media/outer/url?id=493735012.mp3',
     })
     audioPlayer.play().then(()=>{
       // do something
