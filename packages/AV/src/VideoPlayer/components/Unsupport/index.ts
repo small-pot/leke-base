@@ -10,7 +10,7 @@ class Unsupport extends Component {
     }
     render() {
         const unsupport = this.createEl('div', {
-            innerHTML: `<img src='https://static.leke.cn/images/videoPlayer/upgrade.png'/><p>视频播放暂不支持ie10及以下版本，请升级或用其他浏览器打开</p>`
+            innerHTML: `<img src='https://static.leke.cn/images/AV/VideoPlayer/upgrade.png'/><p>视频播放暂不支持ie10及以下版本，请升级或用其他浏览器打开</p>`
         }, { class: 'video-unsupport' });
         this.el.appendChild(unsupport);
         return unsupport;

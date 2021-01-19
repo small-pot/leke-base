@@ -13,7 +13,7 @@ class PlayerControl extends Component {
     }
     render() {
         this.control = this.createEl('div', {
-            innerHTML: `<i class="resource-iconfont ${this.video.paused ? 'icon-icon_weikebofang' : 'icon-icon_weikezanting'}" />`
+            innerHTML: `<i class="video-icon ${this.video.paused ? 'icon_weikebofang' : 'icon_weikezanting'}" />`
         }, { class: 'video-play-wrap' });
         this.el.appendChild(this.control);
         return this.control;
@@ -34,7 +34,7 @@ class PlayerControl extends Component {
         });
     }
     update() {
-        this.control.querySelector('i').className = `resource-iconfont ${this.video.paused ? 'icon-icon_weikebofang' : 'icon-icon_weikezanting'}`;
+        this.control.querySelector('i').className = `video-icon ${this.video.paused ? 'icon_weikebofang' : 'icon_weikezanting'}`;
     }
 
 }
