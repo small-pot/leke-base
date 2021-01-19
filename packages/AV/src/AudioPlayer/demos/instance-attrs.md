@@ -1,5 +1,5 @@
 ---    
-title: Instance Api - 实例属性
+title: 实例属性
 ---
 
 | 属性 | 说明 | 类型 | 默认值 | 
