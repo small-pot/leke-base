@@ -42,23 +42,17 @@
 | allowSeek  | 是否允许手动控制进度条                                       | boolean  | -          |
 
 ### AudioPlayer API
-
 AudioPlayer实例会暴露以下内容：
-
 #### 实例属性
-
 ##### `audioPlayer.duration`
-
 音频时间长度(s)
 
 ##### `audioPlayer.currentTime`
-
 当前播放时间
 
 #### 静态方法
 
 ##### `AudioPlayer.canPlay(types)`
-
 type有以下几种类型
 
 + Mp3 - `AudioPlayer.canPlay('mp3')`
@@ -72,37 +66,23 @@ type有以下几种类型
 
 
 #### 实例方法
-
 ##### `audioPlayer.load(url)`
-
 载入音频，返回`Promise`，将在音频可播放时`resolve()`
 
 ##### `audioPlayer.play()`
-
 播放音频
 
 ##### `audioPlayer.pause()`
-
 播放音频
 
 ##### `audioPlayer.togglePlay()`
-
 切换音频播放状态
 
-##### `audioPlayer.volume()`
-
-调节音量
-
 ##### `audioPlayer.seek()`
-
 跳转到指定的时间开始播放
 
-
-
 #### 事件
-
 ##### `audioPlayer.on(event,callback)`
-
 参考[audio事件-MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/audio#%E4%BA%8B%E4%BB%B6)
 
 
