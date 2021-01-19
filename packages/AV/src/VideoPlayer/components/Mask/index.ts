@@ -30,7 +30,7 @@ class Mask extends Component {
     }
     render() {
         this.mask = this.createEl('div', {
-            innerHTML: `<img class="paused-icon" src='https://static.leke.cn/images/AV/VideoPlayer/paused.png' />`
+            innerHTML: `<img class="paused-icon" src='https://static.leke.cn/scripts/AV/images/paused.png' />`
         }, { class: 'video-mask' });
         this.mask.addEventListener('click', () => {
             this.video.play();
