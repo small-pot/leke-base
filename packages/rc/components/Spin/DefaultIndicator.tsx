@@ -1,11 +1,11 @@
 import React, { FC, memo } from "react";
 import classNames from "classnames";
 
-const DefaultSpin: FC<any> = memo(({ size, className}) => {
+const DefaultIndicator: FC<any> = memo(({ size, wrapperClassName }) => {
     const props = {
         className: classNames("leke-spin-animation", {
             ['leke-spin-animation-small']: size === 'small',
-        }, className),
+        }, wrapperClassName),
     };
 
     return (
@@ -18,4 +18,4 @@ const DefaultSpin: FC<any> = memo(({ size, className}) => {
     );
 });
 
-export default DefaultSpin;
+export default DefaultIndicator;
