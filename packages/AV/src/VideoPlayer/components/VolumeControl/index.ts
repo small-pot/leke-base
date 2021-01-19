@@ -26,7 +26,7 @@ class Control extends Component {
         this.control = this.createEl('div', {}, { class: 'video-volume-wrap' });
         this.container = this.createEl('div', {}, { class: 'video-volume-container' });
         this.iconWrap = this.createEl('div', {}, { class: `volume-icon` });
-        this.icon = this.createEl('i', {}, { class: `resource-iconfont ${!this.video.volume ? 'icon-icon_jingyin' : 'icon-icon_shengyin'}` });
+        this.icon = this.createEl('i', {}, { class: `video-icon ${!this.video.volume ? 'icon_jingyin' : 'icon_shengyin'}` });
         this.volumeNum = this.createEl('div', { innerText: this.video.volume * 100 }, { class: 'volume-num' });
         this.sliderContainer = this.createEl('div', {}, { class: 'volume-slider-container' });
         this.slider = this.getSlider();
@@ -71,10 +71,10 @@ class Control extends Component {
             if (resetPrev) this.preVolume = parseInt(step) / 100;
             if (Number(step) === 0) {
                 this.video.muted = true;
-                this.icon.className = 'resource-iconfont icon-icon_jingyin';
+                this.icon.className = 'video-icon icon_jingyin';
             } else {
                 this.video.muted = false;
-                this.icon.className = 'resource-iconfont icon-icon_shengyin';
+                this.icon.className = 'video-icon icon_shengyin';
             }
         });
         this.event.on('volumeDragStart', () => {

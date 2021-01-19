@@ -10,7 +10,7 @@ class Loading extends Component {
     }
     render() {
         const loading = this.createEl('div', {
-            innerHTML: `<img class="loading-icon" src='https://static.leke.cn/images/h5video/loading.gif'/><p>视频加载中</p>`
+            innerHTML: `<img class="loading-icon" src='https://static.leke.cn/scripts/AV/images/loading.gif'/><p>视频加载中</p>`
         }, { class: 'loading-container' });
         this.el.appendChild(loading);
         return loading;
