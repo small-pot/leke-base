@@ -1,19 +1,19 @@
 const path = require('path');
-module.exports ={
-    mode:'production',
+module.exports={
     entry:{
         VideoPlayer:path.resolve('./src/VideoPlayer/index.ts'),
         AudioPlayer:path.resolve('./src/AudioPlayer/index.ts'),
         AudioRecorder:path.resolve('./src/AudioRecorder/index.ts')
     },
-    output: {
+    output:{
         path: path.resolve(__dirname, 'dist'),
         filename:'[name].min.js',
         library: '[name]',
         libraryTarget: 'umd',
         libraryExport: 'default',
+        globalObject: 'this'
     },
-    //target:['web','es5'],
+    target:['web','es5'],
     resolve: {
         extensions: ['.ts','.tsx','.js','.jsx']
     },
@@ -26,4 +26,4 @@ module.exports ={
             },
         ]
     }
-};
+}

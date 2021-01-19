@@ -4,6 +4,7 @@ const ts = require("gulp-typescript");
 const merge2 = require('merge2');
 const gulpLess = require('gulp-less');
 const getBabelConfig = require('./getBabelConfig');
+const Vinyl = require('vinyl');
 
 function dest(stream,out){
     const output=Array.isArray(out)?out:[out];
@@ -44,3 +45,17 @@ exports.buildLess=function ({stream,outDir}) {
 };
 
 exports.getBabelConfig=getBabelConfig
+
+exports.createStream=function createStream(options){
+    const {code}=options
+    delete options.code
+    const stream=require('stream').Readable({ objectMode: true });
+    stream._read = function () {
+        this.push(new Vinyl({
+            ...options,
+            contents: Buffer.from(code)
+        }));
+        this.push(null);
+    };
+    return stream;
+}

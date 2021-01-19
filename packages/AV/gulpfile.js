@@ -1,16 +1,21 @@
 const gulp = require('gulp');
-const {buildTs}=require('@leke/gulp-compile');
-const rename=require('gulp-rename');
+const {createStream}=require('@leke/gulp-compile');
 const gulpLess=require('gulp-less');
-const tsEntry=['src/!(demos|__test__)/*.ts','src/index.ts'];
-const lessEntry=['src/*/*/**/*.less'];
-exports.default = gulp.parallel(
-    ()=>buildTs({stream:gulp.src(tsEntry),outDir:'es',modules:false}),
-    ()=>buildTs({stream:gulp.src(tsEntry),outDir:'lib',modules:'commonjs'}),
-    gulp.series(
-        ()=>gulp.src(lessEntry).pipe(gulp.dest("style")).pipe(gulpLess()).pipe(gulp.dest("style")),
-        ()=>gulp.src('src/*/*.less').pipe(gulp.dest("style")).pipe(gulpLess()).pipe(gulp.dest("style"))
-    ),
-    ()=>gulp.src('src/AudioPlayer/index.less').pipe(gulpLess()).pipe(rename('AudioPlayer.css')).pipe(gulp.dest("./dist")),
-    ()=>gulp.src('src/VideoPlayer/index.less').pipe(gulpLess()).pipe(rename('VideoPlayer.css')).pipe(gulp.dest("./dist"))
-);
+const path = require('path')
+const lessEntry=['src/**/*.less'];
+function createLessStream(name){
+    const code=`@import "../style/${name}/index.less";`
+    const base=path.resolve('./dist')
+    return createStream({
+        code,
+        base,
+        path:path.join(base,`${name}.less`)
+    })
+}
+exports.default = gulp.series(
+    ()=>gulp.src(lessEntry).pipe(gulp.dest("style")),
+    gulp.parallel(
+        ()=>createLessStream('AudioPlayer').pipe(gulp.dest("dist")).pipe(gulpLess()).pipe(gulp.dest("dist")),
+        ()=>createLessStream('VideoPlayer').pipe(gulp.dest("dist")).pipe(gulpLess()).pipe(gulp.dest("dist"))
+    )
+)
