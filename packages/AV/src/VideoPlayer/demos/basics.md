@@ -1,7 +1,7 @@
 ## 代码演示
 
 ```html
-<script src='https://static.leke.cn/js/AV/VideoPlayer'></script>
+<script src='https://static.leke.cn/scripts/AV/VideoPlayer.min.js'></script>
 <script>
 	const player=new VideoPlayer('root',{
 		width:400,
@@ -24,5 +24,5 @@
 ## 引入样式
 
 ```css
-<link rel="stylesheet" type="text/css" href='https://static.leke.cn/styles/AV/VideoPlayer/index.css' />
+<link rel="stylesheet" type="text/css" href='https://static.leke.cn/scripts/AV/VideoPlayer.css' />
 ```
