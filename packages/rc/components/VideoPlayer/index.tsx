@@ -1,9 +1,7 @@
 import React, { FC, useEffect, useRef, useMemo, useCallback } from "react";
 import { IVideoProps } from "./type";
-// const VideoPlayer=require('@leke/AV');
+import {VideoPlayer} from '@leke/AV'
 import {newUID} from './uid';
-// import '@leke/AV/dist/VideoPlayer.less';
-
 const prefixCls = "leke-video";
 
 const Video: FC<IVideoProps> = (props) => {
@@ -17,9 +15,9 @@ const Video: FC<IVideoProps> = (props) => {
     });
 
     const init=()=>{
-        // new VideoPlayer(ref.current.uid,{
-        //     ...config
-        // });
+        new VideoPlayer(ref.current.uid,{
+            ...config
+        });
     };
 
     useEffect(() => {
