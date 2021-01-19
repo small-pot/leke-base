@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-19 17:32:00
+ * @LastEditTime: 2021-01-19 17:56:38
  */
 
 import EventEmitter from './EventEmitter';
@@ -13,7 +13,7 @@ interface AudioPlayerOptions{
   el: HTMLElement,
   src:string,
   loop:boolean,
-  autoPlay:boolean,
+  autoplay:boolean,
   allowSeek:boolean,
   preload:'none' | 'metadata' | 'auto' | ''
   timeFormat?:(val:number)=>string
@@ -23,7 +23,7 @@ const defaultOps: AudioPlayerOptions = {
     el: document.querySelector('body'),
     src:'',
     loop:false,
-    autoPlay:false,
+    autoplay:false,
     allowSeek:true,
     preload:'metadata',
 };
@@ -98,7 +98,7 @@ class AudioPlayer extends EventEmitter  {
   }
 
   private init(){
-      const {el,src,autoPlay,loop,preload} = this.options;
+      const {el,src,autoplay,loop,preload} = this.options;
       const $audioContainer = str2dom(this.template)[0] as HTMLElement;
       this.$container = $audioContainer;
       this.$audio = $audioContainer.querySelector<HTMLAudioElement>('#audio')!;
@@ -107,7 +107,7 @@ class AudioPlayer extends EventEmitter  {
       this.$innerProgress = $audioContainer.querySelector<HTMLDivElement>('.progress-inner')!;
       this.$outerProgress = $audioContainer.querySelector<HTMLDivElement>('.progress-outer')!;
       this.$progressBtn = $audioContainer.querySelector<HTMLDivElement>('.progress-button')!;
-      if (autoPlay) {
+      if (autoplay) {
           this.playing = true;
           this.$audio.autoplay = true;
           this.$playBtn.classList.add('button-pause');

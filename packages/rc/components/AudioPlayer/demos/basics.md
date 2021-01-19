@@ -14,6 +14,9 @@ export default function(){
         autoplay:false,
         allowSeek:true,
         preload:'metadata',
+        onPlay:()=>{
+            console.log('play');
+        }
     };
     return <AudioPlayer {...options}/>;
 }
