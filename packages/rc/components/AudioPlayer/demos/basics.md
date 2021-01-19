@@ -7,7 +7,15 @@ import React from 'react';
 import {AudioPlayer} from '@leke/rc';
 
 export default function(){
-    return  <AudioPlayer source="http://music.163.com/song/media/outer/url?id=493735012.mp3"/>;
+    const options = {
+        id: 'audio-player',
+        source:'http://music.163.com/song/media/outer/url?id=493735012.mp3',
+        loop:false,
+        autoplay:false,
+        allowSeek:true,
+        preload:'metadata',
+    };
+    return <AudioPlayer {...options}/>;
 }
 ```
 

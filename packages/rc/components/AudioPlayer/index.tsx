@@ -2,15 +2,26 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-19 14:57:47
- * @LastEditTime: 2021-01-19 15:52:51
+ * @LastEditTime: 2021-01-19 16:23:10
  */
 import React from 'react';
 import AudioPlayerCls from '../../../AV/src/AudioPlayer';
-const AudioPlayer = (props) => {
+
+interface AudioPlayerProps {
+    id:string,
+    source:string,
+    autoplay?:boolean,
+    loop?:boolean,
+    allowSeek?:boolean,
+    preload?:'none' | 'metadata' | 'auto' | '',
+    timeFormat?:(val:number)=>string
+}
+const AudioPlayer = (props:AudioPlayerProps,ref) => {
     React.useEffect(() => {
-        const {source,autoplay,loop,preload,timeFormat,allowSeek} = props;
+        const {id,source='',autoplay=false,loop=false,preload='metadata',allowSeek=true,timeFormat} = props;
+        console.log(props);
         const audioPlayer = new AudioPlayerCls({
-            el:'#audio-player',
+            el:`#${id}`,
             source:source,
             autoplay:autoplay,
             loop:loop,
@@ -19,17 +30,13 @@ const AudioPlayer = (props) => {
             allowSeek,
             
         });
-    }, [props]);
+        if (ref) {
+            ref.current = audioPlayer;
+        }
+    }, [props,ref]);
     return (
-        <div id="audio-player" />
+        <div id={props.id} />
     );
 };
-AudioPlayer.defaultProps = {
-    source:'',
-    loop:false,
-    autoplay:false,
-    allowSeek:true,
-    preload:'metadata',
-};
 
-export default AudioPlayer;
+export default React.forwardRef(AudioPlayer);
