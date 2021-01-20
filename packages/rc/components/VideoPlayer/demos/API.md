@@ -12,7 +12,6 @@ description: 可以用ref获取到实例
 | loop | 循环播放 | boolean | false |
 | poster | 视频封面 | string | - |
 | paused | 是否暂停 | boolean | false |
-| volume | 音量 | number | 0-100 |
 | fullscreen | 是否全屏(不支持初始化为true) | boolean | false |
 | onPauseChange | 切换暂停/播放时触发 | function | - |
 | onTimeChange | 播放时间变更 | function | - |

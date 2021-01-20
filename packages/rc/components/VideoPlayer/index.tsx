@@ -22,9 +22,6 @@ const Video = (props:IVideoProps,ref) => {
 
     const el=useRef(null);
     const player=useRef({});
-    const space=useRef({
-        prev:volume
-    });
 
     const init=()=>{
         const instance=player.current= new VideoPlayer({
@@ -43,9 +40,9 @@ const Video = (props:IVideoProps,ref) => {
         instance.on('timeupdate',time=>{
             onTimeChange&&onTimeChange(time);
         });
-        if(volume!==undefined){
-            instance.trigger('volumeState',onVolumeChange,volume);
-        }
+        instance.on('volumeChange',volume=>{
+            onVolumeChange&&onVolumeChange(volume);
+        });
         if(fullscreen!==undefined){
             instance.trigger('fullscreenState',onFullscreenChange);
         }
@@ -69,19 +66,6 @@ const Video = (props:IVideoProps,ref) => {
             }
         }
     }, [paused]);
-
-    useEffect(() => {
-        if(volume!==undefined){
-            const instance=player.current as any;
-            if(volume!==(Number(instance.video.volume)*100)){
-                let vol=volume;
-                if(vol<=0)vol=0;
-                if(vol>=100)vol=100;
-                space.current.prev=vol;
-                instance.trigger('volumeChange',vol);
-            }
-        }
-    }, [volume]);
 
     useEffect(() => {
         if(fullscreen!==undefined){

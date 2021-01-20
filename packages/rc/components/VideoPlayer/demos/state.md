@@ -21,7 +21,6 @@ export default function(){
         <VideoPlayer 
             src='https://file.leke.cn/group1/M00/1C/4C/wKgURF8D3rGAIVVHAAAEX_O0MzM97.m3u8' 
             paused={paused}
-            volume={volume}
             fullscreen={full}
             onPauseChange={(paused)=>{
                 setPaused(paused);
@@ -36,10 +35,11 @@ export default function(){
                 setFull(full);
             }}
         />
-        <button onClick={()=>{
-            paused?setPaused(false):setPaused(true);
-        }}>暂停/播放</button>
-        <button onClick={()=>{setVolume(0);}}>静音</button>
+        <div style={{marginTop:12}}>
+            <button onClick={()=>{
+                paused?setPaused(false):setPaused(true);
+            }}>暂停/播放</button>
+        </div>
     </div>
     ;
 }

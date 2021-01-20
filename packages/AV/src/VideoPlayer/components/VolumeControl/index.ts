@@ -10,6 +10,7 @@ class Control extends Component {
     sliderContainer:any;
     slider:any;
     preVolume:number;
+    prevState:number;
     flag:boolean;
 
     constructor(el,video,event){
@@ -51,29 +52,26 @@ class Control extends Component {
                 this.event.trigger('volumeChange', parseInt(step));
             },
             onTouchEnd: (step) => {
-                const flag=this.shouldUpdate(step);
-                this.event.trigger('volumeDragEnd',parseInt(flag?step:this.preVolume));
+                this.event.trigger('volumeChange', parseInt(step));
+                this.event.trigger('volumeDragEnd');
             }
         });
     }
 
     subscription() {
-        this.event.on('volumeState',(fn,volumn)=>{
+        this.event.on('volumeState',(fn)=>{
             this.event.on('volumeStateCallback',fn);
-            this.preVolume=volumn;
         });
         this.iconWrap.addEventListener('click', () => {
             if (!this.video.volume) {
-                const flag=this.shouldUpdate(this.preVolume);
-                this.event.trigger('volumeChange', flag?this.preVolume:0);
+                this.event.trigger('volumeChange', this.preVolume);
             } else {
-                const flag=this.shouldUpdate(0);
-                this.event.trigger('volumeChange', flag?0:this.preVolume);
+                this.event.trigger('volumeChange', 0);
             }
         });
         this.event.on('volumeChange', (step) => {
-            this.volumeNum.innerText = parseInt(step);
-            this.video.volume = parseInt(step) / 100;
+            this.volumeNum.innerText = step;
+            this.video.volume = step / 100;
             this.updateSlider(step);
             if (Number(step) === 0) {
                 this.video.muted = true;
@@ -86,9 +84,7 @@ class Control extends Component {
         this.event.on('volumeDragStart', () => {
             this.container.style.display = 'flex';
         });
-        this.event.on('volumeDragEnd', (step) => {
-            this.event.trigger('volumeChange', parseInt(step));
-            this.preVolume = parseInt(step);
+        this.event.on('volumeDragEnd', () => {
             this.container.style.display = '';
         });
         this.sliderContainer.addEventListener('click', (e) => {
@@ -102,14 +98,13 @@ class Control extends Component {
             } else {
                 step = (scaleY / height * 100).toFixed(0);
             }
-            const flag=this.shouldUpdate(step);
-            const newStep=parseInt(flag?step:this.preVolume);
-            this.event.trigger('volumeChange',newStep);
+            this.event.trigger('volumeChange',parseInt(step));
+            this.preVolume=parseInt(step);
         });
     }
     shouldUpdate(step){
         return this.event.getListener('volumeStateCallback')?
-            this.event.trigger('volumeStateCallback',parseInt(step)).every(item=>item===true):
+            this.prevState===step:
             true;
     }
     updateSlider(step) {
