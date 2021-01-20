@@ -18,11 +18,6 @@ export default function(){
         preload:'metadata',
     };
 
-    React.useEffect(()=>{
-        // audioPlayerRef.current.on('play',()=>{
-        //     // do something
-        // });
-    });
     return <> 
         <AudioPlayer ref={audioPlayerRef} {...options}/>
         <br/>

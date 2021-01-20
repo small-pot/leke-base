@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-19 14:57:47
- * @LastEditTime: 2021-01-20 09:18:33
+ * @LastEditTime: 2021-01-20 11:57:37
  */
 import React from 'react';
 import AudioPlayerCls from '../../../AV/src/AudioPlayer';
@@ -16,25 +16,25 @@ interface AudioPlayerProps {
     allowSeek?:boolean,
     preload?:'none' | 'metadata' | 'auto' | '',
     timeFormat?:(val:number)=>string,
-    onAudioProcess:(e:Event)=>void,
-    onCanplay:(e:Event)=>void,
-    onCanplayThrough:(e:Event)=>void,
-    onDurationChange:(e:Event)=>void,
-    onEmptied:(e:Event)=>void,
-    onEnded:(e:Event)=>void,
-    onLoadedData:(e:Event)=>void,
-    onLoadedMetaData:(e:Event)=>void,
-    onPause:(e:Event)=>void,
-    onPlay:(e:Event)=>void,
-    onPlaying:(e:Event)=>void,
-    onRateChange:(e:Event)=>void,
-    onSeeked:(e:Event)=>void,
-    onSeeking:(e:Event)=>void,
-    onStalled:(e:Event)=>void,
-    onSuspend:(e:Event)=>void,
-    onTimeUpdate:(e:Event)=>void,
-    onVolumeChange:(e:Event)=>void,
-    onWaiting:(e:Event)=>void,
+    onAudioProcess?:(e:Event)=>void,
+    onCanplay?:(e:Event)=>void,
+    onCanplayThrough?:(e:Event)=>void,
+    onDurationChange?:(e:Event)=>void,
+    onEmptied?:(e:Event)=>void,
+    onEnded?:(e:Event)=>void,
+    onLoadedData?:(e:Event)=>void,
+    onLoadedMetaData?:(e:Event)=>void,
+    onPause?:(e:Event)=>void,
+    onPlay?:(e:Event)=>void,
+    onPlaying?:(e:Event)=>void,
+    onRateChange?:(e:Event)=>void,
+    onSeeked?:(e:Event)=>void,
+    onSeeking?:(e:Event)=>void,
+    onStalled?:(e:Event)=>void,
+    onSuspend?:(e:Event)=>void,
+    onTimeUpdate?:(e:Event)=>void,
+    onVolumeChange?:(e:Event)=>void,
+    onWaiting?:(e:Event)=>void,
 }
 const AudioPlayer = (props:AudioPlayerProps,ref) => {
     const {id="audio-player",src='',autoplay=false,loop=false,preload='metadata',allowSeek=true,timeFormat} = props;
