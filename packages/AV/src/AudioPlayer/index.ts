@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-19 15:46:28
+ * @LastEditTime: 2021-01-20 14:46:44
  */
 
 import EventEmitter from './EventEmitter';
@@ -10,8 +10,8 @@ import { str2dom,formatTime } from './utils';
 // import './index.less';
 
 interface AudioPlayerOptions{
-  el: string,
-  source:string,
+  el: HTMLElement,
+  src:string,
   loop:boolean,
   autoplay:boolean,
   allowSeek:boolean,
@@ -20,8 +20,8 @@ interface AudioPlayerOptions{
 }
 
 const defaultOps: AudioPlayerOptions = {
-    el: 'body',
-    source:'',
+    el: document.querySelector('body'),
+    src:'',
     loop:false,
     autoplay:false,
     allowSeek:true,
@@ -98,7 +98,7 @@ class AudioPlayer extends EventEmitter  {
   }
 
   private init(){
-      const {el,source,autoplay,loop,preload} = this.options;
+      const {el,src,autoplay,loop,preload} = this.options;
       const $audioContainer = str2dom(this.template)[0] as HTMLElement;
       this.$container = $audioContainer;
       this.$audio = $audioContainer.querySelector<HTMLAudioElement>('#audio')!;
@@ -116,16 +116,15 @@ class AudioPlayer extends EventEmitter  {
           this.$playBtn.classList.add('button-start');
       }
 
-      if (source) {
-          this.load(source);
+      if (src) {
+          this.load(src);
       }
       this.$audio.loop=loop;
       this.$audio.preload=preload;
       this.bindEvent();
     
-      const $outerContainer = document.querySelector(el);
-      if ($outerContainer) {
-          $outerContainer.appendChild($audioContainer);
+      if (el) {
+          el.appendChild($audioContainer);
       }
     
   }
@@ -180,6 +179,7 @@ class AudioPlayer extends EventEmitter  {
       this.seek(this.duration*seekPercent);
   }
   private onDragStart(e) {
+      if (!this.options.allowSeek) return;
       let seekPercent;
       this.dragging = true;
       this.$progressBtn.classList.add('progress-button-dragging');
@@ -400,6 +400,27 @@ class AudioPlayer extends EventEmitter  {
 
   getAllListener(){
       return this.getListener();
+  }
+
+  configOptions(ops){
+      console.log(ops.src);
+      if (ops.src && ops.src !== this.options.src) {
+          this.load(ops.src);
+      }
+      if (ops.autoplay) {
+          this.$audio.autoplay = ops.autoplay;
+      }
+      if (ops.loop) {
+          this.$audio.loop = ops.loop;
+      }
+      if (ops.preload) {
+          this.$audio.preload = ops.preload;
+      }
+      Object.keys(ops).forEach(key=>{
+          if (this.options.hasOwnProperty(key)) {
+              this.options[key] = ops[key];
+          }
+      });
   }
 
 }
