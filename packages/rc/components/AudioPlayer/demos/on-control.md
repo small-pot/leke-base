@@ -9,7 +9,7 @@ import {AudioPlayer,Button} from '@leke/rc';
 
 export default function(){
     const audioPlayerRef = React.useRef(null);
-    const [paused,setPaused] = React.useState(false);
+    const [paused,setPaused] = React.useState(true);
     const options = {
         id: 'audio-player-control',
         src:'http://music.163.com/song/media/outer/url?id=493735012.mp3',
@@ -24,9 +24,3 @@ export default function(){
     </>;
 }
 ```
-```css
-.audio-button{
-    margin-right: 8px;
-}
-```
-
