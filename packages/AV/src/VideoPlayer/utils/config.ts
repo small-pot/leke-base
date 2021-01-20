@@ -1,10 +1,10 @@
 export const initConfig = {
-    initWidth: 876,
-    initHeight: 492
+    initWidth: 638,
+    initHeight: 358
 };
 
 export const VIDEO_EVENTS = [
-    'click', 'dblclick',
+    'dblclick',
     'abort', 'canplay', 'canplaythrough', 'durationchange', 'emptied', 'ended', 'error', 'loadeddata', 'loadedmetadata', 'loadstart',
     'pause', 'playing', 'progress', 'ratechange', 'readystatechange', 'seeked', 'seeking', 'stalled', 'suspend', 'volumechange', 'waiting'
 ];
