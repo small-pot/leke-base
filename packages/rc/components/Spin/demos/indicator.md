@@ -1,6 +1,6 @@
 ---    
 title: 自定义指示器
-description: 自定义指示器
+description: 支持自定义指示器
 ---
 
 ```jsx

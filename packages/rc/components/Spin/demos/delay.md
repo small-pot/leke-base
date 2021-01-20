@@ -1,6 +1,6 @@
 ---    
-title: 包裹内容
-description: 包裹内容
+title: 延迟显示
+description: 支持延迟显示，防止闪烁（打开和关闭都延迟）
 ---
 
 ```jsx
@@ -11,10 +11,13 @@ export default function(){
     const [spinning,setSpinning] = useState(false);
     return(
         <div>
-            <Spin spinning={spinning} size="small" delay={1000}>
-                <Alert style={{ margin: 0 }} closeIcon={null} icon={null} type={'info'} message={'这是一条普通消息这是一条普通消息这是一条普通消息这是一条普通消息这是一条普通消息这是一条普通消息这是一条普通消息这是一条普通消息这是一条普通消息这是一条普通消息这是一条普通消息这是一条普通消息'} />
+            <Spin spinning={spinning} size="small" delay={500}>
+                <Alert style={{ margin: 0 }} closeIcon={null} icon={null} type="success" message={'延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示延迟显示'} />
             </Spin>
-            <Switch checked={spinning} onChange={setSpinning} />
+            <div style={{ marginTop: '20px' }}>
+                <span style={{ verticalAlign: 'middle' }}>切换状态：</span>
+                <Switch checked={spinning} onChange={setSpinning} style={{ verticalAlign: 'middle' }}/>
+            </div>
         </div>
     );
 }

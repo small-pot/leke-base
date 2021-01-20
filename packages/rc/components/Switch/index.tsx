@@ -22,7 +22,7 @@ interface SwitchProps {
   onClick?:(checked, e) =>void;
 }
 
-const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked: checkedProp, defaultChecked, disabled, className, loading, checkedChildren, unCheckedChildren, onChange, onClick, onKeyDown }) => {
+const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked: checkedProp, defaultChecked, disabled, className, loading, checkedChildren, unCheckedChildren, onChange, onClick, onKeyDown, ...props }) => {
     const [checked, setChecked] = useControl(checkedProp,onChange,defaultChecked);
     disabled = loading || disabled;
   
@@ -57,6 +57,7 @@ const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked: checkedProp, d
     };
     
     const switchProps = {
+        ...props,
         autoFocus,
         onClick: onHandler,
         onKeyDown: onInternalKeyDown,
@@ -64,7 +65,7 @@ const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked: checkedProp, d
             ['leke-switch-small']: size === 'small',
             ['leke-switch-checked']: checked,
             ['leke-switch-disabled']: disabled,
-        }, className),
+        }, className)
     };
 
     return (

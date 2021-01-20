@@ -1,6 +1,6 @@
 ---    
 title: 自定义文案
-description: 自定义文案
+description: 支持显示自定义文案
 ---
 
 ```jsx

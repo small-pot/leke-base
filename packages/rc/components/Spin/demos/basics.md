@@ -1,6 +1,6 @@
 ---    
 title: 基本用法
-description: 大小
+description: 两种大小可选，默认第一种
 ---
 
 ```jsx
