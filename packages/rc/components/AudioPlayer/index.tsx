@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-19 14:57:47
- * @LastEditTime: 2021-01-20 15:00:34
+ * @LastEditTime: 2021-01-20 15:25:33
  */
 import React from 'react';
 import AudioPlayerCls from '../../../AV/src/AudioPlayer';
@@ -11,7 +11,6 @@ const noop = ()=>{};
 interface AudioPlayerProps {
     className?:string,
     style?:object,
-    id?:string,
     src?:string,
     autoplay?:boolean,
     loop?:boolean,
@@ -39,8 +38,9 @@ interface AudioPlayerProps {
     onWaiting?:(e:Event)=>void,
 }
 const AudioPlayer = (props:AudioPlayerProps,ref) => {
-    const {className,style,id="audio-player",src='',autoplay=false,loop=false,preload='metadata',allowSeek=true,timeFormat} = props;
+    const {className,style,src='',autoplay=false,loop=false,preload='metadata',allowSeek=true,timeFormat} = props;
     const audioRef = React.useRef<AudioPlayerCls>(null);
+    const $audioContainer = React.useRef<HTMLDivElement>(null);
     React.useEffect(()=>{
         if (audioRef.current) {
             audioRef.current.configOptions({
@@ -53,7 +53,7 @@ const AudioPlayer = (props:AudioPlayerProps,ref) => {
 
     const init = () => {
         const audioPlayer = new AudioPlayerCls({
-            el:document.querySelector(`#${id}`),
+            el:$audioContainer.current,
             src:src,
             autoplay:autoplay,
             loop:loop,
@@ -87,7 +87,7 @@ const AudioPlayer = (props:AudioPlayerProps,ref) => {
 
     };
     return (
-        <div id={id} className={className} style={style}/>
+        <div ref={$audioContainer} className={className} style={style}/>
     );
 };
 
