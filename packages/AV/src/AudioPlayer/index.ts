@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-19 17:56:38
+ * @LastEditTime: 2021-01-20 14:46:44
  */
 
 import EventEmitter from './EventEmitter';
@@ -179,6 +179,7 @@ class AudioPlayer extends EventEmitter  {
       this.seek(this.duration*seekPercent);
   }
   private onDragStart(e) {
+      if (!this.options.allowSeek) return;
       let seekPercent;
       this.dragging = true;
       this.$progressBtn.classList.add('progress-button-dragging');
@@ -399,6 +400,27 @@ class AudioPlayer extends EventEmitter  {
 
   getAllListener(){
       return this.getListener();
+  }
+
+  configOptions(ops){
+      console.log(ops.src);
+      if (ops.src && ops.src !== this.options.src) {
+          this.load(ops.src);
+      }
+      if (ops.autoplay) {
+          this.$audio.autoplay = ops.autoplay;
+      }
+      if (ops.loop) {
+          this.$audio.loop = ops.loop;
+      }
+      if (ops.preload) {
+          this.$audio.preload = ops.preload;
+      }
+      Object.keys(ops).forEach(key=>{
+          if (this.options.hasOwnProperty(key)) {
+              this.options[key] = ops[key];
+          }
+      });
   }
 
 }
