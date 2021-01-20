@@ -33,7 +33,7 @@ class Mask extends Component {
             innerHTML: `<img class="paused-icon" src='https://static.leke.cn/scripts/AV/images/paused.png' />`
         }, { class: 'video-mask' });
         this.mask.addEventListener('click', () => {
-            this.event.trigger('click',true);
+            this.event.trigger('click',false);
         });        
         this.mask.addEventListener('dblclick', () => {
             this.event.trigger('dblclick');

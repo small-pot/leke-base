@@ -10,13 +10,14 @@ class Control extends Component {
     sliderContainer:any;
     slider:any;
     preVolume:number;
+    flag:boolean;
 
     constructor(el,video,event){
         super(el,video,event);
     }
 
     init() {
-        this.preVolume = this.video.volume;
+        this.preVolume = this.video.volume*100;
         const instance = this.render();
         this.subscription();
         return instance;
@@ -47,28 +48,33 @@ class Control extends Component {
                 this.event.trigger('volumeDragStart');
             },
             onTouchMove: (step) => {
-                this.event.trigger('volumeChange', step);
+                this.event.trigger('volumeChange', parseInt(step));
             },
-            onTouchEnd: () => {
-                this.event.trigger('volumeDragEnd');
+            onTouchEnd: (step) => {
+                const flag=this.shouldUpdate(step);
+                this.event.trigger('volumeDragEnd',parseInt(flag?step:this.preVolume));
             }
         });
     }
 
     subscription() {
+        this.event.on('volumeState',(fn,volumn)=>{
+            this.event.on('volumeStateCallback',fn);
+            this.preVolume=volumn;
+        });
         this.iconWrap.addEventListener('click', () => {
             if (!this.video.volume) {
-                this.event.trigger('volumeChange', this.preVolume * 100);
-                this.updateSlider(this.preVolume * 100);
+                const flag=this.shouldUpdate(this.preVolume);
+                this.event.trigger('volumeChange', flag?this.preVolume:0);
             } else {
-                this.event.trigger('volumeChange', 0, false);
-                this.updateSlider(0);
+                const flag=this.shouldUpdate(0);
+                this.event.trigger('volumeChange', flag?0:this.preVolume);
             }
         });
-        this.event.on('volumeChange', (step, resetPrev = true) => {
+        this.event.on('volumeChange', (step) => {
             this.volumeNum.innerText = parseInt(step);
             this.video.volume = parseInt(step) / 100;
-            if (resetPrev) this.preVolume = parseInt(step) / 100;
+            this.updateSlider(step);
             if (Number(step) === 0) {
                 this.video.muted = true;
                 this.icon.className = 'video-icon icon_jingyin';
@@ -80,7 +86,9 @@ class Control extends Component {
         this.event.on('volumeDragStart', () => {
             this.container.style.display = 'flex';
         });
-        this.event.on('volumeDragEnd', () => {
+        this.event.on('volumeDragEnd', (step) => {
+            this.event.trigger('volumeChange', parseInt(step));
+            this.preVolume = parseInt(step);
             this.container.style.display = '';
         });
         this.sliderContainer.addEventListener('click', (e) => {
@@ -92,11 +100,17 @@ class Control extends Component {
             } else if (scaleY / height < 0) {
                 step = 0;
             } else {
-                step = (scaleY / height * 100).toFixed(2);
+                step = (scaleY / height * 100).toFixed(0);
             }
-            this.event.trigger('volumeChange', step);
-            this.updateSlider(step);
+            const flag=this.shouldUpdate(step);
+            const newStep=parseInt(flag?step:this.preVolume);
+            this.event.trigger('volumeChange',newStep);
         });
+    }
+    shouldUpdate(step){
+        return this.event.getListener('volumeStateCallback')?
+            this.event.trigger('volumeStateCallback',parseInt(step)).every(item=>item===true):
+            true;
     }
     updateSlider(step) {
         this.slider.track.style.height = `${step}%`;

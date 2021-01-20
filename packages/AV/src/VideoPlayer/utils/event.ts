@@ -21,6 +21,6 @@ export default class EventBase {
     }
     trigger = (...args) => {
         const [type, ...params] = args;
-        this.getListener(type).forEach(fn => { fn(...params); });
+        return this.getListener(type).map(fn => { return fn(...params); });
     }
 }
