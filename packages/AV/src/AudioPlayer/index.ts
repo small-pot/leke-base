@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-20 16:55:20
+ * @LastEditTime: 2021-01-20 17:44:00
  */
 
 import EventEmitter from './EventEmitter';
@@ -15,6 +15,7 @@ interface AudioPlayerOptions{
   loop:boolean,
   autoplay:boolean,
   allowSeek:boolean,
+  allowPlayControl:boolean,
   preload:'none' | 'metadata' | 'auto' | ''
   timeFormat?:(val:number)=>string
 }
@@ -47,6 +48,7 @@ const defaultOps: AudioPlayerOptions = {
     loop:false,
     autoplay:false,
     allowSeek:true,
+    allowPlayControl:true,
     preload:'metadata',
 };
 
@@ -361,6 +363,7 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
    * @return {*} void
    */
   togglePlay(){
+      if (!this.options.allowPlayControl) return;
       if (this.playing) {
           this.pause();
       }else{
