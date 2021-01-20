@@ -3,17 +3,17 @@ import { newUID } from './utils/uid';
 import Hls from 'hls.js';
 import EventBase from './utils/event';
 import * as Dom from './utils/dom';
-import { initConfig, VIDEO_EVENTS } from './utils/config';
+import { VIDEO_EVENTS } from './utils/config';
 import Loading from './components/Loading';
 import Mask from './components/Mask';
 import ControlBar from './components/ControlBar';
 import Unsupport from './components/Unsupport';
 import Toast from './components/Toast';
 import Error from './components/Error';
-import { checkBrowser, throttle, entryFullscreen, exitFullscreen } from './utils/share';
+import { getVideoSize,checkBrowser, throttle, entryFullscreen, exitFullscreen } from './utils/share';
+
 class Player {
     uid: number;
-    wrapId: string;
     options:any;
     browser:string;
     event:any;
@@ -21,29 +21,22 @@ class Player {
     loadingTimer:any;
     isFullscreen:boolean;
     el:any;
-    mountedNode:any;
+    mountNode:any;
     video:any;
     input:any;
     mask:any;
     control:any;
     closeLoading:()=>void;
-    addEventListener: (type: any, listener: any) => void;
-    on: (type: any, listener: any) => void;
-    addListener: (type: any, listener: any) => void;
-    removeEventListener: (type: any, listener: any) => void;
-    off: (type: any, listener: any) => void;
-    removeListener: (type: any, listener: any) => void;
-    getListener: (type: any) => void;
-    trigger: (...args: any[]) => void;
-    destory: () => void;
 
-    constructor(id, options) {
+    constructor(options) {
+        const {el,...opts}=options;
         this.uid = newUID();
-        this.wrapId = id;
+        this.mountNode=el;
+        const {width,height}=getVideoSize(options.width,options.height);
         this.options = {
-            width: options.width || initConfig.initWidth,
-            height: options.height || initConfig.initHeight,
-            ...options
+            width,
+            height,
+            ...opts
         };
         this.browser = checkBrowser();
         this.event = new EventBase();
@@ -59,18 +52,13 @@ class Player {
     init() {
         this.validate();
         this.el = this.createEl('div', {}, { class: 'video-root-container', style: `width:${this.options.width}px;height:${this.options.height}px;` });
-        this.mountedNode.append(this.el);
+        this.mountNode.appendChild(this.el);
         this.isHlsSupported();
     }
 
     validate() {
-        if (!this.wrapId) return console.error('请传入挂载id');
+        if (!this.mountNode) return console.error('请传入挂载实例');
         if (!this.options.src) return console.error('请传入视频路径');
-        this.mountedNode = document.querySelector(`#${this.wrapId}`);
-        if (!this.mountedNode) {
-            this.mountedNode = null;
-            return console.error('挂载点不存在');
-        }
     }
 
     isHlsSupported() {
@@ -115,7 +103,7 @@ class Player {
     }
 
     renderVideo() {
-        const autoplay = this.options.autoPlay ? this.browser === 'FF' ? false : true : false; // 火狐无法自动播放
+        const autoplay = this.options.autoplay ? this.browser === 'FF' ? false : true : false; // 火狐无法自动播放
         const config:any = {
             src: this.options.src
         };
@@ -126,7 +114,7 @@ class Player {
             config.loop = 'loop';
         }
         this.video = this.createEl('video', {}, config);
-        this.input = this.createEl('input', {}, { id: 'video-input', class: 'video-input' });
+        this.input = this.createEl('input', {}, { id: `video-input-${this.uid}`, class: 'video-input' });
         this.el.appendChild(this.input);
         this.el.appendChild(this.video);
         this.mask = new Mask(this.el, this.video, this.event).init();
@@ -170,13 +158,16 @@ class Player {
                 this.event.trigger(action);
             });
         });
+        this.video.addEventListener('click', () => {
+            this.event.trigger('click',false);
+        });
         this.el.addEventListener('click', () => {
             this.event.trigger('containerClick');
         });
         this.video.addEventListener('play', () => {
             this.event.trigger('play');
             if (this.video.currentTime === 0) {
-                this.event.trigger('startPlay');
+                this.event.trigger('start');
             }
         });
         const fn = throttle(() => { this.event.trigger('timeupdate'); }, 1000, { leading: true });
@@ -184,8 +175,20 @@ class Player {
             fn();
         });
 
-        this.event.on('click', () => {
-            this.video.pause();
+        this.event.on('click', (paused) => {
+            if(paused){
+                this.video.play();
+            }else{
+                this.video.pause();
+            }
+        });
+        
+        this.event.on('dblclick', () => {
+            if(this.isFullscreen){
+                this.event.trigger('exitFullscreen');
+            }else{
+                this.event.trigger('entryFullscreen');
+            }
         });
         this.event.on('containerClick', () => {
             this.input.focus();
@@ -209,6 +212,7 @@ class Player {
         this.event.on('entryFullscreen', () => {
             this.isFullscreen = true;
             entryFullscreen(this.el);
+            Dom.addClass(this.el, 'full-video-container');
             if (this.browser === 'IE') {
                 this.renderToast();
             }
@@ -216,13 +220,14 @@ class Player {
         this.event.on('exitFullscreen', () => {
             this.isFullscreen = false;
             exitFullscreen();
+            Dom.removeClass(this.el, 'full-video-container');
         });
         // 空格符控制暂停/播放
         const keyDown = e => {
             if (e.keyCode === 32) {
                 e.preventDefault();
                 const activeId = document.activeElement.id;
-                if (activeId === 'video-input') {
+                if (activeId === `video-input-${this.uid}`) {
                     this.video.paused ? this.video.play() : this.video.pause();
                 }
             }
@@ -230,28 +235,40 @@ class Player {
         document.body.addEventListener('keydown', keyDown);
         this.event.on('destory', () => {
             document.body.removeEventListener('keydown', keyDown);
+            document.body.removeChild(this.mountNode);
         });
     }
+
+    addEventListener(type , listener){
+        this.event.on(type , listener);
+    }
+    on(type , listener){
+        this.event.on(type , listener);
+        this.getListener(type).forEach(item=>{
+            console.log(item);
+        });
+    }
+    addListener(type , listener){
+        this.event.on(type , listener);
+    }
+    removeEventListener(type , listener){
+        this.event.off(type , listener);
+    }
+    off(type , listener){
+        this.event.off(type , listener);
+    }
+    removeListener(type , listener){
+        this.event.off(type , listener);
+    }
+    getListener(type){
+        return this.event.getListener(type);
+    }
+    trigger(...args){
+        this.event.trigger(args);
+    }
+    destory(){
+        this.event.trigger('destory');
+    }
 }
-
-Player.prototype.addEventListener = Player.prototype.on = Player.prototype.addListener = function (type , listener) {
-    this.event.on(type , listener);
-};
-
-Player.prototype.removeEventListener = Player.prototype.off = Player.prototype.removeListener = function (type , listener) {
-    this.event.off(type , listener);
-};
-
-Player.prototype.getListener = function (type ) {
-    this.event.getListener(type );
-};
-
-Player.prototype.trigger = function (...args) {
-    this.event.trigger(args);
-};
-
-Player.prototype.destory = function () {
-    this.event.trigger('destory');
-};
 
 export default Player;

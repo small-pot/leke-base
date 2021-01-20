@@ -39,7 +39,7 @@ class PlayerControl extends Component {
         this.event.on('ended', () => {
             this.update();
         });
-        this.event.on('startPlay', () => {
+        this.event.on('start', () => {
             this.updateSlider(0);
         });
         this.event.on('processDragStart', () => {
