@@ -2,10 +2,10 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-19 14:57:47
- * @LastEditTime: 2021-01-20 15:25:33
+ * @LastEditTime: 2021-01-20 15:29:47
  */
 import React from 'react';
-import AudioPlayerCls from '../../../AV/src/AudioPlayer';
+import {AudioPlayer as AudioPlayerCls} from '@leke/AV';
 
 const noop = ()=>{};
 interface AudioPlayerProps {
