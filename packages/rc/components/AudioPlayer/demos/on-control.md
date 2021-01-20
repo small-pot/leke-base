@@ -1,6 +1,6 @@
 ---    
 title: 受控组件
-description: 传入ref使组件变得受控，AudioPlayer会挂载到ref中，可以利用实例绑定事件或者控制音频播放，具体用法可在“音视频”项中找到
+description: 传入ref使组件变得受控，AudioPlayer实例会挂载到ref中，可以利用实例绑定事件或者控制音频播放，具体用法可在“音视频”项中找到
 ---
 ```jsx
 import React from 'react';
