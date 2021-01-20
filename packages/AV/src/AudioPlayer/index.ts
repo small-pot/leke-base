@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-18 17:58:24
+ * @LastEditTime: 2021-01-19 15:46:28
  */
 
 import EventEmitter from './EventEmitter';
@@ -23,7 +23,7 @@ const defaultOps: AudioPlayerOptions = {
     el: 'body',
     source:'',
     loop:false,
-    autoplay:true,
+    autoplay:false,
     allowSeek:true,
     preload:'metadata',
 };
