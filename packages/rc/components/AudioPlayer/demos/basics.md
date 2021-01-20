@@ -9,12 +9,12 @@ import {AudioPlayer} from '@leke/rc';
 export default function(){
     const options = {
         id: 'audio-player',
-        source:'http://music.163.com/song/media/outer/url?id=493735012.mp3',
+        src:'http://music.163.com/song/media/outer/url?id=493735012.mp3',
         loop:false,
         autoplay:false,
         allowSeek:true,
         preload:'metadata',
-        onPlay:()=>{
+        onPlay:()=>{  //注册事件
             console.log('play');
         }
     };

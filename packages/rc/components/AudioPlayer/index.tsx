@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-19 14:57:47
- * @LastEditTime: 2021-01-19 17:56:16
+ * @LastEditTime: 2021-01-20 09:18:33
  */
 import React from 'react';
 import AudioPlayerCls from '../../../AV/src/AudioPlayer';
@@ -37,9 +37,13 @@ interface AudioPlayerProps {
     onWaiting:(e:Event)=>void,
 }
 const AudioPlayer = (props:AudioPlayerProps,ref) => {
+    const {id="audio-player",src='',autoplay=false,loop=false,preload='metadata',allowSeek=true,timeFormat} = props;
+    
     React.useEffect(() => {
-        const {id,src='',autoplay=false,loop=false,preload='metadata',allowSeek=true,timeFormat} = props;
-        console.log(props);
+        init();
+    });
+
+    const init = () => {
         const audioPlayer = new AudioPlayerCls({
             el:document.querySelector(`#${id}`),
             src:src,
@@ -71,9 +75,9 @@ const AudioPlayer = (props:AudioPlayerProps,ref) => {
         if (ref) {
             ref.current = audioPlayer;
         }
-    }, [props,ref]);
+    };
     return (
-        <div id={props.id} />
+        <div id={id} />
     );
 };
 
