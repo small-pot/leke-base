@@ -24,7 +24,7 @@ class TimeControl extends Component {
         return this.control;
     }
     subscription() {
-        this.event.on('startPlay', () => {
+        this.event.on('start', () => {
             this.current.innerText = getTime(0);
         });
         this.event.on('timeupdate', () => {

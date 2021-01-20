@@ -16,4 +16,20 @@ export interface IVideoProps {
     poster?: string;
     // 静音
     muted?: boolean;
+    // 视频挂载完成
+    onReady?:()=>void;
+    // 单击视频
+    onClick?:()=>void;
+    // 双击视频
+    onDblclick?:()=>void;
+    // 视频开始播放触发
+    onStart?:()=>void;
+    // 播放时间变更
+    onTimeChange?:(time:number)=>void;
+    // 音量变更
+    onVolumeChange?:(volumn:number)=>void;
+    //  进入全屏
+    onEntryFullscreen?:()=>void;
+    //  退出全屏
+    onExitFullscreen?:()=>void;
   }
