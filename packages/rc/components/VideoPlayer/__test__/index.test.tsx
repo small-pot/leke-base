@@ -15,10 +15,17 @@ describe('VideoPlayer', function () {
         expect(document.body).toMatchSnapshot();
     });
 
-    // it('onClick should be called', () => {
-    //     const onClick = jest.fn();
-    //     render(<VideoPlayer {...defaultProps} onClick={onClick} />);
-    //     fireEvent.click(screen.get(/取消/i));
-    //     expect(onCancel).toHaveBeenCalledTimes(1);
-    // });
+    it('onClick should be called', () => {
+        const onClick = jest.fn();
+        render(<VideoPlayer {...defaultProps} onClick={onClick} />);
+        fireEvent.click(document.querySelector('.video-root-container'));
+        expect(onClick).toHaveBeenCalledTimes(1);
+    });
+    
+    it('onEntryFullscreen should be called', () => {
+        const onEntryFullscreen = jest.fn();
+        render(<VideoPlayer {...defaultProps} onEntryFullscreen={onEntryFullscreen} />);
+        fireEvent.click(document.querySelector('.video-fullscreen-container .icon_quanping'));
+        expect(onEntryFullscreen).toHaveBeenCalledTimes(1);
+    });
 });
