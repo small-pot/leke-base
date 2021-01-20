@@ -30,7 +30,7 @@ export default function(){
     };
     return <>
         <h3>audio status：{audioStatus}</h3>
-        <AudioPlayer src={mp3List[index]} allowSeek={allowSeek} {...otherOptions}/>
+        <AudioPlayer src={mp3List[index]} allowSeek={allowSeek} {...otherOptions} />
         <br/>
         <Button className="audio-button" size="small" onClick={()=>
         {setAudioStatus('stop');setIndex(pre=>+!pre);}}>toggle mp3</Button>
