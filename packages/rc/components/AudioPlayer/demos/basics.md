@@ -16,21 +16,14 @@ export default function(){
     const [audioStatus,setAudioStatus] = React.useState('stop');
     const [index,setIndex] = React.useState(0);
     
-    const otherOptions = {
-        id: 'audio-player',
-        loop:false,
-        autoplay:false,
-        preload:'metadata',
-        onPlay:()=>{  //注册事件
-            setAudioStatus('playing');
-        },
-        onPause:()=>{  //注册事件
-            setAudioStatus('pause');
-        }
-    };
     return <>
         <h3>audio status：{audioStatus}</h3>
-        <AudioPlayer src={mp3List[index]} allowSeek={allowSeek} {...otherOptions}/>
+        <AudioPlayer 
+            src={mp3List[index]} 
+            allowSeek={allowSeek} 
+            onPlay={()=>{setAudioStatus('playing');}} 
+            onPause={()=>{setAudioStatus('pause');}}
+        />
         <br/>
         <Button className="audio-button" size="small" onClick={()=>
         {setAudioStatus('stop');setIndex(pre=>+!pre);}}>toggle mp3</Button>
@@ -38,4 +31,8 @@ export default function(){
     </>;
 }
 ```
-
+```css
+.audio-button{
+    margin-right: 8px;
+}
+```

@@ -2,45 +2,27 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-19 14:57:47
- * @LastEditTime: 2021-01-20 15:00:34
+ * @LastEditTime: 2021-01-20 17:42:22
  */
 import React from 'react';
-import AudioPlayerCls from '../../../AV/src/AudioPlayer';
+import {AudioPlayer as AudioPlayerCls,AudioPlayerNativeEvent} from '@leke/AV';
 
 const noop = ()=>{};
-interface AudioPlayerProps {
+interface AudioPlayerProps extends Partial<AudioPlayerNativeEvent> {
     className?:string,
     style?:object,
-    id?:string,
     src?:string,
+    paused?:boolean,
     autoplay?:boolean,
     loop?:boolean,
     allowSeek?:boolean,
     preload?:'none' | 'metadata' | 'auto' | '',
-    timeFormat?:(val:number)=>string,
-    onAudioProcess?:(e:Event)=>void,
-    onCanplay?:(e:Event)=>void,
-    onCanplayThrough?:(e:Event)=>void,
-    onDurationChange?:(e:Event)=>void,
-    onEmptied?:(e:Event)=>void,
-    onEnded?:(e:Event)=>void,
-    onLoadedData?:(e:Event)=>void,
-    onLoadedMetaData?:(e:Event)=>void,
-    onPause?:(e:Event)=>void,
-    onPlay?:(e:Event)=>void,
-    onPlaying?:(e:Event)=>void,
-    onRateChange?:(e:Event)=>void,
-    onSeeked?:(e:Event)=>void,
-    onSeeking?:(e:Event)=>void,
-    onStalled?:(e:Event)=>void,
-    onSuspend?:(e:Event)=>void,
-    onTimeUpdate?:(e:Event)=>void,
-    onVolumeChange?:(e:Event)=>void,
-    onWaiting?:(e:Event)=>void,
 }
+
 const AudioPlayer = (props:AudioPlayerProps,ref) => {
-    const {className,style,id="audio-player",src='',autoplay=false,loop=false,preload='metadata',allowSeek=true,timeFormat} = props;
+    const {className,style,src='',autoplay=false,paused,loop=false,preload='metadata',allowSeek=true,timeFormat} = props;
     const audioRef = React.useRef<AudioPlayerCls>(null);
+    const $audioContainer = React.useRef<HTMLDivElement>(null);
     React.useEffect(()=>{
         if (audioRef.current) {
             audioRef.current.configOptions({
@@ -50,16 +32,24 @@ const AudioPlayer = (props:AudioPlayerProps,ref) => {
             init();
         }
     },[src,autoplay,loop,preload,allowSeek]);
+    React.useEffect(()=>{
+        if (paused!==null && paused!==undefined) {
+            if (audioRef.current) {
+                paused?audioRef.current.pause():audioRef.current.play();
+            }
+        }
+    },[paused]);
 
     const init = () => {
         const audioPlayer = new AudioPlayerCls({
-            el:document.querySelector(`#${id}`),
+            el:$audioContainer.current,
             src:src,
             autoplay:autoplay,
             loop:loop,
             preload:preload,
             timeFormat:timeFormat,
             allowSeek,
+            allowPlayControl:!(paused!==null && paused!==undefined),
         });
         audioPlayer.on('audioprocess',props.onAudioProcess || noop);
         audioPlayer.on('canplay',props.onCanplay || noop);
@@ -87,7 +77,7 @@ const AudioPlayer = (props:AudioPlayerProps,ref) => {
 
     };
     return (
-        <div id={id} className={className} style={style}/>
+        <div ref={$audioContainer} className={className} style={style}/>
     );
 };
 

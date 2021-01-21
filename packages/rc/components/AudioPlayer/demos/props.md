@@ -3,7 +3,6 @@
   
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
-| id | 组件id，保证id在document的唯一性 | string | audio-player |
 | ref  | 用于获取AudioPlayer实例 | AudioPlayer  | - |
 | src | 音频地址，参考 audio 标签的 src 属性 | string | - |
 | autoplay   | 参考 audio 标签的 autopaly 属性。注：可能存在局限性，参考[注意](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/audio#%E5%B1%9E%E6%80%A7) | boolean  | false      |
