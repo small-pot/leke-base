@@ -25,7 +25,7 @@
     "build:rc": "npm-run-all --serial build:icons build:hooks build:components",
     "dev:website": "cd website && npm run dev",
     "dev": "npm-run-all --serial build:icons dev:website",
-    "build:site": "npm-run-all --serial build:icons build:website",
+    "build:site": "npm-run-all --serial build:AV build:icons build:website",
     "test": "jest --cache false",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.md",
     "fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.md",
