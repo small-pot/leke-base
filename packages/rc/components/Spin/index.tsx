@@ -3,7 +3,6 @@
  * @description Spin加载中
  * @updated ###### Fri Jan 15 09:38:39 PHT 2021
  */
-// import { useControl } from "@leke/hooks";
 import React, { CSSProperties, FC, memo, ReactNode, useEffect, useRef, useState } from "react";
 import DefaultIndicator from "./DefaultIndicator";
 import classNames from "classnames";

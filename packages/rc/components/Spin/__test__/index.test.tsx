@@ -1,8 +1,7 @@
 import React from "react";
 import Spin from "../";
 import '@testing-library/jest-dom/extend-expect';
-import {render, fireEvent, waitFor} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import {render, waitFor} from '@testing-library/react';
 
 describe('spin', function() {
     it('test default',async function () {
