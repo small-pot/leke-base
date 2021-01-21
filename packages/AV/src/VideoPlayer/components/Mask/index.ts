@@ -33,7 +33,11 @@ class Mask extends Component {
             innerHTML: `<img class="paused-icon" src='https://static.leke.cn/scripts/AV/images/paused.png' />`
         }, { class: 'video-mask' });
         this.mask.addEventListener('click', () => {
-            this.event.trigger('click');
+            if(!this.event.getListener('pausedStateCallback').length){
+                this.event.trigger('click');
+            }else{
+                this.event.trigger('pausedStateCallback',!this.video.paused);
+            }
         });        
         this.mask.addEventListener('dblclick', () => {
             this.event.trigger('dblclick');

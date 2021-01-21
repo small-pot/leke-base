@@ -167,7 +167,11 @@ class Player {
             });
         });
         this.video.addEventListener('click', () => {
-            this.event.trigger('click');
+            if(!this.event.getListener('pausedStateCallback').length){
+                this.event.trigger('click');
+            }else{
+                this.event.trigger('pausedStateCallback',!this.video.paused);
+            }
         });
         this.el.addEventListener('click', () => {
             this.event.trigger('containerClick');
