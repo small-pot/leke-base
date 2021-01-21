@@ -17,8 +17,8 @@ module.exports ={
         fallback: { "path": false },
         extensions: ['.ts','.tsx','.js','.jsx'],
         alias: {
-            '@leke/AV/dist':path.resolve(__dirname,'../../packages/AV/dist'),
             ...resolePaths(path.resolve(__dirname,'../../')),
+            '../../node_modules/@leke':path.resolve(__dirname,'../../packages'),
             "@leke/rc":path.resolve(__dirname,'../../packages/rc')
         }
     },

@@ -32,10 +32,6 @@ export default {
         {
             key:'Select',
             title:'选择器'
-        },
-        {
-            key:'VideoPlayer',
-            title:'视频播放器'
         }
     ]
 };
