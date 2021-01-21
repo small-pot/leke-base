@@ -4,7 +4,7 @@ title: 实例方法
 
 | 方法 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
-| load(url) | 加载音频资源 | (string)=>Promise | - |
+| load(url) | 加载音频资源 | string=>Promise | - |
 | play() | 播放音频 | void | - |
 | pause() | 暂停音频 | void | - |
 | togglePlay() | 切换播放状态 | void | - |

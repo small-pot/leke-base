@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-19 15:46:28
+ * @LastEditTime: 2021-01-20 17:44:00
  */
 
 import EventEmitter from './EventEmitter';
@@ -10,25 +10,49 @@ import { str2dom,formatTime } from './utils';
 // import './index.less';
 
 interface AudioPlayerOptions{
-  el: string,
-  source:string,
+  el: HTMLElement,
+  src:string,
   loop:boolean,
   autoplay:boolean,
   allowSeek:boolean,
+  allowPlayControl:boolean,
   preload:'none' | 'metadata' | 'auto' | ''
   timeFormat?:(val:number)=>string
 }
 
+export interface AudioPlayerNativeEvent {
+    onAudioProcess:(e:Event)=>void,
+    onCanplay:(e:Event)=>void,
+    onCanplayThrough:(e:Event)=>void,
+    onDurationChange:(e:Event)=>void,
+    onEmptied:(e:Event)=>void,
+    onEnded:(e:Event)=>void,
+    onLoadedData:(e:Event)=>void,
+    onLoadedMetaData:(e:Event)=>void,
+    onPause:(e:Event)=>void,
+    onPlay:(e:Event)=>void,
+    onPlaying:(e:Event)=>void,
+    onRateChange:(e:Event)=>void,
+    onSeeked:(e:Event)=>void,
+    onSeeking:(e:Event)=>void,
+    onStalled:(e:Event)=>void,
+    onSuspend:(e:Event)=>void,
+    onTimeUpdate:(e:Event)=>void,
+    onVolumeChange:(e:Event)=>void,
+    onWaiting:(e:Event)=>void,
+}
+
 const defaultOps: AudioPlayerOptions = {
-    el: 'body',
-    source:'',
+    el: document.querySelector('body'),
+    src:'',
     loop:false,
     autoplay:false,
     allowSeek:true,
+    allowPlayControl:true,
     preload:'metadata',
 };
 
-class AudioPlayer extends EventEmitter  {
+class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
   private options: AudioPlayerOptions
   private $audio!:HTMLAudioElement
   private $playBtn!:HTMLDivElement
@@ -98,7 +122,7 @@ class AudioPlayer extends EventEmitter  {
   }
 
   private init(){
-      const {el,source,autoplay,loop,preload} = this.options;
+      const {el,src,autoplay,loop,preload} = this.options;
       const $audioContainer = str2dom(this.template)[0] as HTMLElement;
       this.$container = $audioContainer;
       this.$audio = $audioContainer.querySelector<HTMLAudioElement>('#audio')!;
@@ -116,16 +140,15 @@ class AudioPlayer extends EventEmitter  {
           this.$playBtn.classList.add('button-start');
       }
 
-      if (source) {
-          this.load(source);
+      if (src) {
+          this.load(src);
       }
       this.$audio.loop=loop;
       this.$audio.preload=preload;
       this.bindEvent();
     
-      const $outerContainer = document.querySelector(el);
-      if ($outerContainer) {
-          $outerContainer.appendChild($audioContainer);
+      if (el) {
+          el.appendChild($audioContainer);
       }
     
   }
@@ -180,6 +203,7 @@ class AudioPlayer extends EventEmitter  {
       this.seek(this.duration*seekPercent);
   }
   private onDragStart(e) {
+      if (!this.options.allowSeek) return;
       let seekPercent;
       this.dragging = true;
       this.$progressBtn.classList.add('progress-button-dragging');
@@ -216,7 +240,7 @@ class AudioPlayer extends EventEmitter  {
       document.addEventListener('touchmove',onDragMove);
   }
 
-  private onDurationChange(e:Event){
+  onDurationChange(e:Event){
     
       const {timeFormat:customFormat} = this.options;
       this.$timeText.innerHTML = formatTime(this.$audio.duration || 0,customFormat);
@@ -224,11 +248,11 @@ class AudioPlayer extends EventEmitter  {
       this.emit('durationchange',e);
   }
 
-  private onEmptied(e:Event) {
+  onEmptied(e:Event) {
       this.emit('emptied',e);
   }
 
-  private onEnded(e:Event){
+  onEnded(e:Event){
       const playBtnClass = 'button-start';
       const pauseBtnClass = 'button-pause';
       this.playing = false;
@@ -237,63 +261,63 @@ class AudioPlayer extends EventEmitter  {
       this.emit('ended',e);
   }
 
-  private onAudioProcess(e:Event) {
+  onAudioProcess(e:Event) {
       this.emit('audioprocess',e);
   }
 
-  private onCanplay(e:Event) {
+  onCanplay(e:Event) {
       this.emit('canplay',e);
   }
 
-  private onCanplayThrough(e:Event) {
+  onCanplayThrough(e:Event) {
       this.emit('canplaythrough',e);
   }
 
-  private onLoadedData(e:Event) {
+  onLoadedData(e:Event) {
       this.emit('loadeddata',e);
   }
 
-  private onLoadedMetaData(e:Event) {
+  onLoadedMetaData(e:Event) {
       this.emit('loadedmetadata',e);
   }
 
-  private onPause(e:Event) {
+  onPause(e:Event) {
       this.addPauseStyle();
       this.playing = false;
       this.emit('pause',e);
   }
 
-  private onPlay(e:Event) {
+  onPlay(e:Event) {
       this.addPlayStyle();
       this.playing = true;
       this.emit('play',e);
   }
 
-  private onPlaying(e:Event) {
+  onPlaying(e:Event) {
       this.emit('playing',e);
   }
 
-  private onRateChange(e:Event) {
+  onRateChange(e:Event) {
       this.emit('ratechange',e);
   }
 
-  private onSeeked(e:Event) {
+  onSeeked(e:Event) {
       this.emit('seeked',e);
   }
 
-  private onSeeking(e:Event) {
+  onSeeking(e:Event) {
       this.emit('seeking',e);
   }
 
-  private onStalled(e:Event) {
+  onStalled(e:Event) {
       this.emit('stalled',e);
   }
 
-  private onSuspend(e:Event) {
+  onSuspend(e:Event) {
       this.emit('suspend',e);
   }
 
-  private onTimeUpdate(e:Event){
+  onTimeUpdate(e:Event){
       this.emit('timeupdate',e);
     
       if (this.dragging) return;
@@ -303,16 +327,12 @@ class AudioPlayer extends EventEmitter  {
     
   }
 
-  private onVolumeChange(e:Event) {
+  onVolumeChange(e:Event) {
       this.emit('volumechange',e);
   }
 
-  private onWaiting(e:Event) {
+  onWaiting(e:Event) {
       this.emit('waiting',e);
-  }
-
-  private reset() {
-      // this.currentTime = this.$audio.currentTime = 0
   }
 
   /**
@@ -343,6 +363,7 @@ class AudioPlayer extends EventEmitter  {
    * @return {*} void
    */
   togglePlay(){
+      if (!this.options.allowPlayControl) return;
       if (this.playing) {
           this.pause();
       }else{
@@ -400,6 +421,27 @@ class AudioPlayer extends EventEmitter  {
 
   getAllListener(){
       return this.getListener();
+  }
+
+  configOptions(ops){
+      console.log(ops.src);
+      if (ops.src && ops.src !== this.options.src) {
+          this.load(ops.src);
+      }
+      if (ops.autoplay) {
+          this.$audio.autoplay = ops.autoplay;
+      }
+      if (ops.loop) {
+          this.$audio.loop = ops.loop;
+      }
+      if (ops.preload) {
+          this.$audio.preload = ops.preload;
+      }
+      Object.keys(ops).forEach(key=>{
+          if (this.options.hasOwnProperty(key)) {
+              this.options[key] = ops[key];
+          }
+      });
   }
 
 }
