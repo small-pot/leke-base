@@ -9,3 +9,5 @@ export {default as Trigger} from './Trigger';
 export {default as Tag} from './Tag';
 export {default as Select} from './Select';
 export {default as Spin} from './Spin';
+export {default as VideoPlayer} from './VideoPlayer';
+export {default as AudioPlayer} from './AudioPlayer';

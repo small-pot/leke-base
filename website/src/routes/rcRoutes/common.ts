@@ -34,8 +34,12 @@ export default {
             title:'选择器'
         },
         {
+            key:'VideoPlayer',
+            title:'视频播放器'
+        },
+        {
             key:'Spin',
-            title:'加载中'
+            title:'加载中'    
         }
     ]
 };
