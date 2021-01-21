@@ -10,13 +10,16 @@ class Control extends Component {
     sliderContainer:any;
     slider:any;
     preVolume:number;
+    prevState:number;
+    flag:boolean;
+    isDrag:boolean;
 
     constructor(el,video,event){
         super(el,video,event);
     }
 
     init() {
-        this.preVolume = this.video.volume;
+        this.preVolume = this.video.volume*100;
         const instance = this.render();
         this.subscription();
         return instance;
@@ -47,28 +50,40 @@ class Control extends Component {
                 this.event.trigger('volumeDragStart');
             },
             onTouchMove: (step) => {
-                this.event.trigger('volumeChange', step);
+                if(this.flag){
+                    this.event.trigger('volumeStateCallback',parseInt(step));
+                }else{
+                    this.event.trigger('volumeChange', parseInt(step));
+                }
             },
-            onTouchEnd: () => {
+            onTouchEnd: (step) => {
+                if(this.flag&&this.preVolume!==parseInt(step)){
+                    this.event.trigger('volumeChange', this.preVolume);
+                }else{
+                    this.preVolume=parseInt(step);
+                }
                 this.event.trigger('volumeDragEnd');
             }
         });
     }
 
     subscription() {
+        this.event.on('volumeState',(fn)=>{
+            this.flag=true;
+            this.event.on('volumeStateCallback',fn);
+        });
         this.iconWrap.addEventListener('click', () => {
-            if (!this.video.volume) {
-                this.event.trigger('volumeChange', this.preVolume * 100);
-                this.updateSlider(this.preVolume * 100);
-            } else {
-                this.event.trigger('volumeChange', 0, false);
-                this.updateSlider(0);
+            const step=!this.video.volume?this.preVolume:0;
+            if(this.flag){
+                this.event.trigger('volumeStateCallback',step,true);
+            }else{
+                this.event.trigger('volumeChange', step);
             }
         });
-        this.event.on('volumeChange', (step, resetPrev = true) => {
-            this.volumeNum.innerText = parseInt(step);
-            this.video.volume = parseInt(step) / 100;
-            if (resetPrev) this.preVolume = parseInt(step) / 100;
+        this.event.on('volumeChange', (step) => {
+            this.volumeNum.innerText = step;
+            this.video.volume = step / 100;
+            this.updateSlider(step);
             if (Number(step) === 0) {
                 this.video.muted = true;
                 this.icon.className = 'video-icon icon_jingyin';
@@ -78,12 +93,18 @@ class Control extends Component {
             }
         });
         this.event.on('volumeDragStart', () => {
+            this.isDrag=true;
             this.container.style.display = 'flex';
         });
         this.event.on('volumeDragEnd', () => {
+            setTimeout(()=>{this.isDrag=false;});
             this.container.style.display = '';
         });
+        this.event.on('preVolume', (volume) => {
+            this.preVolume=volume;
+        });
         this.sliderContainer.addEventListener('click', (e) => {
+            if(this.isDrag)return;
             const height = this.slider.rail.clientHeight;
             const scaleY = this.slider.rail.getBoundingClientRect().bottom - e.clientY;
             let step;
@@ -92,10 +113,14 @@ class Control extends Component {
             } else if (scaleY / height < 0) {
                 step = 0;
             } else {
-                step = (scaleY / height * 100).toFixed(2);
+                step = (scaleY / height * 100).toFixed(0);
             }
-            this.event.trigger('volumeChange', step);
-            this.updateSlider(step);
+            if(this.flag){
+                this.event.trigger('volumeStateCallback',parseInt(step));
+            }else{
+                this.event.trigger('volumeChange',parseInt(step));
+                this.preVolume=parseInt(step);
+            }
         });
     }
     updateSlider(step) {

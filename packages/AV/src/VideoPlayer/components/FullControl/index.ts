@@ -5,6 +5,7 @@ class FullControl extends Component {
     control: any; 
     icon: any; 
     isFullscreen: boolean; 
+    stateCallback:(isFullscreen:boolean)=>void;
 
     constructor(el,video,event){
         super(el,video,event);
@@ -22,12 +23,13 @@ class FullControl extends Component {
         this.el.appendChild(this.control);
         return this.control;
     }
+    
     subscription() {
         this.control.addEventListener('click', () => {
-            if (this.isFullscreen === true) {
-                this.event.trigger('exitFullscreen');
-            } else {
-                this.event.trigger('entryFullscreen');
+            if(!this.event.getListener('fullscreenStateCallback').length){
+                this.isFullscreen?this.event.trigger('exitFullscreen'):this.event.trigger('entryFullscreen');
+            }else{
+                this.event.trigger('fullscreenStateCallback',!this.isFullscreen);
             }
         });
         this.event.on('entryFullscreen', () => {
@@ -47,7 +49,11 @@ class FullControl extends Component {
                 !doc.mozFullScreen &&
                 !doc.msFullscreenElement
             ) {
-                this.event.trigger('exitFullscreen');
+                if(!this.event.getListener('fullscreenStateCallback').length){
+                    this.event.trigger('exitFullscreen');
+                }else{
+                    this.isFullscreen&&this.event.trigger('fullscreenStateCallback',!this.isFullscreen);
+                }
             }
         };
         addFullscreenListener(fullListener);

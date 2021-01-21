@@ -20,10 +20,10 @@ class PlayerControl extends Component {
     }
     subscription() {
         this.control.addEventListener('click', () => {
-            if (this.video.paused) {
-                this.video.play();
-            } else {
-                this.video.pause();
+            if(!this.event.getListener('pausedStateCallback').length){
+                this.video.paused?this.video.play():this.video.pause();
+            }else{
+                this.event.trigger('pausedStateCallback',!this.video.paused);
             }
         });
         this.event.on('play', () => {

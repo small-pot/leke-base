@@ -15,17 +15,17 @@ describe('VideoPlayer', function () {
         expect(document.body).toMatchSnapshot();
     });
 
-    it('onClick should be called', () => {
-        const onClick = jest.fn();
-        render(<VideoPlayer {...defaultProps} onClick={onClick} />);
+    it('onPauseChange should be called', () => {
+        const onPauseChange = jest.fn();
+        render(<VideoPlayer {...defaultProps} onPauseChange={onPauseChange} />);
         fireEvent.click(document.querySelector('.video-root-container'));
-        expect(onClick).toHaveBeenCalledTimes(1);
+        expect(onPauseChange).toHaveBeenCalledTimes(1);
     });
     
-    it('onEntryFullscreen should be called', () => {
-        const onEntryFullscreen = jest.fn();
-        render(<VideoPlayer {...defaultProps} onEntryFullscreen={onEntryFullscreen} />);
+    it('onFullscreenChange should be called', () => {
+        const onFullscreenChange = jest.fn();
+        render(<VideoPlayer {...defaultProps} onFullscreenChange={onFullscreenChange} />);
         fireEvent.click(document.querySelector('.video-fullscreen-container .icon_quanping'));
-        expect(onEntryFullscreen).toHaveBeenCalledTimes(1);
+        expect(onFullscreenChange).toHaveBeenCalledTimes(1);
     });
 });

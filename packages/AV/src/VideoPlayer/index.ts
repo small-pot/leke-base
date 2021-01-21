@@ -34,9 +34,9 @@ class Player {
         this.mountNode=el;
         const {width,height}=getVideoSize(options.width,options.height);
         this.options = {
+            ...opts,
             width,
-            height,
-            ...opts
+            height
         };
         this.browser = checkBrowser();
         this.event = new EventBase();
@@ -117,10 +117,12 @@ class Player {
         this.input = this.createEl('input', {}, { id: `video-input-${this.uid}`, class: 'video-input' });
         this.el.appendChild(this.input);
         this.el.appendChild(this.video);
+        this.subscription();
         this.mask = new Mask(this.el, this.video, this.event).init();
         this.control = new ControlBar(this.el, this.video, this.event).init();
-        this.subscription();
-        this.event.trigger('ready');
+        setTimeout(()=>{
+            this.event.trigger('ready');
+        });
     }
 
     renderUnsupport() {
@@ -153,13 +155,23 @@ class Player {
     }
 
     subscription() {
+        this.event.on('pausedState',(fn)=>{
+            this.event.on('pausedStateCallback',fn);
+        });
+        this.event.on('fullscreenState',(fn)=>{
+            this.event.on('fullscreenStateCallback',fn);
+        });
         VIDEO_EVENTS.forEach(action => {
             this.video.addEventListener(action, () => {
                 this.event.trigger(action);
             });
         });
         this.video.addEventListener('click', () => {
-            this.event.trigger('click',false);
+            if(!this.event.getListener('pausedStateCallback').length){
+                this.event.trigger('click');
+            }else{
+                this.event.trigger('pausedStateCallback',!this.video.paused);
+            }
         });
         this.el.addEventListener('click', () => {
             this.event.trigger('containerClick');
@@ -170,26 +182,28 @@ class Player {
                 this.event.trigger('start');
             }
         });
-        const fn = throttle(() => { this.event.trigger('timeupdate'); }, 1000, { leading: true });
+        this.video.addEventListener('pause', () => {
+            this.event.trigger('pause');
+        });
+        const fn = throttle((time) => { this.event.trigger('timeupdate',time); }, 1000, { leading: true });
         this.video.addEventListener('timeupdate', () => {
-            fn();
+            fn(this.video.currentTime);
         });
 
-        this.event.on('click', (paused) => {
-            if(paused){
-                this.video.play();
+        this.event.on('click', () => {
+            if(!this.event.getListener('pausedStateCallback').length){
+                this.video.paused?this.video.play():this.video.pause();
             }else{
-                this.video.pause();
+                this.event.trigger('pausedStateCallback',this.video.paused);
             }
         });
-        
-        this.event.on('dblclick', () => {
-            if(this.isFullscreen){
-                this.event.trigger('exitFullscreen');
-            }else{
-                this.event.trigger('entryFullscreen');
-            }
-        });
+        // this.event.on('dblclick', () => {
+        //     if(this.isFullscreen){
+        //         this.event.trigger('exitFullscreen');
+        //     }else{
+        //         this.event.trigger('entryFullscreen');
+        //     }
+        // });
         this.event.on('containerClick', () => {
             this.input.focus();
         });
@@ -202,12 +216,6 @@ class Player {
         this.event.on('error', (err) => {
             console.error(err);
             this.renderError();
-        });
-        this.event.on('play', () => {
-            this.input.focus();
-        });
-        this.event.on('pause', () => {
-            this.input.focus();
         });
         this.event.on('entryFullscreen', () => {
             this.isFullscreen = true;
@@ -235,7 +243,6 @@ class Player {
         document.body.addEventListener('keydown', keyDown);
         this.event.on('destory', () => {
             document.body.removeEventListener('keydown', keyDown);
-            document.body.removeChild(this.mountNode);
         });
     }
 
@@ -244,9 +251,6 @@ class Player {
     }
     on(type , listener){
         this.event.on(type , listener);
-        this.getListener(type).forEach(item=>{
-            console.log(item);
-        });
     }
     addListener(type , listener){
         this.event.on(type , listener);
@@ -264,7 +268,7 @@ class Player {
         return this.event.getListener(type);
     }
     trigger(...args){
-        this.event.trigger(args);
+        this.event.trigger(...args);
     }
     destory(){
         this.event.trigger('destory');

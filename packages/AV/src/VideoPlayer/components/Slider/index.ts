@@ -15,11 +15,12 @@ class Slider {
     buffer: any;
     track: any;
     step: any;
+    prevStep: any;
     handle: any;
     isDrag: boolean;
     onMouseDown: ()=>void;
     onTouchMove?: (step:number)=>void;
-    onTouchEnd: (step:number)=>void;
+    onTouchEnd: (step:number)=>boolean;
     constructor(el, options) {
         this.el = el;
         this.options = {
@@ -46,9 +47,15 @@ class Slider {
         this.step = this.createEl('div', {}, { class: 'slider-step' });
         this.handle = this.createEl('div', {}, { class: 'slider-handle' });
         if (this.options.defaultValue) {
-            this.track.style.height = `${this.options.defaultValue}%`;
-            this.step.style.height = `${this.options.defaultValue}%`;
-            this.handle.style.bottom = `${this.options.defaultValue}%`;
+            if(this.options.vertical){
+                this.track.style.height = `${this.options.defaultValue}%`;
+                this.step.style.height = `${this.options.defaultValue}%`;
+                this.handle.style.bottom = `${this.options.defaultValue}%`;
+            }else{
+                this.track.style.width = `${this.options.defaultValue}%`;
+                this.step.style.width = `${this.options.defaultValue}%`;
+                this.handle.style.left = `${this.options.defaultValue}%`;
+            }
         }
         this.container.appendChild(this.rail);
         this.container.appendChild(this.buffer);
@@ -111,9 +118,23 @@ class Slider {
                 this.track.style.width = `${step}%`;
                 this.step.style.width = `${step}%`;
             }
+            this.onTouchEnd(step);
+            // const result=this.onTouchEnd(step);
+            // if(!result){
+            //     if(this.options.vertical){
+            //         this.track.style.height = `${this.prevStep}%`;
+            //         this.step.style.height = `${this.prevStep}%`;
+            //         this.handle.style.bottom = `${this.prevStep}%`;
+            //     }else{
+            //         this.track.style.width = `${this.prevStep}%`;
+            //         this.step.style.width = `${this.prevStep}%`;
+            //         this.handle.style.left = `${this.prevStep}%`;
+            //     }
+            // }else{
+            //     this.prevStep=step;
+            // }
             this.step.style.display = 'none';
             this.track.style.display = 'block';
-            this.onTouchEnd(step);
             document.removeEventListener('mousemove', touchMove);
             document.removeEventListener('mouseup', touchEnd);
             return false;

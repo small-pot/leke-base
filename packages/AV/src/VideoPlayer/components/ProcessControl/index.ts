@@ -27,6 +27,7 @@ class PlayerControl extends Component {
             onTouchEnd: (step) => {
                 this.event.trigger('processDragEnd');
                 this.event.trigger('timeChange', step);
+                return true;
             }
         });
         this.el.appendChild(this.control);
