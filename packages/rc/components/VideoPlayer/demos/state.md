@@ -2,20 +2,16 @@
 title: 受控组件
 ---
 ```jsx
-import React,{useState} from 'react';
+import React,{useState,useRef} from 'react';
 import {VideoPlayer} from '@leke/rc';
+
 
 export default function(){
     const [paused,setPaused]=useState(true);
     const [time,setTime]=useState(0);
     const [volume,setVolume]=useState(60);
     const [full,setFull]=useState(false);
-    React.useEffect(()=>{
-        if(volume!==null && volume!==undefined){
-            setVolume;
-        }
-
-    },[volume]);
+    const ref=useRef(null);
 
     return <div>
         <VideoPlayer 
@@ -35,6 +31,7 @@ export default function(){
             onFullscreenChange={full=>{
                 setFull(full);
             }}
+            ref={ref}
         />
         <div style={{marginTop:12}}>
             <button style={{marginRight:16}} onClick={()=>{
@@ -46,6 +43,9 @@ export default function(){
             <button style={{marginRight:16}} onClick={()=>{
                 setFull(!full);
             }}>全屏</button>
+            <button style={{marginRight:16}} onClick={()=>{
+                console.log(ref.current.video);
+            }}>打印Video实例</button>
         </div>
     </div>
     ;
