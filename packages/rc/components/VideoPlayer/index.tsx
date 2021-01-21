@@ -1,4 +1,4 @@
-import React, { useEffect, useRef,useMemo, forwardRef } from "react";
+import React, {useEffect, useRef, useMemo, forwardRef, useImperativeHandle} from "react";
 import { IVideoProps } from "./type";
 import {getVideoSize} from './utils';
 import {VideoPlayer} from '@leke/AV';
@@ -25,7 +25,11 @@ const Video = (props:IVideoProps,ref) => {
     const el=useRef(null);
     const player=useRef(null);
 
-    const init=()=>{
+    useImperativeHandle(ref,()=>{
+        return player.current
+    },[ref])
+
+    useEffect(() => {
         player.current= new VideoPlayer({
             el:el.current,
             src,
@@ -49,16 +53,10 @@ const Video = (props:IVideoProps,ref) => {
         if(fullscreen!==undefined){
             player.current.trigger('fullscreenState',onFullscreenChange);
         }
-        if(ref)ref.current=player.current;
-    };
-
-    useEffect(() => {
-        init();
         return ()=>{
             player.current.destory();
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [player]);
 
     useEffect(() => {
         if(paused!==undefined){
