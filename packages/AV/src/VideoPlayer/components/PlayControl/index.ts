@@ -2,7 +2,6 @@ import Component from '../component';
 
 class PlayerControl extends Component {
     control:any;
-    useState:boolean;
 
     constructor(el,video,event){
         super(el,video,event);
@@ -21,9 +20,8 @@ class PlayerControl extends Component {
     }
     subscription() {
         this.control.addEventListener('click', () => {
-            this.useState=!!this.event.getListener('pausedState');
-            if(!this.useState){
-                this.video.paused?this.event.trigger('play'):this.event.trigger('pause');
+            if(!this.event.getListener('pausedStateCallback').length){
+                this.video.paused?this.video.play():this.video.pause();
             }else{
                 this.event.trigger('pausedStateCallback',!this.video.paused);
             }

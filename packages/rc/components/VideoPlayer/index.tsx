@@ -31,7 +31,7 @@ const Video = (props:IVideoProps,ref) => {
             src,
             width,
             height,
-            autoplay,
+            autoplay:paused?false:autoplay,
             loop,
             poster,
             muted:volume===0

@@ -167,7 +167,7 @@ class Player {
             });
         });
         this.video.addEventListener('click', () => {
-            this.event.trigger('click',true);
+            this.event.trigger('click');
         });
         this.el.addEventListener('click', () => {
             this.event.trigger('containerClick');
@@ -186,11 +186,11 @@ class Player {
             fn(this.video.currentTime);
         });
 
-        this.event.on('click', (paused) => {
-            if(!this.event.getListener('pausedStateCallback')){
-                paused?this.event.trigger('pause'):this.event.trigger('play');
+        this.event.on('click', () => {
+            if(!this.event.getListener('pausedStateCallback').length){
+                this.video.paused?this.video.play():this.video.pause();
             }else{
-                this.event.trigger('pausedStateCallback',paused);
+                this.event.trigger('pausedStateCallback',this.video.paused);
             }
         });
         // this.event.on('dblclick', () => {
