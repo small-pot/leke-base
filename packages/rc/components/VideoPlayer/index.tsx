@@ -23,10 +23,10 @@ const Video = (props:IVideoProps,ref) => {
 
     const [cWidth,cHeight]=useMemo(()=>{return getVideoSize(width,height);},[width,height]);
     const el=useRef(null);
-    const player=useRef({});
+    const player=useRef(null);
 
     const init=()=>{
-        const instance=player.current= new VideoPlayer({
+        player.current= new VideoPlayer({
             el:el.current,
             src,
             width,
@@ -37,17 +37,17 @@ const Video = (props:IVideoProps,ref) => {
             muted:volume===0
         });
         if(paused!==undefined){
-            instance.trigger('pausedState',onPauseChange);
+            player.current.trigger('pausedState',onPauseChange);
         }
-        instance.on('timeupdate',(time)=>{
+        player.current.on('timeupdate',(time)=>{
             onTimeChange&&onTimeChange(time);
         });
         if(volume!==undefined){
-            instance.trigger('volumeState',onVolumeChange);
+            player.current.trigger('volumeState',onVolumeChange);
         }
-        instance.on('volumeState',onVolumeChange);
+        player.current.on('volumeState',onVolumeChange);
         if(fullscreen!==undefined){
-            instance.trigger('fullscreenState',onFullscreenChange);
+            player.current.trigger('fullscreenState',onFullscreenChange);
         }
         if(ref)ref.current=player.current;
     };
@@ -55,34 +55,30 @@ const Video = (props:IVideoProps,ref) => {
     useEffect(() => {
         init();
         return ()=>{
-            const instance=player.current as any;
-            instance.destory();
+            player.current.destory();
         };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         if(paused!==undefined){
-            const instance=player.current as any;
-            if(instance.video.paused!==paused){
-                paused?instance.video.pause():instance.video.play();
+            if(player.current.video.paused!==paused){
+                paused?player.current.video.pause():player.current.video.play();
             }
         }
     }, [paused]);
 
     useEffect(() => {
         if(volume!==undefined){
-            const instance=player.current as any;
-            if(volume!==0)instance.trigger('preVolume',volume);
-            instance.trigger('volumeChange',volume);
+            if(volume!==0)player.current.trigger('preVolume',volume);
+            player.current.trigger('volumeChange',volume);
         }
     }, [volume]);
 
     useEffect(() => {
         if(fullscreen!==undefined){
-            const instance=player.current as any;
-            if(instance.isFullscreen!==fullscreen){
-                fullscreen?instance.trigger('entryFullscreen'):instance.trigger('exitFullscreen');
+            if(player.current.isFullscreen!==fullscreen){
+                fullscreen?player.current.trigger('entryFullscreen'):player.current.trigger('exitFullscreen');
             }
         }
     }, [fullscreen,onFullscreenChange]);
