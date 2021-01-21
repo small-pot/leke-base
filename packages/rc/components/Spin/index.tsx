@@ -7,23 +7,23 @@
 import React, { CSSProperties, FC, memo, ReactNode, useEffect, useRef, useState } from "react";
 import DefaultIndicator from "./DefaultIndicator";
 import classNames from "classnames";
-interface SpinProps {
-  delay?: number;
-  indicator?: ReactNode;
-  size?: "small" | "default";
-  spinning?: boolean;
-  tip?: string;
-  wrapperClassName?: string;
+interface ISpinProps {
+    delay?: number;
+    indicator?: ReactNode;
+    size?: "small" | "default";
+    spinning?: boolean;
+    tip?: string;
+    wrapperClassName?: string;
     children?: ReactNode;
-    style: CSSProperties;
+    style?: CSSProperties;
 }
 
-const Switch: FC<SpinProps> = memo(
+const Spin: FC<ISpinProps> = memo(
     ({ size, spinning, wrapperClassName, tip, indicator, children, delay, style, ...props }) => {
-        const [loading, setLoading] = useState(spinning);
-        const timer = useRef<any>();
+        const [loading, setLoading] = useState(false);
+        const timer = useRef<NodeJS.Timeout>();
 
-        /**渲染默认指示器样式 */
+        /**渲染默认指示器 */
         const renderSpin = () =>
             loading && (
                 <div className="leke-spin-bg" style={style} {...props}>
@@ -31,8 +31,8 @@ const Switch: FC<SpinProps> = memo(
                     {!!tip && <p className="leke-spin-tip">{tip}</p>}
                 </div>
             );
-        
-        /**监听开关延迟 */ 
+
+        /**监听开关以及延迟 */
         useEffect(() => {
             if (delay) {
                 timer.current = setTimeout(() => {
@@ -42,12 +42,12 @@ const Switch: FC<SpinProps> = memo(
                     clearTimeout(timer.current);
                     timer.current = null;
                 };
-            } 
+            }
             setLoading(spinning);
-        },[delay,spinning]);
-            
+        }, [delay, spinning]);
+
         return children ? (
-            <div className={classNames("leke-spin-wrapper",wrapperClassName)} {...props}>
+            <div className={classNames("leke-spin-wrapper", wrapperClassName)} {...props}>
                 {renderSpin()}
                 <div
                     className={classNames("leke-spin-container", {
@@ -63,9 +63,9 @@ const Switch: FC<SpinProps> = memo(
     }
 );
 
-Switch.defaultProps = {
+Spin.defaultProps = {
     spinning: true,
     size: "default"
 };
 
-export default Switch;
+export default Spin;

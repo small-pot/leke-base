@@ -4,25 +4,26 @@
 @default-dot-size: 15px; // 每一个圆点大小
 @default-size-margin: 2.5px; // 距离边框距离
 @default-size-space: 10px; // 圆点间距离
-@default-animation-duration: 1.8s; // 圆点间距离
 
 @small-size: 50px; // 整体占位大小
 @small-dot-size: 10px; // 每一个圆点大小
 @small-size-margin: 4px; // 距离边框距离
 @small-size-space: 6px; // 圆点间距离
-@small-animation-duration: 1.8s; // 圆点间距离
 
+@animation-duration: 1.8s; // 单次动画时长
+
+// 根据大小动态生成动画名称以及各种大小间距
 .keyframes (@size) {
   @dotA-name: e('dotA-@{size}');
   @dotB-name: e('dotB-@{size}');
   @dotC-name: e('dotC-@{size}');
   @dotD-name: e('dotD-@{size}');
-  @size-margin: if(@size=small,@small-size-margin,@default-size-margin);
-  @size-space: if(@size=small,@small-size-space,@default-size-space);
-  @dot-size: if(@size=small,@small-dot-size,@default-dot-size);
-  @frist-index: @size-margin;
-  @second-index: @size-margin + @size-space + @dot-size;
-  @third-index: @size-margin + (@size-space + @dot-size) * 2;
+  @size-margin: if(@size=small,@small-size-margin,@default-size-margin); // 离边框的距离
+  @size-space: if(@size=small,@small-size-space,@default-size-space); // 圆点间距
+  @dot-size: if(@size=small,@small-dot-size,@default-dot-size); // 圆点大小
+  @frist-index: @size-margin; // 第一个圆点x轴
+  @second-index: @size-margin + @size-space + @dot-size; // 第二个圆点x轴
+  @third-index: @size-margin + (@size-space + @dot-size) * 2; // 第三个圆点x轴
   
   @keyframes @dotA-name{
     0% {
@@ -133,7 +134,7 @@
   }
 }
 
-.dot-class(@size) {
+.dot-classes(@size) {
   @dotA-name: e('dotA-@{size}');
   @dotB-name: e('dotB-@{size}');
   @dotC-name: e('dotC-@{size}');
@@ -174,7 +175,7 @@
     display: flex;
     align-items: center;
     .keyframes(default);
-    .dot-class(default);
+    .dot-classes(default);
   
     & > i {
       display:inline-block;
@@ -184,7 +185,7 @@
       background-color: @base-color;
       position: absolute;
       animation-timing-function: ease;
-      animation-duration: @default-animation-duration;
+      animation-duration: @animation-duration;
       animation-iteration-count: infinite;
     }
   }
@@ -193,7 +194,7 @@
     width: @small-size;
     height: @small-size;
     .keyframes(small);
-    .dot-class(small);
+    .dot-classes(small);
   
     & > i {
       width: @small-dot-size;

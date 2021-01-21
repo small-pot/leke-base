@@ -1,11 +1,15 @@
 import React, { FC, memo } from "react";
 import classNames from "classnames";
 
-const DefaultIndicator: FC<any> = memo(({ size, wrapperClassName }) => {
+interface IDefaultIndicatorProps {
+    size?: "small" | "default";
+}
+
+const DefaultIndicator: FC<IDefaultIndicatorProps> = memo(({ size }) => {
     const props = {
         className: classNames("leke-spin-animation", {
             ['leke-spin-animation-small']: size === 'small',
-        }, wrapperClassName),
+        }),
     };
 
     return (
