@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, forwardRef } from "react";
+import React, { useEffect, useRef,useMemo, forwardRef } from "react";
 import { IVideoProps } from "./type";
+import {getVideoSize} from './utils';
 import {VideoPlayer} from '@leke/AV';
 
 const Video = (props:IVideoProps,ref) => {
@@ -20,6 +21,7 @@ const Video = (props:IVideoProps,ref) => {
         onFullscreenChange
     }=props;
 
+    const [cWidth,cHeight]=useMemo(()=>{return getVideoSize(width,height);},[width,height]);
     const el=useRef(null);
     const player=useRef({});
 
@@ -85,7 +87,7 @@ const Video = (props:IVideoProps,ref) => {
         }
     }, [fullscreen,onFullscreenChange]);
 
-    return <div ref={el} className={wrapClassName}></div>;
+    return <div ref={el} className={wrapClassName} style={{width:cWidth,height:cHeight}}></div>;
 };
 
 export default forwardRef(Video);
