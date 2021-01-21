@@ -12,7 +12,7 @@ import { str2dom,formatTime } from './utils';
 
 
 const defaultOps: AudioPlayerOptions = {
-    el: typeof window !==undefined ? document.querySelector('body'):null,
+    el: typeof window === 'object' ? document.querySelector('body'):null,
     src:'',
     loop:false,
     autoplay:false,
