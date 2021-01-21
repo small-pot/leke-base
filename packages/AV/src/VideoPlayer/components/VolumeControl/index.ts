@@ -12,6 +12,7 @@ class Control extends Component {
     preVolume:number;
     prevState:number;
     flag:boolean;
+    isDrag:boolean;
 
     constructor(el,video,event){
         super(el,video,event);
@@ -49,10 +50,18 @@ class Control extends Component {
                 this.event.trigger('volumeDragStart');
             },
             onTouchMove: (step) => {
-                this.event.trigger('volumeChange', parseInt(step));
+                if(this.flag){
+                    this.event.trigger('volumeStateCallback',parseInt(step));
+                }else{
+                    this.event.trigger('volumeChange', parseInt(step));
+                }
             },
             onTouchEnd: (step) => {
-                this.event.trigger('volumeChange', parseInt(step));
+                if(this.flag&&this.preVolume!==parseInt(step)){
+                    this.event.trigger('volumeChange', this.preVolume);
+                }else{
+                    this.preVolume=parseInt(step);
+                }
                 this.event.trigger('volumeDragEnd');
             }
         });
@@ -60,13 +69,15 @@ class Control extends Component {
 
     subscription() {
         this.event.on('volumeState',(fn)=>{
+            this.flag=true;
             this.event.on('volumeStateCallback',fn);
         });
         this.iconWrap.addEventListener('click', () => {
-            if (!this.video.volume) {
-                this.event.trigger('volumeChange', this.preVolume);
-            } else {
-                this.event.trigger('volumeChange', 0);
+            const step=!this.video.volume?this.preVolume:0;
+            if(this.flag){
+                this.event.trigger('volumeStateCallback',step,true);
+            }else{
+                this.event.trigger('volumeChange', step);
             }
         });
         this.event.on('volumeChange', (step) => {
@@ -82,12 +93,18 @@ class Control extends Component {
             }
         });
         this.event.on('volumeDragStart', () => {
+            this.isDrag=true;
             this.container.style.display = 'flex';
         });
         this.event.on('volumeDragEnd', () => {
+            setTimeout(()=>{this.isDrag=false;});
             this.container.style.display = '';
         });
+        this.event.on('preVolume', (volume) => {
+            this.preVolume=volume;
+        });
         this.sliderContainer.addEventListener('click', (e) => {
+            if(this.isDrag)return;
             const height = this.slider.rail.clientHeight;
             const scaleY = this.slider.rail.getBoundingClientRect().bottom - e.clientY;
             let step;
@@ -98,14 +115,13 @@ class Control extends Component {
             } else {
                 step = (scaleY / height * 100).toFixed(0);
             }
-            this.event.trigger('volumeChange',parseInt(step));
-            this.preVolume=parseInt(step);
+            if(this.flag){
+                this.event.trigger('volumeStateCallback',parseInt(step));
+            }else{
+                this.event.trigger('volumeChange',parseInt(step));
+                this.preVolume=parseInt(step);
+            }
         });
-    }
-    shouldUpdate(step){
-        return this.event.getListener('volumeStateCallback')?
-            this.prevState===step:
-            true;
     }
     updateSlider(step) {
         this.slider.track.style.height = `${step}%`;

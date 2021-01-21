@@ -37,12 +37,13 @@ const Video = (props:IVideoProps,ref) => {
         if(paused!==undefined){
             instance.trigger('pausedState',onPauseChange);
         }
-        instance.on('timeupdate',time=>{
+        instance.on('timeupdate',(time)=>{
             onTimeChange&&onTimeChange(time);
         });
-        instance.on('volumeChange',volume=>{
-            onVolumeChange&&onVolumeChange(volume);
-        });
+        if(volume!==undefined){
+            instance.trigger('volumeState',onVolumeChange);
+        }
+        instance.on('volumeState',onVolumeChange);
         if(fullscreen!==undefined){
             instance.trigger('fullscreenState',onFullscreenChange);
         }
@@ -61,11 +62,19 @@ const Video = (props:IVideoProps,ref) => {
     useEffect(() => {
         if(paused!==undefined){
             const instance=player.current as any;
-            if(instance.paused!==paused){
+            if(instance.video.paused!==paused){
                 paused?instance.video.pause():instance.video.play();
             }
         }
     }, [paused]);
+
+    useEffect(() => {
+        if(volume!==undefined){
+            const instance=player.current as any;
+            if(volume!==0)instance.trigger('preVolume',volume);
+            instance.trigger('volumeChange',volume);
+        }
+    }, [volume]);
 
     useEffect(() => {
         if(fullscreen!==undefined){
