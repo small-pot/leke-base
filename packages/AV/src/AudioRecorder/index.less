@@ -1,0 +1,136 @@
+@keyframes myfirst {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes mylast {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.exit {
+    animation: mylast 1s;
+}
+
+.record-wrap {
+    text-align: center;
+
+    .record-container {
+        position: relative;
+
+        .record-micro {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 210px;
+
+            .record-recording {
+                position: absolute;
+                display: none;
+            }
+
+            .record-content {
+                width: 120px;
+                height: 120px;
+                background: #1FB5AB;
+                border-radius: 50%;
+                display: inline-block;
+                position: relative;
+
+                .record-microImg {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 74px;
+                }
+            }
+        }
+
+    }
+
+    .record-title {
+        color: #8C8C8C;
+        font-size: 14px;
+    }
+
+    .record-time {
+        color: #8C8C8C;
+        font-size: 14px;
+        display: none;
+
+        .record-usedTime {
+            color: #262626;
+        }
+    }
+}
+
+.record-audio-wrap {
+    height: 32px;
+    text-align: center;
+    animation: myfirst 1s;
+
+    .record-audio-container {
+        width: 338px;
+        height: 32px;
+        line-height: 32px;
+        background: #F5F5F5;
+        border-radius: 40px;
+        display: inline-block;
+
+        .audio-btn {
+            display: inline-block;
+            vertical-align: middle;
+
+            &-play {
+                width: 24px;
+                height: 24px;
+                margin-left: 8px;
+                background: #1FB5AB;
+                border-radius: 50%;
+                position: relative;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    border-top: 8px solid transparent;
+                    border-bottom: 8px solid transparent;
+                    border-right: 8px solid transparent;
+                    border-left: 8px solid #fff;
+                }
+            }
+        }
+
+        .audio-progress {
+            display: inline-block;
+            vertical-align: middle;
+            width: 240px;
+            height: 4px;
+            background: #D9D9D9;
+        }
+
+        .audio-timeInfo {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+
+    .record-reRecord {
+        display: inline-block;
+        cursor: pointer;
+        margin-left: 14px;
+        font-size: 12px;
+        color: #1FB5AB;
+    }
+}
