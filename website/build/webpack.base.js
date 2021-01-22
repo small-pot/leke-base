@@ -18,6 +18,7 @@ module.exports ={
         extensions: ['.ts','.tsx','.js','.jsx'],
         alias: {
             ...resolePaths(path.resolve(__dirname,'../../')),
+            '../../node_modules/@leke':path.resolve(__dirname,'../../packages'),
             "@leke/rc":path.resolve(__dirname,'../../packages/rc')
         }
     },
