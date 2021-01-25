@@ -2,9 +2,9 @@ export const RecordHtml = `
 <div class="record-wrap">
     <div id='recordContainer' class='record-container'>
         <div class='record-micro'>
-            <img class='record-recording' src="http://static.leke.cn/scripts/AV/images/recording.gif" />
+            <div class='record-recording'></div>
             <div id="record" class='record-content'>
-                <img class='record-microImg' src="http://static.leke.cn/scripts/AV/images/icon-microphone.png" />
+                <div class='record-microImg'></div>
             </div>
         </div>   
     </div>

@@ -1,6 +1,31 @@
 @import '../../../AV/dist/AudioRecorder.less';
 @import '../../../AV/dist/AudioPlayer.less';
 
+
+@keyframes myfirst {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes mylast {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.exit {
+    animation: mylast 1s;
+}
+
 .record-audio-wrap {
     height: 32px;
     text-align: center;

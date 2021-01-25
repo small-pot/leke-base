@@ -8,9 +8,9 @@ type AudioElement = {
 };
 interface IProps {
     isViewAudio?: boolean;
+    duration?: number;
     onStart?: () => void;
     onStop?: () => void;
-    getAudioUrl?: (type?: string) => void;
     onAudioUpdate?: (e: AudioElement) => void;
 }
 interface IState {
@@ -33,7 +33,10 @@ class AudioRecorder extends React.Component<IProps, IState> {
 
     startRecord = () => {
         if (!recorder && this.recorderRef.current) {
-            recorder = new Recorder({ elem: this.recorderRef.current });
+            recorder = new Recorder({
+                elem: this.recorderRef.current,
+                duration: this.props.duration,
+            });
             recorder.onStart = this.props.onStart;
             recorder.onStop = () => this.handleStop();
             recorder.ondataavailable = (event) => this.ondataavailable(event);

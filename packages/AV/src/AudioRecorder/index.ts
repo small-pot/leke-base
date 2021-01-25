@@ -48,19 +48,20 @@ class AudioRecorder {
     }
     private initEvent() {
         // 录制
-        this.record.addEventListener("click", () => {
-            const Recording = "recording";
-            if (this.Recorder) {
-                const state = this.getRecordState();
-                if (state === Recording) {
-                    this.stopRecord();
-                } else {
-                    this.startRecord();
+        this.record &&
+            this.record.addEventListener("click", () => {
+                const Recording = "recording";
+                if (this.Recorder) {
+                    const state = this.getRecordState();
+                    if (state === Recording) {
+                        this.stopRecord();
+                    } else {
+                        this.startRecord();
+                    }
+                    return;
                 }
-                return;
-            }
-            this.startRecord();
-        });
+                this.startRecord();
+            });
     }
     /**
      * 初始化录音实例
@@ -116,7 +117,7 @@ class AudioRecorder {
     private isHasMedia() {
         const n = <any>navigator;
         if (
-            n.mediaDevices.getUserMedia ||
+            (n.mediaDevices && n.mediaDevices.getUserMedia) ||
             n.getUserMedia ||
             n.webkitGetUserMedia ||
             n.mozGetUserMedia
