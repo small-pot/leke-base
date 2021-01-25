@@ -36,7 +36,8 @@ class TimeControl extends Component {
         this.event.on('loadedmetadata', () => {
             this.update();
         });
-        this.event.on('timeChange', (time) => {
+        this.event.on('timeChange', (step) => {
+            const time=step/100*this.video.duration;
             this.current.innerText = getTime(time);
         });
     }
