@@ -1,5 +1,6 @@
-import { RecordHtml, AudioHtml } from "./html";
+import { RecordHtml, AudioHtml, NoData } from "./html";
 import { timeFormat, blobToDataURI } from "./utils";
+import { AudioPlayer } from "@leke/AV";
 import "./index.less";
 
 declare let MediaRecorder: any;
@@ -21,8 +22,9 @@ class AudioRecorder {
     private time: any;
     public onPlay: () => void;
     public onPause: () => void;
-    public getBold: (bold) => void; //获取录音二进制文件
-    public getBase: (audio) => void; //获取录音base64格式
+    public onStart: () => void;
+    public onStop: () => void;
+
     /**
      *
      * @param cfg
@@ -36,12 +38,12 @@ class AudioRecorder {
     }
     private init() {
         this.initHtml();
-        // this.initEvent();
+        this.initEvent();
     }
     //初始化页面
     private initHtml() {
         const { elem } = this.cfg;
-        elem.innerHTML = RecordHtml;
+        elem.innerHTML = navigator.getUserMedia ? RecordHtml : NoData;
         this.record = elem.querySelector("#record");
         this.stop = elem.querySelector("#stop");
         this.play = elem.querySelector("#play");
@@ -55,7 +57,6 @@ class AudioRecorder {
             const Recording = "recording";
             if (this.Recorder) {
                 const state = this.getRecordState();
-                console.log(state);
                 if (state === Recording) {
                     this.stopRecord();
                 } else {
@@ -65,10 +66,6 @@ class AudioRecorder {
             }
             this.startRecord();
         });
-
-        // 播放
-        this.audio.addEventListener("play", this.onPlay);
-        this.audio.addEventListener("pause", this.onPause);
     }
     /**
      * 初始化录音实例
@@ -76,13 +73,10 @@ class AudioRecorder {
      */
     private initRecorder(stream): void {
         const recorder = new MediaRecorder(stream);
-        console.log("re", recorder);
         recorder.ondataavailable = (event) => {
             this.recorderBold = event.data;
-            this.getBold && this.getBold(event.data);
-            blobToDataURI(event.data, this.getBase);
-            this.audio.src = window.URL.createObjectURL(
-                new Blob([event.data], { type: "audio/wav" })
+            this.audioUrl = window.URL.createObjectURL(
+                new Blob([event.data], { type: "audio/mp3" })
             );
         };
         this.Recorder = recorder;
@@ -96,6 +90,7 @@ class AudioRecorder {
     }
     //开始录音
     public startRecord() {
+        this.onStart && this.onStart();
         this.recordContainer.querySelector(".record-recording").style.display =
             "block";
         this.recordTime.style.display = "block";
@@ -118,17 +113,16 @@ class AudioRecorder {
                 (stream) => {
                     this.initRecorder(stream);
                 },
-                (error) => {
-                    console.log(error);
-                }
+                (error) => {}
             );
         } else {
-            // eslint-disable-next-line no-alert
-            alert("麦克风获取失败");
+            const { elem } = this.cfg;
+            elem.innerHTML = NoData;
         }
     }
     //结束录音
-    private stopRecord() {
+    public stopRecord() {
+        this.onStop && this.onStop();
         this.count = 0;
         clearInterval(this.time);
         this.Recorder.stop();
@@ -141,8 +135,28 @@ class AudioRecorder {
         );
         setTimeout(() => {
             elem.innerHTML = AudioHtml;
+            const audioWrap = elem.querySelector(".record-audio-container");
+            const reRecord = elem.querySelector(".record-reRecord");
+            reRecord.addEventListener("click", () => {
+                this.audioUrl = "";
+                setTimeout(() => {
+                    this.init();
+                }, 500);
+            });
+            const audioPlayer = new AudioPlayer({
+                el: audioWrap,
+                src: this.audioUrl,
+            });
         }, 500);
     }
+    //获取音频
+    public getAudioUrl = async (type?: string) => {
+        if (type === "base") {
+            const res = await blobToDataURI(this.recorderBold);
+            return res;
+        }
+        return this.recorderBold;
+    };
 
     //录音计时
     private run(): void {

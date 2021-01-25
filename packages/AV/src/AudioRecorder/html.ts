@@ -20,23 +20,17 @@ export const AudioHtml = `
 <div class='record-audio-wrap'>
     <audio id='audio'></audio>
     <div class='record-audio-container'>
-       <div class='audio-btn' id='audioAction'>
-            <div class='audio-btn-play'></div>
-       </div>
-       <div class='audio-progress'>
-       </div> 
-       <div class='audio-timeInfo'>
-            3'00"
-       </div>
     </div>
     <div class='record-reRecord'>重录</div>
 </div>
 `;
 
-export const NoData = `<div>
-<div></div>
-<div>
-当前浏览器不支持录音
-请安装360浏览器并设置极速模式或安装谷歌浏览器
-</div>
+export const NoData = `<div class='recorder-nodata'>
+    <div class='recorder-top'>
+        <div class='recorder-nodata-img'></div>
+    </div>
+    <div class='recorder-title'>
+        <div>当前浏览器不支持录音</div>
+        <div>请安装360浏览器并设置极速模式或安装谷歌浏览器</div>
+    </div>
 </div>`;

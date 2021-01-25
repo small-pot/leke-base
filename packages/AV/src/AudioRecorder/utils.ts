@@ -11,12 +11,13 @@ export const timeFormat = (seconds: number) => {
 /**
  * 二进制转base64
  * @param blob
- * @param callback
  */
-export const blobToDataURI = (blob, callback) => {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        callback(e.target.result);
-    };
-    reader.readAsDataURL(blob);
+export const blobToDataURI = (blob) => {
+    return new Promise(function (reolove, reject) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            reolove(e.target.result);
+        };
+        reader.readAsDataURL(blob);
+    });
 };

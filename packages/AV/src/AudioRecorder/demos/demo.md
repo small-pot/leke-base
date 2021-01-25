@@ -3,22 +3,39 @@ import React, { useEffect } from "react";
 import { AudioRecorder } from "@leke/AV";
 
 export default function () {
+    let recorder;
     useEffect(() => {
-        const recorder = new AudioRecorder({
+        recorder = new AudioRecorder({
             elem: document.getElementById("wrap"),
             duration: 120,
         });
-        recorder.getBold = (bold) => {
-            console.log(bold);
+        // recorder.getAudioUrl = (bold) => {
+        //     console.log(bold);
+        // };
+        recorder.onStart = () => {
+            console.log("start");
         };
-        recorder.getBase = (bold) => {
-            console.log(bold);
-        };
-        recorder.onPlay = () => {
-            console.log("play");
+        recorder.onStop = () => {
+            console.log("stop");
         };
         console.log(recorder);
     }, []);
-    return <div id="wrap"></div>;
+    const handleClick = () => {
+        if (recorder) {
+            recorder.getAudioUrl().then((res) => console.log(res));
+        }
+    };
+    const handleClick1 = () => {
+        if (recorder) {
+            recorder.getAudioUrl("base").then((res) => console.log(res));
+        }
+    };
+    return (
+        <>
+            <div id="wrap"></div>
+            <div onClick={handleClick}>getAudioUrl</div>
+            <div onClick={handleClick1}>getAudioUrl</div>
+        </>
+    );
 }
 ```
