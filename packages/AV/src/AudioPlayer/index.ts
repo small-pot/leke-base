@@ -2,12 +2,12 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-21 15:48:51
+ * @LastEditTime: 2021-01-25 10:55:19
  */
 
 import EventEmitter from './EventEmitter';
 import {AudioPlayerOptions,AudioPlayerNativeEvent} from './interface';
-import { str2dom,formatTime } from './utils';
+import { str2dom,formatTime,getDuration } from './utils';
 // import './index.less';
 
 
@@ -210,10 +210,14 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
   }
 
   onDurationChange(e:Event){
-    
-      const {timeFormat:customFormat} = this.options;
-      this.$timeText.innerHTML = formatTime(this.$audio.duration || 0,customFormat);
-      this.duration = this.$audio.duration;
+      const {timeFormat:customFormat,src} = this.options;
+
+      // Hack 解决谷歌下部分音频长度为 Infinity 的情况 
+      // https://stackoverflow.com/questions/21522036/html-audio-tag-duration-always-infinity
+      getDuration(src,(duration)=>{
+          this.$timeText.innerHTML = formatTime(duration || 0,customFormat);
+          this.duration = duration;
+      });
       this.emit('durationchange',e);
   }
 

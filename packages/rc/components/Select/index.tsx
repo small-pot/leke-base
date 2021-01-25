@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useRef} from "react";
+import React, {useCallback, useMemo, useRef, useState} from "react";
 import Dropdown,{dropdownPropsType} from "../Dropdown";
 import OptionList from './OptionList';
 import classNames from 'classnames';
@@ -63,10 +63,12 @@ export default function Select(props:selectPropsType) {
     }=props;
     const inputRef=useRef<HTMLInputElement>(null);
     const selectorRef=useRef<HTMLDivElement>(null);
+    const optionListRef=useRef(null)
     const selectedOptionsRef=useRef([]);
     const [searchValue,setSearchValue]=useControl(props.searchValue,props.onSearch,'');
     const [visible,setVisible]=useControl(props.visible,props.onVisibleChange,false);
     const [value,onChange]=useControl<valueType>(props.value,props.onChange,props.defaultValue);
+    const [activeIndex,setActiveIndex]=useState(-1)
     const {label,value:valueKey,disabled:disabledKey}=Object.assign({},defaultFieldNames,fieldNames);
     const values=toArray(value);
     const list=useMemo(()=>{
@@ -80,7 +82,7 @@ export default function Select(props:selectPropsType) {
         values.forEach((v,index)=>{
             const opt=selectedOptionsRef.current[index];
             if(!opt||v!==opt[valueKey]){
-                selectedOptionsRef.current[index]=options.find(o=>o[valueKey]===v);
+                selectedOptionsRef.current[index]=options.find(o=>o[valueKey]===v)||{[valueKey]:v};
             }
         });
     }else{
@@ -104,14 +106,20 @@ export default function Select(props:selectPropsType) {
             selectedOptionsRef.current=[item];
             onChange(item[valueKey],item);
             inputRef.current.blur();
+        }else{
+            inputRef.current.blur();
         }
     }
-    function renderItem(item) {
+    function renderItem(item,index) {
         const selected=value===item[valueKey]||(Array.isArray(value)&&value.indexOf(item[valueKey])!==-1);
+        const active=activeIndex===index
         return (
             <div
-                className={classNames('leke-option',selected?'leke-option-selected':'',item[disabledKey]?'leke-option-disabled':'')}
+                className={classNames('leke-option',active?'leke-option-active':'',selected?'leke-option-selected':'',item[disabledKey]?'leke-option-disabled':'')}
                 key={item[valueKey]}
+                onMouseEnter={()=>{
+                    setActiveIndex(index)
+                }}
                 onClick={()=>{
                     if(item[disabledKey]){
                         return;
@@ -167,6 +175,42 @@ export default function Select(props:selectPropsType) {
         const searchBox:HTMLDivElement=selectorRef.current.querySelector('.leke-select-search-content');
         searchBox.style.maxWidth=selectorRef.current.offsetWidth+'px';
     }
+    function onKeyDown(e) {
+        if(!visible||!optionListRef.current || options.findIndex(item=>!item[disabledKey])===-1){
+            return
+        }
+        const keyCode=e.keyCode
+        const maxIndex=options.length-1
+        if(keyCode===38){
+            e.preventDefault()
+            const newIndex=(function () {
+                let index=activeIndex
+                do{
+                    index=index-1<0?maxIndex:index-1
+                } while (options[index][disabledKey])
+                return index
+            }())
+            setActiveIndex(newIndex)
+            optionListRef.current.scrollToIndex(newIndex)
+        }else if(keyCode===40){
+            e.preventDefault()
+            const newIndex=(function () {
+                let index=activeIndex
+                do{
+                    index=index+1>maxIndex?0:index+1
+                } while (options[index][disabledKey])
+                return index
+            }())
+            setActiveIndex(newIndex)
+            optionListRef.current.scrollToIndex(newIndex)
+        }else if(keyCode===13){
+            const item=options[activeIndex]
+            if(item){
+                e.preventDefault()
+                handle(item)
+            }
+        }
+    }
     const readOnly=!showSearch||disabled
     return(
         <Dropdown
@@ -180,6 +224,7 @@ export default function Select(props:selectPropsType) {
             popupClassName={popupClassName}
             popup={
                 list.length?<OptionList
+                    ref={optionListRef}
                     options={list}
                     renderItem={renderItem}
                     listHeight={listHeight}
@@ -188,7 +233,7 @@ export default function Select(props:selectPropsType) {
             }
         >
             <div
-                className={classNames('leke-select',visible?'leke-select-open':'',disabled?'leke-select-disabled':'',className)}
+                className={classNames('leke-select',multiple?'leke-select-multiple':'',visible?'leke-select-open':'',disabled?'leke-select-disabled':'',className)}
                 style={style}
                 onMouseDown={onMouseDown}
             >
@@ -201,6 +246,7 @@ export default function Select(props:selectPropsType) {
                                 type="text"
                                 value={searchValue}
                                 onChange={(e)=>setSearchValue(e.target.value)}
+                                onKeyDown={onKeyDown}
                                 readOnly={readOnly}
                                 style={{opacity:readOnly?'0':''}}
                             />
