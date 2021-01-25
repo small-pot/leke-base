@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-19 14:57:47
- * @LastEditTime: 2021-01-25 17:50:46
+ * @LastEditTime: 2021-01-25 18:13:29
  */
 import React from 'react';
 
@@ -10,7 +10,7 @@ import {AudioPlayer as AudioPlayerCls,AudioPlayerNativeEvent} from '@leke/AV';
 
 const noop = ()=>{};
 interface AudioPlayerProps extends Partial<AudioPlayerNativeEvent> {
-    forwardedRef?:React.RefObject<AudioPlayerCls | null>
+    // forwardedRef?:React.RefObject<AudioPlayerCls | null>
     className?:string,
     style?:object,
     src?:string,
@@ -129,7 +129,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps> {
             preload,
             allowSeek,
             timeFormat,
-            forwardedRef,
+            // forwardedRef,
             ...eventProps
         } = this.props;
         const audioPlayer = new AudioPlayerCls({
@@ -150,9 +150,9 @@ class AudioPlayer extends React.Component<AudioPlayerProps> {
                 audioPlayer.on(eventName,eventProps[key] || noop);
             }
         });
-        if (forwardedRef) {
-            forwardedRef.current = audioPlayer;
-        }
+        // if (forwardedRef) {
+        //     forwardedRef.current = audioPlayer;
+        // }
         this.audioPlayer = audioPlayer;
     }
     render() {
@@ -164,5 +164,10 @@ class AudioPlayer extends React.Component<AudioPlayerProps> {
 }
 
 export default React.forwardRef((props:AudioPlayerProps,ref:React.RefObject<AudioPlayerCls>)=>{
-    return (<AudioPlayer {...props} forwardedRef={ref}/>);
+    const audioPlayerRef = React.useRef(null);
+    React.useImperativeHandle(
+        ref,
+        () => audioPlayerRef.current.audioPlayer,
+    );
+    return (<AudioPlayer {...props} ref={audioPlayerRef}/>);
 });
