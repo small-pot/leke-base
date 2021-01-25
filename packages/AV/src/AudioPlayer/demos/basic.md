@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-18 20:38:36
- * @LastEditTime: 2021-01-19 17:33:49
+ * @LastEditTime: 2021-01-25 11:27:51
 -->
 
 ## 代码演示
@@ -21,8 +21,8 @@
 
 
 <!-- import js and css -->
-<link rel="stylesheet" type="text/css" href="https://static.leke.cn/scripts/AV/AudioPlayer.css">
-<script src='https://static.leke.cn/scripts/AV/AudioPlayer.min.js'></script>
+<link rel="stylesheet" type="text/css" href="https://static.leke.cn/scripts/common/player/AudioPlayer.css">
+<script src='https://static.leke.cn/scripts/common/player/AudioPlayer.min.js'></script>
 
 <script>
   window.onload=function(){
