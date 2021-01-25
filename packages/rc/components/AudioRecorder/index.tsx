@@ -30,7 +30,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
             audioUrl: "",
         };
     }
-
+    //初始化recorder
     startRecord = () => {
         if (!recorder && this.recorderRef.current) {
             recorder = new Recorder({
@@ -38,7 +38,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
                 duration: this.props.duration,
             });
             recorder.onStart = this.props.onStart;
-            recorder.onStop = () => this.handleStop();
+            recorder.onStop = (e) => this.handleStop(e);
             recorder.ondataavailable = (event) => this.ondataavailable(event);
         }
     };
@@ -46,7 +46,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
     componentDidMount() {
         this.startRecord();
     }
-
+    //录音音频查看
     componentDidUpdate(preProps: IProps, preState: IState) {
         if (!this.state.isSwitch) {
             this.startRecord();
@@ -61,6 +61,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
             });
         }
     }
+    //base64文件转化
     blobToDataURI = (blob) => {
         return new Promise(function (reolove, reject) {
             const reader = new FileReader();
@@ -70,7 +71,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
             reader.readAsDataURL(blob);
         });
     };
-
+    //录音结束回调监听
     ondataavailable = async (event) => {
         this.setState({
             audioUrl: event.data,
@@ -78,8 +79,9 @@ class AudioRecorder extends React.Component<IProps, IState> {
         const res = await this.blobToDataURI(event.data);
         this.props.onAudioUpdate({ boldFile: event.data, baseFile: res });
     };
-
-    handleStop = async () => {
+    //停止录音
+    handleStop = (e) => {
+        console.log("e", e);
         const { onStop, isViewAudio } = this.props;
         onStop && onStop();
         if (isViewAudio) {

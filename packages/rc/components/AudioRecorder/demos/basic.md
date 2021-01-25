@@ -1,3 +1,8 @@
+---
+title: 基本用法
+description: 录音基本使用
+---
+
 ```jsx
 import React from "react";
 import { AudioRecorder } from "@leke/rc";

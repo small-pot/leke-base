@@ -21,7 +21,7 @@ class AudioRecorder {
     private recordTime: HTMLElement;
     private recordContainer: HTMLElement;
     public onStart: () => void; //开始录音回调
-    public onStop: () => void; //结束录音回调
+    public onStop: (bold: any) => void; //结束录音回调
     public ondataavailable: (event) => void;
 
     /**
@@ -72,12 +72,8 @@ class AudioRecorder {
         recorder.ondataavailable = (event) => {
             this.ondataavailable && this.ondataavailable(event);
             this.recorderBold = event.data;
-            // this.audioUrl = window.URL.createObjectURL(
-            //     new Blob([event.data], { type: "audio/mp3" })
-            // );
         };
         this.Recorder = recorder;
-        this.Recorder.start();
         this.run();
     }
     //获取录音状态
@@ -101,7 +97,6 @@ class AudioRecorder {
             this.count
         );
         if (this.Recorder) {
-            this.Recorder.start();
             this.run();
             return;
         }
@@ -206,32 +201,38 @@ class AudioRecorder {
     }
 
     //结束录音
-    public stopRecord() {
-        this.onStop && this.onStop();
+    public stopRecord = async () => {
         clearInterval(this.time);
         this.Recorder.stop();
         const recording: HTMLElement = this.recordContainer.querySelector(
             ".record-recording"
         );
         recording.style.display = "none";
-    }
+        const req = await this.getRecorderAudio();
+        this.onStop && this.onStop(req);
+    };
     //获取音频
-    public getAudioUrl = async (type?: string) => {
-        if (!this.recorderBold) {
-            return "暂无音频文件，请先录音";
-        }
-        if (type === "base") {
-            const res = await blobToDataURI(this.recorderBold);
-            return res;
-        }
-        return this.recorderBold;
+    public getRecorderAudio = (type?: string) => {
+        return new Promise((resolve) =>
+            setTimeout(async () => {
+                if (!this.recorderBold) {
+                    resolve("暂无音频文件，请先录音");
+                }
+                if (type === "base64") {
+                    const res = await blobToDataURI(this.recorderBold);
+                    resolve(res);
+                }
+                resolve(this.recorderBold);
+            }, 0)
+        );
     };
 
     //录音计时
     private run(): void {
+        this.Recorder && this.Recorder.start();
         clearInterval(this.time);
         if (this.count >= this.duration) {
-            this.Recorder.stop();
+            this.Recorder && this.Recorder.stop();
         }
         this.time = setInterval(() => {
             this.count++;
