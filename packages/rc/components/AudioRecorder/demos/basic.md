@@ -11,6 +11,9 @@ export default function () {
     const onStart = () => {
         console.log("start");
     };
+    const onStop = (e) => {
+        console.log(e);
+    };
     const handleAudioUpdate = (e) => {
         console.log(e);
     };
@@ -18,6 +21,7 @@ export default function () {
         <>
             <AudioRecorder
                 onStart={onStart}
+                onStop={onStop}
                 isViewAudio
                 onAudioUpdate={handleAudioUpdate}
             />

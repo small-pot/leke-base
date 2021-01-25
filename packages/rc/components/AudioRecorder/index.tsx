@@ -81,7 +81,6 @@ class AudioRecorder extends React.Component<IProps, IState> {
     };
     //停止录音
     handleStop = (e) => {
-        console.log("e", e);
         const { onStop, isViewAudio } = this.props;
         onStop && onStop();
         if (isViewAudio) {
@@ -97,7 +96,6 @@ class AudioRecorder extends React.Component<IProps, IState> {
     };
 
     public render() {
-        console.log(this.state);
         const { isSwitch } = this.state;
         return (
             <div>
