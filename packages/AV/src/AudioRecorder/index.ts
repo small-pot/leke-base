@@ -43,7 +43,7 @@ class AudioRecorder {
     //初始化页面
     private initHtml() {
         const { elem } = this.cfg;
-        elem.innerHTML = navigator.getUserMedia ? RecordHtml : NoData;
+        elem.innerHTML = this.isHasMedia() ? RecordHtml : NoData;
         this.record = elem.querySelector("#record");
         this.stop = elem.querySelector("#stop");
         this.play = elem.querySelector("#play");
@@ -105,21 +105,106 @@ class AudioRecorder {
             this.run();
             return;
         }
-        if (navigator.getUserMedia) {
-            navigator.getUserMedia(
-                {
-                    audio: true,
-                },
-                (stream) => {
-                    this.initRecorder(stream);
-                },
-                (error) => {}
-            );
+
+        if (this.isHasMedia()) {
+            this.getUserMedia({ audio: true });
         } else {
             const { elem } = this.cfg;
             elem.innerHTML = NoData;
         }
     }
+    //获取录音权限
+    private isHasMedia() {
+        const n = <any>navigator;
+        if (
+            n.mediaDevices.getUserMedia ||
+            n.getUserMedia ||
+            n.webkitGetUserMedia ||
+            n.mozGetUserMedia
+        ) {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * 录音兼容处理
+     * @param constrains
+     */
+    public getUserMedia(constrains) {
+        let that = this;
+        const n = <any>navigator;
+        if (n.mediaDevices.getUserMedia) {
+            // 最新标准API、
+            n.mediaDevices
+                .getUserMedia(constrains)
+                .then((stream) => {
+                    that.success(stream);
+                })
+                .catch((err) => {
+                    that.error(err);
+                });
+        } else if (n.webkitGetUserMedia || n.mozGetUserMedia) {
+            // webkit内核浏览器
+            if (n.mediaDevices === undefined) {
+                n.mediaDevices = {};
+            }
+
+            // 一些浏览器部分支持 mediaDevices。我们不能直接给对象设置 getUserMedia
+            // 因为这样可能会覆盖已有的属性。这里我们只会在没有getUserMedia属性的时候添加它。
+            if (navigator.mediaDevices.getUserMedia === undefined) {
+                navigator.mediaDevices.getUserMedia = function (constraints) {
+                    // 首先，如果有getUserMedia的话，就获得它
+                    const getUserMedia =
+                        n.webkitGetUserMedia || n.mozGetUserMedia;
+
+                    // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
+                    if (!getUserMedia) {
+                        return Promise.reject(
+                            new Error(
+                                "getUserMedia is not implemented in this browser"
+                            )
+                        );
+                    }
+
+                    // 否则，为老的navigator.getUserMedia方法包裹一个Promise
+                    return new Promise(function (resolve, reject) {
+                        getUserMedia.call(
+                            navigator,
+                            constraints,
+                            resolve,
+                            reject
+                        );
+                    });
+                };
+            }
+            navigator.mediaDevices
+                .getUserMedia(constrains)
+                .then((stream) => {
+                    that.success(stream);
+                })
+                .catch((err) => {
+                    that.error(err);
+                });
+        } else if (navigator.getUserMedia) {
+            // 旧版API
+            n.getUserMedia(constrains)
+                .then((stream) => {
+                    that.success(stream);
+                })
+                .catch((err) => {
+                    that.error(err);
+                });
+        }
+    }
+    // 成功的回调函数
+    success(stream) {
+        this.initRecorder(stream);
+    }
+    // 异常的回调函数
+    error(error) {
+        console.log("访问用户媒体设备失败：", error.name, error.message);
+    }
+
     //结束录音
     public stopRecord() {
         this.onStop && this.onStop();
