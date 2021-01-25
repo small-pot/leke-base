@@ -9,7 +9,6 @@ export const RecordHtml = `
         </div>   
     </div>
     <div class='record-title'>点击图标开始录音</div>
-    <div><audio id='audio' /></div>
     <div class='record-time'>
         <span id='recordUsetime' class='record-usedTime'>0'00"</span>/限<span id='recordDuration'>5'00"</span>
     </div>

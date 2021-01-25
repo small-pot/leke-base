@@ -22,6 +22,7 @@ class AudioRecorder {
     private recordContainer: HTMLElement;
     public onStart: () => void; //开始录音回调
     public onStop: () => void; //结束录音回调
+    public ondataavailable: (event) => void;
 
     /**
      *
@@ -68,6 +69,7 @@ class AudioRecorder {
     private initRecorder(stream): void {
         const recorder = new MediaRecorder(stream);
         recorder.ondataavailable = (event) => {
+            this.ondataavailable && this.ondataavailable(event);
             this.recorderBold = event.data;
             // this.audioUrl = window.URL.createObjectURL(
             //     new Blob([event.data], { type: "audio/mp3" })
