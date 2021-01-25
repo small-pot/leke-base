@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-25 10:52:25
+ * @LastEditTime: 2021-01-25 10:55:19
  */
 
 import EventEmitter from './EventEmitter';
@@ -12,7 +12,7 @@ import { str2dom,formatTime,getDuration } from './utils';
 
 
 const defaultOps: AudioPlayerOptions = {
-    el: typeof window !=='undefined' ? document.querySelector('body'):null,
+    el: typeof window === 'object' ? document.querySelector('body'):null,
     src:'',
     loop:false,
     autoplay:false,

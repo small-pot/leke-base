@@ -800,7 +800,7 @@
     "@babel/plugin-transform-react-jsx-development" "^7.12.7"
     "@babel/plugin-transform-react-pure-annotations" "^7.12.1"
 
-"@babel/preset-typescript@^7.10.1", "@babel/preset-typescript@^7.12.7":
+"@babel/preset-typescript@^7.10.1", "@babel/preset-typescript@^7.12.1":
   version "7.12.7"
   resolved "http://192.168.20.146:4873/@babel%2fpreset-typescript/-/preset-typescript-7.12.7.tgz#fc7df8199d6aae747896f1e6c61fc872056632a3"
   integrity sha1-/H34GZ1qrnR4lvHmxh/IcgVmMqM=
