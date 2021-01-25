@@ -6,9 +6,16 @@ export default function () {
     const onStart = () => {
         console.log("start");
     };
+    const handleAudioUpdate = (e) => {
+        console.log(e);
+    };
     return (
         <>
-            <AudioRecorder onStart={onStart} />
+            <AudioRecorder
+                onStart={onStart}
+                isViewAudio
+                onAudioUpdate={handleAudioUpdate}
+            />
         </>
     );
 }

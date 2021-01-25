@@ -1,1 +1,63 @@
 @import '../../../AV/dist/AudioRecorder.less';
+@import '../../../AV/dist/AudioPlayer.less';
+
+.record-audio-wrap {
+    height: 32px;
+    text-align: center;
+    animation: myfirst 1s;
+
+    .record-audio-container {
+        width: 338px;
+        height: 32px;
+        line-height: 32px;
+        background: #F5F5F5;
+        border-radius: 40px;
+        display: inline-block;
+
+        .audio-btn {
+            display: inline-block;
+            vertical-align: middle;
+
+            &-play {
+                width: 24px;
+                height: 24px;
+                margin-left: 8px;
+                background: #1FB5AB;
+                border-radius: 50%;
+                position: relative;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    border-top: 8px solid transparent;
+                    border-bottom: 8px solid transparent;
+                    border-right: 8px solid transparent;
+                    border-left: 8px solid #fff;
+                }
+            }
+        }
+
+        .audio-progress {
+            display: inline-block;
+            vertical-align: middle;
+            width: 240px;
+            height: 4px;
+            background: #D9D9D9;
+        }
+
+        .audio-timeInfo {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+
+    .record-reRecord {
+        display: inline-block;
+        vertical-align: middle;
+        height: 32px;
+        cursor: pointer;
+        margin-left: 14px;
+        font-size: 12px;
+        color: #1FB5AB;
+    }
+}

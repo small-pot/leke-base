@@ -9,9 +9,5 @@ export default {
             key: "VideoPlayer",
             title: "视频播放器",
         },
-        {
-            key: "AudioRecorder",
-            title: "录音",
-        },
     ],
 };
