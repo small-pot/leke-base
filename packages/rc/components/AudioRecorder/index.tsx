@@ -10,7 +10,7 @@ interface IProps {
     isViewAudio?: boolean;
     duration?: number;
     onStart?: () => void;
-    onStop?: () => void;
+    onStop?: (e: any) => void;
     onAudioUpdate?: (e: AudioElement) => void;
 }
 interface IState {
@@ -77,12 +77,13 @@ class AudioRecorder extends React.Component<IProps, IState> {
             audioUrl: event.data,
         });
         const res = await this.blobToDataURI(event.data);
-        this.props.onAudioUpdate({ boldFile: event.data, baseFile: res });
+        this.props.onAudioUpdate &&
+            this.props.onAudioUpdate({ boldFile: event.data, baseFile: res });
     };
     //停止录音
     handleStop = (e) => {
         const { onStop, isViewAudio } = this.props;
-        onStop && onStop();
+        onStop && onStop(e);
         if (isViewAudio) {
             this.recorderRef.current.className = " exit";
             setTimeout(() => {

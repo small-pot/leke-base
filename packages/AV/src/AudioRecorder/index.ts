@@ -1,6 +1,5 @@
 import { RecordHtml, AudioHtml, NoData } from "./html";
 import { timeFormat, blobToDataURI } from "./utils";
-import AudioPlayer from "../AudioPlayer";
 
 declare let MediaRecorder: any;
 

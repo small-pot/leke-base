@@ -19,12 +19,7 @@ export default function () {
     };
     return (
         <>
-            <AudioRecorder
-                onStart={onStart}
-                onStop={onStop}
-                isViewAudio
-                onAudioUpdate={handleAudioUpdate}
-            />
+            <AudioRecorder onStart={onStart} onStop={onStop} isViewAudio />
         </>
     );
 }
