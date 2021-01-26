@@ -2,13 +2,12 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-26 10:17:37
+ * @LastEditTime: 2021-01-26 15:47:12
  */
 
 import EventEmitter from './EventEmitter';
 import {AudioPlayerOptions,AudioPlayerNativeEvent} from './interface';
 import { str2dom,formatTime,getDuration } from './utils';
-import './index.less';
 
 
 
@@ -92,6 +91,7 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
   }
 
   private init(){
+      require('./index.less');
       const {el,src,autoplay,loop,preload} = this.options;
       const $audioContainer = str2dom(this.template)[0] as HTMLElement;
       this.$container = $audioContainer;
