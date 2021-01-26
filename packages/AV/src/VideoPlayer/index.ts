@@ -6,6 +6,9 @@ import { VIDEO_EVENTS } from './utils/config';
 import { getVideoSize, checkBrowser,getResourceType, throttle, entryFullscreen, exitFullscreen } from './utils/share';
 import Control from './components/ControlBar';
 import txt from 'raw-loader!./template.html';
+if(typeof window==='object'){
+    require('./index.less');
+}
 
 class Player {
     private uid: number;
@@ -49,7 +52,6 @@ class Player {
     }
 
     init() {
-        require('./index.less');
         this.validate();
         this.isSupported();
     }
