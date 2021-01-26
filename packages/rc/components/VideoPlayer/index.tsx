@@ -2,7 +2,6 @@ import React, {useImperativeHandle,createRef} from "react";
 import { IVideoProps } from "./type";
 import {getVideoSize} from './utils';
 import {VideoPlayer} from '@leke/AV';
-import './index.less';
 
 class Video extends React.PureComponent<IVideoProps>{
     ref =createRef<HTMLDivElement>()

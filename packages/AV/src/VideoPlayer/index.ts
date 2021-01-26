@@ -1,4 +1,3 @@
-
 import Hls from 'hls.js';
 import { newUID } from './utils/uid';
 import EventBase from './utils/event';
@@ -7,6 +6,7 @@ import { VIDEO_EVENTS } from './utils/config';
 import { getVideoSize, checkBrowser, throttle, entryFullscreen, exitFullscreen } from './utils/share';
 import Control from './components/ControlBar';
 import txt from 'raw-loader!./template.html';
+import './index.less';
 
 class Player {
     private uid: number;
@@ -158,16 +158,16 @@ class Player {
         this.video.addEventListener('timeupdate', () => {
             fn(this.video.currentTime);
         });
-        this.video.addEventListener('loadeddata', ()=> {
-            if(!this.options.poster){
-                const canvas = document.createElement('canvas');
-                canvas.width = this.width;
-                canvas.height = this.height;
-                canvas.getContext('2d').drawImage(this.video, 0, 0, canvas.width, canvas.height);
-                const src = canvas.toDataURL('image/png');
-                this.video.setAttribute('poster', src);
-            }
-        });
+        // this.video.addEventListener('loadeddata', ()=> {
+        //     if(!this.options.poster){
+        //         const canvas = document.createElement('canvas');
+        //         canvas.width = this.width;
+        //         canvas.height = this.height;
+        //         canvas.getContext('2d').drawImage(this.video, 0, 0, canvas.width, canvas.height);
+        //         const src = canvas.toDataURL('image/png');
+        //         this.video.setAttribute('poster', src);
+        //     }
+        // });
         this.event.on('click', () => {
             if (!this.proxyPausedChange) {
                 this.video.paused ? this.video.play() : this.video.pause();

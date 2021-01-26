@@ -2,13 +2,14 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-25 10:55:19
+ * @LastEditTime: 2021-01-26 09:51:14
  */
 
 import EventEmitter from './EventEmitter';
 import {AudioPlayerOptions,AudioPlayerNativeEvent} from './interface';
 import { str2dom,formatTime,getDuration } from './utils';
-// import './index.less';
+import './index.less';
+
 
 
 const defaultOps: AudioPlayerOptions = {
