@@ -1,7 +1,6 @@
 import * as React from "react";
 import { AudioRecorder as Recorder, AudioPlayer } from "@leke/AV";
 
-let recorder = null;
 type AudioElement = {
     boldFile: any;
     baseFile: any;
@@ -32,8 +31,8 @@ class AudioRecorder extends React.Component<IProps, IState> {
     }
     //初始化recorder
     startRecord = () => {
-        if (!recorder && this.recorderRef.current) {
-            recorder = new Recorder({
+        if (this.recorderRef.current) {
+            const recorder = new Recorder({
                 elem: this.recorderRef.current,
                 duration: this.props.duration,
             });
@@ -48,18 +47,20 @@ class AudioRecorder extends React.Component<IProps, IState> {
     }
     //录音音频查看
     componentDidUpdate(preProps: IProps, preState: IState) {
-        if (!this.state.isSwitch) {
-            this.startRecord();
-        } else {
-            const src = this.state.audioUrl;
-            const el = this.audioRef.current;
-            const audio = new AudioPlayer({
-                el,
-                src: window.URL.createObjectURL(
-                    new Blob([src], { type: "audio/wav" })
-                ),
-            });
-        }
+        if(this.props.isViewAudio){
+            if (!this.state.isSwitch) {
+                this.startRecord();
+            } else {
+                const src = this.state.audioUrl;
+                const el = this.audioRef.current;
+                const audio = new AudioPlayer({
+                    el,
+                    src: window.URL.createObjectURL(
+                        new Blob([src], { type: "audio/wav" })
+                    ),
+                });
+            }
+        } 
     }
     //录音结束回调监听
     ondataavailable(event) {
@@ -75,7 +76,6 @@ class AudioRecorder extends React.Component<IProps, IState> {
         if (isViewAudio) {
             this.recorderRef.current.className = " exit";
             setTimeout(() => {
-                recorder = null;
                 this.recorderRef.current.innerHTML = "";
                 this.setState({
                     isSwitch: true,

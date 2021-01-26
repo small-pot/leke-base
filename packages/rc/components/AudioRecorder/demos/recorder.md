@@ -1,5 +1,5 @@
 ---
-title: 功能拓展
+title: 纯录音
 description: 录音基本使用
 ---
 
@@ -19,7 +19,7 @@ export default function () {
     };
     return (
         <>
-            <AudioRecorder onStart={onStart} onStop={onStop} isViewAudio />
+            <AudioRecorder onStart={onStart} onStop={onStop} />
         </>
     );
 }

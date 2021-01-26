@@ -1,4 +1,7 @@
-## props
+---    
+title: API
+description: 可以用ref获取到实例
+---
 为录音组件设定个性化配置
 
 | 属性            | 说明                                                                                                    | 类型     | 默认值    |
