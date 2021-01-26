@@ -18,6 +18,7 @@
 ## 代码演示
 
 ```html
+<script src='https://static.leke.cn/scripts/common/player/VideoPlayer.min.js'></script>
 <script>
 	const player=new VideoPlayer({
 		el:document.querySelector('#root'),
@@ -36,13 +37,6 @@
 	player.addEventListener('ended',()=>{});
 	player.addEventListener('timeupdate',()=>{});
 </script>
-```
-
-## 静态资源
-
-```
-<link rel="stylesheet" type="text/css" href='https://static.leke.cn/scripts/common/player/VideoPlayer.css' />
-<script src='https://static.leke.cn/scripts/common/player/VideoPlayer.min.js'></script>
 ```
 
 ## API
