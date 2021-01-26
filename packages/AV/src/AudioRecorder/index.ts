@@ -1,6 +1,5 @@
 import { RecordHtml, AudioHtml, NoData } from "./html";
 import { timeFormat, blobToDataURI } from "./utils";
-import "./index.less";
 
 declare let MediaRecorder: any;
 
@@ -35,6 +34,7 @@ class AudioRecorder {
         this.init();
     }
     private init() {
+        require('./index.less');
         this.initHtml();
         this.initEvent();
     }
