@@ -1,7 +1,7 @@
 const baseWebpackConfig=require('./webpack.base');
 const {merge}=require('webpack-merge');
 const MiniCssExtractPlugin=require("mini-css-extract-plugin");
-const OptimizeCssAssetsPlugin=require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin=require('css-minimizer-webpack-plugin');
 
 const postcssLoader={
     loader: 'postcss-loader',
@@ -45,10 +45,12 @@ const buildConfig = merge(baseWebpackConfig, {
     },
     optimization: {
         minimize:true,
-        runtimeChunk: "single"
+        runtimeChunk: "single",
+        minimizer:[
+            new CssMinimizerPlugin()
+        ]
     },
     plugins: [
-        new OptimizeCssAssetsPlugin(),
         new MiniCssExtractPlugin({
             filename: "css/[name].[contenthash].css",
             ignoreOrder: true

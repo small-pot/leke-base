@@ -2,6 +2,7 @@ const webpack=require("webpack");
 const baseWebpackConfig=require('./webpack.base.config');
 const {merge}=require('webpack-merge');
 const MiniCssExtractPlugin=require("mini-css-extract-plugin");
+const CssMinimizerPlugin=require('css-minimizer-webpack-plugin');
 const ResourcePlugin=require('./resource-plugin');
 const getRules=require('./getRules');
 const {resolveEntry,webpackConfig}=require('../resolveConfig');
@@ -20,7 +21,10 @@ const config = merge(baseWebpackConfig, {
         minimize:true,
         runtimeChunk: "single",
         moduleIds:'deterministic',
-        chunkIds:'deterministic'
+        chunkIds:'deterministic',
+        minimizer:[
+            new CssMinimizerPlugin()
+        ]
     },
     module: {
         rules: getRules()
