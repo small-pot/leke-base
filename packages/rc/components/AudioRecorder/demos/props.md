@@ -11,3 +11,4 @@ description: 可以用ref获取到实例
 | onStart         | 开始录音回调                                                                                            | boolean  | -         |
 | onStop          | 停止录音回调                                                                                            | function | bold      |
 | onDataAvailable | 当 MediaRecorder 将媒体数据传递到您的应用程序以供使用时，将触发该事件。数据在包含数据的 Blob 对象中提供 | function | event     |
+| onReRecorder | 重新录音回调| function | -     |

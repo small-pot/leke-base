@@ -6,11 +6,12 @@ type AudioElement = {
     baseFile: any;
 };
 interface IProps {
-    isViewAudio?: boolean;
-    duration?: number;
-    onStart?: () => void;
-    onStop?: (e: any) => void;
+    isViewAudio?: boolean;  //是否展示录音音频
+    duration?: number;  //录音限时
+    onStart?: () => void;   //开始录音回调
+    onStop?: (e: any) => void;  //结束录音回调
     onDataAvailable?: (e: AudioElement) => void;
+    onReRecorder?:() => void;   //重录回调
 }
 interface IState {
     isSwitch: boolean;
@@ -97,6 +98,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
                         <div
                             className="record-reRecord"
                             onClick={() => {
+                                this.props.onReRecorder && this.props.onReRecorder();
                                 this.setState({ isSwitch: false });
                             }}
                         >

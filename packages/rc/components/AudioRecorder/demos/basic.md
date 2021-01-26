@@ -1,6 +1,6 @@
 ---
 title: 功能拓展
-description: 录音基本使用
+description: 展示录音音频
 ---
 
 ```jsx
@@ -17,9 +17,12 @@ export default function () {
     const handleAudioUpdate = (e) => {
         console.log(e);
     };
+    const onReRecorder = () => {
+        console.log('重新录音');
+    };
     return (
         <>
-            <AudioRecorder onStart={onStart} onStop={onStop} isViewAudio />
+            <AudioRecorder onStart={onStart} onStop={onStop} isViewAudio onReRecorder={onReRecorder} />
         </>
     );
 }
