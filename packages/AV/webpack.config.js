@@ -29,7 +29,19 @@ module.exports={
                 use: [
                     'style-loader',
                     'css-loader',
-                    'postcss-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions:{
+                                plugins: [
+                                    require('postcss-preset-env')({
+                                        browsers:['last 2 versions'],
+                                        autoprefixer:{}
+                                    })
+                                ]
+                            }
+                        }
+                    },
                     'less-loader'
                 ]
             }
