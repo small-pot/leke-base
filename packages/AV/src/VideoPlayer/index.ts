@@ -10,7 +10,7 @@ import Unsupport from './components/Unsupport';
 import Toast from './components/Toast';
 import Error from './components/Error';
 import { getVideoSize,checkBrowser, throttle, entryFullscreen, exitFullscreen } from './utils/share';
-import './index.less'
+import './index.less';
 
 class Player {
     uid: number;
