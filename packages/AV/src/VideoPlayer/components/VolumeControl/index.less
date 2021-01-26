@@ -1,3 +1,6 @@
+@MUTED_URL:'https://static.leke.cn/scripts/common/player/images/icon_jingyin.png';
+@UNMUTED_URL:'https://static.leke.cn/scripts/common/player/images/icon_shengyin.png';
+
 .video-volume-wrap {
     position: relative;
     order: 4;
@@ -64,10 +67,10 @@
         align-items: center;
 
         .video-icon.icon_jingyin{
-            background-image: url('https://static.leke.cn/scripts/AV/images/icon_jingyin.png');
+            background-image: url(@MUTED_URL);
         }
         .video-icon.icon_shengyin{
-            background-image: url('https://static.leke.cn/scripts/AV/images/icon_shengyin.png');
+            background-image: url(@UNMUTED_URL);
         }
     }
 }

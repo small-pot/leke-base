@@ -7,41 +7,43 @@ import FullControl from '../FullControl';
 import * as Dom from '../../utils/dom';
 
 class Control extends Component {
-    control: any; 
+    private play:any;
+    private time:any;
+    private progress:any;
+    private volume:any;
+    private fullscreen:any;
 
     constructor(el,video,event){
         super(el,video,event);
+        this.play=this.el.querySelector('.video-play-wrap');
+        this.time=this.el.querySelector('.video-time-wrap');
+        this.progress=this.el.querySelector('.video-progress-wrap');
+        this.volume=this.el.querySelector('.video-volume-wrap');
+        this.fullscreen=this.el.querySelector('.video-fullscreen-container');
+        this.init();
     }
     
     init() {
-        const instance = this.render();
+        new PlayerControl(this.play,this.video,this.event);
+        new TimerControl(this.time,this.video,this.event);
+        new ProcessControl(this.progress,this.video,this.event);
+        new VolumeControl(this.volume,this.video,this.event);
+        new FullControl(this.fullscreen,this.video,this.event);
         this.subscription();
-        return instance;
-    }
-
-    render() {
-        this.control = this.createEl('div', {}, { class: 'video-control-bar' });
-        new PlayerControl(this.control, this.video, this.event).init();
-        new TimerControl(this.control, this.video, this.event).init();
-        new ProcessControl(this.control, this.video, this.event).init();
-        new VolumeControl(this.control, this.video, this.event).init();
-        new FullControl(this.control, this.video, this.event).init();
-        this.el.appendChild(this.control);
-        return this.control;
     }
 
     subscription() {
         this.event.on('play', () => {
-            this.control.style.opacity = '';
+            this.el.style.opacity = '';
         });
         this.event.on('pause', () => {
-            this.control.style.opacity = 1;
+            this.el.style.opacity = 1;
         });
         this.event.on('entryFullscreen', () => {
-            Dom.addClass(this.control, 'full-video-control-bar');
+            Dom.addClass(this.el, 'full-video-control-bar');
         });
         this.event.on('exitFullscreen', () => {
-            Dom.removeClass(this.control, 'full-video-control-bar');
+            Dom.removeClass(this.el, 'full-video-control-bar');
         });
     }
 }

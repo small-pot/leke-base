@@ -2,34 +2,29 @@ import Component from '../component';
 import { addFullscreenListener,removeFullscreenListener } from '../../utils/share';
 
 class FullControl extends Component {
-    control: any; 
-    icon: any; 
-    isFullscreen: boolean; 
-    stateCallback:(isFullscreen:boolean)=>void;
+    private icon: any;
+    private isFullscreen: boolean; 
+    private proxyFullscreenChange: (boolean)=>void;
 
     constructor(el,video,event){
         super(el,video,event);
+        this.icon=this.el.querySelector('.video-icon');
+        this.init();
     }
 
     init() {
-        this.render();
         this.subscription();
-    }
-
-    render() {
-        this.control = this.createEl('div', {}, { class: 'video-fullscreen-container' });
-        this.icon = this.createEl('i', {}, { class: 'video-icon icon_quanping' });
-        this.control.appendChild(this.icon);
-        this.el.appendChild(this.control);
-        return this.control;
     }
     
     subscription() {
-        this.control.addEventListener('click', () => {
-            if(!this.event.getListener('fullscreenStateCallback').length){
+        this.event.on('proxyFullscreenChange', (fn) => {
+            this.proxyFullscreenChange=fn;
+        });
+        this.el.addEventListener('click', () => {
+            if(!this.proxyFullscreenChange){
                 this.isFullscreen?this.event.trigger('exitFullscreen'):this.event.trigger('entryFullscreen');
             }else{
-                this.event.trigger('fullscreenStateCallback',!this.isFullscreen);
+                this.proxyFullscreenChange(!this.isFullscreen);
             }
         });
         this.event.on('entryFullscreen', () => {
@@ -49,10 +44,10 @@ class FullControl extends Component {
                 !doc.mozFullScreen &&
                 !doc.msFullscreenElement
             ) {
-                if(!this.event.getListener('fullscreenStateCallback').length){
+                if(!this.proxyFullscreenChange){
                     this.event.trigger('exitFullscreen');
                 }else{
-                    this.isFullscreen&&this.event.trigger('fullscreenStateCallback',!this.isFullscreen);
+                    this.proxyFullscreenChange(false);
                 }
             }
         };
@@ -60,9 +55,6 @@ class FullControl extends Component {
         this.event.on('destory', () => {
             removeFullscreenListener(fullListener);
         });
-    }
-    update() {
-
     }
 
 }
