@@ -1,26 +1,25 @@
 import Component from '../component';
-import Tooltip from './tooltip';
 import Slider from '../Slider';
 import { getTime } from '../../utils/share';
 
-class PlayerControl extends Component {
-    tooltip:any;
-    slider:any;
-    control:any;
-    isDrag:boolean;
+class ProcessControl extends Component {
+    private tooltip: any;
+    private slider: any;
+    private isDrag: boolean;
 
-    constructor(el,video,event){
-        super(el,video,event);
+    constructor(el, video, event) {
+        super(el, video, event);
+        this.tooltip = this.el.querySelector('.video-tooltip');
+        this.slider = this.getSlider();
+        this.init();
     }
 
     init() {
-        this.render();
         this.subscription();
     }
-    render() {
-        this.control = this.createEl('div', {}, { class: 'video-progress-wrap' });
-        this.tooltip = new Tooltip(this.control, this.video, this.event).init();
-        this.slider = new Slider(this.control, {
+
+    getSlider(){
+        return new Slider(this.el, {
             onMouseDown: () => {
                 this.event.trigger('processDragStart');
             },
@@ -30,9 +29,8 @@ class PlayerControl extends Component {
                 return true;
             }
         });
-        this.el.appendChild(this.control);
-        return this.control;
     }
+
     subscription() {
         this.event.on('timeupdate', () => {
             this.update();
@@ -58,7 +56,7 @@ class PlayerControl extends Component {
             this.video.currentTime = step / 100 * this.video.duration;
         });
         // 点击进度条进度跳转
-        this.control.addEventListener('click', (e) => {
+        this.el.addEventListener('click', (e) => {
             const scaleX = e.clientX - this.slider.rail.getBoundingClientRect().left;
             const width = this.slider.rail.clientWidth;
             if (scaleX / width > 1) return;
@@ -68,8 +66,8 @@ class PlayerControl extends Component {
 
         // tooltip  mouseEnter mouseMove mouseLeave监听
         const mouseMove = e => {
-            const scaleX = e.clientX - this.control.getBoundingClientRect().left;
-            const width = this.control.clientWidth;
+            const scaleX = e.clientX - this.el.getBoundingClientRect().left;
+            const width = this.el.clientWidth;
             if (scaleX / width <= 1 && scaleX / width >= 0) {
                 if (this.tooltip.style.display !== `block`)
                     this.tooltip.style.display = `block`;
@@ -81,19 +79,20 @@ class PlayerControl extends Component {
                 }
             }
         };
-        this.control.addEventListener('mouseenter', () => {
+        this.el.addEventListener('mouseenter', () => {
             if (this.tooltip.style.display !== 'block') {
                 this.tooltip.style.display = 'block';
             }
-            this.control.addEventListener('mousemove', mouseMove);
+            this.el.addEventListener('mousemove', mouseMove);
         });
-        this.control.addEventListener('mouseleave', () => {
+        this.el.addEventListener('mouseleave', () => {
             if (this.tooltip.style.display !== 'none') {
                 this.tooltip.style.display = 'none';
             }
-            this.control.removeEventListener('mousemove', mouseMove);
+            this.el.removeEventListener('mousemove', mouseMove);
         });
     }
+
     update() {
         const { buffered, duration, currentTime } = this.video;
         if (buffered.length) {
@@ -103,6 +102,7 @@ class PlayerControl extends Component {
         const step = (currentTime / duration * 100).toFixed(2);
         this.updateSlider(step);
     }
+
     updateSlider(step) {
         this.slider.track.style.width = `${step}%`;
         this.slider.step.style.width = `${step}%`;
@@ -111,4 +111,4 @@ class PlayerControl extends Component {
 
 }
 
-export default PlayerControl;
+export default ProcessControl;

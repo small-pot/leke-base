@@ -1,45 +1,31 @@
 import Component from '../component';
 import Slider from '../Slider';
 
-class Control extends Component {
-    control:any;
-    container:any;
-    iconWrap:any;
-    icon:any;
-    volumeNum:any;
-    sliderContainer:any;
-    slider:any;
-    preVolume:number;
-    prevState:number;
-    flag:boolean;
-    isDrag:boolean;
+class VolumeControl extends Component {
+    private container:any;
+    private iconWrap:any;
+    private icon:any;
+    private volumeNum:any;
+    private sliderContainer:any;
+    private slider:any;
+    private preVolume:number;
+    private isDrag:boolean;
+    private proxyVolumeChange:(number,boolean?)=>void;
 
     constructor(el,video,event){
         super(el,video,event);
+        this.container = this.el.querySelector('.video-volume-container');
+        this.iconWrap = this.el.querySelector('.volume-icon');
+        this.icon = this.iconWrap.querySelector('.video-icon');
+        this.volumeNum = this.el.querySelector('.volume-num');
+        this.sliderContainer = this.el.querySelector('.volume-slider-container');
+        this.slider = this.getSlider();
+        this.init();
     }
 
     init() {
         this.preVolume = this.video.volume*100;
-        const instance = this.render();
         this.subscription();
-        return instance;
-    }
-
-    render() {
-        this.control = this.createEl('div', {}, { class: 'video-volume-wrap' });
-        this.container = this.createEl('div', {}, { class: 'video-volume-container' });
-        this.iconWrap = this.createEl('div', {}, { class: `volume-icon` });
-        this.icon = this.createEl('i', {}, { class: `video-icon ${!this.video.volume ? 'icon_jingyin' : 'icon_shengyin'}` });
-        this.volumeNum = this.createEl('div', { innerText: this.video.volume * 100 }, { class: 'volume-num' });
-        this.sliderContainer = this.createEl('div', {}, { class: 'volume-slider-container' });
-        this.slider = this.getSlider();
-        this.iconWrap.appendChild(this.icon);
-        this.container.appendChild(this.volumeNum);
-        this.container.appendChild(this.sliderContainer);
-        this.control.appendChild(this.container);
-        this.control.appendChild(this.iconWrap);
-        this.el.appendChild(this.control);
-        return this.control;
     }
 
     getSlider() {
@@ -50,14 +36,15 @@ class Control extends Component {
                 this.event.trigger('volumeDragStart');
             },
             onTouchMove: (step) => {
-                if(this.flag){
-                    this.event.trigger('volumeStateCallback',parseInt(step));
+                if(this.proxyVolumeChange){
+                    this.proxyVolumeChange(parseInt(step));
                 }else{
                     this.event.trigger('volumeChange', parseInt(step));
                 }
             },
             onTouchEnd: (step) => {
-                if(this.flag&&this.preVolume!==parseInt(step)){
+                if(this.proxyVolumeChange&&this.preVolume!==parseInt(step)){
+                    // 并未修改外部传入的volume
                     this.event.trigger('volumeChange', this.preVolume);
                 }else{
                     this.preVolume=parseInt(step);
@@ -68,14 +55,13 @@ class Control extends Component {
     }
 
     subscription() {
-        this.event.on('volumeState',(fn)=>{
-            this.flag=true;
-            this.event.on('volumeStateCallback',fn);
+        this.event.on('proxyVolumeChange',(fn)=>{
+            this.proxyVolumeChange=fn;
         });
         this.iconWrap.addEventListener('click', () => {
             const step=!this.video.volume?this.preVolume:0;
-            if(this.flag){
-                this.event.trigger('volumeStateCallback',step,true);
+            if(this.proxyVolumeChange){
+                this.proxyVolumeChange(step,true);
             }else{
                 this.event.trigger('volumeChange', step);
             }
@@ -115,8 +101,8 @@ class Control extends Component {
             } else {
                 step = (scaleY / height * 100).toFixed(0);
             }
-            if(this.flag){
-                this.event.trigger('volumeStateCallback',parseInt(step));
+            if(this.proxyVolumeChange){
+                this.proxyVolumeChange(parseInt(step));
             }else{
                 this.event.trigger('volumeChange',parseInt(step));
                 this.preVolume=parseInt(step);
@@ -131,4 +117,4 @@ class Control extends Component {
 
 }
 
-export default Control;
+export default VolumeControl;

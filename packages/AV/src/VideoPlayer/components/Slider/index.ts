@@ -1,5 +1,3 @@
-import * as Dom from '../../utils/dom';
-
 const initOptions = {
     vertical: false,
     defaultValue: 0,
@@ -27,25 +25,18 @@ class Slider {
             ...initOptions,
             ...options
         };
+        this.rail = this.el.querySelector('.slider-rail');
+        this.buffer = this.el.querySelector('.buffer-rail');
+        this.track = this.el.querySelector('.slider-track');
+        this.step = this.el.querySelector('.slider-step');
+        this.handle = this.el.querySelector('.slider-handle');
         this.onMouseDown = this.options.onMouseDown;
         this.onTouchMove = this.options.onTouchMove;
         this.onTouchEnd = this.options.onTouchEnd;
         this.isDrag = false;
         this.init();
     }
-    createEl = Dom.createEl;
     init() {
-        const instance = this.render();
-        this.subscription();
-        return instance;
-    }
-    render() {
-        this.container = this.createEl('div', {}, { class: this.options.vertical ? 'slider-vertical-container' : 'slider-container' });
-        this.rail = this.createEl('div', {}, { class: 'slider-rail' });
-        this.buffer = this.createEl('div', {}, { class: 'buffer-rail' });
-        this.track = this.createEl('div', {}, { class: 'slider-track' });
-        this.step = this.createEl('div', {}, { class: 'slider-step' });
-        this.handle = this.createEl('div', {}, { class: 'slider-handle' });
         if (this.options.defaultValue) {
             if(this.options.vertical){
                 this.track.style.height = `${this.options.defaultValue}%`;
@@ -57,14 +48,9 @@ class Slider {
                 this.handle.style.left = `${this.options.defaultValue}%`;
             }
         }
-        this.container.appendChild(this.rail);
-        this.container.appendChild(this.buffer);
-        this.container.appendChild(this.track);
-        this.container.appendChild(this.step);
-        this.container.appendChild(this.handle);
-        this.el.appendChild(this.container);
-        return this.container;
+        this.subscription();
     }
+
     subscription() {
         const touchMove = e => {
             if (this.options.vertical) {

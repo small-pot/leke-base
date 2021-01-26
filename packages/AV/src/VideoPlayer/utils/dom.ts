@@ -1,13 +1,11 @@
-export function createEl(tagName = 'div', properties = {}, attributes = {}) {
-    const el = document.createElement(tagName);
-
+export function setProps(el, properties = {}, attributes = {}) {
     Object.getOwnPropertyNames(properties).forEach(function (propName) {
         const val = properties[propName];
 
         if (propName.indexOf('aria-') !== -1 || propName === 'role' || propName === 'type') {
-            console.warn('Setting attributes in the second argument of createEl()\n' +
+            console.warn('Setting attributes in the second argument of setProps()\n' +
                 'has been deprecated. Use the third argument instead.\n' +
-                `createEl(type, properties, attributes). Attempting to set ${propName} to ${val}.`);
+                `setProps(el, properties, attributes). Attempting to set ${propName} to ${val}.`);
             el.setAttribute(propName, val);
 
         } else if (el[propName] !== val) {

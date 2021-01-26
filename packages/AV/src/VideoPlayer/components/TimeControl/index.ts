@@ -2,27 +2,20 @@ import Component from '../component';
 import { getTime } from '../../utils/share';
 
 class TimeControl extends Component {
-    control:any;
-    current:any;
-    duration:any;
+    private current: any;
+    private duration: any;
 
-    constructor(el,video,event){
-        super(el,video,event);
+    constructor(el, video, event) {
+        super(el, video, event);
+        this.current = this.el.querySelector('.currentTime');
+        this.duration = this.el.querySelector('.duration');
+        this.init();
     }
 
     init() {
-        this.render();
         this.subscription();
     }
-    render() {
-        this.control = this.createEl('div', {
-            innerHTML: `<span class="currentTime">${getTime(this.video.currentTime)}</span>/<span class="duration">${getTime(this.video.duration)}</span>`
-        }, { class: 'video-time-wrap' });
-        this.current = this.control.querySelector('.currentTime');
-        this.duration = this.control.querySelector('.duration');
-        this.el.appendChild(this.control);
-        return this.control;
-    }
+
     subscription() {
         this.event.on('start', () => {
             this.current.innerText = getTime(0);
@@ -37,7 +30,7 @@ class TimeControl extends Component {
             this.update();
         });
         this.event.on('timeChange', (step) => {
-            const time=step/100*this.video.duration;
+            const time = step / 100 * this.video.duration;
             this.current.innerText = getTime(time);
         });
     }
