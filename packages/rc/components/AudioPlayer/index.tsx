@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-19 14:57:47
- * @LastEditTime: 2021-01-25 18:13:29
+ * @LastEditTime: 2021-01-26 10:17:50
  */
 import React from 'react';
 
@@ -108,7 +108,6 @@ class AudioPlayer extends React.Component<AudioPlayerProps> {
             }
         });
         if (Object.keys(changedObj).length) {
-            console.log(changedObj);
             this.audioPlayer.configOptions(changedObj);
         }
 
