@@ -119,6 +119,9 @@ class Player {
         if (this.options.loop) {
             config.loop = 'loop';
         }
+        if(this.options.poster){
+            config.poster=this.options.poster;
+        }
         if(this.options.onPauseChange){
             this.trigger('proxyPausedChange',this.options.onPauseChange);
         }
