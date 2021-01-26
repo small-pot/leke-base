@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-14 14:08:52
- * @LastEditTime: 2021-01-25 10:51:21
+ * @LastEditTime: 2021-01-26 11:28:26
  */
+
 export const str2dom =(str:string)=>{
     const $outer = document.createElement('div');
     $outer.innerHTML=str;
@@ -38,5 +39,5 @@ export const getDuration = function (url, cb) {
     tempPlayer.currentTime = 24*60*60; //fake big time
     tempPlayer.volume = 0;
     // 兼容FF
-    tempPlayer.play();
+    tempPlayer.play().catch(()=>{});
 };
