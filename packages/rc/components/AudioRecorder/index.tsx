@@ -11,7 +11,7 @@ interface IProps {
     duration?: number;
     onStart?: () => void;
     onStop?: (e: any) => void;
-    onAudioUpdate?: (e: AudioElement) => void;
+    onDataAvailable?: (e: AudioElement) => void;
 }
 interface IState {
     isSwitch: boolean;
@@ -61,25 +61,13 @@ class AudioRecorder extends React.Component<IProps, IState> {
             });
         }
     }
-    //base64文件转化
-    blobToDataURI = (blob) => {
-        return new Promise(function (reolove, reject) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                reolove(e.target.result);
-            };
-            reader.readAsDataURL(blob);
-        });
-    };
     //录音结束回调监听
-    ondataavailable = async (event) => {
+    ondataavailable(event) {
         this.setState({
             audioUrl: event.data,
         });
-        const res = await this.blobToDataURI(event.data);
-        this.props.onAudioUpdate &&
-            this.props.onAudioUpdate({ boldFile: event.data, baseFile: res });
-    };
+        this.props.onDataAvailable && this.props.onDataAvailable(event);
+    }
     //停止录音
     handleStop = (e) => {
         const { onStop, isViewAudio } = this.props;
@@ -116,7 +104,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
                         </div>
                     </div>
                 ) : (
-                    <div id="recorder" ref={this.recorderRef}></div>
+                    <div ref={this.recorderRef}></div>
                 )}
             </div>
         );
