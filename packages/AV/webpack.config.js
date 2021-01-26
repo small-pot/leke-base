@@ -15,7 +15,7 @@ module.exports={
     },
     target:['web','es5'],
     resolve: {
-        extensions: ['.ts','.tsx','.js','.jsx']
+        extensions: ['.ts','.tsx','.js','.jsx','.html']
     },
     module: {
         rules:[
@@ -32,7 +32,7 @@ module.exports={
                     'postcss-loader',
                     'less-loader'
                 ]
-            },
+            }
         ]
     }
-}
+};

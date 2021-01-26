@@ -7,7 +7,6 @@
 ## 代码演示
 
 ```html
-<script src='https://static.leke.cn/scripts/AV/VideoPlayer.min.js'></script>
 <script>
 	const player=new VideoPlayer({
 		el:document.querySelector('#root'),
@@ -28,10 +27,11 @@
 </script>
 ```
 
-## 引入样式
+## 静态资源
 
-```css
-<link rel="stylesheet" type="text/css" href='https://static.leke.cn/scripts/AV/VideoPlayer.css' />
+```
+<link rel="stylesheet" type="text/css" href='https://static.leke.cn/scripts/common/player/VideoPlayer.css' />
+<script src='https://static.leke.cn/scripts/common/player/VideoPlayer.min.js'></script>
 ```
 
 ## API
@@ -61,13 +61,9 @@
 
 | 事件 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
-| click | 点击视频 | function | - |
-| dblclick | 双击视频 | function | - |
-| start | 视频开始播放触发 | function | - |
-| timeChange | 播放时间变更 | function | - |
-| volumeChange | 音量变更 | function | - |
-| entryFullscreen | 进入全屏 | function | - |
-| exitFullscreen | 退出全屏 | function | - |
+| onPausedChange | 暂停/播放变更 | function | - |
+| onVolumeChange | 音量变更 | function | - |
+| onFullscreenChange | 进入/退出全屏 | function | - |
 
 ```html
 <script>
@@ -77,6 +73,9 @@
 		height:200,
 		src='...'
 		autoplay:true,
+		onPausedChange:(paused)=>{
+			console.log(paused)
+		}
 		...
 	});
 	player.addEventListener('click',()=>{

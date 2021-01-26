@@ -803,7 +803,6 @@
 "@babel/preset-typescript@^7.10.1", "@babel/preset-typescript@^7.12.1":
   version "7.12.7"
   resolved "http://192.168.20.146:4873/@babel%2fpreset-typescript/-/preset-typescript-7.12.7.tgz#fc7df8199d6aae747896f1e6c61fc872056632a3"
-  integrity sha1-/H34GZ1qrnR4lvHmxh/IcgVmMqM=
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
     "@babel/helper-validator-option" "^7.12.1"
@@ -3220,7 +3219,6 @@ css-loader@^3.5.3:
 css-loader@^5.0.1:
   version "5.0.1"
   resolved "http://192.168.20.146:4873/css-loader/-/css-loader-5.0.1.tgz#9e4de0d6636a6266a585bd0900b422c85539d25f"
-  integrity sha1-nk3g1mNqYmalhb0JALQiyFU50l8=
   dependencies:
     camelcase "^6.2.0"
     cssesc "^3.0.0"
@@ -4799,7 +4797,6 @@ gulp-cli@^2.2.0, gulp-cli@^2.3.0:
 gulp-compile@^1.0.0:
   version "1.1.1"
   resolved "http://192.168.20.146:4873/gulp-compile/-/gulp-compile-1.1.1.tgz#99500b52c08a9f026327a20702e556517973caf6"
-  integrity sha1-mVALUsCKnwJjJ6IHAuVWUXlzyvY=
   dependencies:
     lodash "^4.17.19"
     plugin-error "^1.0.1"
@@ -5188,7 +5185,6 @@ icss-utils@^4.0.0, icss-utils@^4.1.1:
 icss-utils@^5.0.0:
   version "5.1.0"
   resolved "http://192.168.20.146:4873/icss-utils/-/icss-utils-5.1.0.tgz#c6be6858abd013d768e98366ae47e25d5887b1ae"
-  integrity sha1-xr5oWKvQE9do6YNmrkfiXViHsa4=
 
 identity-obj-proxy@^3.0.0:
   version "3.0.0"
@@ -6315,7 +6311,6 @@ less-loader@^6.1.0:
 less-loader@^7.3.0:
   version "7.3.0"
   resolved "http://192.168.20.146:4873/less-loader/-/less-loader-7.3.0.tgz#f9d6d36d18739d642067a05fb5bd70c8c61317e5"
-  integrity sha1-+dbTbRhznWQgZ6Bftb1wyMYTF+U=
   dependencies:
     klona "^2.0.4"
     loader-utils "^2.0.0"
@@ -7008,7 +7003,6 @@ nan@^2.12.1:
 nanoid@^3.1.20:
   version "3.1.20"
   resolved "http://192.168.20.146:4873/nanoid/-/nanoid-3.1.20.tgz#badc263c6b1dcf14b71efaa85f6ab4c1d6cfc788"
-  integrity sha1-utwmPGsdzxS3HvqoX2q0wdbPx4g=
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -7976,7 +7970,6 @@ postcss-loader@^4.0.2, postcss-loader@^4.0.4:
 postcss-loader@^4.2.0:
   version "4.2.0"
   resolved "http://192.168.20.146:4873/postcss-loader/-/postcss-loader-4.2.0.tgz#f6993ea3e0f46600fb3ee49bbd010448123a7db4"
-  integrity sha1-9pk+o+D0ZgD7PuSbvQEESBI6fbQ=
   dependencies:
     cosmiconfig "^7.0.0"
     klona "^2.0.4"
@@ -8061,7 +8054,6 @@ postcss-modules-extract-imports@^2.0.0:
 postcss-modules-extract-imports@^3.0.0:
   version "3.0.0"
   resolved "http://192.168.20.146:4873/postcss-modules-extract-imports/-/postcss-modules-extract-imports-3.0.0.tgz#cda1f047c0ae80c97dbe28c3e76a43b88025741d"
-  integrity sha1-zaHwR8CugMl9vijD52pDuIAldB0=
 
 postcss-modules-local-by-default@^3.0.2:
   version "3.0.3"
@@ -8075,7 +8067,6 @@ postcss-modules-local-by-default@^3.0.2:
 postcss-modules-local-by-default@^4.0.0:
   version "4.0.0"
   resolved "http://192.168.20.146:4873/postcss-modules-local-by-default/-/postcss-modules-local-by-default-4.0.0.tgz#ebbb54fae1598eecfdf691a02b3ff3b390a5a51c"
-  integrity sha1-67tU+uFZjuz99pGgKz/zs5ClpRw=
   dependencies:
     icss-utils "^5.0.0"
     postcss-selector-parser "^6.0.2"
@@ -8091,7 +8082,6 @@ postcss-modules-scope@^2.2.0:
 postcss-modules-scope@^3.0.0:
   version "3.0.0"
   resolved "http://192.168.20.146:4873/postcss-modules-scope/-/postcss-modules-scope-3.0.0.tgz#9ef3151456d3bbfa120ca44898dfca6f2fa01f06"
-  integrity sha1-nvMVFFbTu/oSDKRImN/Kby+gHwY=
   dependencies:
     postcss-selector-parser "^6.0.4"
 
@@ -8105,7 +8095,6 @@ postcss-modules-values@^3.0.0:
 postcss-modules-values@^4.0.0:
   version "4.0.0"
   resolved "http://192.168.20.146:4873/postcss-modules-values/-/postcss-modules-values-4.0.0.tgz#d7c5e7e68c3bb3c9b27cbf48ca0bb3ffb4602c9c"
-  integrity sha1-18Xn5ow7s8myfL9Iyguz/7RgLJw=
   dependencies:
     icss-utils "^5.0.0"
 
@@ -8217,7 +8206,6 @@ postcss-place@^4.0.1:
 postcss-preset-env@^6.7.0:
   version "6.7.0"
   resolved "http://192.168.20.146:4873/postcss-preset-env/-/postcss-preset-env-6.7.0.tgz#c34ddacf8f902383b35ad1e030f178f4cdf118a5"
-  integrity sha1-w03az4+QI4OzWtHgMPF49M3xGKU=
   dependencies:
     autoprefixer "^9.6.1"
     browserslist "^4.6.4"
@@ -8371,7 +8359,6 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.2
 postcss@^8.1.4, postcss@^8.2.4:
   version "8.2.4"
   resolved "http://192.168.20.146:4873/postcss/-/postcss-8.2.4.tgz#20a98a39cf303d15129c2865a9ec37eda0031d04"
-  integrity sha1-IKmKOc8wPRUSnChlqew37aADHQQ=
   dependencies:
     colorette "^1.2.1"
     nanoid "^3.1.20"
@@ -8576,6 +8563,13 @@ raw-body@2.4.0:
     http-errors "1.7.2"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+raw-loader@^4.0.2:
+  version "4.0.2"
+  resolved "http://192.168.20.146:4873/raw-loader/-/raw-loader-4.0.2.tgz#1aac6b7d1ad1501e66efdac1522c73e59a584eb6"
+  dependencies:
+    loader-utils "^2.0.0"
+    schema-utils "^3.0.0"
 
 react-dom@^17.0.1:
   version "17.0.1"
@@ -8895,7 +8889,6 @@ replace-ext@^1.0.0:
 replace-ext@^2.0.0:
   version "2.0.0"
   resolved "http://192.168.20.146:4873/replace-ext/-/replace-ext-2.0.0.tgz#9471c213d22e1bcc26717cd6e50881d88f812b06"
-  integrity sha1-lHHCE9IuG8wmcXzW5QiB2I+BKwY=
 
 replace-homedir@^1.0.0:
   version "1.0.0"
@@ -9807,7 +9800,6 @@ style-loader@^1.2.1:
 style-loader@^2.0.0:
   version "2.0.0"
   resolved "http://192.168.20.146:4873/style-loader/-/style-loader-2.0.0.tgz#9669602fd4690740eaaec137799a03addbbc393c"
-  integrity sha1-lmlgL9RpB0DqrsE3eZoDrdu8OTw=
   dependencies:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
@@ -9979,7 +9971,6 @@ through2@^3.0.1:
 through2@^4.0.2:
   version "4.0.2"
   resolved "http://192.168.20.146:4873/through2/-/through2-4.0.2.tgz#a7ce3ac2a7a8b0b966c80e7c49f0484c3b239764"
-  integrity sha1-p846wqeosLlmyA58SfBITDsjl2Q=
   dependencies:
     readable-stream "3"
 
