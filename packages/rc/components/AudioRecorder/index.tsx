@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: gulingxin
+ * @Date: 2021-01-26 13:40:25
+ * @LastEditTime: 2021-01-26 13:40:25
+ */
 import * as React from "react";
 import { AudioRecorder as Recorder, AudioPlayer } from "@leke/AV";
 
