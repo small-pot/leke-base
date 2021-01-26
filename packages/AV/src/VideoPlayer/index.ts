@@ -1,4 +1,3 @@
-
 import { newUID } from './utils/uid';
 import Hls from 'hls.js';
 import EventBase from './utils/event';
@@ -11,6 +10,7 @@ import Unsupport from './components/Unsupport';
 import Toast from './components/Toast';
 import Error from './components/Error';
 import { getVideoSize,checkBrowser, throttle, entryFullscreen, exitFullscreen } from './utils/share';
+import './index.less';
 
 class Player {
     uid: number;
