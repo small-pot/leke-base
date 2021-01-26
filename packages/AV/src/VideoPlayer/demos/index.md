@@ -24,7 +24,7 @@
 		el:document.querySelector('#root'),
 		width:876,
 		height:492,
-		src='...'
+		src:'https://hls.cntv.kcdnvip.com/asp/hls/1200/0303000a/3/default/c9d6fcb3ff7e42f6b6db4199768ff249/1200.m3u8?maxbr=2048',
 		autoplay:true,
 		...
 	});
@@ -76,7 +76,7 @@
 		el:document.querySelector('#root'),
 		width:400,
 		height:200,
-		src='...'
+		src:'https://hls.cntv.kcdnvip.com/asp/hls/1200/0303000a/3/default/c9d6fcb3ff7e42f6b6db4199768ff249/1200.m3u8?maxbr=2048',
 		autoplay:true,
 		onPausedChange:(paused)=>{
 			console.log(paused)
