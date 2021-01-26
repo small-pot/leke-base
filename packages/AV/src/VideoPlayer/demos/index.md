@@ -4,6 +4,17 @@
 ## 兼容环境
 - 现代浏览器和IE11
 
+## 升级提示
+![提示](https://static.leke.cn/scripts/common/player/images/upgrade_tip.png)
+
+## 支持的视频格式
+| 格式 | IE | Firefox | Opera | Chrome | Safari | 
+| --- | --- | --- | --- | --- | --- | 
+| MP4 | 9.0+ | 35.0+ | 25.0+ | 4.0+  | 3.2+ |
+| WebM | No | 28.0+ | 16.0+| 16.0+  | 12.0+ |
+| Ogg | No | 3.5+ | 11.5+ | 4.0+  | No |
+| M3U8 | 11.0+(IE 11部分支持) | 42.0+ | 15.0+ | 23.0+  | 8.0+ |
+
 ## 代码演示
 
 ```html

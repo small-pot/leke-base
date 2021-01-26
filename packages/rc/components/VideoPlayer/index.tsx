@@ -21,6 +21,7 @@ class Video extends React.PureComponent<IVideoProps>{
             onVolumeChange,
             onFullscreenChange
         }=this.props;
+
         this.instance=new VideoPlayer({
             el:this.ref.current,
             src,
@@ -34,8 +35,9 @@ class Video extends React.PureComponent<IVideoProps>{
             onVolumeChange,
             onFullscreenChange,
         });
-        this.instance.on('timeupdate',(time)=>{
-            onTimeChange&&onTimeChange(time);
+
+        onTimeChange&&this.instance.on('timeupdate',(time)=>{
+            onTimeChange(time);
         });
     }
     

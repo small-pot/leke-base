@@ -3,7 +3,7 @@ import { newUID } from './utils/uid';
 import EventBase from './utils/event';
 import * as Dom from './utils/dom';
 import { VIDEO_EVENTS } from './utils/config';
-import { getVideoSize, checkBrowser, throttle, entryFullscreen, exitFullscreen } from './utils/share';
+import { getVideoSize, checkBrowser,getResourceType, throttle, entryFullscreen, exitFullscreen } from './utils/share';
 import Control from './components/ControlBar';
 import txt from 'raw-loader!./template.html';
 import './index.less';
@@ -51,7 +51,7 @@ class Player {
 
     init() {
         this.validate();
-        this.isHlsSupported();
+        this.isSupported();
     }
 
     validate() {
@@ -59,23 +59,29 @@ class Player {
         if (!this.options.src) return console.error('请传入视频路径');
     }
 
-    isHlsSupported() {
-        if (Hls.isSupported()) {
-            this.mountNode.innerHTML=this.template.replace('<div class="video-root-container">',`<div class="video-root-container" style="width:${this.width}px;height:${this.height}px;">`);
-            this.el = this.mountNode.querySelector('.video-root-container');
-            this.input = this.el.querySelector(`.video-input`);
-            this.input.id = `video-input-${this.uid}`;
-            this.video = this.el.querySelector(`video`);
-            this.video.id=`video-${this.uid}`;
-            this.mask = this.el.querySelector(`.video-mask`);
-            this.control = this.el.querySelector(`.video-control-bar`);
-            this.loading = this.el.querySelector(`.loading-container`);
-            this.error = this.el.querySelector(`.error-wrap`);
-            this.toast = this.el.querySelector(`.video-fullscreen-toast`);
-            new Control(this.control,this.video,this.event);
-            this.initConfig();
-        } else {
-            this.mountNode.innerHTML = `<div class="video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src='https://static.leke.cn/scripts/common/player/images/upgrade.png'/><p>视频播放暂不支持ie10及以下版本，请升级或用其他浏览器打开</p></div>`;
+    isSupported() {
+        const type=getResourceType(this.options.src);
+        if(['M3U8','MP4','WEBM','OGG'].includes(type)){
+            if(type==='M3U8'&&!Hls.isSupported()){
+                this.mountNode.innerHTML = `<div class="video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png"/><p>视频播放暂不支持ie10及以下版本，请升级或用其他浏览器打开</p></div>`;
+            }else{
+                this.mountNode.innerHTML=this.template.replace('<div class="video-root-container">',`<div class="video-root-container" style="width:${this.width}px;height:${this.height}px;">`);
+                this.el = this.mountNode.querySelector('.video-root-container');
+                this.input = this.el.querySelector(`.video-input`);
+                this.input.id = `video-input-${this.uid}`;
+                this.video = this.el.querySelector(`video`);
+                this.video.id=`video-${this.uid}`;
+                this.mask = this.el.querySelector(`.video-mask`);
+                this.control = this.el.querySelector(`.video-control-bar`);
+                this.loading = this.el.querySelector(`.loading-container`);
+                this.error = this.el.querySelector(`.error-wrap`);
+                this.toast = this.el.querySelector(`.video-fullscreen-toast`);
+                new Control(this.control,this.video,this.event);
+                this.initConfig();
+                type==='M3U8'?this.hlsHandle():this.video.src=this.options.src;
+            }
+        }else{
+            this.mountNode.innerHTML = `<div class="video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png"/><p>不支持的视频格式，请转化为Mp4、WebM、Ogg、M3u8等格式</p></div>`;
         }
     }
 
@@ -124,7 +130,6 @@ class Player {
         }
         Dom.setProps(this.video, {}, config);
         this.subscription();
-        this.hlsHandle();
     }
 
     subscription() {
@@ -216,6 +221,7 @@ class Player {
             this.mask.style.display='block';
         });
         this.event.on('ended', () => {
+            this.closeLoading();
             this.mask.style.display='block';
         });
         
