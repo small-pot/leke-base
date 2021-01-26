@@ -29,9 +29,9 @@ describe("AudioRecorder ", function () {
         expect(onStop).toHaveBeenCalledTimes(1);
     });
     it("AudioRecorder should be called", () => {
-        const onAudioUpdate = jest.fn();
-        render(<AudioRecorder onAudioUpdate={onAudioUpdate} />);
+        const onDataAvailable = jest.fn();
+        render(<AudioRecorder onDataAvailable={onDataAvailable} />);
         fireEvent.click(screen.getByText("停止"));
-        expect(onAudioUpdate).toHaveBeenCalledTimes(1);
+        expect(onDataAvailable).toHaveBeenCalledTimes(1);
     });
 });
