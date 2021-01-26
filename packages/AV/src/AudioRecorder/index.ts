@@ -231,10 +231,10 @@ class AudioRecorder {
     private run(): void {
         this.Recorder && this.Recorder.start();
         clearInterval(this.time);
-        if (this.count >= this.duration) {
-            this.Recorder && this.Recorder.stop();
-        }
         this.time = setInterval(() => {
+            if (this.count >= this.duration) {
+                this.stopRecord();
+            }
             this.count++;
 
             this.recordTime.querySelector(

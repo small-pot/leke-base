@@ -22,7 +22,7 @@ export default function () {
     };
     return (
         <>
-            <AudioRecorder onStart={onStart} onStop={onStop} isViewAudio onReRecorder={onReRecorder} />
+            <AudioRecorder duration="5" onStart={onStart} onStop={onStop} isViewAudio onReRecorder={onReRecorder} />
         </>
     );
 }
