@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-26 09:51:14
+ * @LastEditTime: 2021-01-26 10:17:37
  */
 
 import EventEmitter from './EventEmitter';
@@ -377,7 +377,6 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
       if (time>this.duration) {
           time = this.duration;
       }
-      console.log(time);
       this.$audio.currentTime = Math.floor(time);
   }
 
@@ -398,7 +397,6 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
   }
 
   configOptions(ops){
-      console.log(ops.src);
       if (ops.src && ops.src !== this.options.src) {
           this.load(ops.src);
       }
