@@ -5,8 +5,6 @@
   "module": "index.esm.js",
   "types": "types",
   "scripts": {
-    "build:umd": "rimraf dist && webpack --config webpack.config.js",
-    "build:less": "rimraf es && rimraf lib && rimraf style && gulp",
     "build": "rimraf dist && rimraf types && webpack --config webpack.config.js"
   },
   "license": "ISC",
@@ -15,7 +13,6 @@
     "index.esm.js",
     "index.cjs.js",
     "types",
-    "style",
     "dist"
   ],
   "dependencies": {
