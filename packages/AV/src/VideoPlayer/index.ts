@@ -137,8 +137,8 @@ class Player {
         if(this.options.onStart){
             this.on('start',this.options.onStart);
         }
-        if(this.options.onPauseChange){
-            this.trigger('proxyPausedChange',this.options.onPauseChange);
+        if(this.options.onPausedChange){
+            this.trigger('proxyPausedChange',this.options.onPausedChange);
         }
         if(this.options.onVolumeChange){
             this.trigger('proxyVolumeChange',this.options.onVolumeChange);

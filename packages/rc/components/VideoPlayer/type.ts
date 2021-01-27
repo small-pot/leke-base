@@ -27,7 +27,7 @@ export interface IVideoProps {
     // 视频开始播放的回调
     onStart?:()=>void;
     // 播放状态
-    onPauseChange?:(pasued:boolean)=>void;
+    onPausedChange?:(pasued:boolean)=>void;
     // 播放时间变更
     onTimeChange?:(time:number)=>void;
     // 音量变更

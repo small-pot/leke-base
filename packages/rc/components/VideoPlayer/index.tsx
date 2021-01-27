@@ -20,7 +20,7 @@ class Video extends React.PureComponent<IVideoProps>{
             onReady,
             onLoad,
             onStart,
-            onPauseChange,
+            onPausedChange,
             onTimeChange,
             onVolumeChange,
             onFullscreenChange
@@ -38,13 +38,13 @@ class Video extends React.PureComponent<IVideoProps>{
             onReady,
             onLoad,
             onStart,
-            onPauseChange:paused?onPauseChange:null,
+            onPausedChange:paused?onPausedChange:null,
             onVolumeChange:volume?onVolumeChange:null,
             onFullscreenChange:fullscreen?onFullscreenChange:null,
         });
 
-        !paused&&onPauseChange&&this.instance.on('click',(status)=>{
-            onPauseChange(status);
+        !paused&&onPausedChange&&this.instance.on('click',(status)=>{
+            onPausedChange(status);
         });
 
         !volume&&onVolumeChange&&this.instance.on('volumeChange',(step)=>{
