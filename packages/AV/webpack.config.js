@@ -1,5 +1,6 @@
 const path = require('path');
 module.exports={
+    mode:'production',
     entry:{
         VideoPlayer:path.resolve('./src/VideoPlayer/index.ts'),
         AudioPlayer:path.resolve('./src/AudioPlayer/index.ts'),
@@ -15,7 +16,7 @@ module.exports={
     },
     target:['web','es5'],
     resolve: {
-        extensions: ['.ts','.tsx','.js','.jsx']
+        extensions: ['.ts','.tsx','.js','.jsx','.html']
     },
     module: {
         rules:[
@@ -24,6 +25,27 @@ module.exports={
                 loader: 'ts-loader',
                 exclude: /node_modules/
             },
+            {
+                test: /\.less$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions:{
+                                plugins: [
+                                    require('postcss-preset-env')({
+                                        browsers:['last 2 versions'],
+                                        autoprefixer:{}
+                                    })
+                                ]
+                            }
+                        }
+                    },
+                    'less-loader'
+                ]
+            }
         ]
     }
-}
+};

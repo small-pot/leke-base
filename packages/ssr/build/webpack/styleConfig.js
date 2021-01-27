@@ -1,16 +1,21 @@
 const MiniCssExtractPlugin=require('mini-css-extract-plugin');
-const isProduction=process.env.NODE_ENV==='production';
 const {cssModules,modifyVars,postcssConfig,browsers}=require('../resolveConfig');
 const postcssPresetEnv=require('postcss-preset-env');
 
 const modulesOption={
-    modules:{
-        localIdentName: '[local]_[hash:base64:5]',
-        auto(filename) {
-            return filename.indexOf('node_modules')===-1
-        }
+    localIdentName: '[local]_[hash:base64:5]',
+    auto(filename) {
+        return filename.indexOf('node_modules')===-1
     }
 };
+const lessConfig={
+    loader: "less-loader",
+    options: {
+        lessOptions:{
+            modifyVars
+        }
+    }
+}
 const config={
     postcssOptions: {
         plugins: [
@@ -24,12 +29,11 @@ if(typeof postcssConfig==='function'){
 const postcss={loader:'postcss-loader',options:config};
 const webCSSConfig=[
     {
-        loader: MiniCssExtractPlugin.loader,
-        options:{hmr:!isProduction,reloadAll:true}
+        loader: MiniCssExtractPlugin.loader
     },
     {
         loader: 'css-loader',
-        options: Object.assign({},cssModules===true?modulesOption:cssModules)
+        options: {modules:cssModules===true?modulesOption:cssModules}
     },
     postcss
 ];
@@ -42,20 +46,14 @@ const webStyleConfig = [
         test: /\.less$/,
         use: [
             ...webCSSConfig,
-            {
-                loader: "less-loader",
-                options: {
-                    modifyVars,
-                    javascriptEnabled: true
-                }
-            }
+            lessConfig
         ]
     }
 ];
 const nodeCssConfig=[
     {
         loader: 'css-loader',
-        options: {...modulesOption,onlyLocals: true}
+        options: {modules:{...modulesOption,exportOnlyLocals: true}}
     }
 ];
 const nodeStyleConfig = [
@@ -67,12 +65,7 @@ const nodeStyleConfig = [
         test: /\.less$/,
         use: [
             ...nodeCssConfig,
-            {
-                loader: "less-loader",
-                options: {
-                    javascriptEnabled: true
-                }
-            }
+            lessConfig
         ]
     }
 ];

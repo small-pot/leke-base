@@ -35,6 +35,10 @@ export function checkBrowser() {
     return null;
 }
 
+export function getResourceType(url){
+    return url.split('.').pop().replace(/\?.*$/,'').toUpperCase();
+}
+
 export const getTime = (seconds) => {
     if (!seconds) return '00:00';
     seconds = Math.ceil(seconds).toFixed(0);

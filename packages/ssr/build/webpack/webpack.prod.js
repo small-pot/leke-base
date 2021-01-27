@@ -2,43 +2,28 @@ const webpack=require("webpack");
 const baseWebpackConfig=require('./webpack.base.config');
 const {merge}=require('webpack-merge');
 const MiniCssExtractPlugin=require("mini-css-extract-plugin");
+const CssMinimizerPlugin=require('css-minimizer-webpack-plugin');
 const ResourcePlugin=require('./resource-plugin');
-const UglifyJsPlugin=require('uglifyjs-webpack-plugin');
-const OptimizeCssAssetsPlugin=require('optimize-css-assets-webpack-plugin');
 const getRules=require('./getRules');
 const {resolveEntry,webpackConfig}=require('../resolveConfig');
 
 const entry=resolveEntry();
 entry.unshift('core-js');
 const config = merge(baseWebpackConfig, {
+    name:'client',
     mode: 'production',
     entry: {app:entry},
     output: {
         filename: 'js/[name].[chunkhash].js'
     },
+    target:['web','es5'],
     optimization: {
+        minimize:true,
         runtimeChunk: "single",
-        splitChunks: {
-            chunks: "async",
-            name: true,
-            cacheGroups: {
-                vendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    priority: -10
-                },
-                default: {
-                    minChunks: 3,
-                    priority: -20,
-                    reuseExistingChunk: true
-                }
-            }
-        },
+        moduleIds:'deterministic',
+        chunkIds:'deterministic',
         minimizer:[
-            new UglifyJsPlugin({
-                cache: true,
-                parallel: true
-            }),
-            new OptimizeCssAssetsPlugin()
+            new CssMinimizerPlugin()
         ]
     },
     module: {
@@ -46,6 +31,7 @@ const config = merge(baseWebpackConfig, {
     },
     plugins: [
         new webpack.DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify('production'),
             "process.env.WEB": JSON.stringify(true)
         }),
         new MiniCssExtractPlugin({

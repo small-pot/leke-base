@@ -9,6 +9,25 @@ module.exports=merge(baseConfig,{
         filename:'js/[name].js',
         publicPath:'/'
     },
+    module:{
+        rules:[
+            {
+                test:/\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'less-loader'
+                ]
+            }
+        ]
+    },
     plugins:[
         new webpack.HotModuleReplacementPlugin()
     ],

@@ -2,48 +2,17 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-20 17:44:00
+ * @LastEditTime: 2021-01-27 13:51:37
  */
 
 import EventEmitter from './EventEmitter';
-import { str2dom,formatTime } from './utils';
-// import './index.less';
+import {AudioPlayerOptions,AudioPlayerNativeEvent} from './interface';
+import { str2dom,formatTime,getDuration } from './utils';
 
-interface AudioPlayerOptions{
-  el: HTMLElement,
-  src:string,
-  loop:boolean,
-  autoplay:boolean,
-  allowSeek:boolean,
-  allowPlayControl:boolean,
-  preload:'none' | 'metadata' | 'auto' | ''
-  timeFormat?:(val:number)=>string
-}
 
-export interface AudioPlayerNativeEvent {
-    onAudioProcess:(e:Event)=>void,
-    onCanplay:(e:Event)=>void,
-    onCanplayThrough:(e:Event)=>void,
-    onDurationChange:(e:Event)=>void,
-    onEmptied:(e:Event)=>void,
-    onEnded:(e:Event)=>void,
-    onLoadedData:(e:Event)=>void,
-    onLoadedMetaData:(e:Event)=>void,
-    onPause:(e:Event)=>void,
-    onPlay:(e:Event)=>void,
-    onPlaying:(e:Event)=>void,
-    onRateChange:(e:Event)=>void,
-    onSeeked:(e:Event)=>void,
-    onSeeking:(e:Event)=>void,
-    onStalled:(e:Event)=>void,
-    onSuspend:(e:Event)=>void,
-    onTimeUpdate:(e:Event)=>void,
-    onVolumeChange:(e:Event)=>void,
-    onWaiting:(e:Event)=>void,
-}
 
 const defaultOps: AudioPlayerOptions = {
-    el: document.querySelector('body'),
+    el: typeof window === 'object' ? document.querySelector('body'):null,
     src:'',
     loop:false,
     autoplay:false,
@@ -122,6 +91,7 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
   }
 
   private init(){
+      require('./index.less');
       const {el,src,autoplay,loop,preload} = this.options;
       const $audioContainer = str2dom(this.template)[0] as HTMLElement;
       this.$container = $audioContainer;
@@ -166,6 +136,7 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
       this.$audio.addEventListener('durationchange',this.onDurationChange.bind(this));
       this.$audio.addEventListener('emptied',this.onEmptied.bind(this));
       this.$audio.addEventListener('ended',this.onEnded.bind(this));
+      this.$audio.addEventListener('error',this.onError.bind(this));
       this.$audio.addEventListener('loadeddata',this.onLoadedData.bind(this));
       this.$audio.addEventListener('loadedmetadata',this.onLoadedMetaData.bind(this));
       this.$audio.addEventListener('pause',this.onPause.bind(this));
@@ -241,10 +212,14 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
   }
 
   onDurationChange(e:Event){
-    
-      const {timeFormat:customFormat} = this.options;
-      this.$timeText.innerHTML = formatTime(this.$audio.duration || 0,customFormat);
-      this.duration = this.$audio.duration;
+      const {timeFormat:customFormat,src} = this.options;
+
+      // Hack 解决谷歌下部分音频长度为 Infinity 的情况 
+      // https://stackoverflow.com/questions/21522036/html-audio-tag-duration-always-infinity
+      getDuration(src,(duration)=>{
+          this.$timeText.innerHTML = formatTime(duration || 0,customFormat);
+          this.duration = duration;
+      });
       this.emit('durationchange',e);
   }
 
@@ -259,6 +234,14 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
       this.$playBtn.classList.remove(pauseBtnClass);
       this.$playBtn.classList.add(playBtnClass);
       this.emit('ended',e);
+  }
+
+  onError(e:Event) {
+      this.emit('error',{
+          type:'MediaError',
+          error:(e.target as HTMLMediaElement).error,
+          message:'a MediaError occurred'
+      });
   }
 
   onAudioProcess(e:Event) {
@@ -341,7 +324,13 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
    */
   play() {
       // if (!this.canplay) return
-      this.$audio.play();
+      this.$audio.play().catch(e=>{
+          this.emit('error',{
+              type:'DOMException',
+              error:e,
+              message:'a DOMException occurred'
+          });
+      });
   }
 
   /**
@@ -403,7 +392,6 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
       if (time>this.duration) {
           time = this.duration;
       }
-      console.log(time);
       this.$audio.currentTime = Math.floor(time);
   }
 
@@ -424,7 +412,6 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
   }
 
   configOptions(ops){
-      console.log(ops.src);
       if (ops.src && ops.src !== this.options.src) {
           this.load(ops.src);
       }

@@ -3,20 +3,26 @@ import {renderToString} from "react-dom/server";
 import {configType} from './types';
 export {SSRPage} from './types';
 
-function getAssets (manifest,chunkName,entrypoints='app') {
+function getAssets (manifest,chunkName) {
     const {publicPath,namedChunkGroups}=manifest;
-    const chunkNames=[chunkName,entrypoints];
     const css=[];
     const scripts=[];
-    chunkNames.forEach(key=>{
-        namedChunkGroups[key].assets.forEach(src=>{
-            if(/\.css$/.test(src)){
-                css.unshift(publicPath+src);
-            }else if(/(?<!\.hot-update)\.js$/.test(src)){
-                scripts.push(publicPath+src);
-            }
-        });
+    namedChunkGroups[chunkName].assets.forEach(item=>{
+        const src=item.name
+        if(/\.css$/.test(src)){
+            css.push(publicPath+src);
+        }else if(/(?<!\.hot-update)\.js$/.test(src)){
+            scripts.push(publicPath+src);
+        }
     });
+    namedChunkGroups['app'].assets.forEach((item)=>{
+        const src=item.name
+        if(/\.css$/.test(src)){
+            css.unshift(publicPath+src);
+        }else if(/(?<!\.hot-update)\.js$/.test(src)){
+            scripts.push(publicPath+src);
+        }
+    })
     return {css,scripts};
 }
 function getRouterConfig(req){
