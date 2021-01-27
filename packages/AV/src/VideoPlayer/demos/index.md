@@ -67,6 +67,8 @@
 | 事件 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
 | onReady | 视频组件加载完毕后的回调 | function | - |
+| onLoad | 组件媒体信息获取完毕后的回调 | function | - |
+| onStart | 视频开始播放的回调 | function | - |
 | onPausedChange | 暂停/播放变更 | function | - |
 | onVolumeChange | 音量变更 | function | - |
 | onFullscreenChange | 进入/退出全屏 | function | - |

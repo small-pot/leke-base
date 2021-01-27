@@ -14,6 +14,9 @@ description: 可以用ref获取到实例
 | paused | 是否暂停 | boolean | false |
 | volume | 音量 | number | 100 |
 | fullscreen | 是否全屏(不支持初始化为true) | boolean | false |
+| onReady | 切换暂停/组件SourceBuffer加载完成后的回调 | function | - |
+| onLoad | 组件媒体信息获取完毕后的回调 | function | - |
+| onStart | 视频开始播放的回调 | function | - |
 | onPauseChange | 切换暂停/播放时触发 | function | - |
 | onTimeChange | 播放时间变更 | function | - |
 | onVolumeChange | 音量变更 | function | - |

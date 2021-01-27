@@ -89,7 +89,12 @@ class Player {
         const hls = new Hls();
         hls.loadSource(this.options.src);
         hls.attachMedia(this.video);
-        this.event.trigger('ready');
+        hls.on(Hls.Events.MEDIA_ATTACHED,()=>{
+            this.event.trigger('ready');
+        });
+        hls.on(Hls.Events.FRAG_PARSING_INIT_SEGMENT,()=>{
+            this.event.trigger('fragInit');
+        });
         hls.on(Hls.Events.ERROR, (err) => {
             console.error(err);
             if(!this.loadingFlag)this.showLoading();
@@ -112,6 +117,7 @@ class Player {
     }
 
     initConfig() {
+        this.subscription();
         const config: any = {};
         if (this.options.autoplay) {
             config.autoplay = 'autoplay';
@@ -125,6 +131,12 @@ class Player {
         if(this.options.onReady){
             this.on('ready',this.options.onReady);
         }
+        if(this.options.onLoad){
+            this.on('loadedmetadata',this.options.onLoad);
+        }
+        if(this.options.onStart){
+            this.on('start',this.options.onStart);
+        }
         if(this.options.onPauseChange){
             this.trigger('proxyPausedChange',this.options.onPauseChange);
         }
@@ -135,7 +147,6 @@ class Player {
             this.trigger('proxyFullscreenChange',this.options.onFullscreenChange);
         }
         Dom.setProps(this.video, {}, config);
-        this.subscription();
     }
 
     subscription() {
@@ -148,10 +159,10 @@ class Player {
             });
         });
         this.video.addEventListener('click', () => {
-            this.event.trigger('click');
+            this.event.trigger('click',this.video.paused);
         });
         this.mask.addEventListener('click', () => {
-            this.event.trigger('click');
+            this.event.trigger('click',this.video.paused);
         });
         this.el.addEventListener('click', () => {
             this.event.trigger('containerClick');
@@ -179,11 +190,11 @@ class Player {
         //         this.video.setAttribute('poster', src);
         //     }
         // });
-        this.event.on('click', () => {
+        this.event.on('click', (paused) => {
             if (!this.proxyPausedChange) {
-                this.video.paused ? this.video.play() : this.video.pause();
+                paused ? this.video.play() : this.video.pause();
             } else {
-                this.proxyPausedChange(!this.video.paused);
+                this.proxyPausedChange(!paused);
             }
         });
         // this.event.on('dblclick', () => {
