@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-26 15:47:12
+ * @LastEditTime: 2021-01-27 13:51:37
  */
 
 import EventEmitter from './EventEmitter';
@@ -136,6 +136,7 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
       this.$audio.addEventListener('durationchange',this.onDurationChange.bind(this));
       this.$audio.addEventListener('emptied',this.onEmptied.bind(this));
       this.$audio.addEventListener('ended',this.onEnded.bind(this));
+      this.$audio.addEventListener('error',this.onError.bind(this));
       this.$audio.addEventListener('loadeddata',this.onLoadedData.bind(this));
       this.$audio.addEventListener('loadedmetadata',this.onLoadedMetaData.bind(this));
       this.$audio.addEventListener('pause',this.onPause.bind(this));
@@ -235,6 +236,14 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
       this.emit('ended',e);
   }
 
+  onError(e:Event) {
+      this.emit('error',{
+          type:'MediaError',
+          error:(e.target as HTMLMediaElement).error,
+          message:'a MediaError occurred'
+      });
+  }
+
   onAudioProcess(e:Event) {
       this.emit('audioprocess',e);
   }
@@ -315,7 +324,13 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
    */
   play() {
       // if (!this.canplay) return
-      this.$audio.play();
+      this.$audio.play().catch(e=>{
+          this.emit('error',{
+              type:'DOMException',
+              error:e,
+              message:'a DOMException occurred'
+          });
+      });
   }
 
   /**
