@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-21 14:57:17
- * @LastEditTime: 2021-01-21 14:57:47
+ * @LastEditTime: 2021-01-27 14:07:53
  */
 
 export interface AudioPlayerOptions{
@@ -23,6 +23,7 @@ export interface AudioPlayerNativeEvent {
   onDurationChange:(e:Event)=>void,
   onEmptied:(e:Event)=>void,
   onEnded:(e:Event)=>void,
+  onError:(e:Event)=>void,
   onLoadedData:(e:Event)=>void,
   onLoadedMetaData:(e:Event)=>void,
   onPause:(e:Event)=>void,
