@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-27 13:51:37
+ * @LastEditTime: 2021-01-27 17:51:44
  */
 
 import EventEmitter from './EventEmitter';
@@ -323,14 +323,18 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
    * @return {*} void
    */
   play() {
-      // if (!this.canplay) return
-      this.$audio.play().catch(e=>{
-          this.emit('error',{
-              type:'DOMException',
-              error:e,
-              message:'a DOMException occurred'
+      const promise = this.$audio.play();
+      //   IE11 下 play 返回 void
+      if (promise) {
+          promise.catch(e=>{
+              this.emit('error',{
+                  type:'DOMException',
+                  error:e,
+                  message:'a DOMException occurred'
+              });
           });
-      });
+      }
+      
   }
 
   /**
