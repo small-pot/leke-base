@@ -1,5 +1,6 @@
 const path = require('path');
 module.exports={
+    mode:'production',
     entry:{
         VideoPlayer:path.resolve('./src/VideoPlayer/index.ts'),
         AudioPlayer:path.resolve('./src/AudioPlayer/index.ts'),
