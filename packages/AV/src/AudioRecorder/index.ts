@@ -3,6 +3,7 @@ import { RecordHtml, AudioHtml, NoData } from "./html";
 import { timeFormat, blobToDataURI } from "./utils";
 
 declare let MediaRecorder: any;
+declare let window: any;
 
 // 构造函数参数格式
 interface IRecorderConfig {
@@ -37,6 +38,11 @@ class AudioRecorder {
     recorderList:[];
     private init() {
         require('./index.less');
+        if(!window.MediaRecorder){
+            const { elem } = this.cfg;
+            elem.innerHTML =  NoData;
+            return;
+        }
         this.initHtml();
         this.initEvent();
     }
