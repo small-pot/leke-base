@@ -1560,6 +1560,11 @@
     "@webassemblyjs/ast" "1.11.0"
     "@xtuc/long" "4.2.2"
 
+"@webpack-cli/configtest@^1.0.0":
+  version "1.0.0"
+  resolved "http://192.168.20.146:4873/@webpack-cli%2fconfigtest/-/configtest-1.0.0.tgz#2aff5f1ebc6f793c13ba9b2a701d180eab17f5ee"
+  integrity sha1-Kv9fHrxveTwTupsqcB0YDqsX9e4=
+
 "@webpack-cli/info@^1.2.1":
   version "1.2.1"
   resolved "https://registry.npm.taobao.org/@webpack-cli/info/download/@webpack-cli/info-1.2.1.tgz#af98311f983d0b9fce7284cfcf1acaf1e9f4879c"
@@ -1569,6 +1574,11 @@
 "@webpack-cli/serve@^1.2.1":
   version "1.2.1"
   resolved "https://registry.npm.taobao.org/@webpack-cli/serve/download/@webpack-cli/serve-1.2.1.tgz#7513d7a769e3f97958de799b5b49874425ae3396"
+
+"@webpack-cli/serve@^1.2.2":
+  version "1.2.2"
+  resolved "http://192.168.20.146:4873/@webpack-cli%2fserve/-/serve-1.2.2.tgz#1f8eee44f96524756268f5e3f43e9d943f864d41"
+  integrity sha1-H47uRPllJHViaPXj9D6dlD+GTUE=
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -3387,7 +3397,7 @@ end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
-enhanced-resolve@^4.0.0, enhanced-resolve@^4.1.1:
+enhanced-resolve@^4.0.0:
   version "4.5.0"
   resolved "https://registry.npm.taobao.org/enhanced-resolve/download/enhanced-resolve-4.5.0.tgz#2f3cfd84dbe3b487f18f2db2ef1e064a571ca5ec"
   dependencies:
@@ -4282,12 +4292,6 @@ global-modules@^1.0.0:
     is-windows "^1.0.1"
     resolve-dir "^1.0.0"
 
-global-modules@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/global-modules/download/global-modules-2.0.0.tgz#997605ad2345f27f51539bea26574421215c7780"
-  dependencies:
-    global-prefix "^3.0.0"
-
 global-prefix@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/global-prefix/download/global-prefix-1.0.2.tgz#dbf743c6c14992593c655568cb66ed32c0122ebe"
@@ -4297,14 +4301,6 @@ global-prefix@^1.0.1:
     ini "^1.3.4"
     is-windows "^1.0.1"
     which "^1.2.14"
-
-global-prefix@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npm.taobao.org/global-prefix/download/global-prefix-3.0.0.tgz#fc85f73064df69f50421f47f883fe5b913ba9b97"
-  dependencies:
-    ini "^1.3.5"
-    kind-of "^6.0.2"
-    which "^1.3.1"
 
 globals@^11.1.0:
   version "11.12.0"
@@ -4835,7 +4831,7 @@ inherits@2.0.3:
   version "2.0.3"
   resolved "https://registry.npm.taobao.org/inherits/download/inherits-2.0.3.tgz?cache=0&sync_timestamp=1606706255906&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Finherits%2Fdownload%2Finherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
 
-ini@^1.3.4, ini@^1.3.5:
+ini@^1.3.4:
   version "1.3.8"
   resolved "https://registry.npm.taobao.org/ini/download/ini-1.3.8.tgz?cache=0&sync_timestamp=1607907842483&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fini%2Fdownload%2Fini-1.3.8.tgz#a29da425b48806f34767a4efce397269af28432c"
 
@@ -9748,7 +9744,7 @@ uuid@^8.3.0:
   version "8.3.2"
   resolved "https://registry.npm.taobao.org/uuid/download/uuid-8.3.2.tgz?cache=0&sync_timestamp=1607460052228&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fuuid%2Fdownload%2Fuuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
 
-v8-compile-cache@^2.0.3, v8-compile-cache@^2.1.1, v8-compile-cache@^2.2.0:
+v8-compile-cache@^2.0.3, v8-compile-cache@^2.2.0:
   version "2.2.0"
   resolved "https://registry.npm.taobao.org/v8-compile-cache/download/v8-compile-cache-2.2.0.tgz?cache=0&sync_timestamp=1603909372873&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fv8-compile-cache%2Fdownload%2Fv8-compile-cache-2.2.0.tgz#9471efa3ef9128d2f7c6a7ca39c4dd6b5055b132"
 
@@ -9924,22 +9920,6 @@ webidl-conversions@^6.1.0:
   version "6.1.0"
   resolved "https://registry.npm.taobao.org/webidl-conversions/download/webidl-conversions-6.1.0.tgz#9111b4d7ea80acd40f5270d666621afa78b69514"
 
-webpack-cli@^3.3.11:
-  version "3.3.12"
-  resolved "https://registry.npm.taobao.org/webpack-cli/download/webpack-cli-3.3.12.tgz?cache=0&sync_timestamp=1609434277002&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwebpack-cli%2Fdownload%2Fwebpack-cli-3.3.12.tgz#94e9ada081453cd0aa609c99e500012fd3ad2d4a"
-  dependencies:
-    chalk "^2.4.2"
-    cross-spawn "^6.0.5"
-    enhanced-resolve "^4.1.1"
-    findup-sync "^3.0.0"
-    global-modules "^2.0.0"
-    import-local "^2.0.0"
-    interpret "^1.4.0"
-    loader-utils "^1.4.0"
-    supports-color "^6.1.0"
-    v8-compile-cache "^2.1.1"
-    yargs "^13.3.2"
-
 webpack-cli@^4.3.1:
   version "4.3.1"
   resolved "https://registry.npm.taobao.org/webpack-cli/download/webpack-cli-4.3.1.tgz?cache=0&sync_timestamp=1609434277002&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwebpack-cli%2Fdownload%2Fwebpack-cli-4.3.1.tgz#87a7873bc9c6a4708aa657759274b691e72a04a8"
@@ -9957,6 +9937,26 @@ webpack-cli@^4.3.1:
     rechoir "^0.7.0"
     v8-compile-cache "^2.2.0"
     webpack-merge "^4.2.2"
+
+webpack-cli@^4.4.0:
+  version "4.4.0"
+  resolved "http://192.168.20.146:4873/webpack-cli/-/webpack-cli-4.4.0.tgz#38c7fa01ea31510f5c490245dd1bb28018792f1b"
+  integrity sha1-OMf6AeoxUQ9cSQJF3RuygBh5Lxs=
+  dependencies:
+    "@discoveryjs/json-ext" "^0.5.0"
+    "@webpack-cli/configtest" "^1.0.0"
+    "@webpack-cli/info" "^1.2.1"
+    "@webpack-cli/serve" "^1.2.2"
+    colorette "^1.2.1"
+    commander "^6.2.0"
+    enquirer "^2.3.6"
+    execa "^5.0.0"
+    fastest-levenshtein "^1.0.12"
+    import-local "^3.0.2"
+    interpret "^2.2.0"
+    rechoir "^0.7.0"
+    v8-compile-cache "^2.2.0"
+    webpack-merge "^5.7.3"
 
 webpack-dev-middleware@^3.7.2:
   version "3.7.3"
@@ -9980,9 +9980,10 @@ webpack-dev-middleware@^4.1.0:
     range-parser "^1.2.1"
     schema-utils "^3.0.0"
 
-webpack-dev-server@^3.11.0:
+webpack-dev-server@^3.11.2:
   version "3.11.2"
-  resolved "https://registry.npm.taobao.org/webpack-dev-server/download/webpack-dev-server-3.11.2.tgz?cache=0&sync_timestamp=1610553035203&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwebpack-dev-server%2Fdownload%2Fwebpack-dev-server-3.11.2.tgz#695ebced76a4929f0d5de7fd73fafe185fe33708"
+  resolved "http://192.168.20.146:4873/webpack-dev-server/-/webpack-dev-server-3.11.2.tgz#695ebced76a4929f0d5de7fd73fafe185fe33708"
+  integrity sha1-aV687Xakkp8NXef9c/r+GF/jNwg=
   dependencies:
     ansi-html "0.0.7"
     bonjour "^3.5.0"
@@ -10050,7 +10051,7 @@ webpack-merge@^4.2.2:
   dependencies:
     lodash "^4.17.15"
 
-webpack-merge@^5.4.0:
+webpack-merge@^5.4.0, webpack-merge@^5.7.3:
   version "5.7.3"
   resolved "https://registry.npm.taobao.org/webpack-merge/download/webpack-merge-5.7.3.tgz?cache=0&sync_timestamp=1608705595544&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwebpack-merge%2Fdownload%2Fwebpack-merge-5.7.3.tgz#2a0754e1877a25a8bbab3d2475ca70a052708213"
   dependencies:
@@ -10146,7 +10147,7 @@ which-pm-runs@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/which-pm-runs/download/which-pm-runs-1.0.0.tgz#670b3afbc552e0b55df6b7780ca74615f23ad1cb"
 
-which@^1.2.14, which@^1.2.9, which@^1.3.1:
+which@^1.2.14, which@^1.2.9:
   version "1.3.1"
   resolved "https://registry.npm.taobao.org/which/download/which-1.3.1.tgz?cache=0&sync_timestamp=1605134855909&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwhich%2Fdownload%2Fwhich-1.3.1.tgz#a45043d54f5805316da8d62f9f50918d3da70b0a"
   dependencies:
