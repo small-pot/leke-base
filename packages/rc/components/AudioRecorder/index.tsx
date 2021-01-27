@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: gulingxin
  * @Date: 2021-01-26 13:40:25
- * @LastEditTime: 2021-01-26 13:40:25
+ * @LastEditTime: 2021-01-26 22:39:42
  */
 import * as React from "react";
 import { AudioRecorder as Recorder, AudioPlayer } from "@leke/AV";
@@ -14,6 +14,7 @@ type AudioElement = {
 interface IProps {
     isViewAudio?: boolean;  //是否展示录音音频
     duration?: number;  //录音限时
+    url?:number;    //音频地址
     onStart?: () => void;   //开始录音回调
     onStop?: (e: any) => void;  //结束录音回调
     onDataAvailable?: (e: AudioElement) => void;
@@ -32,12 +33,12 @@ class AudioRecorder extends React.Component<IProps, IState> {
         this.recorderRef = React.createRef();
         this.audioRef = React.createRef();
         this.state = {
-            isSwitch: false,
-            audioUrl: "",
+            isSwitch: this.props.url ? true : false,
+            audioUrl: this.props.url || "",
         };
     }
     //初始化recorder
-    startRecord = () => {
+    startRecord = (isStart?:boolean) => {
         if (this.recorderRef.current) {
             const recorder = new Recorder({
                 elem: this.recorderRef.current,
@@ -46,17 +47,29 @@ class AudioRecorder extends React.Component<IProps, IState> {
             recorder.onStart = this.props.onStart;
             recorder.onStop = (e) => this.handleStop(e);
             recorder.ondataavailable = (event) => this.ondataavailable(event);
+            if(isStart){
+                recorder.startRecord();
+            }
         }
     };
 
     componentDidMount() {
-        this.startRecord();
+        if(this.props.url){
+            const src = this.state.audioUrl;
+            const el = this.audioRef.current;
+            const audio = new AudioPlayer({
+                el,
+                src: src,
+            });
+        }else {
+            this.startRecord();
+        }
     }
     //录音音频查看
     componentDidUpdate(preProps: IProps, preState: IState) {
-        if(this.props.isViewAudio){
+        if(this.props.isViewAudio && this.state.isSwitch !== preState.isSwitch){
             if (!this.state.isSwitch) {
-                this.startRecord();
+                this.startRecord(true);
             } else {
                 const src = this.state.audioUrl;
                 const el = this.audioRef.current;
@@ -105,7 +118,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
                             className="record-reRecord"
                             onClick={() => {
                                 this.props.onReRecorder && this.props.onReRecorder();
-                                this.setState({ isSwitch: false });
+                                this.setState({ isSwitch: false,audioUrl:'' });
                             }}
                         >
                             重录
