@@ -122,6 +122,9 @@ class Player {
         if(this.options.poster){
             config.poster=this.options.poster;
         }
+        if(this.options.onReady){
+            this.on('ready',this.options.onReady);
+        }
         if(this.options.onPauseChange){
             this.trigger('proxyPausedChange',this.options.onPauseChange);
         }
@@ -162,9 +165,9 @@ class Player {
         this.video.addEventListener('pause', () => {
             this.event.trigger('pause');
         });
-        const fn = throttle((time) => { this.event.trigger('timeupdate', time); }, 1000, { leading: true });
+        // const fn = throttle((time) => { this.event.trigger('timeupdate', time); }, 1000, { leading: true });
         this.video.addEventListener('timeupdate', () => {
-            fn(this.video.currentTime);
+            this.event.trigger('timeupdate', this.video.currentTime);
         });
         // this.video.addEventListener('loadeddata', ()=> {
         //     if(!this.options.poster){

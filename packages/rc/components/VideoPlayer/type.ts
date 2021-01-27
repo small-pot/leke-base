@@ -20,6 +20,8 @@ export interface IVideoProps {
     volume?:number;
     // 全屏
     fullscreen?: boolean;
+    // 组件加载完成后的回调
+    onReady?:()=>void
     // 播放状态
     onPauseChange?:(pasued:boolean)=>void;
     // 播放时间变更

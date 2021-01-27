@@ -41,7 +41,6 @@ export function getResourceType(url){
 
 export const getTime = (seconds) => {
     if (!seconds) return '00:00';
-    seconds = Math.ceil(seconds).toFixed(0);
     let hour:any = Math.floor(seconds / 3600);
     if (hour) {
         if (hour < 10) {
@@ -55,7 +54,7 @@ export const getTime = (seconds) => {
     if (minute < 10) {
         minute = "0" + minute;
     }
-    let second:any = seconds % 60;
+    let second:any = Math.floor(seconds % 60);
     if (second < 10) {
         second = "0" + second;
     }
