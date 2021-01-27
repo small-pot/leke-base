@@ -7,6 +7,7 @@ const name=require(rootDir+'/package.json').name;
 const configPath=path.resolve(rootDir, './leke.config.js');
 let config={
     publicPath:'/lib/'+name,
+    cssModules: false,
     port:9999,
     browsers:[
         "last 2 versions",

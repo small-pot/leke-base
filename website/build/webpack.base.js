@@ -1,11 +1,9 @@
 const webpack=require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path=require('path');
-const MiniCssExtractPlugin=require('mini-css-extract-plugin');
 const resolePaths=require('../../resolvPaths');
 
 const env=process.env.NODE_ENV;
-const handleStyleLoader=env==='production'?MiniCssExtractPlugin.loader:'style-loader';
 
 module.exports ={
     entry:path.resolve(__dirname, '../src/index.tsx'),
@@ -43,23 +41,6 @@ module.exports ={
                 test: /\.j|tsx?$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/
-            },
-            {
-                test:/\.css$/,
-                use: [
-                    handleStyleLoader,
-                    'css-loader',
-                    'postcss-loader'
-                ]
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    handleStyleLoader,
-                    'css-loader',
-                    'postcss-loader',
-                    'less-loader'
-                ]
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf)(\?.*)?$/,

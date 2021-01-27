@@ -4,17 +4,19 @@ import {configType} from './types';
 export {SSRPage} from './types';
 
 function getAssets (manifest,chunkName) {
-    const {publicPath,namedChunkGroups,entrypoints}=manifest;
+    const {publicPath,namedChunkGroups}=manifest;
     const css=[];
     const scripts=[];
-    namedChunkGroups[chunkName].assets.forEach(src=>{
+    namedChunkGroups[chunkName].assets.forEach(item=>{
+        const src=item.name
         if(/\.css$/.test(src)){
             css.push(publicPath+src);
-        }else if(/\.js$/.test(src)){
+        }else if(/(?<!\.hot-update)\.js$/.test(src)){
             scripts.push(publicPath+src);
         }
     });
-    entrypoints['app'].assets.forEach((src)=>{
+    namedChunkGroups['app'].assets.forEach((item)=>{
+        const src=item.name
         if(/\.css$/.test(src)){
             css.unshift(publicPath+src);
         }else if(/(?<!\.hot-update)\.js$/.test(src)){
