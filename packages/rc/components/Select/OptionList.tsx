@@ -27,7 +27,7 @@ const OptionList=forwardRef(function (props:OptionListPropsType,ref) {
                     const maxScrollTop=totalHeight-listHeight
                     const oldScrollTop=scrollBar.scrollTop
                     const newScrollTop=Math.min(maxScrollTop,index*itemHeight)
-                    function inView(top) {
+                    const inView = (top)=>{
                         return top>=oldScrollTop && top<=oldScrollTop+listHeight
                     }
                     if(!inView(newScrollTop) || !inView(newScrollTop+itemHeight)){
@@ -40,7 +40,7 @@ const OptionList=forwardRef(function (props:OptionListPropsType,ref) {
 
     useEffect(()=>{
         if(haveScrollBar){
-            function onWheel(e) {
+            const onWheel = (e)=>{
                 e.preventDefault();
                 scrollBarRef.current.scrollTop=scrollBarRef.current.scrollTop+e.deltaY;
             }

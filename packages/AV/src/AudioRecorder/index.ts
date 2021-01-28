@@ -1,7 +1,9 @@
+import { Alert } from '@leke/rc';
 import { RecordHtml, AudioHtml, NoData } from "./html";
 import { timeFormat, blobToDataURI } from "./utils";
 
 declare let MediaRecorder: any;
+declare let window: any;
 
 // 构造函数参数格式
 interface IRecorderConfig {
@@ -33,8 +35,14 @@ class AudioRecorder {
             this.cfg && this.cfg.duration ? this.cfg.duration : 3000;
         this.init();
     }
+    recorderList:[];
     private init() {
         require('./index.less');
+        if(!window.MediaRecorder){
+            const { elem } = this.cfg;
+            elem.innerHTML =  NoData;
+            return;
+        }
         this.initHtml();
         this.initEvent();
     }
@@ -45,6 +53,9 @@ class AudioRecorder {
         this.record = elem.querySelector("#record");
         this.recordContainer = elem.querySelector("#recordContainer");
         this.recordTime = elem.querySelector(".record-time");
+        if (this.isHasMedia()) {
+            this.getUserMedia({ audio: true });
+        }
     }
     private initEvent() {
         // 录制
@@ -85,6 +96,21 @@ class AudioRecorder {
     public startRecord() {
         this.count = 0;
         this.onStart && this.onStart();
+        if (this.Recorder) {
+            this.run();
+            return;
+        }
+
+        if (this.isHasMedia()) {
+            this.getUserMedia({ audio: true },true);
+        } else {
+            const { elem } = this.cfg;
+            elem.innerHTML = NoData;
+        }
+    }
+    //初始化录音样式
+    private initStartRecorderHtml(){
+        const {elem} = this.cfg;
         const recordIng: HTMLElement = this.recordContainer.querySelector(
             ".record-recording"
         );
@@ -96,17 +122,9 @@ class AudioRecorder {
         this.recordTime.querySelector("#recordUsetime").innerHTML = timeFormat(
             this.count
         );
-        if (this.Recorder) {
-            this.run();
-            return;
-        }
-
-        if (this.isHasMedia()) {
-            this.getUserMedia({ audio: true });
-        } else {
-            const { elem } = this.cfg;
-            elem.innerHTML = NoData;
-        }
+        //没有麦克风设备提示
+        const recordError:HTMLElement = elem.querySelector('.record-error');
+        recordError.style.display = 'none';
     }
     //获取录音权限
     private isHasMedia() {
@@ -124,8 +142,9 @@ class AudioRecorder {
     /**
      * 录音兼容处理
      * @param constrains
+     * @param isInitRecorder
      */
-    public getUserMedia(constrains) {
+    public getUserMedia(constrains,isInitRecorder?:boolean) {
         let that = this;
         const n = <any>navigator;
         if (n.mediaDevices.getUserMedia) {
@@ -133,7 +152,7 @@ class AudioRecorder {
             n.mediaDevices
                 .getUserMedia(constrains)
                 .then((stream) => {
-                    that.success(stream);
+                    that.success(stream,isInitRecorder);
                 })
                 .catch((err) => {
                     that.error(err);
@@ -175,7 +194,7 @@ class AudioRecorder {
             navigator.mediaDevices
                 .getUserMedia(constrains)
                 .then((stream) => {
-                    that.success(stream);
+                    that.success(stream,isInitRecorder);
                 })
                 .catch((err) => {
                     that.error(err);
@@ -184,7 +203,7 @@ class AudioRecorder {
             // 旧版API
             n.getUserMedia(constrains)
                 .then((stream) => {
-                    that.success(stream);
+                    that.success(stream,isInitRecorder);
                 })
                 .catch((err) => {
                     that.error(err);
@@ -192,12 +211,26 @@ class AudioRecorder {
         }
     }
     // 成功的回调函数
-    success(stream) {
-        this.initRecorder(stream);
+    private success(stream,isInitRecorder?:boolean) {
+        if(isInitRecorder){
+            this.initStartRecorderHtml();  
+            this.initRecorder(stream);
+        } else {
+
+        }
     }
     // 异常的回调函数
-    error(error) {
+    private error(error) {
         console.log("访问用户媒体设备失败：", error.name, error.message);
+        const { elem } = this.cfg;
+        const recordError:HTMLElement = elem.querySelector('.record-error');
+        recordError.style.display = 'block';
+        clearInterval(this.time);
+        const recording: HTMLElement = this.recordContainer.querySelector(
+            ".record-recording"
+        );
+        recording.style.display = "none";
+        this.recordTime.style.display = "none";
     }
 
     //结束录音
@@ -231,10 +264,13 @@ class AudioRecorder {
     private run(): void {
         this.Recorder && this.Recorder.start();
         clearInterval(this.time);
-        if (this.count >= this.duration) {
-            this.Recorder && this.Recorder.stop();
-        }
+        this.initStartRecorderHtml();
         this.time = setInterval(() => {
+            if (this.count >= this.duration) {
+                this.stopRecord();
+                clearInterval(this.time);
+                return;
+            }
             this.count++;
 
             this.recordTime.querySelector(

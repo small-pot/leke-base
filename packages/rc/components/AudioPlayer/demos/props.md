@@ -11,5 +11,4 @@
 | timeFormat | 自定义展示音频总时间 | duration:number => string | - |
 | allowSeek  | 是否允许手动控制进度条 | boolean  | true |
 | onEvent  | 使用驼峰命名方式，例如onPlay()，支持原生audio所有事件，参考[audio事件-MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/audio#%E4%BA%8B%E4%BB%B6) | e:Event => void  | - |
-
-
+| onError  | 错误回调，目前包含了[DOMException](https://developer.mozilla.org/zh-CN/docs/Web/API/DOMException)和[MediaError](https://developer.mozilla.org/en-us/docs/Web/API/MediaError) | error => void  | - |
