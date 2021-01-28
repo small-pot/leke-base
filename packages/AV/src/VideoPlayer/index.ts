@@ -128,6 +128,9 @@ class Player {
         if(this.options.poster){
             config.poster=this.options.poster;
         }
+        if(this.options.muted){
+            config.muted='muted';
+        }
         if(this.options.onReady){
             this.on('ready',this.options.onReady);
         }
@@ -178,6 +181,7 @@ class Player {
         });
         // const fn = throttle((time) => { this.event.trigger('timeupdate', time); }, 1000, { leading: true });
         this.video.addEventListener('timeupdate', () => {
+            if(this.loading)this.closeLoading();
             this.event.trigger('timeupdate', this.video.currentTime);
         });
         // this.video.addEventListener('loadeddata', ()=> {
@@ -208,7 +212,7 @@ class Player {
             this.input.focus();
         });
         this.event.on('ready', () => {
-            if (this.options.muted) {
+            if (this.options.muted||this.browser==='FF') {
                 this.video.defaultMuted = true;
                 this.event.trigger('volumeChange', 0);
             }
@@ -236,6 +240,9 @@ class Player {
         });        
         this.event.on('pause', () => {
             this.mask.style.display='block';
+        });
+        this.event.on('playing',()=>{
+            if(this.loading)this.closeLoading();
         });
         this.event.on('ended', () => {
             this.closeLoading();
