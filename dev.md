@@ -50,7 +50,8 @@
 ```
 
 ## npm测试包版本
-- 修改package.json，如"version": "1.0.1-test_guoquankai"
-- npm publish --tag=test_guoquankai
-- npm install <packageName>@test_guoquankai
+- 修改package.json，如"version": "1.0.1-test"
+- npm publish --tag=test
+- npm install <packageName>@test
+- test可以随意命名
 
