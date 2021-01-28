@@ -159,10 +159,10 @@ class Player {
             });
         });
         this.video.addEventListener('click', () => {
-            this.event.trigger('click',this.video.paused);
+            this.event.trigger('click',!this.video.paused);
         });
         this.mask.addEventListener('click', () => {
-            this.event.trigger('click',this.video.paused);
+            this.event.trigger('click',!this.video.paused);
         });
         this.el.addEventListener('click', () => {
             this.event.trigger('containerClick');
@@ -190,11 +190,11 @@ class Player {
         //         this.video.setAttribute('poster', src);
         //     }
         // });
-        this.event.on('click', (paused) => {
+        this.event.on('click', (nextPaused) => {
             if (!this.proxyPausedChange) {
-                paused ? this.video.play() : this.video.pause();
+                nextPaused ?this.video.pause(): this.video.play();
             } else {
-                this.proxyPausedChange(!paused);
+                this.proxyPausedChange(nextPaused);
             }
         });
         // this.event.on('dblclick', () => {
