@@ -16,11 +16,7 @@ class PlayerControl extends Component {
             this.proxyPausedChange=fn;
         });
         this.el.addEventListener('click', () => {
-            if(!this.proxyPausedChange){
-                this.video.paused?this.video.play():this.video.pause();
-            }else{
-                this.proxyPausedChange(!this.video.paused);
-            }
+            this.event.trigger('click',!this.video.paused);
         });
         this.event.on('play', () => {
             this.update();

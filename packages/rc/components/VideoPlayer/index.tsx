@@ -16,7 +16,11 @@ class Video extends React.PureComponent<IVideoProps>{
             poster,
             paused,
             volume,
-            onPauseChange,
+            fullscreen,
+            onReady,
+            onLoad,
+            onStart,
+            onPausedChange,
             onTimeChange,
             onVolumeChange,
             onFullscreenChange
@@ -31,9 +35,24 @@ class Video extends React.PureComponent<IVideoProps>{
             loop,
             poster,
             muted:volume===0,
-            onPauseChange,
-            onVolumeChange,
-            onFullscreenChange,
+            onReady,
+            onLoad,
+            onStart,
+            onPausedChange:paused!==undefined?onPausedChange:null,
+            onVolumeChange:volume!==undefined?onVolumeChange:null,
+            onFullscreenChange:fullscreen!==undefined?onFullscreenChange:null,
+        });
+
+        paused===undefined&&onPausedChange&&this.instance.on('click',(status)=>{
+            onPausedChange(status);
+        });
+
+        volume===undefined&&onVolumeChange&&this.instance.on('volumeChange',(step)=>{
+            onVolumeChange(step);
+        });
+        
+        fullscreen===undefined&&onFullscreenChange&&this.instance.on('fullscreenChange',(status)=>{
+            onFullscreenChange(status);
         });
 
         onTimeChange&&this.instance.on('timeupdate',(time)=>{
@@ -46,7 +65,7 @@ class Video extends React.PureComponent<IVideoProps>{
         if(prevProps.paused!==paused){
             paused?this.instance.video.pause():this.instance.video.play();
         }
-        if(prevProps.paused!==volume){
+        if(prevProps.volume!==volume){
             if(volume!==0)this.instance.trigger('preVolume',volume);
             this.instance.trigger('volumeChange',volume);
         }

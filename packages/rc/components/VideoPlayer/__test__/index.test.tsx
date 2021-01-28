@@ -15,11 +15,11 @@ describe('VideoPlayer', function () {
         expect(document.body).toMatchSnapshot();
     });
 
-    it('onPauseChange should be called', () => {
-        const onPauseChange = jest.fn();
-        render(<VideoPlayer {...defaultProps} onPauseChange={onPauseChange} />);
+    it('onPausedChange should be called', () => {
+        const onPausedChange = jest.fn();
+        render(<VideoPlayer {...defaultProps} onPausedChange={onPausedChange} />);
         fireEvent.click(document.querySelector('.video-root-container'));
-        expect(onPauseChange).toHaveBeenCalledTimes(1);
+        expect(onPausedChange).toHaveBeenCalledTimes(1);
     });
     
     it('onFullscreenChange should be called', () => {

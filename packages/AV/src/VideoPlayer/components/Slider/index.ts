@@ -13,6 +13,7 @@ class Slider {
     buffer: any;
     track: any;
     step: any;
+    scale: any;
     prevStep: any;
     handle: any;
     isDrag: boolean;
@@ -29,6 +30,7 @@ class Slider {
         this.buffer = this.el.querySelector('.buffer-rail');
         this.track = this.el.querySelector('.slider-track');
         this.step = this.el.querySelector('.slider-step');
+        this.scale = this.el.querySelector('.scale-rail');
         this.handle = this.el.querySelector('.slider-handle');
         this.onMouseDown = this.options.onMouseDown;
         this.onTouchMove = this.options.onTouchMove;

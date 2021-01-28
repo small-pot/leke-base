@@ -19,7 +19,7 @@ export default function(){
             paused={paused}
             volume={volume}
             fullscreen={full}
-            onPauseChange={(paused)=>{
+            onPausedChange={(paused)=>{
                 setPaused(paused);
             }}
             onTimeChange={time=>{
