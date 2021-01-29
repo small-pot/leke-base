@@ -25,13 +25,17 @@ export interface IVideoProps {
     // 组件媒体信息获取完毕后的回调
     onLoad?:()=>void;
     // 视频开始播放的回调
-    onStart?:()=>void;
-    // 播放状态
-    onPausedChange?:(pasued:boolean)=>void;
-    // 播放时间变更
+    onStart?:()=>void;    
+    // 视频结束播放的回调
+    onEnded?:()=>void;
+    // 播放时间变更的回调
     onTimeChange?:(time:number)=>void;
-    // 音量变更
+    // 手动改变播放时间后触发的回调
+    onTouchTimeChange?:(time:number)=>void;
+    // 播放状态的回调
+    onPausedChange?:(pasued:boolean)=>void;
+    // 音量变更的回调
     onVolumeChange?:(volumn:number)=>void;
-    // 进入全屏
+    // 进入全屏的回调
     onFullscreenChange?:(isFullscreen:boolean)=>void;
   }

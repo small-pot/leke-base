@@ -140,6 +140,12 @@ class Player {
         if(this.options.onStart){
             this.on('start',this.options.onStart);
         }
+        if(this.options.onEnded){
+            this.on('ended',this.options.onEnded);
+        }
+        if(this.options.onTimeChange){
+            this.on('timeupdate',this.options.onTimeChange);
+        }
         if(this.options.onPausedChange){
             this.trigger('proxyPausedChange',this.options.onPausedChange);
         }
@@ -255,7 +261,7 @@ class Player {
                 e.preventDefault();
                 const activeId = document.activeElement.id;
                 if (activeId === `video-input-${this.uid}`) {
-                    this.video.paused ? this.video.play() : this.video.pause();
+                    this.trigger('click',!this.video.paused);
                 }
             }
         };

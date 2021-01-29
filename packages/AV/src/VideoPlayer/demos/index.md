@@ -69,9 +69,11 @@
 | onReady | 视频组件加载完毕后的回调 | function | - |
 | onLoad | 组件媒体信息获取完毕后的回调 | function | - |
 | onStart | 视频开始播放的回调 | function | - |
-| onPausedChange | 暂停/播放变更 | function | - |
-| onVolumeChange | 音量变更 | function | - |
-| onFullscreenChange | 进入/退出全屏 | function | - |
+| onEnded | 视频结束播放的回调 | function | - |
+| onPausedChange | 暂停/播放变更的回调 | function | - |
+| onTimeChange |  | 播放时间变更的回调 | - |
+| onVolumeChange | 音量变更的回调 | function | - |
+| onFullscreenChange | 进入/退出全屏的回调 | function | - |
 
 ```html
 <script>
