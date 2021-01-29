@@ -1,18 +1,18 @@
-import React, {useState, useCallback, useMemo, useRef, useEffect,useImperativeHandle} from 'react';
+import React, {useState, useCallback, useMemo, useRef, useEffect, useImperativeHandle, RefObject} from 'react';
 import classNames from 'classnames';
 import Slide from './Slide';
 import Fade from './Fade';
 
 interface propTypes{
     children:React.ReactElement<HTMLElement>|React.ReactElement<HTMLElement>[],
-    autoplay:boolean,
-    interval:number,
+    autoplay?:boolean,
+    interval?:number,
     beforeChange?:(from:number,to:number)=>void,
     className?:string,
     style?:React.CSSProperties,
-    direction:'left'|'right'|'up'|'down',
-    dots:boolean,
-    type:'slide'|'fade'
+    vertical?:boolean,
+    dots?:boolean,
+    type?:'slide'|'fade'
 }
 
 function usePlay(callback,interval) {
@@ -31,9 +31,11 @@ function usePlay(callback,interval) {
 }
 
 type indexType=((index:number)=>number)|number
+type setIndexType=(newIndex?:indexType)=>void
+type refType={dom:HTMLDivElement,goTo:setIndexType}
 
-const Carousel=React.forwardRef(function (props:propTypes,ref){
-    const {children,style,autoplay,interval,beforeChange,className,direction,dots,type}=props;
+const Carousel=React.forwardRef<refType,propTypes>(function (props,ref){
+    const {children,style,autoplay,interval,beforeChange,className,vertical,dots,type}=props;
     const [currentIndex,setIndex]=useState(0);
     const carouselData=useRef({oldIndex:currentIndex,height:0});
     const domRef=useRef<HTMLDivElement>(null);
@@ -45,7 +47,7 @@ const Carousel=React.forwardRef(function (props:propTypes,ref){
         return childList;
     },[children,type]);
     const maxIndex=childList.length-1;
-    const setCurrentIndex=useCallback((newIndex?:indexType)=>{
+    const setCurrentIndex=useCallback<setIndexType>((newIndex)=>{
         if(typeof newIndex==='function'){
             newIndex=newIndex(currentIndex);
         }else if(newIndex===undefined){
@@ -64,12 +66,14 @@ const Carousel=React.forwardRef(function (props:propTypes,ref){
         }
         setIndex(newIndex);
     },[currentIndex,maxIndex,setIndex,beforeChange]);
+
     useImperativeHandle(ref,()=>{
         return {
             goTo:setCurrentIndex,
             dom:domRef.current
         };
     },[setCurrentIndex,domRef]);
+
     const isNeedDuration=useMemo(()=>{
         if(type==='fade'){
             return true;
@@ -87,17 +91,9 @@ const Carousel=React.forwardRef(function (props:propTypes,ref){
     const {stop,play}=usePlay(setCurrentIndex,interval);
     useEffect(()=>{
         if(!isNeedDuration){
-            const win=window as any;
-            const animationFrame=
-                win.requestAnimationFrame||
-                win.mozRequestAnimationFrame||
-                win.oRequestAnimationFrame||
-                win.msRequestAnimationFrame||
-                function (callback) {
-                    window.setTimeout(callback, 1000 / 60);
-                };
             stop();
-            animationFrame(()=>setCurrentIndex());
+            setTimeout(setCurrentIndex,50);
+            //animationFrame(()=>setCurrentIndex());
         }else if(autoplay){
             play();
             return stop;
@@ -107,7 +103,7 @@ const Carousel=React.forwardRef(function (props:propTypes,ref){
     const length=React.Children.count(children);
     return (
         <div ref={domRef} className={classNames('leke-carousel',className)} onMouseEnter={stop} onMouseLeave={play} style={style}>
-            {type==='fade'?<Fade currentIndex={currentIndex}>{childList}</Fade>:<Slide className={isNeedDuration?'leke-carousel-duration':''} currentIndex={currentIndex} direction={direction}>{childList}</Slide>}
+            {type==='fade'?<Fade currentIndex={currentIndex}>{childList}</Fade>:<Slide className={isNeedDuration?'leke-carousel-transition':''} currentIndex={currentIndex} vertical={vertical}>{childList}</Slide>}
             {dots?<ul className="leke-carousel-dots">
                 {
                     new Array(length).fill('').map((item,index)=>{
@@ -129,7 +125,7 @@ Carousel.defaultProps={
     autoplay:true,
     interval:3000,
     dots:true,
-    direction:'left',
+    vertical:false,
     type:'slide'
 };
 export default Carousel;

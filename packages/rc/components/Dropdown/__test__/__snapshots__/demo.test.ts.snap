@@ -3,15 +3,15 @@
 exports[`test basics.md 1`] = `
 <div>
   <a>
-    focus me
+    hover me
   </a>
 </div>
 `;
 
-exports[`test hover.md 1`] = `
+exports[`test click.md 1`] = `
 <div>
   <a>
-    hover me
+    focus me
   </a>
 </div>
 `;

@@ -1,4 +1,4 @@
-import {useRef, RefObject, useLayoutEffect, useEffect} from "react";
+import {useRef, RefObject, useEffect,useLayoutEffect} from "react";
 import classNames from 'classnames';
 import omit from 'omit.js';
 interface useAnimationProps{
@@ -29,7 +29,11 @@ function getAnimationEventName(type='animation') {
     }
     return type+'end';
 }
+
 export default function useAnimation(params:useAnimationProps) {
+    if(typeof window!=='object'){
+        return
+    }
     const {
         ref,
         open,

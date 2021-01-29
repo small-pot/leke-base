@@ -23,37 +23,21 @@ export interface MiniHeaderProps {
     userInfo ?:userInfoTypes,
     messageCount ?:number
 }
-function getHeaderState(userInfo?:userInfoTypes,messageCount?:number) {
-    if(userInfo===undefined){
-        return function () {
-            return getUserInfo().then(userInfo=>{
-                return getMessageCount().then(messageCount=>{
-                    return {userInfo,messageCount};
-                });
-            });
-        };
-    }
-    if(userInfo&&messageCount===undefined){
-        return function () {
-            return getMessageCount().then(messageCount=>{
-                return {userInfo,messageCount};
-            });
-        };
-    }
-    return {userInfo,messageCount};
-}
+
 export default function MiniHeader(props:MiniHeaderProps) {
     const {showLogo} = props;
-    const {data,loading} = useResolve<{userInfo:userInfoTypes,messageCount:number}>(getHeaderState(props.userInfo,props.messageCount));
+    const {data:userInfo,loading}=useResolve<userInfoTypes>(props.userInfo===undefined?getUserInfo:props.userInfo)
+    const {data:messageCount}=useResolve<number>(props.messageCount===undefined?getMessageCount:props.messageCount)
+
     if(loading){
         return <div className='leke-miniHeader'><div className="leke-miniHeader-content"></div></div>;
     }
-    if(data&&data.userInfo){
+    if(userInfo){
         return(
             <div className='leke-miniHeader'>
                 <div className="leke-miniHeader-content">
                     <div className='leke-miniHeader-left'>
-                        {showLogo?<img src={data.userInfo.schoolLogoUrl||'https://static.leke.cn/images/common/logo/mini-header-logo-new-2.png'} className='leke-miniHeader-logo' />:null}
+                        {showLogo?<img src={userInfo.schoolLogoUrl||'https://static.leke.cn/images/common/logo/mini-header-logo-new-2.png'} className='leke-miniHeader-logo' />:null}
                     </div>
                     <div className='leke-miniHeader-right'>
                         <a
@@ -64,9 +48,9 @@ export default function MiniHeader(props:MiniHeaderProps) {
                         >
                             <Notice className='icon-notice' />
                             <span>消息</span>
-                            {data.messageCount ? <span className='leke-miniHeader-count' >{Math.min(data.messageCount,99)}</span>:null}
+                            {messageCount ? <span className='leke-miniHeader-count' >{Math.min(messageCount,99)}</span>:null}
                         </a>
-                        <UserInfo userInfo={data.userInfo} />
+                        <UserInfo userInfo={userInfo} />
                     </div>
                 </div>
             </div>

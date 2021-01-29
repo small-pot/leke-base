@@ -36,7 +36,7 @@ function selector(state){
     };
 }
 function compare(prev,next) {
-    return prev.visible!==next.visible;   //当visible发生变化时更新数据
+    return prev.visible===next.visible;   //当visible发生变化时更新数据
 }
 const {text,visible}=useData(selector,compare);
 ```
@@ -47,9 +47,9 @@ const {text,visible}=useData(selector,compare);
 
 ## useStore
 ```js
-const {getData,setData}=useDispatch;
+const {getData,setData}=useStore;
 ```
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
 | getData | 获取store中的数据 | ()=>any | _ |
-| setData | 更新store中的数据 | (prev,next)=>boolean | 浅比较 |
+| setData | 更新store中的数据 | (object)=>void | _ |

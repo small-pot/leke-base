@@ -1,18 +1,18 @@
 import React, {
     CSSProperties,
-    useLayoutEffect,
     useRef,
-    useReducer, useMemo, ReactElement
+    useReducer, useEffect, useCallback
 } from 'react';
-import {createPortal} from 'react-dom';
 import classNames from 'classnames';
 import {useAnimation,useControl} from '@leke/hooks';
 import {setPopupPosition,placementType} from './util';
+import Popup from './Popup';
 
 export interface childPropsType {
     ref?:React.RefObject<HTMLElement>|React.RefCallback<HTMLElement>,
     tabIndex?:number,
     onFocus?:(e)=>void,
+    onClick?:(e)=>void,
     onMouseEnter?:(e)=>void,
     onMouseLeave?:(e)=>void,
     onBlur?:(e)=>void
@@ -29,13 +29,14 @@ export interface triggerPropsType {
     visible?:boolean,
     onVisibleChange?:(boolean)=>void,
     children:React.ReactElement<HTMLElement>,
-    event?:('focus'|'hover')[],
-    popup:ReactElement,
+    eventType?:Array<'focus'|'hover'|'click'>,
+    popup:React.ReactNode,
     popupStyle?:CSSProperties,
     popupClassName?:string,
     getPopupContainer?:(HTMLElement)=>HTMLElement,
-    placement:placementType,
-    autoSize?:boolean
+    placement?:placementType,
+    autoSize?:boolean,
+    disabled?:boolean
 }
 const enter='leke-open';
 const exit='leke-close';
@@ -54,31 +55,20 @@ function contains (container:HTMLElement,target:HTMLElement){
     }
     return false;
 }
-export default function Trigger(props:triggerPropsType) {
-    const {children,event,popup,popupStyle,popupClassName,getPopupContainer,placement,autoSize}=props;
-    const [visible,setShow]=useControl(props.visible,props.onVisibleChange);
+const useLayoutEffect=typeof window==='object'?React.useLayoutEffect:useEffect
+function Trigger (props) {
+    const {children,eventType,popup,popupStyle,popupClassName,getPopupContainer,placement,autoSize,disabled}=props;
+    const [visible,setVisible]=useControl(props.visible,props.onVisibleChange,false);
     const triggerRef=useRef<HTMLElement>(null);
     const popupRef=useRef<HTMLDivElement>(null);
+    const timerRef=useRef(null)
     const [portalContainer,setPortalContainer]=useReducer(()=>getPopupContainer(triggerRef.current),null);
     const child=React.Children.only(children);
     const childProps:childPropsType=child.props;
-    const setVisible=useMemo(()=>{
-        let timer=null;
-        let show;
-        return (val)=>{
-            if(timer){
-                clearTimeout(timer);
-                timer=null;
-            }
-            timer=setTimeout(()=>{
-                if(show!==val){
-                    show=val;
-                    setShow(val);
-                }
-                timer=null;
-            },50);
-        };
-    },[setShow]);
+    const includeClick=eventType.indexOf('click')!==-1
+    const includeFocus=eventType.indexOf('focus')!==-1;
+    const includeHover=eventType.indexOf('hover')!==-1;
+
     const popupProps:popupPropsType={
         ref:popupRef,
         style:popupStyle,
@@ -95,80 +85,102 @@ export default function Trigger(props:triggerPropsType) {
             triggerRef.current=node;
         }
     };
-    if(event.indexOf('focus')!==-1){
-        cloneProps.onFocus=(e)=>{
-            childProps.onFocus?.(e);
-            setVisible(true);
-        };
-        cloneProps.onBlur=()=>{
-            const activeElement=document.activeElement as HTMLElement;
-            if(contains(triggerRef.current,activeElement)){
-                activeElement.blur();
-            }
-            setVisible(false);
-        };
-        cloneProps.tabIndex=-1;
-        popupProps.onMouseDown=mousedown;
-    }
-    if(event.indexOf('hover')!==-1){
-        cloneProps.onMouseEnter=(e)=>{
-            childProps.onMouseEnter?.(e);
-            setVisible(true);
-        };
-        cloneProps.onMouseLeave=(e)=>{
-            childProps.onMouseLeave?.(e);
-            setVisible(false);
-        };
-        popupProps.onMouseEnter=(e)=>{
-            setVisible(true);
-        };
-        popupProps.onMouseLeave=(e)=>{
-            setVisible(false);
-        };
+    const clearDelay=useCallback(()=>{
+        if(timerRef.current){
+            clearTimeout(timerRef.current)
+        }
+    },[])
+    const delaySetVisible=useCallback((v)=>{
+        clearDelay()
+        timerRef.current=setTimeout(()=>{
+            setVisible(v)
+        },50)
+    },[clearDelay,timerRef,setVisible])
+    if(!disabled){
+        if(includeClick){
+            cloneProps.onClick=(e)=>{
+                delaySetVisible(true)
+                childProps.onClick?.(e);
+            };
+        }
+        if(includeFocus){
+            cloneProps.onFocus=(e)=>{
+                delaySetVisible(true)
+                childProps.onFocus?.(e);
+            };
+            cloneProps.onBlur=(e)=>{
+                delaySetVisible(false)
+                childProps.onBlur?.(e);
+            };
+            popupProps.onMouseDown=mousedown;
+        }
+        if(includeHover){
+            cloneProps.onMouseEnter=(e)=>{
+                childProps.onMouseEnter?.(e);
+                delaySetVisible(true)
+            };
+            cloneProps.onMouseLeave=(e)=>{
+                childProps.onMouseLeave?.(e);
+                delaySetVisible(false)
+            };
+            popupProps.onMouseEnter=clearDelay;
+            popupProps.onMouseLeave=()=>{
+                delaySetVisible(false)
+            };
+        }
     }
     useAnimation({
         ref:popupRef,
         open:portalContainer?visible:false,
-        onEnter(){
-            const {position}=window.getComputedStyle(portalContainer);
-            if(!position||position==='static'){
-                portalContainer.style.position='relative';
-            }
-            if(autoSize){
-                if(placement.indexOf('bottom')===0||placement.indexOf('top')===0){
-                    popupRef.current.style.minWidth=triggerRef.current.offsetWidth+'px';
-                }else{
-                    popupRef.current.style.minHeight=triggerRef.current.offsetHeight+'px';
-                }
-            }
-            setPopupPosition(popupRef.current,triggerRef.current,portalContainer,placement);
-        },
         enter,
         exit,
         exited:'leke-hide'
     });
     useLayoutEffect(()=>{
-        if(!visible){
-            return;
+        if(visible){
+            if(portalContainer){
+                if(autoSize){
+                    if(placement.indexOf('bottom')===0||placement.indexOf('top')===0){
+                        popupRef.current.style.minWidth=triggerRef.current.offsetWidth+'px';
+                    }else{
+                        popupRef.current.style.minHeight=triggerRef.current.offsetHeight+'px';
+                    }
+                }
+                setPopupPosition(popupRef.current,triggerRef.current,portalContainer,placement);
+            }else{
+                setPortalContainer()
+            }
         }
-        if(!portalContainer){
-            return setPortalContainer();
+    },[children,visible,triggerRef,popupRef,placement,portalContainer,setPortalContainer,autoSize])
+
+    useEffect(clearDelay,[clearDelay])
+
+    useEffect(()=>{
+        if(includeClick){
+            const click=(e)=>{
+                const {target}=e
+                if(popupRef.current&&!contains(triggerRef.current,target)&&!contains(popupRef.current,target)){
+                    delaySetVisible(false)
+                }
+            }
+            document.addEventListener('click',click)
+            return ()=>{
+                document.removeEventListener('click',click)
+            }
         }
-    },[triggerRef,popupRef,visible,placement,portalContainer,setPortalContainer]);
+    },[includeClick,delaySetVisible,triggerRef,popupRef])
     return(
         <>
             {React.cloneElement(child,cloneProps)}
-            {portalContainer?createPortal(
-                <div style={{position:'absolute',top:0,left:0,width:'100%'}}>
-                    <div {...popupProps}>{popup}</div>
-                </div>,
-                portalContainer
-            ):null}
+            <Popup  portalContainer={portalContainer} visible={visible} >
+                <div {...popupProps}>{popup}</div>
+            </Popup>
         </>
     );
-}
+};
 Trigger.defaultProps={
     placement:'bottomLeft',
     getPopupContainer:()=>document.body,
-    event:['hover']
+    eventType:['hover']
 };
+export default Trigger;

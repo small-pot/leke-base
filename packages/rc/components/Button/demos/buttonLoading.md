@@ -30,21 +30,21 @@ export default function(){
     };
 
     return  <>
-        <Button type='primary' className='leke-demo-container' loading>按钮</Button>
+        <Button type='main' className='leke-demo-container' loading>按钮</Button>
         <Button 
-            type='primary' 
+            type='main' 
             className='leke-demo-container' 
             shape='circle' 
             loading={loadings[0]}
             onClick={() => handleClick(0)} 
             icon={<DownloadOutlined />} />
         <Button 
-            type='primary' 
+            type='main' 
             className='leke-demo-container' 
             shape='circle' 
             loading
             icon={<DownloadOutlined />} />
-        <Button type='primary' className='leke-demo-container' loading={loadings[1]} onClick={() => handleClick(1)}>按钮</Button>
+        <Button type='main' className='leke-demo-container' loading={loadings[1]} onClick={() => handleClick(1)}>按钮</Button>
     </>;
 }
 ```

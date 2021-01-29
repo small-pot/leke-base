@@ -3,20 +3,26 @@ import {renderToString} from "react-dom/server";
 import {configType} from './types';
 export {SSRPage} from './types';
 
-function getAssets (manifest,chunkName,entrypoints='app') {
+function getAssets (manifest,chunkName) {
     const {publicPath,namedChunkGroups}=manifest;
-    const chunkNames=[chunkName,entrypoints];
     const css=[];
     const scripts=[];
-    chunkNames.forEach(key=>{
-        namedChunkGroups[key].assets.forEach(src=>{
-            if(/\.css$/.test(src)){
-                css.unshift(publicPath+src);
-            }else if(/(?<!\.hot-update)\.js$/.test(src)){
-                scripts.push(publicPath+src);
-            }
-        });
+    namedChunkGroups[chunkName].assets.forEach(item=>{
+        const src=item.name
+        if(/\.css$/.test(src)){
+            css.push(publicPath+src);
+        }else if(/(?<!\.hot-update)\.js$/.test(src)){
+            scripts.push(publicPath+src);
+        }
     });
+    namedChunkGroups['app'].assets.forEach((item)=>{
+        const src=item.name
+        if(/\.css$/.test(src)){
+            css.unshift(publicPath+src);
+        }else if(/(?<!\.hot-update)\.js$/.test(src)){
+            scripts.push(publicPath+src);
+        }
+    })
     return {css,scripts};
 }
 function getRouterConfig(req){
@@ -109,9 +115,9 @@ export default function start(config:configType) {
             </>
         );
     };
-    const {publicPath,createRequest}=config;
+    const {publicPath,createRequest,errorInterceptor}=config;
     return async function (req, res, next,manifest) {
-        if(publicPath&&req.path.indexOf(publicPath)!==0){
+        if(publicPath&&!new RegExp('^'+publicPath+'(/|$)').test(req.path)){
             return next();
         }
         const route=getRoute(req.path);
@@ -146,7 +152,11 @@ export default function start(config:configType) {
                 res.end(getJsCode({data,css,scripts}));
             }
         } catch (e) {
-            next(e);
+            if(typeof errorInterceptor==='function'){
+                errorInterceptor(e,req,res,next)
+            }else{
+                next(e);
+            }
         }
     };
 }
