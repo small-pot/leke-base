@@ -1,3 +1,4 @@
+const webpack=require('webpack');
 const baseWebpackConfig=require('./webpack.base.config');
 const {merge}=require('webpack-merge');
 const nodeExternals=require("webpack-node-externals");
@@ -25,7 +26,12 @@ const config = merge(baseWebpackConfig,{
     externals: [nodeExternals()],  // 不绑定node模块，保留为 require()
     module: {
         rules:getRules('node')
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify('development')
+        })
+    ]
 });
 if(typeof webpackConfig==='function'){
     webpackConfig(config);

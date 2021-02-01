@@ -1,4 +1,3 @@
-const webpack=require("webpack");
 const path=require('path');
 const isPro=process.env.NODE_ENV==='production';
 const {alias,publicPath}=require('../resolveConfig');
@@ -12,10 +11,5 @@ module.exports={
     resolve: {
         extensions: [".js", ".jsx",".ts",".tsx", ".json"],
         alias
-    },
-    plugins: [
-        new webpack.DefinePlugin({
-            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
-        })
-    ]
+    }
 };

@@ -1,3 +1,4 @@
+const webpack=require('webpack');
 const baseWebpackConfig=require('./webpack.base.config');
 const {merge}=require('webpack-merge');
 const getRules=require('./getRules');
@@ -21,7 +22,12 @@ const config = merge(baseWebpackConfig,{
         rules: getRules('node')
     },
     target: "node",  // 指定node运行环境
-    externals: ['react','react-dom','axios','qs']
+    externals: ['react','react-dom','axios','qs'],
+    plugins: [
+        new webpack.DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify('production')
+        })
+    ]
 });
 if(typeof webpackConfig==='function'){
     webpackConfig(config);

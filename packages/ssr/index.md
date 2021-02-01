@@ -91,15 +91,15 @@ export default start({
     },
     errorInterceptor(error,req,res,next){
         //错误拦截器,此方法拦截错误并处理，未处理的错误请执行next(error)
-        const status=error?error.status:null
+        const status=error?error.status:null;
         switch (status) {
-            case 404:
-                res.redirect('https://repository.leke.cn/error/404.htm')
-                break;
+        case 404:
+            res.redirect('https://repository.leke.cn/error/404.htm');
+            break;
             //.....
-            default:
-                next(error)
-                break;
+        default:
+            next(error);
+            break;
         }
     },
     routes:[

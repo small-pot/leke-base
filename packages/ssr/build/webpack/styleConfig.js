@@ -7,7 +7,7 @@ const modulesOption={
     modules:{
         localIdentName: '[local]_[hash:base64:5]',
         auto(filename) {
-            return filename.indexOf('node_modules')===-1
+            return filename.indexOf('node_modules')===-1;
         }
     }
 };

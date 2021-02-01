@@ -63,12 +63,12 @@ export default function Select(props:selectPropsType) {
     }=props;
     const inputRef=useRef<HTMLInputElement>(null);
     const selectorRef=useRef<HTMLDivElement>(null);
-    const optionListRef=useRef(null)
+    const optionListRef=useRef(null);
     const selectedOptionsRef=useRef([]);
     const [searchValue,setSearchValue]=useControl(props.searchValue,props.onSearch,'');
     const [visible,setVisible]=useControl(props.visible,props.onVisibleChange,false);
     const [value,onChange]=useControl<valueType>(props.value,props.onChange,props.defaultValue);
-    const [activeIndex,setActiveIndex]=useState(-1)
+    const [activeIndex,setActiveIndex]=useState(-1);
     const {label,value:valueKey,disabled:disabledKey}=Object.assign({},defaultFieldNames,fieldNames);
     const values=toArray(value);
     const list=useMemo(()=>{
@@ -112,13 +112,13 @@ export default function Select(props:selectPropsType) {
     }
     function renderItem(item,index) {
         const selected=value===item[valueKey]||(Array.isArray(value)&&value.indexOf(item[valueKey])!==-1);
-        const active=activeIndex===index
+        const active=activeIndex===index;
         return (
             <div
                 className={classNames('leke-option',active?'leke-option-active':'',selected?'leke-option-selected':'',item[disabledKey]?'leke-option-disabled':'')}
                 key={item[valueKey]}
                 onMouseEnter={()=>{
-                    setActiveIndex(index)
+                    setActiveIndex(index);
                 }}
                 onClick={()=>{
                     if(item[disabledKey]){
@@ -158,14 +158,14 @@ export default function Select(props:selectPropsType) {
     }
 
     const onVisibleChange=useCallback((show)=>{
-        setVisible(show)
+        setVisible(show);
         if(!show){
-            setSearchValue('')
+            setSearchValue('');
         }
-    },[setSearchValue,setVisible])
+    },[setSearchValue,setVisible]);
 
     function onMouseDown(e) {
-        e.preventDefault()
+        e.preventDefault();
         if(!inputRef.current){
             return;
         }
@@ -177,41 +177,41 @@ export default function Select(props:selectPropsType) {
     }
     function onKeyDown(e) {
         if(!visible||!optionListRef.current || options.findIndex(item=>!item[disabledKey])===-1){
-            return
+            return;
         }
-        const keyCode=e.keyCode
-        const maxIndex=options.length-1
+        const keyCode=e.keyCode;
+        const maxIndex=options.length-1;
         if(keyCode===38){
-            e.preventDefault()
+            e.preventDefault();
             const newIndex=(function () {
-                let index=activeIndex
+                let index=activeIndex;
                 do{
-                    index=index-1<0?maxIndex:index-1
-                } while (options[index][disabledKey])
-                return index
-            }())
-            setActiveIndex(newIndex)
-            optionListRef.current.scrollToIndex(newIndex)
+                    index=index-1<0?maxIndex:index-1;
+                } while (options[index][disabledKey]);
+                return index;
+            }());
+            setActiveIndex(newIndex);
+            optionListRef.current.scrollToIndex(newIndex);
         }else if(keyCode===40){
-            e.preventDefault()
+            e.preventDefault();
             const newIndex=(function () {
-                let index=activeIndex
+                let index=activeIndex;
                 do{
-                    index=index+1>maxIndex?0:index+1
-                } while (options[index][disabledKey])
-                return index
-            }())
-            setActiveIndex(newIndex)
-            optionListRef.current.scrollToIndex(newIndex)
+                    index=index+1>maxIndex?0:index+1;
+                } while (options[index][disabledKey]);
+                return index;
+            }());
+            setActiveIndex(newIndex);
+            optionListRef.current.scrollToIndex(newIndex);
         }else if(keyCode===13){
-            const item=options[activeIndex]
+            const item=options[activeIndex];
             if(item){
-                e.preventDefault()
-                handle(item)
+                e.preventDefault();
+                handle(item);
             }
         }
     }
-    const readOnly=!showSearch||disabled
+    const readOnly=!showSearch||disabled;
     return(
         <Dropdown
             placement='bottomLeft'

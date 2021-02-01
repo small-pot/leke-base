@@ -22,35 +22,35 @@ const OptionList=forwardRef(function (props:OptionListPropsType,ref) {
     useImperativeHandle(ref,()=>{
         return {
             scrollToIndex(index){
-                const scrollBar=scrollBarRef.current
+                const scrollBar=scrollBarRef.current;
                 if(scrollBar){
-                    const maxScrollTop=totalHeight-listHeight
-                    const oldScrollTop=scrollBar.scrollTop
-                    const newScrollTop=Math.min(maxScrollTop,index*itemHeight)
+                    const maxScrollTop=totalHeight-listHeight;
+                    const oldScrollTop=scrollBar.scrollTop;
+                    const newScrollTop=Math.min(maxScrollTop,index*itemHeight);
                     const inView = (top)=>{
-                        return top>=oldScrollTop && top<=oldScrollTop+listHeight
-                    }
+                        return top>=oldScrollTop && top<=oldScrollTop+listHeight;
+                    };
                     if(!inView(newScrollTop) || !inView(newScrollTop+itemHeight)){
-                        scrollBar.scrollTop=newScrollTop
+                        scrollBar.scrollTop=newScrollTop;
                     }
                 }
             }
-        }
-    },[haveScrollBar,itemHeight,listHeight,scrollBarRef])
+        };
+    },[totalHeight,itemHeight,listHeight]);
 
     useEffect(()=>{
         if(haveScrollBar){
             const onWheel = (e)=>{
                 e.preventDefault();
                 scrollBarRef.current.scrollTop=scrollBarRef.current.scrollTop+e.deltaY;
-            }
+            };
             const container=containerRef.current;
             container.addEventListener('wheel',onWheel);
             return ()=>{
                 container.removeEventListener('wheel',onWheel);
             };
         }
-    },[scrollBarRef,containerRef,haveScrollBar]);
+    },[haveScrollBar]);
     return(
         <div ref={containerRef}  className='leke-option-container'>
             <div className='leke-option-list' style={{maxHeight:listHeight}}>
@@ -63,9 +63,9 @@ const OptionList=forwardRef(function (props:OptionListPropsType,ref) {
             }
         </div>
     );
-})
+});
 OptionList.defaultProps={
     itemHeight:32,
     listHeight:256
 };
-export default OptionList
+export default OptionList;

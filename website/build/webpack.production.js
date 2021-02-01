@@ -15,7 +15,7 @@ const postcssLoader={
             ]
         }
     }
-}
+};
 const buildConfig = merge(baseWebpackConfig, {
     mode: 'production',
     output: {

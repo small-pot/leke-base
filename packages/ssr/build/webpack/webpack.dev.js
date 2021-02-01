@@ -34,6 +34,7 @@ const config =merge(baseWebpackConfig,{
     },
     plugins: [
         new webpack.DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify('development'),
             "process.env.WEB": JSON.stringify(true)
         }),
         new MiniCssExtractPlugin({

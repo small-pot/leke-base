@@ -20,7 +20,7 @@ function getAssets (manifest,chunkName) {
         }else if(/(?<!\.hot-update)\.js$/.test(src)){
             scripts.push(publicPath+src);
         }
-    })
+    });
     return {css,scripts};
 }
 function getRouterConfig(req){
@@ -151,7 +151,7 @@ export default function start(config:configType) {
             }
         } catch (e) {
             if(typeof errorInterceptor==='function'){
-                errorInterceptor(e,req,res,next)
+                errorInterceptor(e,req,res,next);
             }else{
                 next(e);
             }
