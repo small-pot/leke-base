@@ -1,15 +1,9 @@
-const nodePath = require('path');
-const fs = require('fs');
-const makeDir = require('make-dir');
+const path = require('path');
+const mkdirp = require('mkdirp')
 
 class resourcePlugin {
-    constructor({
-        filename = 'resource.json',
-        path,
-        writeToDisk,
-        outputAsset = true,
-    } = {}) {
-        this.opts = {filename, writeToDisk, outputAsset, path};
+    constructor(filename='resource.json') {
+        this.filename=filename
         this.compiler = null;
     }
 
@@ -24,33 +18,22 @@ class resourcePlugin {
             2
         );
 
-        if (this.opts.outputAsset) {
-            hookCompiler.assets[this.opts.filename] = {
-                source() {
-                    return result;
-                },
-                size() {
-                    return result.length;
-                },
-            };
-        }
-
-        if (this.opts.writeToDisk) {
-            this.writeAssetsFile(result);
-        }
+        this.writeAssetsFile(result);
 
         callback();
     }
 
-    writeAssetsFile(manifest){
-        const outputFolder =
-            this.opts.writeToDisk.filename || this.compiler.options.output.path;
-
-        const outputFile = nodePath.resolve(outputFolder, this.opts.filename);
-
+    writeAssetsFile(json){
+        const outputDir=this.compiler.outputPath
+        const fs=this.compiler.outputFileSystem
+        const outputFile = path.resolve(outputDir, this.filename);
         try {
-            if (!fs.existsSync(outputFolder)) {
-                makeDir.sync(outputFolder);
+            if (!fs.existsSync(outputDir)) {
+                if(fs.mkdirpSync){
+                    fs.mkdirpSync(outputDir);
+                }else{
+                    mkdirp.sync(outputDir);
+                }
             }
         } catch (err) {
             if (err.code !== 'EEXIST') {
@@ -58,15 +41,12 @@ class resourcePlugin {
             }
         }
 
-        fs.writeFileSync(outputFile, manifest);
+        fs.writeFileSync(outputFile, json);
     }
 
     apply(compiler) {
         this.compiler = compiler;
-        compiler.options.output.jsonpFunction = 'webpackSSR';
-        if (this.opts.outputAsset || this.opts.writeToDisk) {
-            compiler.hooks.emit.tapAsync('manifest-plugin', this.handleEmit.bind(this));
-        }
+        compiler.hooks.emit.tapAsync('resource-plugin', this.handleEmit.bind(this));
     }
 }
 
