@@ -14,10 +14,20 @@ class resourcePlugin {
     }
 
     handleEmit(hookCompiler, callback){
-        const stats = hookCompiler.getStats().toJson();
+        const stats = hookCompiler.getStats().toJson({
+            hash: false,
+            publicPath: true,
+            assets: false,
+            chunks: false,
+            modules: false,
+            source: false,
+            errorDetails: false,
+            timings: false,
+        });
         const result = JSON.stringify(
             {
                 publicPath:stats.publicPath,
+                entrypoints:stats.entrypoints,
                 namedChunkGroups:stats.namedChunkGroups
             },
             null,

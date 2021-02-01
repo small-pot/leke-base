@@ -1,21 +1,16 @@
 const MiniCssExtractPlugin=require('mini-css-extract-plugin');
+const isProduction=process.env.NODE_ENV==='production';
 const {cssModules,modifyVars,postcssConfig,browsers}=require('../resolveConfig');
 const postcssPresetEnv=require('postcss-preset-env');
 
 const modulesOption={
-    localIdentName: '[local]_[hash:base64:5]',
-    auto(filename) {
-        return filename.indexOf('node_modules')===-1
-    }
-};
-const lessConfig={
-    loader: "less-loader",
-    options: {
-        lessOptions:{
-            modifyVars
+    modules:{
+        localIdentName: '[local]_[hash:base64:5]',
+        auto(filename) {
+            return filename.indexOf('node_modules')===-1
         }
     }
-}
+};
 const config={
     postcssOptions: {
         plugins: [
@@ -29,11 +24,12 @@ if(typeof postcssConfig==='function'){
 const postcss={loader:'postcss-loader',options:config};
 const webCSSConfig=[
     {
-        loader: MiniCssExtractPlugin.loader
+        loader: MiniCssExtractPlugin.loader,
+        options:{hmr:!isProduction,reloadAll:true}
     },
     {
         loader: 'css-loader',
-        options: {modules:cssModules===true?modulesOption:cssModules}
+        options: Object.assign({},cssModules===true?modulesOption:cssModules)
     },
     postcss
 ];
@@ -46,14 +42,20 @@ const webStyleConfig = [
         test: /\.less$/,
         use: [
             ...webCSSConfig,
-            lessConfig
+            {
+                loader: "less-loader",
+                options: {
+                    modifyVars,
+                    javascriptEnabled: true
+                }
+            }
         ]
     }
 ];
 const nodeCssConfig=[
     {
         loader: 'css-loader',
-        options: {modules:{...modulesOption,exportOnlyLocals: true}}
+        options: {...modulesOption,onlyLocals: true}
     }
 ];
 const nodeStyleConfig = [
@@ -65,7 +67,12 @@ const nodeStyleConfig = [
         test: /\.less$/,
         use: [
             ...nodeCssConfig,
-            lessConfig
+            {
+                loader: "less-loader",
+                options: {
+                    javascriptEnabled: true
+                }
+            }
         ]
     }
 ];
