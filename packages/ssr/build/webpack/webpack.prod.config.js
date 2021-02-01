@@ -7,11 +7,12 @@ const TerserPlugin = require('terser-webpack-plugin');
 const ResourcePlugin=require('./resource-plugin');
 const getRules=require('./getRules');
 const {resolveEntry,webpackConfig}=require('../resolveConfig');
-const {clientName,serverName}=require('../static')
+const {clientName,serverName}=require('../static');
 
 const clientConfig = merge(baseWebpackConfig, {
     mode: 'production',
     entry: {[clientName]:resolveEntry('core-js')},
+    devtool:false,
     output: {
         filename: 'js/[name].[chunkhash].js',
     },
@@ -47,6 +48,7 @@ const clientConfig = merge(baseWebpackConfig, {
 const serverConfig = merge(baseWebpackConfig,{
     mode:'production',
     entry: {[serverName]:resolveEntry()},
+    devtool:false,
     output: {
         filename: `${serverName}.js`,
         libraryTarget: "commonjs2"  // 打包成commonjs2规范
@@ -75,5 +77,5 @@ if(typeof webpackConfig==='function'){
     webpackConfig(clientConfig);
     webpackConfig(serverConfig);
 }
-exports.clientConfig=clientConfig
-exports.serverConfig=serverConfig
+exports.clientConfig=clientConfig;
+exports.serverConfig=serverConfig;

@@ -6,11 +6,12 @@ const CaseSensitivePathsPlugin=require('case-sensitive-paths-webpack-plugin');
 const ResourcePlugin=require('./resource-plugin');
 const getRules=require('./getRules');
 const {resolveEntry,webpackConfig}=require('../resolveConfig');
-const {clientName,serverName}=require('../static')
+const {clientName,serverName}=require('../static');
 
 const clientConfig =merge(baseWebpackConfig,{
     mode:'development',
     entry: {[clientName]:resolveEntry('core-js')},
+    devtool:'eval-source-map',
     module: {
         rules: getRules()
     },
@@ -37,6 +38,7 @@ const clientConfig =merge(baseWebpackConfig,{
 const serverConfig = merge(baseWebpackConfig,{
     mode:'development',
     entry: {[serverName]:resolveEntry()},
+    devtool:'eval-source-map',
     output: {
         filename: `${serverName}.js`,
         libraryTarget: "commonjs2"  // 打包成commonjs2规范
@@ -65,5 +67,5 @@ if(typeof webpackConfig==='function'){
     webpackConfig(clientConfig);
     webpackConfig(serverConfig);
 }
-exports.clientConfig=clientConfig
-exports.serverConfig=serverConfig
+exports.clientConfig=clientConfig;
+exports.serverConfig=serverConfig;
