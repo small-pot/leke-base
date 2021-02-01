@@ -1,5 +1,6 @@
 const path = require('path');
 const mkdirp = require('mkdirp');
+const fs = require('fs');
 
 class resourcePlugin {
     constructor(filename='resource.json') {
@@ -8,16 +9,7 @@ class resourcePlugin {
     }
 
     handleEmit(hookCompiler, callback){
-        const stats = hookCompiler.getStats().toJson({
-            hash: false,
-            publicPath: true,
-            assets: false,
-            chunks: false,
-            modules: false,
-            source: false,
-            errorDetails: false,
-            timings: false,
-        });
+        const stats = hookCompiler.getStats().toJson();
         const result = JSON.stringify(
             {
                 publicPath:stats.publicPath,
@@ -32,25 +24,21 @@ class resourcePlugin {
         callback();
     }
 
-    writeAssetsFile(json){
+    writeAssetsFile(jsonString){
         const outputDir=this.compiler.outputPath;
-        const fs=this.compiler.outputFileSystem;
         const outputFile = path.resolve(outputDir, this.filename);
-        try {
+        if(this.compiler.options.mode==="development"){
+            const outputFileSystem=this.compiler.outputFileSystem;
+            if (!outputFileSystem.existsSync(outputDir)){
+                outputFileSystem.mkdirpSync(outputDir);
+            }
+            outputFileSystem.writeFileSync(outputFile, jsonString);
+        }else{
             if (!fs.existsSync(outputDir)) {
-                if(fs.mkdirpSync){
-                    fs.mkdirpSync(outputDir);
-                }else{
-                    mkdirp.sync(outputDir);
-                }
+                mkdirp.sync(outputDir);
             }
-        } catch (err) {
-            if (err.code !== 'EEXIST') {
-                throw err;
-            }
+            fs.writeFileSync(outputFile, jsonString);
         }
-
-        fs.writeFileSync(outputFile, json);
     }
 
     apply(compiler) {
