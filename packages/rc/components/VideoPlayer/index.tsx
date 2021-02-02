@@ -54,7 +54,7 @@ class Video extends React.PureComponent<IVideoProps>{
         volume===undefined&&onVolumeChange&&this.instance.on('volumeChange',(step)=>{
             onVolumeChange(step);
         });
-        
+
         fullscreen===undefined&&onFullscreenChange&&this.instance.on('fullscreenChange',(status)=>{
             onFullscreenChange(status);
         });
@@ -63,7 +63,7 @@ class Video extends React.PureComponent<IVideoProps>{
             onPausedChange(true);
         });
 
-        onTouchTimeChange&&this.instance.on('timeChange',onTouchTimeChange);
+        onTouchTimeChange&&this.instance.on('touchTimeChange',onTouchTimeChange);
     }
     
     componentDidUpdate(prevProps){

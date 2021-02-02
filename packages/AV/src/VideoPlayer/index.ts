@@ -11,6 +11,10 @@ class Player {
     private uid: number;
     private width: number;
     private height: number;
+    private paused:boolean;
+    private currentTime:number;
+    private duration:number;
+    private volume:number;
     private options: any;
     private browser: string;
     private event: any;
@@ -44,6 +48,7 @@ class Player {
         this.loadingFlag = false;
         this.loadingTimer = null;
         this.isFullscreen = false;
+        this.volume=100;
         this.template = txt;
         this.init();
     }
@@ -177,29 +182,26 @@ class Player {
             this.event.trigger('containerClick');
         });
         this.video.addEventListener('play', () => {
+            this.paused=false;
             this.event.trigger('play');
             if (this.video.currentTime === 0) {
                 this.event.trigger('start');
             }
         });
         this.video.addEventListener('pause', () => {
+            this.paused=true;
             this.event.trigger('pause');
+        });
+        this.video.addEventListener('loadedmetadata', () => {
+            this.duration=this.video.duration;
+            this.event.trigger('loadedmetadata');
         });
         // const fn = throttle((time) => { this.event.trigger('timeupdate', time); }, 1000, { leading: true });
         this.video.addEventListener('timeupdate', () => {
+            this.currentTime=this.video.currentTime;
             if(this.loading)this.closeLoading();
             this.event.trigger('timeupdate', this.video.currentTime);
         });
-        // this.video.addEventListener('loadeddata', ()=> {
-        //     if(!this.options.poster){
-        //         const canvas = document.createElement('canvas');
-        //         canvas.width = this.width;
-        //         canvas.height = this.height;
-        //         canvas.getContext('2d').drawImage(this.video, 0, 0, canvas.width, canvas.height);
-        //         const src = canvas.toDataURL('image/png');
-        //         this.video.setAttribute('poster', src);
-        //     }
-        // });
         this.event.on('click', (nextPaused) => {
             if (!this.proxyPausedChange) {
                 nextPaused ?this.video.pause(): this.video.play();
@@ -227,6 +229,9 @@ class Player {
                 this.error.style.display='block';
             });
         });
+        this.event.on('volumeChange', (step) => {
+            this.volume=step;
+        });   
         this.event.on('entryFullscreen', () => {
             this.isFullscreen = true;
             entryFullscreen(this.el);
@@ -254,7 +259,6 @@ class Player {
             this.closeLoading();
             this.mask.style.display='block';
         });
-        
         // 空格符控制暂停/播放
         const keyDown = e => {
             if (e.keyCode === 32) {
@@ -282,22 +286,46 @@ class Player {
         this.loading.style.display='';
     }
 
+    play(){
+        this.video.play();
+    }
+    pause(){
+        this.video.pause();
+    }
+    changeTime(time:number){
+        if (time < 0) {
+            time = 0;
+        }
+        if (time>this.duration) {
+            time = this.duration;
+        }
+        this.trigger('timeChange',time/this.duration*100);
+    }
+    changeVolume(volume:number){
+        if (volume < 0) {
+            volume = 0;
+        }
+        if (volume>100) {
+            volume = 100;
+        }
+        this.trigger('volumeChange',volume);
+    }
+    entryFullscreen(){
+        this.trigger('entryFullscreen');
+    }
+    exitFullscreen(){
+        this.trigger('exitFullscreen');
+    }
     addEventListener(type, listener) {
         this.event.on(type, listener);
     }
     on(type, listener) {
         this.event.on(type, listener);
     }
-    addListener(type, listener) {
-        this.event.on(type, listener);
-    }
     removeEventListener(type, listener) {
         this.event.off(type, listener);
     }
     off(type, listener) {
-        this.event.off(type, listener);
-    }
-    removeListener(type, listener) {
         this.event.off(type, listener);
     }
     getListener(type) {

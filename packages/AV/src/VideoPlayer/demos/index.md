@@ -26,16 +26,18 @@
 		height:492,
 		src:'https://hls.cntv.kcdnvip.com/asp/hls/1200/0303000a/3/default/c9d6fcb3ff7e42f6b6db4199768ff249/1200.m3u8?maxbr=2048',
 		autoplay:true,
-		...
+		onPausedChange:(paused)=>{
+			console.log(paused)
+		}
 	});
-	// video Element对象
-	player.video.pause();
+	// 方法
+	player.pause();
 	// 属性
 	console.log(player.video.duration);
 	// 事件
-	player.addEventListener('error',()=>{});
-	player.addEventListener('ended',()=>{});
-	player.addEventListener('timeupdate',()=>{});
+	player.on('error',()=>{});
+	player.on('ended',()=>{});
+	player.on('timeupdate',()=>{});
 </script>
 ```
 
@@ -52,47 +54,20 @@
 | muted | 静音 | boolean | false |
 
 ## 属性
-
-#### 实列会暴露挂载的Video Element，可以取到所有的原生属性。之外，提供额外的属性
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
 | video | Video Element | element | - |
+| currentTime | 当前时间 | number | - |
+| duration | 视频时长 | number | - |
+| volume | 视频音量 | number | 1 |
 | isFullscreen | 是否处于全屏 | boolean | false |
 
-
-## 事件
-
-#### 支持原有Video Element的原生事件。之外，提供额外的事件
-
-| 事件 | 说明 | 类型 | 默认值 | 
+## 方法
+| 方法 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
-| onReady | 视频组件加载完毕后的回调 | function | - |
-| onLoad | 组件媒体信息获取完毕后的回调 | function | - |
-| onStart | 视频开始播放的回调 | function | - |
-| onEnded | 视频结束播放的回调 | function | - |
-| onPausedChange | 暂停/播放变更的回调 | function | - |
-| onTimeChange |  | 播放时间变更的回调 | - |
-| onVolumeChange | 音量变更的回调 | function | - |
-| onFullscreenChange | 进入/退出全屏的回调 | function | - |
-
-```html
-<script>
-	const player=new VideoPlayer({
-		el:document.querySelector('#root'),
-		width:400,
-		height:200,
-		src:'https://hls.cntv.kcdnvip.com/asp/hls/1200/0303000a/3/default/c9d6fcb3ff7e42f6b6db4199768ff249/1200.m3u8?maxbr=2048',
-		autoplay:true,
-		onPausedChange:(paused)=>{
-			console.log(paused)
-		}
-		...
-	});
-	player.addEventListener('click',()=>{
-        console.log('click')
-    });
-	player.addEventListener('timeupdate',()=>{
-        console.log('timeupdate')
-    });
-</script>
-```
+| play | 播放 | function | - |
+| pause | 暂停 | function | - |
+| changeTime | 时间跳转 | function(time)=>void | - |
+| changeVolume | 音量调节 | function(volume)=>void | - |
+| entryFullscreen | 进入全屏 | function | - |
+| exitFullscreen | 退出全屏 | function | - |

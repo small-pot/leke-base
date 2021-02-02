@@ -7,17 +7,23 @@ export default class EventBase {
         if (!this.events[type]) this.events[type] = [];
         return this.events[type];
     }
-    addListener = (type, listener) => {
-        this.getListener(type).push(listener);
+    on = (types, listener) => {
+        if(Array.isArray(types)){
+            types.forEach(type=>{
+                this.getListener(type).push(listener);
+            });
+        }else{
+            this.getListener(types).push(listener);
+        }
     }
-    removeListener = (type, listener) => {
-        this.getListener(type).filter(item => item !== listener);
-    }
-    on = (type, listener) => {
-        return this.addListener(type, listener);
-    }
-    off = (type, listener) => {
-        return this.removeListener(type, listener);
+    off = (types, listener) => {
+        if(Array.isArray(types)){
+            types.forEach(type=>{
+                this.getListener(type).filter(item => item !== listener);
+            });
+        }else{
+            this.getListener(types).filter(item => item !== listener);
+        }
     }
     trigger = (...args) => {
         const [type, ...params] = args;

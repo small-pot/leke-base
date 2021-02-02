@@ -51,9 +51,12 @@ class ProcessControl extends Component {
             this.slider.track.style.display = 'block';
             this.slider.step.style.display = 'none';
         });
-        this.event.on('touchTimeChange', (step) => {
+        this.event.on('timeChange', (step) => {
             this.updateSlider(step);
             this.video.currentTime = step / 100 * this.video.duration;
+        });
+        this.event.on('touchTimeChange',(step)=>{
+            this.event.trigger('timeChange',step);
         });
         // 点击进度条进度跳转
         this.el.addEventListener('click', (e) => {
