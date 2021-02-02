@@ -31,12 +31,12 @@ const subscription=[];
 export const useData=<T=any>(selector:(data)=>T,compare=shallowEqual):T=>{
     const {getData}=useStore();
     const [state,setState]=useReducer((oldState)=>{
-        const newState=selector(getData())
+        const newState=selector(getData());
         if(!compare(oldState,newState)){
             return newState;
         }
-        return oldState
-    },selector(getData()))
+        return oldState;
+    },selector(getData()));
 
     useEffect(()=>{
         subscription.push(setState);

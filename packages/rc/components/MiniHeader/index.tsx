@@ -26,8 +26,8 @@ export interface MiniHeaderProps {
 
 export default function MiniHeader(props:MiniHeaderProps) {
     const {showLogo} = props;
-    const {data:userInfo,loading}=useResolve<userInfoTypes>(props.userInfo===undefined?getUserInfo:props.userInfo)
-    const {data:messageCount}=useResolve<number>(props.messageCount===undefined?getMessageCount:props.messageCount)
+    const {data:userInfo,loading}=useResolve<userInfoTypes>(props.userInfo===undefined?getUserInfo:props.userInfo);
+    const {data:messageCount}=useResolve<number>(props.messageCount===undefined?getMessageCount:props.messageCount);
 
     if(loading){
         return <div className='leke-miniHeader'><div className="leke-miniHeader-content"></div></div>;

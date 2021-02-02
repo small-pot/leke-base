@@ -55,17 +55,17 @@ function contains (container:HTMLElement,target:HTMLElement){
     }
     return false;
 }
-const useLayoutEffect=typeof window==='object'?React.useLayoutEffect:useEffect
+const useLayoutEffect=typeof window==='object'?React.useLayoutEffect:useEffect;
 function Trigger (props) {
     const {children,eventType,popup,popupStyle,popupClassName,getPopupContainer,placement,autoSize,disabled}=props;
     const [visible,setVisible]=useControl(props.visible,props.onVisibleChange,false);
     const triggerRef=useRef<HTMLElement>(null);
     const popupRef=useRef<HTMLDivElement>(null);
-    const timerRef=useRef(null)
+    const timerRef=useRef(null);
     const [portalContainer,setPortalContainer]=useReducer(()=>getPopupContainer(triggerRef.current),null);
     const child=React.Children.only(children);
     const childProps:childPropsType=child.props;
-    const includeClick=eventType.indexOf('click')!==-1
+    const includeClick=eventType.indexOf('click')!==-1;
     const includeFocus=eventType.indexOf('focus')!==-1;
     const includeHover=eventType.indexOf('hover')!==-1;
 
@@ -87,29 +87,29 @@ function Trigger (props) {
     };
     const clearDelay=useCallback(()=>{
         if(timerRef.current){
-            clearTimeout(timerRef.current)
+            clearTimeout(timerRef.current);
         }
-    },[])
+    },[]);
     const delaySetVisible=useCallback((v)=>{
-        clearDelay()
+        clearDelay();
         timerRef.current=setTimeout(()=>{
-            setVisible(v)
-        },50)
-    },[clearDelay,timerRef,setVisible])
+            setVisible(v);
+        },50);
+    },[clearDelay,timerRef,setVisible]);
     if(!disabled){
         if(includeClick){
             cloneProps.onClick=(e)=>{
-                delaySetVisible(true)
+                delaySetVisible(true);
                 childProps.onClick?.(e);
             };
         }
         if(includeFocus){
             cloneProps.onFocus=(e)=>{
-                delaySetVisible(true)
+                delaySetVisible(true);
                 childProps.onFocus?.(e);
             };
             cloneProps.onBlur=(e)=>{
-                delaySetVisible(false)
+                delaySetVisible(false);
                 childProps.onBlur?.(e);
             };
             popupProps.onMouseDown=mousedown;
@@ -117,15 +117,15 @@ function Trigger (props) {
         if(includeHover){
             cloneProps.onMouseEnter=(e)=>{
                 childProps.onMouseEnter?.(e);
-                delaySetVisible(true)
+                delaySetVisible(true);
             };
             cloneProps.onMouseLeave=(e)=>{
                 childProps.onMouseLeave?.(e);
-                delaySetVisible(false)
+                delaySetVisible(false);
             };
             popupProps.onMouseEnter=clearDelay;
             popupProps.onMouseLeave=()=>{
-                delaySetVisible(false)
+                delaySetVisible(false);
             };
         }
     }
@@ -148,27 +148,27 @@ function Trigger (props) {
                 }
                 setPopupPosition(popupRef.current,triggerRef.current,portalContainer,placement);
             }else{
-                setPortalContainer()
+                setPortalContainer();
             }
         }
-    },[children,visible,triggerRef,popupRef,placement,portalContainer,setPortalContainer,autoSize])
+    },[children,visible,triggerRef,popupRef,placement,portalContainer,setPortalContainer,autoSize]);
 
-    useEffect(clearDelay,[clearDelay])
+    useEffect(clearDelay,[clearDelay]);
 
     useEffect(()=>{
         if(includeClick){
             const click=(e)=>{
-                const {target}=e
+                const {target}=e;
                 if(popupRef.current&&!contains(triggerRef.current,target)&&!contains(popupRef.current,target)){
-                    delaySetVisible(false)
+                    delaySetVisible(false);
                 }
-            }
-            document.addEventListener('click',click)
+            };
+            document.addEventListener('click',click);
             return ()=>{
-                document.removeEventListener('click',click)
-            }
+                document.removeEventListener('click',click);
+            };
         }
-    },[includeClick,delaySetVisible,triggerRef,popupRef])
+    },[includeClick,delaySetVisible,triggerRef,popupRef]);
     return(
         <>
             {React.cloneElement(child,cloneProps)}
