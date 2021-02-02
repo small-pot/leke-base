@@ -36,7 +36,7 @@ default:
 module.exports = {
     transform:{
         '\\.(ts|js)x?$':'babel-jest',
-        '\\.html':'jest-raw-loader',
+        '\\.html$':'jest-raw-loader',
         '\\.md$':path.resolve('./jest-markdown.js')
     },
     moduleNameMapper:{
