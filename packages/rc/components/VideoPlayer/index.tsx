@@ -62,7 +62,9 @@ class Video extends React.PureComponent<IVideoProps>{
             onPausedChange(true);
         });
 
-        onTouchTimeChange&&this.instance.on('touchTimeChange',onTouchTimeChange);
+        onTouchTimeChange&&this.instance.on('touchTimeChange',(step)=>{
+            onTouchTimeChange(step/100*this.instance.duration);
+        });
     }
     
     componentDidUpdate(prevProps){
