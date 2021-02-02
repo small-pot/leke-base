@@ -12,16 +12,16 @@ const config={
         "ie >= 11"
     ]
 };
-const alias={}
+const alias={};
 const devServer={
     port:9999,
     serveIndex:false,
     host:'localhost'
-}
+};
 if(fs.existsSync(configPath)){
     const setting=require(configPath);
     Object.assign(alias,setting.alias);
-    Object.assign(devServer,setting.devServer)
+    Object.assign(devServer,setting.devServer);
     Object.assign(config,setting,{alias,devServer});
 }
 const {publicPath,entry}=config;

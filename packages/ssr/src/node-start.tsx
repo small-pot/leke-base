@@ -2,14 +2,14 @@ import React from 'react';
 import {renderToString} from "react-dom/server";
 import {configType} from './types';
 export {SSRPage} from './types';
-const {clientName}=require('../build/static')
+const {clientName}=require('../build/static');
 
 function getAssets (manifest,chunkName) {
     const {publicPath,namedChunkGroups}=manifest;
     const css=[];
     const scripts=[];
     namedChunkGroups[chunkName].assets.forEach(item=>{
-        const src=item.name
+        const src=item.name;
         if(src.endsWith('.css')){
             css.push(publicPath+src);
         }else if(/(?<!\.hot-update)\.js$/.test(src)){
@@ -17,13 +17,13 @@ function getAssets (manifest,chunkName) {
         }
     });
     namedChunkGroups[clientName].assets.forEach((item)=>{
-        const src=item.name
+        const src=item.name;
         if(src.endsWith('.css')){
             css.unshift(publicPath+src);
         }else if(/(?<!\.hot-update)\.js$/.test(src)){
             scripts.push(publicPath+src);
         }
-    })
+    });
     return {css,scripts};
 }
 function getRouterConfig(req){
@@ -154,7 +154,7 @@ export default function start(config:configType) {
             }
         } catch (e) {
             if(typeof errorInterceptor==='function'){
-                errorInterceptor(e,req,res,next)
+                errorInterceptor(e,req,res,next);
             }else{
                 next(e);
             }

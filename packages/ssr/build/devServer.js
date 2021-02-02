@@ -2,7 +2,7 @@ const path=require('path');
 const webpack=require('webpack');
 const MFS=require('memory-fs');
 const vm=require('vm');
-const webpackDevServer=require('webpack-dev-server')
+const webpackDevServer=require('webpack-dev-server');
 const {clientConfig,serverConfig}=require('./webpack/webpack.dev.config.js');
 const cluster=require('cluster');
 const cookieParser=require('cookie-parser');
@@ -27,14 +27,14 @@ if (cluster.isMaster){
         ...devServer,
         before(app){
             if(typeof devServer.before==='function'){
-                devServer.before.apply(null,arguments)
+                devServer.before.apply(null,arguments);
             }
-            const jsonPath=path.join(clientCompiler.outputPath, 'resource.json')
-            const fs=clientCompiler.outputFileSystem
+            const jsonPath=path.join(clientCompiler.outputPath, 'resource.json');
+            const fs=clientCompiler.outputFileSystem;
             app.use(cookieParser());
             app.use((req, res,next) => {
                 if(render&&fs.existsSync(jsonPath)){
-                    const jsonString=fs.readFileSync(jsonPath)
+                    const jsonString=fs.readFileSync(jsonPath);
                     render(req, res,next, JSON.parse(jsonString));
                 }
             });
@@ -51,8 +51,8 @@ if (cluster.isMaster){
                 res.status(500).end(err.toString());
             });
         }
-    }
-    const server=new webpackDevServer(clientCompiler,options)
+    };
+    const server=new webpackDevServer(clientCompiler,options);
 
     server.listen(devServer.port,devServer.host);
 
