@@ -299,7 +299,7 @@ class Player {
         if (time>this.duration) {
             time = this.duration;
         }
-        this.trigger('timeChange',time/this.duration*100);
+        this.trigger('timeChange',time);
     }
     changeVolume(volume:number){
         if (volume < 0) {
