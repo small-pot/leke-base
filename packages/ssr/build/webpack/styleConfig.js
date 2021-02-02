@@ -5,7 +5,7 @@ const postcssPresetEnv=require('postcss-preset-env');
 const modulesOption={
     localIdentName: '[local]_[hash:base64:5]',
     auto(filename) {
-        return filename.indexOf('node_modules')===-1
+        return filename.indexOf('node_modules')===-1;
     }
 };
 const lessConfig={
@@ -15,12 +15,12 @@ const lessConfig={
             modifyVars
         }
     }
-}
+};
 const config={
     postcssOptions: {
         plugins: [
             postcssPresetEnv({browsers,autoprefixer:{}})
-        ],
+        ]
     }
 };
 if(typeof postcssConfig==='function'){

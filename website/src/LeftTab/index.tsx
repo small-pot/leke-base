@@ -5,7 +5,7 @@ import './index.less';
 
 
 export default function LeftTab({type,name}){
-    const typeRoutes=routes[type]
+    const typeRoutes=routes[type];
     if(!typeRoutes){
         return null;
     }

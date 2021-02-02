@@ -1,9 +1,8 @@
 const webpack=require('webpack');
-const clientWebpackConfig=require('./webpack/webpack.prod');
-const serverWebpackConfig=require('./webpack/webpack.server');
+const {clientConfig,serverConfig}=require('./webpack/webpack.prod.config.js');
 const cluster=require('cluster');
 const rimraf=require('rimraf');
-rimraf.sync(clientWebpackConfig.output.path);
+rimraf.sync(clientConfig.output.path);
 if (cluster.isMaster){
     const workerClient=cluster.fork();
     const workerServer=cluster.fork();
@@ -17,7 +16,7 @@ if (cluster.isMaster){
 }else{
     process.on('message', msg => {
         if(msg==='client'){
-            webpack(clientWebpackConfig,(err,stats)=>{
+            webpack(clientConfig,(err,stats)=>{
                 if(err){
                     console.log(err);
                 }else{
@@ -32,7 +31,7 @@ if (cluster.isMaster){
                 process.send('end');
             });
         }else{
-            webpack(serverWebpackConfig,(err,stats)=>{
+            webpack(serverConfig,(err,stats)=>{
                 if(err){
                     console.log(err);
                 }else{

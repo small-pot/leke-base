@@ -44,11 +44,11 @@ exports.buildLess=function ({stream,outDir}) {
     return dest(stream.pipe(gulpLess()),outDir);
 };
 
-exports.getBabelConfig=getBabelConfig
+exports.getBabelConfig=getBabelConfig;
 
 exports.createStream=function createStream(options){
-    const {code}=options
-    delete options.code
+    const {code}=options;
+    delete options.code;
     const stream=require('stream').Readable({ objectMode: true });
     stream._read = function () {
         this.push(new Vinyl({
@@ -58,4 +58,4 @@ exports.createStream=function createStream(options){
         this.push(null);
     };
     return stream;
-}
+};

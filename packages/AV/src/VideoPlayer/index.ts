@@ -5,7 +5,7 @@ import * as Dom from './utils/dom';
 import { VIDEO_EVENTS } from './utils/config';
 import { getVideoSize, checkBrowser,getResourceType, throttle, entryFullscreen, exitFullscreen } from './utils/share';
 import Control from './components/ControlBar';
-import txt from 'raw-loader!./template.html';
+import txt from './template.html';
 
 class Player {
     private uid: number;

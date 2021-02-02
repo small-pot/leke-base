@@ -27,6 +27,11 @@ module.exports={
                 exclude: /node_modules/
             },
             {
+                test: /\.html$/,
+                loader: 'raw-loader',
+                exclude: /node_modules/
+            },
+            {
                 test: /\.less$/,
                 use: [
                     'style-loader',
