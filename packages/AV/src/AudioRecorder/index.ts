@@ -32,7 +32,6 @@ class AudioRecorder {
     private oututSampleBits: number; //输出采样数位 8, 16
     public onStart: () => void; //开始录音回调
     public onStop: (bold: any) => void; //结束录音回调
-    public ondataavailable: (event) => void;
 
     /**
      *
@@ -105,7 +104,9 @@ class AudioRecorder {
         this.inputSampleBits = 16; //输入采样数位 8, 16
         this.outputSampleRate = this.config.sampleRate; //输出采样率
         this.oututSampleBits = this.config.sampleBits; //输出采样数位 8, 16
-
+        this.Recorder.onaudioprocess = (e) => {
+            this.input(e.inputBuffer.getChannelData(0));
+        };
         this.run();
     }
     input(data) {
@@ -419,9 +420,6 @@ class AudioRecorder {
         this.Recorder.disconnect();
         this.context && this.context.close();
     }
-    // this.close=function(){
-    //     this.Recorder.closeContext()
-    // }
     //录音计时
     private run(): void {
         this.start();
