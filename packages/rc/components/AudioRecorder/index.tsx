@@ -1,8 +1,8 @@
 /*
- * @Description: 
+ * @Description:
  * @Author: gulingxin
  * @Date: 2021-01-26 13:40:25
- * @LastEditTime: 2021-01-28 13:52:23
+ * @LastEditTime: 2021-02-02 19:35:36
  */
 import * as React from "react";
 import { AudioRecorder as Recorder, AudioPlayer } from "@leke/AV";
@@ -12,13 +12,13 @@ type AudioElement = {
     baseFile: any;
 };
 interface IProps {
-    isViewAudio?: boolean;  //是否展示录音音频
-    duration?: number;  //录音限时
-    url?:number;    //音频地址
-    onStart?: () => void;   //开始录音回调
-    onStop?: (e: any) => void;  //结束录音回调
-    onDataAvailable?: (e: AudioElement) => void;
-    onReRecorder?:() => void;   //重录回调
+    isViewAudio?: boolean; //是否展示录音音频
+    duration?: number; //录音限时
+    url?: string; //音频地址
+    onStart?: () => void; //开始录音回调
+    onStop?: (e: any) => void; //结束录音回调
+    onReRecorder?: () => void; //重录回调
+    loadSrc?: any; //音频上传
 }
 interface IState {
     isSwitch: boolean;
@@ -38,7 +38,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
         };
     }
     //初始化recorder
-    startRecord = (isStart?:boolean) => {
+    startRecord = (isStart?: boolean) => {
         if (this.recorderRef.current) {
             const recorder = new Recorder({
                 elem: this.recorderRef.current,
@@ -46,28 +46,30 @@ class AudioRecorder extends React.Component<IProps, IState> {
             });
             recorder.onStart = this.props.onStart;
             recorder.onStop = (e) => this.handleStop(e);
-            recorder.ondataavailable = (event) => this.ondataavailable(event);
-            if(isStart){
+            if (isStart) {
                 recorder.startRecord();
             }
         }
     };
 
     componentDidMount() {
-        if(this.props.url){
+        if (this.props.url) {
             const src = this.state.audioUrl;
             const el = this.audioRef.current;
             const audio = new AudioPlayer({
                 el,
                 src: src,
             });
-        }else {
+        } else {
             this.startRecord();
         }
     }
     //录音音频查看
     componentDidUpdate(preProps: IProps, preState: IState) {
-        if(this.props.isViewAudio && this.state.isSwitch !== preState.isSwitch){
+        if (
+            this.props.isViewAudio &&
+            this.state.isSwitch !== preState.isSwitch
+        ) {
             if (!this.state.isSwitch) {
                 this.startRecord(true);
             } else {
@@ -80,19 +82,30 @@ class AudioRecorder extends React.Component<IProps, IState> {
                     ),
                 });
             }
-        } 
+        }
     }
-    //录音结束回调监听
-    ondataavailable(event) {
-        this.setState({
-            audioUrl: event.data,
-        });
-        this.props.onDataAvailable && this.props.onDataAvailable(event);
-    }
+
     //停止录音
     handleStop = (e) => {
-        const { onStop, isViewAudio } = this.props;
+        const { onStop } = this.props;
         onStop && onStop(e);
+        if (this.props.loadSrc) {
+            this.props.loadSrc().then((src) => {
+                this.setState({
+                    audioUrl: src,
+                });
+                this.showAudio();
+            });
+        } else {
+            this.setState({
+                audioUrl: e,
+            });
+            this.showAudio();
+        }
+    };
+
+    showAudio = () => {
+        const { isViewAudio } = this.props;
         if (isViewAudio) {
             this.recorderRef.current.className = " exit";
             setTimeout(() => {
@@ -117,8 +130,12 @@ class AudioRecorder extends React.Component<IProps, IState> {
                         <div
                             className="record-reRecord"
                             onClick={() => {
-                                this.props.onReRecorder && this.props.onReRecorder();
-                                this.setState({ isSwitch: false,audioUrl:'' });
+                                this.props.onReRecorder &&
+                                    this.props.onReRecorder();
+                                this.setState({
+                                    isSwitch: false,
+                                    audioUrl: "",
+                                });
                             }}
                         >
                             重录

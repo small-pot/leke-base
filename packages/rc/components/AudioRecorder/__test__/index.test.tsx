@@ -1,3 +1,9 @@
+/*
+ * @Descripttion:
+ * @Author: gulingxin
+ * @Date: 2021-01-26 09:35:28
+ * @LastEditTime: 2021-02-02 20:27:01
+ */
 import React from "react";
 import AudioRecorder from "../index";
 import { render, waitFor, screen, fireEvent } from "@testing-library/react";
@@ -27,11 +33,5 @@ describe("AudioRecorder ", function () {
         render(<AudioRecorder onStop={onStop} />);
         fireEvent.click(screen.getByText("停止"));
         expect(onStop).toHaveBeenCalledTimes(1);
-    });
-    it("AudioRecorder should be called", () => {
-        const onDataAvailable = jest.fn();
-        render(<AudioRecorder onDataAvailable={onDataAvailable} />);
-        fireEvent.click(screen.getByText("停止"));
-        expect(onDataAvailable).toHaveBeenCalledTimes(1);
     });
 });
