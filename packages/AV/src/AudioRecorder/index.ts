@@ -1,4 +1,4 @@
-import { Alert } from '@leke/rc';
+import { Alert } from "@leke/rc";
 import { RecordHtml, AudioHtml, NoData } from "./html";
 import { timeFormat, blobToDataURI } from "./utils";
 
@@ -21,6 +21,15 @@ class AudioRecorder {
     private record: HTMLElement;
     private recordTime: HTMLElement;
     private recordContainer: HTMLElement;
+    private audioInput: any;
+    private context: any;
+    private config: any;
+    private size: number; //录音文件长度
+    private buffer: any[]; //录音缓存
+    private inputSampleRate: number; //输入采样率
+    private inputSampleBits: number; //输入采样数位 8, 16
+    private outputSampleRate: any; //输出采样率
+    private oututSampleBits: number; //输出采样数位 8, 16
     public onStart: () => void; //开始录音回调
     public onStop: (bold: any) => void; //结束录音回调
     public ondataavailable: (event) => void;
@@ -35,14 +44,9 @@ class AudioRecorder {
             this.cfg && this.cfg.duration ? this.cfg.duration : 3000;
         this.init();
     }
-    recorderList:[];
+    recorderList: [];
     private init() {
-        require('./index.less');
-        if(!window.MediaRecorder){
-            const { elem } = this.cfg;
-            elem.innerHTML =  NoData;
-            return;
-        }
+        require("./index.less");
         this.initHtml();
         this.initEvent();
     }
@@ -61,14 +65,8 @@ class AudioRecorder {
         // 录制
         this.record &&
             this.record.addEventListener("click", () => {
-                const Recording = "recording";
                 if (this.Recorder) {
-                    const state = this.getRecordState();
-                    if (state === Recording) {
-                        this.stopRecord();
-                    } else {
-                        this.startRecord();
-                    }
+                    this.stopRecord();
                     return;
                 }
                 this.startRecord();
@@ -78,14 +76,154 @@ class AudioRecorder {
      * 初始化录音实例
      * @param stream
      */
-    private initRecorder(stream): void {
-        const recorder = new MediaRecorder(stream);
-        recorder.ondataavailable = (event) => {
-            this.ondataavailable && this.ondataavailable(event);
-            this.recorderBold = event.data;
-        };
-        this.Recorder = recorder;
+    private initRecorder(stream, cfg): void {
+        //首先new一个AudioContext对象，作为声源的载体
+        const audioContext = window.AudioContext || window.webkitAudioContext;
+        this.context = new audioContext();
+
+        this.config = cfg || {};
+        this.config.channelCount = 1;
+        this.config.numberOfInputChannels = this.config.channelCount;
+        this.config.numberOfOutputChannels = this.config.channelCount;
+        this.config.sampleBits = this.config.sampleBits || 16;
+        this.config.sampleRate = this.config.sampleRate || 8000;
+        this.config.bufferSize = 4096; //创建缓存，用来缓存声音
+        //将声音输入这个对像，stream 就是上面返回音源-
+        this.audioInput = this.context.createMediaStreamSource(stream); //将声音输入这个对像
+        const volume = this.context.createGain(); //设置音量节点
+        this.audioInput.connect(volume);
+
+        // 创建声音的缓存节点，createScriptProcessor方法的第二个和第三个参数指的是输入和输出都是声道数
+        this.Recorder = this.context.createScriptProcessor(
+            this.config.bufferSize,
+            this.config.channelCount,
+            this.config.channelCount
+        );
+        this.size = 0; //录音文件长度
+        this.buffer = []; //录音缓存
+        this.inputSampleRate = this.context.sampleRate; //输入采样率
+        this.inputSampleBits = 16; //输入采样数位 8, 16
+        this.outputSampleRate = this.config.sampleRate; //输出采样率
+        this.oututSampleBits = this.config.sampleBits; //输出采样数位 8, 16
+
         this.run();
+    }
+    input(data) {
+        // 实时存储录音的数据
+        this.buffer.push(new Float32Array(data)); //Float32Array
+        this.size += data.length;
+    }
+    reshapeWavData(sampleBits, offset, iBytes, oData) {
+        // 8位采样数位
+        if (sampleBits === 8) {
+            for (let i = 0; i < iBytes.length; i++, offset++) {
+                const s = Math.max(-1, Math.min(1, iBytes[i]));
+                let val = s < 0 ? s * 0x8000 : s * 0x7fff;
+                val = 255 / (65535 / (val + 32768));
+                oData.setInt8(offset, val, true);
+            }
+        } else {
+            for (let i = 0; i < iBytes.length; i++, offset += 2) {
+                const s = Math.max(-1, Math.min(1, iBytes[i]));
+                oData.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+            }
+        }
+        return oData;
+    }
+    getRawData() {
+        //合并压缩
+        //合并
+        const data = new Float32Array(this.size);
+        let offset = 0;
+        for (let i = 0; i < this.buffer.length; i++) {
+            data.set(this.buffer[i], offset);
+            offset += this.buffer[i].length;
+        }
+        // 压缩
+        const getRawDataion = this.inputSampleRate / this.outputSampleRate;
+        const length = data.length / getRawDataion;
+        const result = new Float32Array(length);
+        let index = 0,
+            j = 0;
+        while (index < length) {
+            result[index] = data[j];
+            j += getRawDataion;
+            index++;
+        }
+        return result;
+    }
+    private covertWav() {
+        // 转换成wav文件数据
+        const sampleRate = Math.min(
+            this.inputSampleRate,
+            this.outputSampleRate
+        );
+        const sampleBits = Math.min(this.inputSampleBits, this.oututSampleBits);
+        const bytes = this.getRawData();
+        const dataLength = bytes.length * (sampleBits / 8);
+        const buffer = new ArrayBuffer(44 + dataLength);
+        let data = new DataView(buffer);
+        let offset = 0;
+        const writeString = function (str) {
+            for (let i = 0; i < str.length; i++) {
+                data.setUint8(offset + i, str.charCodeAt(i));
+            }
+        };
+        // 资源交换文件标识符
+        writeString("RIFF");
+        offset += 4;
+        // 下个地址开始到文件尾总字节数,即文件大小-8
+        data.setUint32(offset, 36 + dataLength, true);
+        offset += 4;
+        // WAV文件标志
+        writeString("WAVE");
+        offset += 4;
+        // 波形格式标志
+        writeString("fmt ");
+        offset += 4;
+        // 过滤字节,一般为 0x10 = 16
+        data.setUint32(offset, 16, true);
+        offset += 4;
+        // 格式类别 (PCM形式采样数据)
+        data.setUint16(offset, 1, true);
+        offset += 2;
+        // 通道数
+        data.setUint16(offset, this.config.channelCount, true);
+        offset += 2;
+        // 采样率,每秒样本数,表示每个通道的播放速度
+        data.setUint32(offset, sampleRate, true);
+        offset += 4;
+        // 波形数据传输率 (每秒平均字节数) 单声道×每秒数据位数×每样本数据位/8
+        data.setUint32(
+            offset,
+            this.config.channelCount * sampleRate * (sampleBits / 8),
+            true
+        );
+        offset += 4;
+        // 快数据调整数 采样一次占用字节数 单声道×每样本的数据位数/8
+        data.setUint16(
+            offset,
+            this.config.channelCount * (sampleBits / 8),
+            true
+        );
+        offset += 2;
+        // 每样本数据位数
+        data.setUint16(offset, sampleBits, true);
+        offset += 2;
+        // 数据标识符
+        writeString("data");
+        offset += 4;
+        // 采样数据总数,即数据总大小-44
+        data.setUint32(offset, dataLength, true);
+        offset += 4;
+        // 写入采样数据
+        data = this.reshapeWavData(sampleBits, offset, bytes, data);
+        return data;
+    }
+    private getFullWavData() {
+        // 用blob生成文件
+        const data = this.covertWav();
+        return new Blob([data], { type: "audio/wav" });
     }
     //获取录音状态
     public getRecordState() {
@@ -102,15 +240,15 @@ class AudioRecorder {
         }
 
         if (this.isHasMedia()) {
-            this.getUserMedia({ audio: true },true);
+            this.getUserMedia({ audio: true }, true);
         } else {
             const { elem } = this.cfg;
             elem.innerHTML = NoData;
         }
     }
     //初始化录音样式
-    private initStartRecorderHtml(){
-        const {elem} = this.cfg;
+    private initStartRecorderHtml() {
+        const { elem } = this.cfg;
         const recordIng: HTMLElement = this.recordContainer.querySelector(
             ".record-recording"
         );
@@ -123,8 +261,8 @@ class AudioRecorder {
             this.count
         );
         //没有麦克风设备提示
-        const recordError:HTMLElement = elem.querySelector('.record-error');
-        recordError.style.display = 'none';
+        const recordError: HTMLElement = elem.querySelector(".record-error");
+        recordError.style.display = "none";
     }
     //获取录音权限
     private isHasMedia() {
@@ -144,19 +282,23 @@ class AudioRecorder {
      * @param constrains
      * @param isInitRecorder
      */
-    public getUserMedia(constrains,isInitRecorder?:boolean) {
+    public getUserMedia(constrains, isInitRecorder?: boolean) {
         let that = this;
         const n = <any>navigator;
         if (n.mediaDevices.getUserMedia) {
             // 最新标准API、
-            n.mediaDevices
-                .getUserMedia(constrains)
-                .then((stream) => {
-                    that.success(stream,isInitRecorder);
-                })
-                .catch((err) => {
-                    that.error(err);
-                });
+            try {
+                n.mediaDevices
+                    .getUserMedia(constrains)
+                    .then((stream) => {
+                        that.success(stream, isInitRecorder);
+                    })
+                    .catch((err) => {
+                        that.error(err);
+                    });
+            } catch (error) {
+                that.error(error);
+            }
         } else if (n.webkitGetUserMedia || n.mozGetUserMedia) {
             // webkit内核浏览器
             if (n.mediaDevices === undefined) {
@@ -191,40 +333,47 @@ class AudioRecorder {
                     });
                 };
             }
-            navigator.mediaDevices
-                .getUserMedia(constrains)
-                .then((stream) => {
-                    that.success(stream,isInitRecorder);
-                })
-                .catch((err) => {
-                    that.error(err);
-                });
+            try {
+                navigator.mediaDevices
+                    .getUserMedia(constrains)
+                    .then((stream) => {
+                        that.success(stream, isInitRecorder);
+                    })
+                    .catch((err) => {
+                        that.error(err);
+                    });
+            } catch (error) {
+                that.error(error);
+            }
         } else if (navigator.getUserMedia) {
             // 旧版API
-            n.getUserMedia(constrains)
-                .then((stream) => {
-                    that.success(stream,isInitRecorder);
-                })
-                .catch((err) => {
-                    that.error(err);
-                });
+            try {
+                n.getUserMedia(constrains)
+                    .then((stream) => {
+                        that.success(stream, isInitRecorder);
+                    })
+                    .catch((err) => {
+                        that.error(err);
+                    });
+            } catch (error) {
+                that.error(error);
+            }
         }
     }
     // 成功的回调函数
-    private success(stream,isInitRecorder?:boolean) {
-        if(isInitRecorder){
-            this.initStartRecorderHtml();  
-            this.initRecorder(stream);
+    private success(stream, isInitRecorder?: boolean) {
+        if (isInitRecorder) {
+            this.initStartRecorderHtml();
+            this.initRecorder(stream, {});
         } else {
-
         }
     }
     // 异常的回调函数
     private error(error) {
         console.log("访问用户媒体设备失败：", error.name, error.message);
         const { elem } = this.cfg;
-        const recordError:HTMLElement = elem.querySelector('.record-error');
-        recordError.style.display = 'block';
+        const recordError: HTMLElement = elem.querySelector(".record-error");
+        recordError.style.display = "block";
         clearInterval(this.time);
         const recording: HTMLElement = this.recordContainer.querySelector(
             ".record-recording"
@@ -236,13 +385,15 @@ class AudioRecorder {
     //结束录音
     public stopRecord = async () => {
         clearInterval(this.time);
-        this.Recorder.stop();
+        this.stop();
+        console.log("stop", this.getFullWavData());
+        const boldFile = this.getFullWavData();
         const recording: HTMLElement = this.recordContainer.querySelector(
             ".record-recording"
         );
         recording.style.display = "none";
-        const req = await this.getRecorderAudio();
-        this.onStop && this.onStop(req);
+        // const req = await this.getRecorderAudio();
+        this.onStop && this.onStop(boldFile);
     };
     //获取音频
     public getRecorderAudio = (type?: string) => {
@@ -259,10 +410,21 @@ class AudioRecorder {
             }, 0)
         );
     };
-
+    private start() {
+        this.audioInput.connect(this.Recorder);
+        this.Recorder.connect(this.context.destination);
+    }
+    // 停止
+    private stop() {
+        this.Recorder.disconnect();
+        // this.Recorder.closeContext();
+    }
+    // this.close=function(){
+    //     this.Recorder.closeContext()
+    // }
     //录音计时
     private run(): void {
-        this.Recorder && this.Recorder.start();
+        this.start();
         clearInterval(this.time);
         this.initStartRecorderHtml();
         this.time = setInterval(() => {

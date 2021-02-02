@@ -4,7 +4,8 @@ module.exports={
     entry:{
         VideoPlayer:path.resolve('./src/VideoPlayer/index.ts'),
         AudioPlayer:path.resolve('./src/AudioPlayer/index.ts'),
-        AudioRecorder:path.resolve('./src/AudioRecorder/index.ts')
+        AudioRecorder:path.resolve('./src/AudioRecorder/index.ts'),
+        Recorder:path.resolve('./src/Recorder/index.ts')
     },
     output:{
         path: path.resolve(__dirname, 'dist'),
