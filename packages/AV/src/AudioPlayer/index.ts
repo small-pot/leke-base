@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-27 17:51:44
+ * @LastEditTime: 2021-01-28 14:08:10
  */
 
 import EventEmitter from './EventEmitter';
@@ -111,7 +111,7 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
       }
 
       if (src) {
-          this.load(src);
+          this.loadSource(src);
       }
       this.$audio.loop=loop;
       this.$audio.preload=preload;
@@ -211,15 +211,18 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
       document.addEventListener('touchmove',onDragMove);
   }
 
-  onDurationChange(e:Event){
+  async onDurationChange(e:Event){
       const {timeFormat:customFormat,src} = this.options;
-
+      let duration:number = this.$audio.duration;
+      
       // Hack 解决谷歌下部分音频长度为 Infinity 的情况 
       // https://stackoverflow.com/questions/21522036/html-audio-tag-duration-always-infinity
-      getDuration(src,(duration)=>{
-          this.$timeText.innerHTML = formatTime(duration || 0,customFormat);
-          this.duration = duration;
-      });
+      if (duration === Infinity) {
+          duration = await getDuration(src);
+      }
+      this.$timeText.innerHTML = formatTime(duration || 0,customFormat);
+      this.duration = duration;
+
       this.emit('durationchange',e);
   }
 
@@ -324,7 +327,6 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
    */
   play() {
       const promise = this.$audio.play();
-      //   IE11 下 play 返回 void
       if (promise) {
           promise.catch(e=>{
               this.emit('error',{
@@ -365,11 +367,22 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
   }
 
   /**
-   * @description: 加载音频资源
+   * @description: 更换音频链接，configOptions 的便携调用版
    * @param {string} url 音频链接
    * @return {Promise} promise
    */
   load(url:string){
+      return this.configOptions({
+          src:url
+      });
+  }
+
+  /**
+   * @description: 加载音频资源
+   * @param {string} url 音频链接
+   * @return {Promise} promise
+   */
+  loadSource(url:string){
       this.canplay = false;
       this.playing = false;
       this.$audio.setAttribute('src',url);
@@ -417,7 +430,7 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
 
   configOptions(ops){
       if (ops.src && ops.src !== this.options.src) {
-          this.load(ops.src);
+          this.loadSource(ops.src);
       }
       if (ops.autoplay) {
           this.$audio.autoplay = ops.autoplay;

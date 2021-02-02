@@ -39,16 +39,9 @@ module.exports=merge(baseConfig,{
         historyApiFallback:true,
         disableHostCheck: true,
         proxy: {
-            context: ['/auth', '/proxy'],
-            target: 'https://webapp.leke.cn',
-            changeOrigin: true
+            // context: ['/auth', '/proxy'],
+            // target: 'https://webapp.leke.cn',
+            // changeOrigin: true
         }
-        // proxy:{
-        //     '/auth':{
-        //         target: 'https://webapp.leke.cn',
-        //         changeOrigin: true,
-        //         secure: false
-        //     }
-        // }
     }
 });

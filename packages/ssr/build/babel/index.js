@@ -33,6 +33,9 @@ module.exports= function (target='web') {
         plugins.push([path.resolve(__dirname,'./plugin-dynamic-import-node.js')]);
         !cssModules&&plugins.push([path.resolve(__dirname,'./plugin-node-style.js')]);
     }
+    if(process.env.NODE_ENV==='production'){
+        plugins.push("babel-plugin-transform-react-remove-prop-types");
+    }
     const config={
         cacheDirectory:true,
         babelrc:false,
