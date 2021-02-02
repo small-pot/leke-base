@@ -44,7 +44,7 @@ export default function useAnimation(params:useAnimationProps) {
     omitRef.current=omit(params,['ref','open']);
     useLayoutEffect(()=>{
         const el=ref.current;
-        if(el){
+        if(!el){
             return;
         }
         if(classNameRef.current===null){
