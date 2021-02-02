@@ -417,7 +417,7 @@ class AudioRecorder {
     // 停止
     private stop() {
         this.Recorder.disconnect();
-        // this.Recorder.closeContext();
+        this.context && this.context.close();
     }
     // this.close=function(){
     //     this.Recorder.closeContext()
