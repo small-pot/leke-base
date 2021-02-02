@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: gulingxin
  * @Date: 2021-01-26 13:40:25
- * @LastEditTime: 2021-01-26 22:39:42
+ * @LastEditTime: 2021-01-28 13:52:23
  */
 import * as React from "react";
 import { AudioRecorder as Recorder, AudioPlayer } from "@leke/AV";
@@ -76,7 +76,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
                 const audio = new AudioPlayer({
                     el,
                     src: window.URL.createObjectURL(
-                        new Blob([src], { type: "audio/wav" })
+                        new Blob([src], { type: "audio/mp3" })
                     ),
                 });
             }
