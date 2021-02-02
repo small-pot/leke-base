@@ -1,6 +1,5 @@
 import React, {useImperativeHandle,createRef} from "react";
 import { IVideoProps } from "./type";
-import {getVideoSize} from './utils';
 import {VideoPlayer} from '@leke/AV';
 
 class Video extends React.PureComponent<IVideoProps>{
@@ -47,16 +46,16 @@ class Video extends React.PureComponent<IVideoProps>{
             onFullscreenChange:fullscreen!==undefined?onFullscreenChange:null,
         });
 
-        paused===undefined&&onPausedChange&&this.instance.on('click',(status)=>{
-            onPausedChange(status);
+        paused===undefined&&onPausedChange&&this.instance.on('click',(nextStatus)=>{
+            onPausedChange(nextStatus);
         });
 
         volume===undefined&&onVolumeChange&&this.instance.on('volumeChange',(step)=>{
             onVolumeChange(step);
         });
 
-        fullscreen===undefined&&onFullscreenChange&&this.instance.on('fullscreenChange',(status)=>{
-            onFullscreenChange(status);
+        fullscreen===undefined&&onFullscreenChange&&this.instance.on('fullscreenChange',(nextStatus)=>{
+            onFullscreenChange(nextStatus);
         });
 
         onPausedChange&&this.instance.on('ended',()=>{
@@ -69,21 +68,20 @@ class Video extends React.PureComponent<IVideoProps>{
     componentDidUpdate(prevProps){
         const {paused,volume,fullscreen}=this.props;
         if(prevProps.paused!==paused){
-            paused?this.instance.video.pause():this.instance.video.play();
+            paused?this.instance.pause():this.instance.play();
         }
         if(prevProps.volume!==volume){
             if(volume!==0)this.instance.trigger('preVolume',volume);
             this.instance.trigger('volumeChange',volume);
         }
         if(prevProps.fullscreen!==fullscreen){
-            fullscreen?this.instance.trigger('entryFullscreen'):this.instance.trigger('exitFullscreen');
+            fullscreen?this.instance.entryFullscreen():this.instance.exitFullscreen();
         }
     }
 
     render(){
         const {wrapClassName}=this.props;
-        const [width,height]=getVideoSize(this.props.width,this.props.height);
-        return <div ref={this.ref} className={wrapClassName} style={{width,height}}></div>;
+        return <div ref={this.ref} className={wrapClassName}></div>;
     }
 }
 

@@ -25,15 +25,12 @@
 		width:876,
 		height:492,
 		src:'https://hls.cntv.kcdnvip.com/asp/hls/1200/0303000a/3/default/c9d6fcb3ff7e42f6b6db4199768ff249/1200.m3u8?maxbr=2048',
-		autoplay:true,
-		onPausedChange:(paused)=>{
-			console.log(paused)
-		}
+		autoplay:true
 	});
 	// 方法
 	player.pause();
 	// 属性
-	console.log(player.video.duration);
+	console.log(player.duration);
 	// 事件
 	player.on('error',()=>{});
 	player.on('ended',()=>{});
