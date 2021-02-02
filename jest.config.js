@@ -1,5 +1,5 @@
 const path=require('path');
-const resolvePaths=require('./resolvPaths');
+const resolvePaths=require('./resolvePaths');
 let coverageDir=process.argv[process.argv.length-1];
 const collectCoverageFrom=["!**/node_modules/**"];
 
@@ -36,6 +36,7 @@ default:
 module.exports = {
     transform:{
         '\\.(ts|js)x?$':'babel-jest',
+        '\\.html':'jest-raw-loader',
         '\\.md$':path.resolve('./jest-markdown.js')
     },
     moduleNameMapper:{
