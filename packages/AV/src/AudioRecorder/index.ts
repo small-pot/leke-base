@@ -52,6 +52,7 @@ class AudioRecorder {
     //初始化页面
     private initHtml() {
         const { elem } = this.cfg;
+        console.log('this.isHasMedia()',this.isHasMedia());
         elem.innerHTML = this.isHasMedia() ? RecordHtml : NoData;
         this.record = elem.querySelector("#record");
         this.recordContainer = elem.querySelector("#recordContainer");
@@ -366,7 +367,6 @@ class AudioRecorder {
         if (isInitRecorder) {
             this.initStartRecorderHtml();
             this.initRecorder(stream, {});
-        } else {
         }
     }
     // 异常的回调函数

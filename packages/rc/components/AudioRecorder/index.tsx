@@ -2,7 +2,7 @@
  * @Description:
  * @Author: gulingxin
  * @Date: 2021-01-26 13:40:25
- * @LastEditTime: 2021-02-02 19:35:36
+ * @LastEditTime: 2021-02-03 09:23:56
  */
 import * as React from "react";
 import { AudioRecorder as Recorder, AudioPlayer } from "@leke/AV";
@@ -87,12 +87,17 @@ class AudioRecorder extends React.Component<IProps, IState> {
 
     //停止录音
     handleStop = (e) => {
-        const { onStop } = this.props;
+        const { onStop,loadSrc } = this.props;
         onStop && onStop(e);
-        if (this.props.loadSrc) {
-            this.props.loadSrc().then((src) => {
+        if (loadSrc) {
+            loadSrc(e).then((src) => {
                 this.setState({
                     audioUrl: src,
+                });
+                this.showAudio();
+            }).catch((error) => {
+                this.setState({
+                    audioUrl: e,
                 });
                 this.showAudio();
             });
@@ -120,7 +125,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
     public render() {
         const { isSwitch } = this.state;
         return (
-            <div>
+            <div className='record-container'>
                 {isSwitch ? (
                     <div className="record-audio-wrap">
                         <div

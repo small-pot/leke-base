@@ -1,4 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @Author: gulingxin
+ * @Date: 2021-02-02 20:38:10
+ * @LastEditTime: 2021-02-03 09:16:52
+-->
 ---
+
 title: 功能拓展
 description: 展示录音音频
 ---
@@ -9,16 +16,16 @@ import { AudioRecorder } from "@leke/rc";
 import http from "@leke/http";
 
 export default function () {
-    const [boldFile, setBoldFile] = useState("");
+    // const [boldFile, setBoldFile] = useState("");
 
     const onStart = () => {
         console.log("start");
     };
     const onStop = (e) => {
-        setBoldFile(e);
+        // setBoldFile(e);
     };
 
-    const loadUrl = useCallback(async () => {
+    const loadSrc = async (boldFile) => {
         if (!boldFile) {
             return;
         }
@@ -30,12 +37,13 @@ export default function () {
         //去头部
         baseFile = baseFile.slice(pos + number, baseFile.length);
         console.log("base", baseFile);
-        new Promise((reolove, reject) => {
+        return new Promise((reolove, reject) => {
             http({
                 method: "post",
                 url:
-                    "https://dev.leke.cn/auth/global/fs/upload/audio/base64.htm",
-                data: { file: baseFile, ext: "mp3", type: "audio" },
+                    "https://webapp.leke.cn/auth/global/fs/upload/audio/base64.htm",
+                // data: { file: baseFile, ext: "mp3", type: "audio" },
+                data:`file=${baseFile}&ext=mp3&type=audio`
             })
                 .then((res) => {
                     const SUCCESS = 200;
@@ -47,7 +55,7 @@ export default function () {
                 })
                 .catch((error) => reject(error));
         });
-    }, [boldFile]);
+    };
     const onReRecorder = () => {
         console.log("重新录音");
     };
@@ -63,7 +71,7 @@ export default function () {
     return (
         <>
             <AudioRecorder
-                loadUrl={loadUrl}
+                loadSrc={loadSrc}
                 duration="5"
                 onStart={onStart}
                 onStop={onStop}
