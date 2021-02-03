@@ -201,10 +201,9 @@ class AudioRecorder {
             if(getUserMedia){
                 getUserMedia.then((stream) => {
                     that.success(stream,isInitRecorder);
-                })
-                    .catch((err) => {
-                        that.error(err);
-                    });
+                }).catch((err) => {
+                    that.error(err);
+                });
             }else{
                 const { elem } = this.cfg;
                 elem.innerHTML = NoData;
@@ -215,10 +214,9 @@ class AudioRecorder {
             if(getUserMedia){
                 getUserMedia.then((stream) => {
                     that.success(stream,isInitRecorder);
-                })
-                    .catch((err) => {
-                        that.error(err);
-                    });
+                }).catch((err) => {
+                    that.error(err);
+                });
             } else {
                 const { elem } = this.cfg;
                 elem.innerHTML = NoData;
