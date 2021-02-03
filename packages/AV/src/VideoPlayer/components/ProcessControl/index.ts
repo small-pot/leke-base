@@ -25,7 +25,7 @@ class ProcessControl extends Component {
             },
             onTouchEnd: (step) => {
                 this.event.trigger('processDragEnd');
-                this.event.trigger('timeChange', step);
+                this.event.trigger('touchTimeChange', step);
                 return true;
             }
         });
@@ -51,9 +51,14 @@ class ProcessControl extends Component {
             this.slider.track.style.display = 'block';
             this.slider.step.style.display = 'none';
         });
-        this.event.on('timeChange', (step) => {
+        this.event.on('timeChange', (time) => {
+            const step=time/this.video.duration*100;
             this.updateSlider(step);
-            this.video.currentTime = step / 100 * this.video.duration;
+            this.video.currentTime = time;
+        });
+        this.event.on('touchTimeChange',(step)=>{
+            const time=step/100*this.video.duration;
+            this.event.trigger('timeChange',time);
         });
         // 点击进度条进度跳转
         this.el.addEventListener('click', (e) => {
@@ -61,7 +66,7 @@ class ProcessControl extends Component {
             const width = this.slider.rail.clientWidth;
             if (scaleX / width > 1) return;
             const step = (scaleX / width * 100).toFixed(2);
-            this.event.trigger('timeChange', step);
+            this.event.trigger('touchTimeChange', step);
         });
 
         // tooltip  mouseEnter mouseMove mouseLeave监听
