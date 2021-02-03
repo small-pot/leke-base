@@ -1060,6 +1060,13 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@leke/AV@^1.0.4":
+  version "1.0.4"
+  resolved "http://192.168.20.146:4873/@leke%2fAV/-/AV-1.0.4.tgz#12fdbd212ce728c15816fa295bc136b646fa600a"
+  integrity sha512-TteFFFf8I7+CD5Ln+PLLl7ngNFQBRvqNgN84OTIa7Tei7SfwVnKdcHI9/s7P5yzONEFhmd1mFkP5WFtVz76KOw==
+  dependencies:
+    hls.js "^0.13.2"
+
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents":
   version "2.1.8-no-fsevents"
   resolved "https://registry.npm.taobao.org/@nicolo-ribaudo/chokidar-2/download/@nicolo-ribaudo/chokidar-2-2.1.8-no-fsevents.tgz#da7c3996b8e6e19ebd14d82eaced2313e7769f9b"

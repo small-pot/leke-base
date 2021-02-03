@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: gulingxin
  * @Date: 2021-01-29 13:34:42
- * @LastEditTime: 2021-02-02 20:28:07
+ * @LastEditTime: 2021-02-03 09:26:58
  */
 import AudioPlayer from "../AudioPlayer";
 import AudioRecorder from "../AudioRecorder";

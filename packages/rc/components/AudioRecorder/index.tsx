@@ -2,7 +2,7 @@
  * @Description:
  * @Author: gulingxin
  * @Date: 2021-01-26 13:40:25
- * @LastEditTime: 2021-02-03 09:23:56
+ * @LastEditTime: 2021-02-03 10:09:10
  */
 import * as React from "react";
 import { AudioRecorder as Recorder, AudioPlayer } from "@leke/AV";
@@ -77,9 +77,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
                 const el = this.audioRef.current;
                 const audio = new AudioPlayer({
                     el,
-                    src: window.URL.createObjectURL(
-                        new Blob([src], { type: "audio/mp3" })
-                    ),
+                    src,
                 });
             }
         }
@@ -97,13 +95,17 @@ class AudioRecorder extends React.Component<IProps, IState> {
                 this.showAudio();
             }).catch((error) => {
                 this.setState({
-                    audioUrl: e,
+                    audioUrl: window.URL.createObjectURL(
+                        new Blob([e], { type: "audio/mp3" })
+                    ),
                 });
                 this.showAudio();
             });
         } else {
             this.setState({
-                audioUrl: e,
+                audioUrl: window.URL.createObjectURL(
+                    new Blob([e], { type: "audio/mp3" })
+                ),
             });
             this.showAudio();
         }

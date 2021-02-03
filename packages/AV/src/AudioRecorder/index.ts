@@ -288,19 +288,18 @@ class AudioRecorder {
         let that = this;
         const n = <any>navigator;
         if (n.mediaDevices.getUserMedia) {
+            const getUserMedia =  n.mediaDevices.getUserMedia(constrains);
             // 最新标准API、
-            try {
-                n.mediaDevices
-                    .getUserMedia(constrains)
-                    .then((stream) => {
-                        that.success(stream, isInitRecorder);
-                    })
+            if(getUserMedia){
+                getUserMedia.then((stream) => {
+                    that.success(stream, isInitRecorder);
+                })
                     .catch((err) => {
                         that.error(err);
                     });
-            } catch (error) {
-                that.error(error);
+                return;
             }
+            that.error('无法获取用户权限');
         } else if (n.webkitGetUserMedia || n.mozGetUserMedia) {
             // webkit内核浏览器
             if (n.mediaDevices === undefined) {
@@ -335,31 +334,31 @@ class AudioRecorder {
                     });
                 };
             }
-            try {
-                navigator.mediaDevices
-                    .getUserMedia(constrains)
-                    .then((stream) => {
-                        that.success(stream, isInitRecorder);
-                    })
+            const getUserMedia = navigator.mediaDevices.getUserMedia(constrains);
+            if(getUserMedia){
+                getUserMedia.then((stream) => {
+                    that.success(stream, isInitRecorder);
+                })
                     .catch((err) => {
                         that.error(err);
                     });
-            } catch (error) {
-                that.error(error);
+                return;
             }
+            that.error('无法获取用户权限');
         } else if (navigator.getUserMedia) {
             // 旧版API
-            try {
-                n.getUserMedia(constrains)
+            const getUserMedia = n.getUserMedia(constrains);
+            if(getUserMedia){
+                getUserMedia
                     .then((stream) => {
                         that.success(stream, isInitRecorder);
                     })
                     .catch((err) => {
                         that.error(err);
                     });
-            } catch (error) {
-                that.error(error);
-            }
+                return;
+            } 
+            that.error('无法获取用户权限');
         }
     }
     // 成功的回调函数
