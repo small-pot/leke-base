@@ -1,3 +1,9 @@
+/*
+ * @Descripttion: 
+ * @Author: gulingxin
+ * @Date: 2021-02-02 20:38:10
+ * @LastEditTime: 2021-02-03 11:45:15
+ */
 export const RecordHtml = `
 <div class="record-wrap">
     <div id='recordContainer' class='record-container'>
@@ -36,6 +42,6 @@ export const NoData = `<div class='recorder-nodata'>
     </div>
     <div class='recorder-title'>
         <div>当前浏览器不支持录音</div>
-        <div>请安装360浏览器并设置极速模式或安装谷歌浏览器</div>
+        <div>请安装最新360浏览器并设置极速模式或安装谷歌浏览器</div>
     </div>
 </div>`;

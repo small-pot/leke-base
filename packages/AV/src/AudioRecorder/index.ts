@@ -297,9 +297,10 @@ class AudioRecorder {
                     .catch((err) => {
                         that.error(err);
                     });
-                return;
+            }else {
+                const { elem } = this.cfg;
+                elem.innerHTML = NoData;
             }
-            that.error('无法获取用户权限');
         } else if (n.webkitGetUserMedia || n.mozGetUserMedia) {
             // webkit内核浏览器
             if (n.mediaDevices === undefined) {
@@ -342,9 +343,10 @@ class AudioRecorder {
                     .catch((err) => {
                         that.error(err);
                     });
-                return;
+            }else {
+                const { elem } = this.cfg;
+                elem.innerHTML = NoData;
             }
-            that.error('无法获取用户权限');
         } else if (navigator.getUserMedia) {
             // 旧版API
             const getUserMedia = n.getUserMedia(constrains);
@@ -356,9 +358,10 @@ class AudioRecorder {
                     .catch((err) => {
                         that.error(err);
                     });
-                return;
-            } 
-            that.error('无法获取用户权限');
+            }else {
+                const { elem } = this.cfg;
+                elem.innerHTML = NoData;
+            }
         }
     }
     // 成功的回调函数
