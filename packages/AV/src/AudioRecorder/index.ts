@@ -149,14 +149,20 @@ class AudioRecorder {
         const n = <any>navigator;
         if (n.mediaDevices.getUserMedia) {
             // 最新标准API、
-            n.mediaDevices
-                .getUserMedia(constrains)
-                .then((stream) => {
-                    that.success(stream,isInitRecorder);
-                })
-                .catch((err) => {
-                    that.error(err);
-                });
+            const getUserMedia = n.mediaDevices.getUserMedia(constrains);
+            if(getUserMedia){
+                getUserMedia
+                    .then((stream) => {
+                        that.success(stream,isInitRecorder);
+                    })
+                    .catch((err) => {
+                        that.error(err);
+                    });
+            } else {
+                const { elem } = this.cfg;
+                elem.innerHTML = NoData;
+            }
+            
         } else if (n.webkitGetUserMedia || n.mozGetUserMedia) {
             // webkit内核浏览器
             if (n.mediaDevices === undefined) {
@@ -191,23 +197,32 @@ class AudioRecorder {
                     });
                 };
             }
-            navigator.mediaDevices
-                .getUserMedia(constrains)
-                .then((stream) => {
+            const getUserMedia =  navigator.mediaDevices.getUserMedia(constrains);
+            if(getUserMedia){
+                getUserMedia.then((stream) => {
                     that.success(stream,isInitRecorder);
                 })
-                .catch((err) => {
-                    that.error(err);
-                });
+                    .catch((err) => {
+                        that.error(err);
+                    });
+            }else{
+                const { elem } = this.cfg;
+                elem.innerHTML = NoData;
+            }         
         } else if (navigator.getUserMedia) {
             // 旧版API
-            n.getUserMedia(constrains)
-                .then((stream) => {
+            const getUserMedia =  n.getUserMedia(constrains);
+            if(getUserMedia){
+                getUserMedia.then((stream) => {
                     that.success(stream,isInitRecorder);
                 })
-                .catch((err) => {
-                    that.error(err);
-                });
+                    .catch((err) => {
+                        that.error(err);
+                    });
+            } else {
+                const { elem } = this.cfg;
+                elem.innerHTML = NoData;
+            }
         }
     }
     // 成功的回调函数
