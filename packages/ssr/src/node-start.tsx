@@ -2,20 +2,27 @@ import React from 'react';
 import {renderToString} from "react-dom/server";
 import {configType} from './types';
 export {SSRPage} from './types';
+const {clientName}=require('../build/static');
 
-function getAssets (manifest,chunkName,entrypoints='app') {
+function getAssets (manifest,chunkName) {
     const {publicPath,namedChunkGroups}=manifest;
-    const chunkNames=[chunkName,entrypoints];
     const css=[];
     const scripts=[];
-    chunkNames.forEach(key=>{
-        namedChunkGroups[key].assets.forEach(src=>{
-            if(/\.css$/.test(src)){
-                css.unshift(publicPath+src);
-            }else if(/(?<!\.hot-update)\.js$/.test(src)){
-                scripts.push(publicPath+src);
-            }
-        });
+    namedChunkGroups[chunkName].assets.forEach(item=>{
+        const src=item.name;
+        if(src.endsWith('.css')){
+            css.push(publicPath+src);
+        }else if(/(?<!\.hot-update)\.js$/.test(src)){
+            scripts.push(publicPath+src);
+        }
+    });
+    namedChunkGroups[clientName].assets.forEach((item)=>{
+        const src=item.name;
+        if(src.endsWith('.css')){
+            css.unshift(publicPath+src);
+        }else if(/(?<!\.hot-update)\.js$/.test(src)){
+            scripts.push(publicPath+src);
+        }
     });
     return {css,scripts};
 }
@@ -147,7 +154,7 @@ export default function start(config:configType) {
             }
         } catch (e) {
             if(typeof errorInterceptor==='function'){
-                errorInterceptor(e,req,res,next)
+                errorInterceptor(e,req,res,next);
             }else{
                 next(e);
             }

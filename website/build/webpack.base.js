@@ -1,23 +1,19 @@
 const webpack=require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path=require('path');
-const MiniCssExtractPlugin=require('mini-css-extract-plugin');
-const resolePaths=require('../../resolvPaths');
-
-const env=process.env.NODE_ENV;
-const handleStyleLoader=env==='production'?MiniCssExtractPlugin.loader:'style-loader';
+const resolvePaths=require('../../resolvePaths');
 
 module.exports ={
     entry:path.resolve(__dirname, '../src/index.tsx'),
     output: {
         path: path.resolve(__dirname, '../dist')
     },
-    //target:['web','es5'],
     resolve: {
         fallback: { "path": false },
         extensions: ['.ts','.tsx','.js','.jsx'],
         alias: {
-            ...resolePaths(path.resolve(__dirname,'../../')),
+            ...resolvePaths(path.resolve(__dirname,'../../')),
+            '../../node_modules/@leke':path.resolve(__dirname,'../../packages'),
             "@leke/rc":path.resolve(__dirname,'../../packages/rc')
         }
     },
@@ -44,21 +40,9 @@ module.exports ={
                 exclude: /node_modules/
             },
             {
-                test:/\.css$/,
-                use: [
-                    handleStyleLoader,
-                    'css-loader',
-                    'postcss-loader'
-                ]
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    handleStyleLoader,
-                    'css-loader',
-                    'postcss-loader',
-                    'less-loader'
-                ]
+                test: /\.html$/,
+                loader: 'raw-loader',
+                exclude: /node_modules/
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf)(\?.*)?$/,

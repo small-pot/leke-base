@@ -8,7 +8,7 @@ export interface popupPropsType {
 const Popup=React.memo(function (props:popupPropsType) {
     const {children,portalContainer}=props;
     if(!portalContainer){
-        return null
+        return null;
     }
     return createPortal(
         <div style={{position:'absolute',top:0,left:0,width:'100%'}}>
