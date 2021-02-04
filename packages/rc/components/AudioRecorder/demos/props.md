@@ -13,3 +13,4 @@ description: 可以用 ref 获取到实例
 | onStart      | 开始录音回调 | boolean  | -         |
 | onStop       | 停止录音回调 | function | bold      |
 | onReRecorder | 重新录音回调 | function | -         |
+| loadSrc | 业务方音频上传 | function | -         |
