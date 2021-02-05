@@ -17,6 +17,13 @@
         opacity: 0;
     }
 }
+@keyframes rotate{
+
+    from{transform: rotate(0deg)}
+
+    to{transform: rotate(359deg)}
+
+}
 
 .exit {
     animation: mylast 1s;
@@ -80,5 +87,29 @@
         margin-left: 14px;
         font-size: 12px;
         color: #1FB5AB;
+    }
+    .record-loading{
+        display: inline-block;
+        vertical-align: super;
+        height: 32px;
+        margin-left: 14px;
+        font-size: 16px;
+        color: #D9D9D9;
+        svg{
+            animation: rotate 3s linear infinite;
+        }
+    }
+    .record-reUpload{
+        display: inline-block;
+        vertical-align: middle;
+        height: 32px;
+        margin-left: 14px;
+        font-size: 12px;
+        color: #595959;
+        .reUpload{
+            cursor: pointer;
+            color:#1FB5AB;
+            text-decoration: underline;
+        }
     }
 }

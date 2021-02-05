@@ -2,13 +2,12 @@
  * @Descripttion:
  * @Author: gulingxin
  * @Date: 2021-02-04 16:34:16
- * @LastEditTime: 2021-02-04 17:16:10
+ * @LastEditTime: 2021-02-05 11:02:28
  */
 import * as React from "react";
 import { AudioRecorder as Recorder } from "@leke/AV";
-import { AudioPlayer } from "@leke/rc";
-import { AudioPlayerProps } from "../AudioPlayer";
-import { Load } from "@leke/icons";
+import AudioPlayer,{ AudioPlayerProps }  from "../AudioPlayer";
+import { RecordLoading } from "@leke/icons";
 
 type AudioElement = {
   boldFile: any;
@@ -140,7 +139,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
       if (isLoading) {
           return (
               <div className="record-loading">
-                  <Load />
+                  <RecordLoading />
               </div>
           );
       }

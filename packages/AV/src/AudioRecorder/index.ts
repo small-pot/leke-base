@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: gulingxin
  * @Date: 2021-02-04 16:26:49
- * @LastEditTime: 2021-02-04 16:35:03
+ * @LastEditTime: 2021-02-05 11:15:06
  */
 import { Alert } from "@leke/rc";
 import { RecordHtml, AudioHtml, NoData } from "./html";
@@ -15,6 +15,7 @@ declare let window: any;
 interface IRecorderConfig {
   el: HTMLElement;
   duration?: number;
+  recordConfig?:any;
 }
 
 class AudioRecorder {
@@ -81,13 +82,13 @@ class AudioRecorder {
    * 初始化录音实例
    * @param stream
    */
-  private initRecorder(stream, cfg): void {
+  private initRecorder(stream): void {
       //首先new一个AudioContext对象，作为声源的载体
       const audioContext = window.AudioContext || window.webkitAudioContext;
       this.context = new audioContext();
 
-      this.config = cfg || {};
-      this.config.channelCount = 1;
+      this.config = this.cfg.recordConfig || {};
+      this.config.channelCount = 1;// 双声道
       this.config.numberOfInputChannels = this.config.channelCount;
       this.config.numberOfOutputChannels = this.config.channelCount;
       this.config.sampleBits = this.config.sampleBits || 16;
@@ -110,6 +111,7 @@ class AudioRecorder {
       this.inputSampleBits = 16; //输入采样数位 8, 16
       this.outputSampleRate = this.config.sampleRate; //输出采样率
       this.oututSampleBits = this.config.sampleBits; //输出采样数位 8, 16
+      //音频采集  
       this.Recorder.onaudioprocess = (e) => {
           this.input(e.inputBuffer.getChannelData(0));
       };
@@ -360,7 +362,7 @@ class AudioRecorder {
   private success(stream, isInitRecorder?: boolean) {
       if (isInitRecorder) {
           this.initStartRecorderHtml();
-          this.initRecorder(stream, {});
+          this.initRecorder(stream);
       }
   }
   // 异常的回调函数
