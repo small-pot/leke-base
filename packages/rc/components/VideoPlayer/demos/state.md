@@ -31,6 +31,9 @@ export default function(){
             onFullscreenChange={full=>{
                 setFull(full);
             }}
+            onTouchTimeChange={time=>{
+                console.log(time);
+            }}
             ref={ref}
         />
         <div style={{marginTop:12}}>
