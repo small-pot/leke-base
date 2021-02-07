@@ -18,13 +18,11 @@ yarn add @leke/ssr --save
 ```js
 module.exports={
     cssModules:false,
-    port:8888,
     entry:'./src/index.ts',
-    proxy:{
-        '/auth':{
-            target:'https://webapp.leke.cn',
-            changeOrigin:true
-        }
+    devServer:{
+        port:9999,
+        serveIndex:false,
+        host:'localhost'
     },
     browsers:[
         "last 2 versions",
@@ -55,9 +53,8 @@ module.exports={
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
 | cssModules | 是否启用cssModules，[配置详情](https://www.npmjs.com/package/css-loader) | boolean \| object | false |
-| port | 开发服务器端口号 | number | 8989 |
 | entry | 入口文件路径| string | _ |
-| proxy | 跨域代理配置，[配置详情](https://www.npmjs.com/package/http-proxy-middleware)| object | _ |
+| devServer | [开发服务器配置](https://webpack.docschina.org/configuration/dev-server/#devserveropenpage) | object | { port:9999, serveIndex:false, host:"localhost" } |
 | browsers | 根据提供的浏览器进行js补丁与css前缀补全| Array | \[ "last 2 versions","ie >= 11" \] |
 | babelConfig | 自定义babel-loader配置 | (config, target:"web" \| "node")=>void | _ |
 | postcssConfig | 自定义postcss-loader的配置，[配置详情](https://www.npmjs.com/package/postcss-loader) | (config)=>void | _ |
@@ -91,15 +88,15 @@ export default start({
     },
     errorInterceptor(error,req,res,next){
         //错误拦截器,此方法拦截错误并处理，未处理的错误请执行next(error)
-        const status=error?error.status:null
+        const status=error?error.status:null;
         switch (status) {
-            case 404:
-                res.redirect('https://repository.leke.cn/error/404.htm')
-                break;
+        case 404:
+            res.redirect('https://repository.leke.cn/error/404.htm');
+            break;
             //.....
-            default:
-                next(error)
-                break;
+        default:
+            next(error);
+            break;
         }
     },
     routes:[

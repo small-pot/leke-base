@@ -1,61 +1,71 @@
 const path=require('path');
-const express=require('express');
 const webpack=require('webpack');
-const serverConfig=require('./webpack/webpack.devServer');
+const MFS=require('memory-fs');
 const vm=require('vm');
-const webpackDevMiddleware=require("webpack-dev-middleware");
-const webpackHotMiddleware=require("webpack-hot-middleware");
-const clientConfig=require('./webpack/webpack.dev.js');
-const middleware=require('./middleware');
-const {port}=require('./resolveConfig');
+const webpackDevServer=require('webpack-dev-server');
+const {clientConfig,serverConfig}=require('./webpack/webpack.dev.config.js');
+const cluster=require('cluster');
+const cookieParser=require('cookie-parser');
+const {devServer}=require('./resolveConfig');
 
-const app = express();
-const compiler = webpack([clientConfig,serverConfig]);
+if (cluster.isMaster){
+    let render;
+    cluster.fork();
+    cluster.on('message', (worker, renderStr, handle) => {
+        const sandbox = {
+            console,
+            module,
+            require
+        };
+        vm.runInNewContext(renderStr, sandbox);
+        render = sandbox.module.exports.default;
+    });
 
-compiler.hooks.done.tap("done", stats => {
-    const info = stats.toJson();
-    if (stats.hasErrors()) {
-        return console.error(info.errors);
-    }
-});
-app.use(webpackDevMiddleware(compiler, {
-    serverSideRender:true
-}));
-app.use(webpackHotMiddleware(compiler.compilers.find(item => item.name === 'client'), {
-    path:'/ssr/__hot',
-    reload:true,
-    noInfo:true
-}));
-middleware(app);
-app.use((req, res,next) => {
-    const { devMiddleware } = res.locals.webpack;
-    const outputFileSystem = devMiddleware.outputFileSystem;
-    const [clientStats,serverStats] = devMiddleware.stats.toJson().children;
-    const { namedChunkGroups, publicPath } = clientStats;
-    const renderStr=outputFileSystem.readFileSync(path.join(serverStats.outputPath,'server-entry.js'))
-    const sandbox = {
-        console,
-        module,
-        require
+    const clientCompiler = webpack(clientConfig);
+    const options={
+        publicPath:clientConfig.output.publicPath,
+        ...devServer,
+        before(app){
+            if(typeof devServer.before==='function'){
+                devServer.before.apply(null,arguments);
+            }
+            const jsonPath=path.join(clientCompiler.outputPath, 'resource.json');
+            const fs=clientCompiler.outputFileSystem;
+            app.use(cookieParser());
+            app.use((req, res,next) => {
+                if(render&&fs.existsSync(jsonPath)){
+                    const jsonString=fs.readFileSync(jsonPath);
+                    render(req, res,next, JSON.parse(jsonString));
+                }
+            });
+            app.use(function(err, req, res, next) {
+                console.log(err);
+                res.setHeader('Content-Type', 'text/plain;charset=utf-8');
+                let {status,config,headers}=err;
+                if(config&&headers){ //接口请求失败
+                    return res.status(500).end(`request failed to ${config.url}`);
+                }
+                if(status===404){
+                    return res.status(404).end('匹配不到路由');
+                }
+                res.status(500).end(err.toString());
+            });
+        }
     };
-    vm.runInNewContext(renderStr, sandbox);
-    sandbox.module.exports.default(req, res,next, { namedChunkGroups, publicPath });
-});
-app.use(function(err, req, res, next) {
-    console.log(err);
-    res.setHeader('Content-Type', 'text/plain;charset=utf-8');
-    let {status,config,headers}=err;
-    if(config&&headers){ //接口请求失败
-        return res.status(500).end(`request failed to ${config.url}`);
-    }
-    if(status===404){
-        return res.status(404).end('匹配不到路由');
-    }
-    res.status(500).end(err.toString());
-});
-app.listen(port, function () {
-    console.log("成功启动：localhost:" + port);
-});
-process.on('uncaughtException', function (err) {
-    console.log(err);
-});
+    const server=new webpackDevServer(clientCompiler,options);
+
+    server.listen(devServer.port,devServer.host);
+
+    process.on('uncaughtException', function (err) {
+        console.log(err);
+    });
+}else{
+    const mfs = new MFS();
+    const serverCompiler = webpack(serverConfig);
+    serverCompiler.outputFileSystem = mfs;
+    serverCompiler.watch({}, (err, stats) => {
+        if (err) return console.error(err);
+        const renderStr = mfs.readFileSync(path.join(serverConfig.output.path, serverConfig.output.filename), 'utf-8');
+        process.send(renderStr);
+    });
+}

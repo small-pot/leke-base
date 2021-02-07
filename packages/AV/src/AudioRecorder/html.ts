@@ -36,6 +36,6 @@ export const NoData = `<div class='recorder-nodata'>
     </div>
     <div class='recorder-title'>
         <div>当前浏览器不支持录音</div>
-        <div>请安装360浏览器并设置极速模式或安装谷歌浏览器</div>
+        <div>请安装最新360浏览器并设置极速模式或安装谷歌浏览器</div>
     </div>
 </div>`;

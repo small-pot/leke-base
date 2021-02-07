@@ -5,6 +5,6 @@ export const initConfig = {
 
 export const VIDEO_EVENTS = [
     'dblclick',
-    'abort', 'canplay', 'canplaythrough', 'durationchange', 'emptied', 'ended', 'error', 'loadeddata', 'loadedmetadata', 'loadstart',
+    'abort', 'canplay', 'canplaythrough', 'durationchange', 'emptied', 'ended', 'error', 'loadeddata', 'loadstart',
     'playing', 'progress', 'ratechange', 'readystatechange', 'seeked', 'seeking', 'stalled', 'suspend', 'volumechange', 'waiting'
 ];
