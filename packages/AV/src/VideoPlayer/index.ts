@@ -67,7 +67,8 @@ class Player {
 
     isSupported() {
         const type=getResourceType(this.options.src);
-        if(['M3U8','MP4','WEBM','OGG'].includes(type)){
+        
+        if('M3U8,MP4,WEBM,OGG'.indexOf(type)){
             if(type==='M3U8'&&!Hls.isSupported()){
                 this.mountNode.innerHTML = `<div class="video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png"/><p>视频播放暂不支持ie10及以下版本，请升级或用其他浏览器打开</p></div>`;
             }else{
