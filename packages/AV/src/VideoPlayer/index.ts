@@ -7,6 +7,7 @@ import { getVideoSize, checkBrowser,getResourceType, throttle, entryFullscreen, 
 import Control from './components/ControlBar';
 import txt from './template.html';
 
+const prefixCls='leke';
 class Player {
     private uid: number;
     private width: number;
@@ -70,17 +71,17 @@ class Player {
             if(type==='M3U8'&&!Hls.isSupported()){
                 this.mountNode.innerHTML = `<div class="video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png"/><p>视频播放暂不支持ie10及以下版本，请升级或用其他浏览器打开</p></div>`;
             }else{
-                this.mountNode.innerHTML=this.template.replace('<div class="video-root-container">',`<div class="video-root-container" style="width:${this.width}px;height:${this.height}px;">`);
-                this.el = this.mountNode.querySelector('.video-root-container');
-                this.input = this.el.querySelector(`.video-input`);
+                this.mountNode.innerHTML=this.template.replace(`<div class="${prefixCls}-video-root-container">`,`<div class="${prefixCls}-video-root-container" style="width:${this.width}px;height:${this.height}px;">`);
+                this.el = this.mountNode.querySelector(`.${prefixCls}-video-root-container`);
+                this.input = this.el.querySelector(`.${prefixCls}-video-input`);
                 this.input.id = `video-input-${this.uid}`;
                 this.video = this.el.querySelector(`video`);
                 this.video.id=`video-${this.uid}`;
-                this.mask = this.el.querySelector(`.video-mask`);
-                this.control = this.el.querySelector(`.video-control-bar`);
-                this.loading = this.el.querySelector(`.loading-container`);
-                this.error = this.el.querySelector(`.error-wrap`);
-                this.toast = this.el.querySelector(`.video-fullscreen-toast`);
+                this.mask = this.el.querySelector(`.${prefixCls}-video-mask`);
+                this.control = this.el.querySelector(`.${prefixCls}-video-control-bar`);
+                this.loading = this.el.querySelector(`.${prefixCls}-loading-container`);
+                this.error = this.el.querySelector(`.${prefixCls}-error-wrap`);
+                this.toast = this.el.querySelector(`.${prefixCls}-video-fullscreen-toast`);
                 new Control(this.control,this.video,this.event);
                 this.initConfig();
                 type==='M3U8'?this.hlsHandle():this.video.src=this.options.src;

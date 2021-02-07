@@ -18,7 +18,7 @@ describe('VideoPlayer', function () {
     it('onPausedChange should be called', () => {
         const onPausedChange = jest.fn();
         render(<VideoPlayer {...defaultProps} onPausedChange={onPausedChange} />);
-        fireEvent.click(document.querySelector('.video-root-container'));
+        fireEvent.click(document.querySelector('.leke-video-root-container'));
         expect(onPausedChange).toHaveBeenCalledTimes(1);
     });
     
