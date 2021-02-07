@@ -20,7 +20,7 @@ const baseCls = 'leke-text-area';
 const TextArea:React.FC<TextAreaProps> = (props) => {
     const {autoSize,className,maxLength,value,onChange,onResize} = props;
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const [inputVal, setInputVal] = useState(value);
+    const [inputVal, setInputVal] = useState(value||'');
     const getTextAreaClassName = () => classNames(className,baseCls,{
         [`${baseCls}-auto-size`]:autoSize
     });
@@ -34,7 +34,7 @@ const TextArea:React.FC<TextAreaProps> = (props) => {
     }, [value]);
 
 
-    // TODO onResize 暂时无要求先不添加，功能已完成 依赖于resize-observer-polyfill
+    // TODO onResize 暂时先不添加 依赖于resize-observer-polyfill
     // useEffect(() => {
     //     const resizeObserver = new ResizeObserver((entries)=>{
     //         entries.forEach(i => {
@@ -92,13 +92,8 @@ const TextArea:React.FC<TextAreaProps> = (props) => {
             </div>);
     } 
     return textareaNode;
-    
 };
 TextArea.defaultProps={
     autoSize:false,
-    value:'',
-    // maxLength:200,
-    onChange:(e)=>{},
-    onResize:(rect)=>{}
 };
 export default TextArea;

@@ -2,15 +2,17 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2020-11-13 16:16:51
- * @LastEditTime: 2020-12-11 10:09:24
+ * @LastEditTime: 2021-02-07 14:34:29
 -->
-### 文本域
+---
+title: 禁用状态
+description: 禁止操作输入框
+---
 ```jsx
 import React from 'react';
 import {Input} from '@leke/rc';
 
 export default function(){
-    const [value,SetValue] = React.useState('');
-    return  <Input.TextArea className="outer" placeholder="基本使用"/>;
+    return  <Input className="outer" disabled placeholder="disabled" />;
 }
 ```

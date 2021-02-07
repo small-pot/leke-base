@@ -2,9 +2,12 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2020-11-13 16:16:51
- * @LastEditTime: 2020-12-11 11:06:09
+ * @LastEditTime: 2021-02-07 14:37:25
 -->
-### 配合icon使用
+---
+title: 配合icon使用
+description: 可以前置或者后置icon
+---
 ```jsx
 import React from 'react';
 import {Input} from '@leke/rc';
@@ -14,10 +17,7 @@ export default function(){
     return  <>
         <Input className="outer" prefix={<Notice />} type='password' placeholder="prefix-icon"/>
         <br/>
-        <br/>
         <Input className="outer" suffix={<Notice />} placeholder="suffix-icon"/>
-        <br/>
-        <br/>
     </>;
 }
 ```
