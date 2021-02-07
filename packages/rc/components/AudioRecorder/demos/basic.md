@@ -1,3 +1,9 @@
+<!--
+ * @Descripttion: 
+ * @Author: gulingxin
+ * @Date: 2021-02-07 17:23:06
+ * @LastEditTime: 2021-02-07 18:06:09
+-->
 ---
 
 title: 功能拓展
@@ -30,40 +36,27 @@ export default function () {
     //     const pos = baseFile.search(";base64,");
     //     //去头部
     //     baseFile = baseFile.slice(pos + number, baseFile.length);
-    //     console.log("base", baseFile);
-    //     return new Promise((reolove, reject) => {
-    //         http({
-    //             method: "post",
-    //             url:
-    //                 "https://webapp.leke.cn/auth/global/fs/upload/audio/base64.htm",
-    //             // data: { file: baseFile, ext: "mp3", type: "audio" },
-    //             data:`file=${baseFile}&ext=mp3&type=audio`
-    //         })
-    //             .then((res) => {
-    //                 const SUCCESS = 200;
-    //                 if (res.status === SUCCESS && res.data.success) {
-    //                     reolove(res.data.datas.url)
-    //                     return;
-    //                 }
-    //                 reject("音频上传失败")
-    //             })
-    //             .catch((error) => reject(error))
+    //     return new Promise((reslove) => {
+    //         setTimeout(()=>{
+    //             reslove('111');
+    //         },3000)
     //     });
     // };
     const onReRecorder = () => {
         console.log("重新录音");
     };
-    // const blobToDataURI = (blob) => {
-    //     return new Promise(function (reolove, reject) {
-    //         const reader = new FileReader();
-    //         reader.onload = function (e) {
-    //             reolove(e.target.result);
-    //         };
-    //         reader.readAsDataURL(blob);
-    //     });
-    // };
+    const blobToDataURI = (blob) => {
+        return new Promise(function (reolove, reject) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                reolove(e.target.result);
+            };
+            reader.readAsDataURL(blob);
+        });
+    };
     const player = {
-        onAudioPlayerVisible:true
+        onAudioPlayerVisible:true,
+        // onSrcChange:loadSrc
     };
     return (
         <>

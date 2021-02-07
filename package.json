@@ -29,7 +29,8 @@
     "test": "jest --cache false",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.md",
     "fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.md",
-    "tsc": "tsc --noEmit --jsx react"
+    "tsc": "tsc --noEmit --jsx react",
+    "eslint": "eslint"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
