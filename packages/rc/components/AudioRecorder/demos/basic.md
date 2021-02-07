@@ -53,14 +53,17 @@ export default function () {
     const onReRecorder = () => {
         console.log("重新录音");
     };
-    const blobToDataURI = (blob) => {
-        return new Promise(function (reolove, reject) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                reolove(e.target.result);
-            };
-            reader.readAsDataURL(blob);
-        });
+    // const blobToDataURI = (blob) => {
+    //     return new Promise(function (reolove, reject) {
+    //         const reader = new FileReader();
+    //         reader.onload = function (e) {
+    //             reolove(e.target.result);
+    //         };
+    //         reader.readAsDataURL(blob);
+    //     });
+    // };
+    const player = {
+        onAudioPlayerVisible:true
     };
     return (
         <>
@@ -69,7 +72,7 @@ export default function () {
                 duration="5"
                 onStart={onStart}
                 onStop={onStop}
-                isViewAudio
+                player={player}
                 onReRecorder={onReRecorder}
             />
         </>

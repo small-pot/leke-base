@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: gulingxin
  * @Date: 2021-02-04 16:26:49
- * @LastEditTime: 2021-02-07 09:36:45
+ * @LastEditTime: 2021-02-07 13:36:17
  */
 import { Alert } from "@leke/rc";
 import { RecordHtml, AudioHtml, NoData } from "./html";
@@ -51,7 +51,7 @@ class AudioRecorder {
   }
   recorderList: [];
   private init() {
-      require("./index.less");
+      require("./AudioRecorder.less");
       this.initHtml();
       this.initEvent();
   }

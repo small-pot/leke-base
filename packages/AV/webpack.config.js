@@ -1,10 +1,15 @@
+/*
+ * @Descripttion: 
+ * @Author: gulingxin
+ * @Date: 2021-02-03 15:42:48
+ * @LastEditTime: 2021-02-07 16:56:51
+ */
 const path = require('path');
 module.exports={
     mode:'production',
     entry:{
         VideoPlayer:path.resolve('./src/VideoPlayer/index.ts'),
         AudioPlayer:path.resolve('./src/AudioPlayer/index.ts'),
-        AudioRecorder:path.resolve('./src/AudioRecorder/index.ts'),
         Recorder:path.resolve('./src/Recorder/index.ts')
     },
     output:{
