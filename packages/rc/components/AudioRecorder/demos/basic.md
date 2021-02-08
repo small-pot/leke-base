@@ -16,52 +16,52 @@ import { AudioRecorder } from "@leke/rc";
 import http from "@leke/http";
 
 export default function () {
-    // const [boldFile, setBoldFile] = useState("");
+    const [boldFile, setBoldFile] = useState("");
 
     const onStart = () => {
         console.log("start");
     };
     const onStop = (e) => {
-        // setBoldFile(e);
+        setBoldFile(e);
     };
 
-    // const loadSrc = async (boldFile) => {
-    //     if (!boldFile) {
-    //         return;
-    //     }
-    //     let baseFile = await blobToDataURI(boldFile);
-
-    //     const number = 8;
-    //     //检索头部关键词位置
-    //     const pos = baseFile.search(";base64,");
-    //     //去头部
-    //     baseFile = baseFile.slice(pos + number, baseFile.length);
-    //     return new Promise((reslove) => {
-    //         setTimeout(()=>{
-    //             reslove('111');
-    //         },3000)
-    //     });
-    // };
+    const loadSrc = async (boldFile) => {
+        if (!boldFile) {
+            return;
+        }
+        let baseFile = await blobToDataURI(boldFile);
+   
+        const number = 8;
+        //检索头部关键词位置
+        const pos = baseFile.search(";base64,");
+        //去头部
+        baseFile = baseFile.slice(pos + number, baseFile.length);
+        return new Promise((resolve) => {
+            setTimeout(()=>{
+                resolve('111');
+            },3000);
+        });
+    };
     const onReRecorder = () => {
         console.log("重新录音");
     };
     const blobToDataURI = (blob) => {
-        return new Promise(function (reolove, reject) {
+        return new Promise(function (resolve, reject) {
             const reader = new FileReader();
             reader.onload = function (e) {
-                reolove(e.target.result);
+                resolve(e.target.result);
             };
             reader.readAsDataURL(blob);
         });
     };
     const player = {
         onAudioPlayerVisible:true,
-        // onSrcChange:loadSrc
+        onSrcChange:loadSrc
     };
     return (
         <>
             <AudioRecorder
-                // loadSrc={loadSrc}
+                //loadSrc={loadSrc}
                 duration="5"
                 onStart={onStart}
                 onStop={onStop}
@@ -71,8 +71,4 @@ export default function () {
         </>
     );
 }
-```
-
-```css
-
 ```
