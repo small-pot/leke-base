@@ -8,10 +8,9 @@ import * as React from "react";
 import { AudioRecorder as Recorder } from "@leke/AV";
 import AudioPlayer, { AudioPlayerProps } from "../AudioPlayer";
 import { RecordLoading } from "@leke/icons";
-import { AxiosRequestConfig, AxiosResponse } from "axios";
-import http from "@leke/http";
+import http, { httpRequest } from "@leke/http";
 type Player = AudioPlayerProps;
-interface AudioUpload extends AxiosRequestConfig {
+interface AudioUpload extends httpRequest {
   success?: (res: any) => void;
   error?: (res: any) => void;
 }
@@ -126,7 +125,6 @@ class AudioRecorder extends React.Component<IProps, IState> {
       this.setState({
           loading: true,
       });
-      console.log("audioUpload", audioUpload);
       if (!audioUpload.url) {
           return;
       }
@@ -184,7 +182,6 @@ class AudioRecorder extends React.Component<IProps, IState> {
 
   public render() {
       const { recorderStatus, audioSrc, loading } = this.state;
-      console.log(recorderStatus);
       return (
           <div className="leke-record-container">
               {recorderStatus ? (
