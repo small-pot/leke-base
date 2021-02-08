@@ -5,7 +5,7 @@ import qs from 'qs';
 function validateStatus(){
     return true;
 }
-export default function createHttp (opt?:createOption) {
+export default function createHttp (opt?:createOption):<T>(options:httpRequest)=>Promise<T> {
     const headers=Object.assign({'X-Requested-With':'XMLHttpRequest'},opt&&opt.headers);
     const option=Object.assign({timeout: 30000},opt);
     option.headers=headers;
