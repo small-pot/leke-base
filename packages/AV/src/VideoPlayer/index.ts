@@ -232,7 +232,7 @@ class Player {
                 this.errorFlag=true;
                 if(this.loadingFlag)this.closeLoading();
                 this.error.style.display='block';
-                this.control.style.display='noe';
+                this.control.style.display='none';
             });
         });
         this.event.on('volumeChange', (step) => {
