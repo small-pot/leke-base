@@ -1,15 +1,9 @@
-import axios,{AxiosRequestConfig,AxiosResponse} from 'axios';
+import axios from 'axios';
+import {httpRequest,createOption} from './types';
 import qs from 'qs';
 
 function validateStatus(){
     return true;
-}
-export interface httpRequest extends AxiosRequestConfig{
-    reset?:boolean,
-}
-export interface createOption extends AxiosRequestConfig{
-    requestInterceptor?:(config:httpRequest)=>httpRequest,
-    responseInterceptor?:<T=any>(res:AxiosResponse)=>T
 }
 export default function createHttp (opt?:createOption) {
     const headers=Object.assign({'X-Requested-With':'XMLHttpRequest'},opt&&opt.headers);
