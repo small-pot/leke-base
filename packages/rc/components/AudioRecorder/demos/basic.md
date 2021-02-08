@@ -1,9 +1,3 @@
-<!--
- * @Descripttion: 
- * @Author: gulingxin
- * @Date: 2021-02-07 17:23:06
- * @LastEditTime: 2021-02-07 18:06:09
--->
 ---
 
 title: 功能拓展
@@ -16,16 +10,13 @@ import { AudioRecorder } from "@leke/rc";
 import http from "@leke/http";
 
 export default function () {
-    const [boldFile, setBoldFile] = useState("");
+    // const [httpOption,setHttpOption] = useState({})
 
     const onStart = () => {
         console.log("start");
     };
-    const onStop = (e) => {
-        setBoldFile(e);
-    };
-
-    const loadSrc = async (boldFile) => {
+    
+    const onStop = async(boldFile) => {
         if (!boldFile) {
             return;
         }
@@ -36,11 +27,13 @@ export default function () {
         const pos = baseFile.search(";base64,");
         //去头部
         baseFile = baseFile.slice(pos + number, baseFile.length);
-        return new Promise((resolve) => {
-            setTimeout(()=>{
-                resolve('111');
-            },3000);
-        });
+        // setTimeout(()=>{
+        //     setHttpOption({
+        //         method: "post",
+        //         url:"https://webapp.leke.cn/auth/global/fs/upload/audio/base64.htm",
+        //         data:`file=${boldFile}&ext=mp3&type=audio`
+        //     });
+        // },3000)
     };
     const onReRecorder = () => {
         console.log("重新录音");
@@ -56,14 +49,13 @@ export default function () {
     };
     const player = {
         onAudioPlayerVisible:true,
-        onSrcChange:loadSrc
     };
     return (
         <>
             <AudioRecorder
-                //loadSrc={loadSrc}
                 duration="5"
                 onStart={onStart}
+                // httpOption={httpOption}
                 onStop={onStop}
                 player={player}
                 onReRecorder={onReRecorder}

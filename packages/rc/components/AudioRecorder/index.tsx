@@ -2,26 +2,35 @@
  * @Descripttion:
  * @Author: gulingxin
  * @Date: 2021-02-04 16:34:16
- * @LastEditTime: 2021-02-07 13:53:32
+ * @LastEditTime: 2021-02-08 11:42:46
  */
 import * as React from "react";
 import { AudioRecorder as Recorder } from "@leke/AV";
 import AudioPlayer,{ AudioPlayerProps }  from "../AudioPlayer";
 import { RecordLoading } from "@leke/icons";
-
+import {AxiosRequestConfig,AxiosResponse} from 'axios';
+import http from '@leke/http';
+export interface httpRequest extends AxiosRequestConfig{
+    reset?:boolean,
+}
+export interface createOption extends AxiosRequestConfig{
+    requestInterceptor?:(config:httpRequest)=>httpRequest,
+    responseInterceptor?:<T=any>(res:AxiosResponse)=>T
+}
 type Player = {
-    onSrcChange:any;    //音频上传
-    onAudioPlayerVisible:boolean; //是否展示音频
+    onAudioPlayerVisible?:boolean; //是否展示音频
 } & AudioPlayerProps;
 interface IProps {
   duration?: number; //录音限时
   player?: Player; //音频组件
+  httpOption?:createOption; //http上传数据
+  onHttpChange?:({success,res}:{success:boolean,res:any}) => void;    //音频上传
   onStart?: () => void; //开始录音回调
   onStop?: (e: any) => void; //结束录音回调
   onReRecorder?: () => void; //重录回调
 }
 interface IState {
-  audioVisible: boolean;    //是否切换
+  recorderStatus: boolean;    //录音状态
   audioSrc: any;    //音频地址
   loading: boolean;   //是否上传中
   boldFile: any;    //音频文件二进制流
@@ -36,7 +45,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
       this.recorderRef = React.createRef();
       this.audioRef = React.createRef();
       this.state = {
-          audioVisible: this.props.player && this.props.player.src ? true : false,
+          recorderStatus: this.props.player && this.props.player.src ? true : false,
           audioSrc: this.props.player ? this.props.player.src : "",
           loading: false,
           boldFile: null,
@@ -59,16 +68,20 @@ class AudioRecorder extends React.Component<IProps, IState> {
   };
 
   componentDidMount() {
-      if (!this.state.audioVisible) {
+      if (!this.state.recorderStatus) {
           this.startRecord();
       }
   }
   //录音音频查看
   componentDidUpdate(preProps: IProps, preState: IState) {
+      console.log('httpOption',this.props.httpOption);
+      if(this.props.httpOption !== preProps.httpOption){
+          this.recordUpload();
+      }
       if (
           this.props.player && this.props.player.onAudioPlayerVisible &&
-      this.state.audioVisible !== preState.audioVisible &&
-      !this.state.audioVisible
+        this.state.recorderStatus !== preState.recorderStatus &&
+        !this.state.recorderStatus
       ) {
           this.startRecord(true);
       }
@@ -76,19 +89,25 @@ class AudioRecorder extends React.Component<IProps, IState> {
 
   //停止录音
   handleStop = (e) => {
-      const { onStop, player } = this.props;
+      const { onStop, player,httpOption } = this.props;
       onStop && onStop(e);
+      const stateParams = {
+          audioSrc: window.URL.createObjectURL(
+              new Blob([e], { type: "audio/wav" })
+          ),
+          boldFile: e,
+      };
       this.showAudio();
-      if (player && player.onSrcChange) {
-          this.recordUpload(e);
+      if (httpOption) {
+          this.setState({
+              ...stateParams
+          });
+          this.recordUpload();
       } else {
           this.setState({
-              audioSrc: window.URL.createObjectURL(
-                  new Blob([e], { type: "audio/mp3" })
-              ),
+              ...stateParams,
               loading: false,
               success: true,
-              boldFile: e,
           });
       }
   };
@@ -100,40 +119,37 @@ class AudioRecorder extends React.Component<IProps, IState> {
           setTimeout(() => {
               this.recorderRef.current.innerHTML = "";
               this.setState({
-                  audioVisible: true,
+                  recorderStatus: true,
               });
           }, 500);
       }
   };
 
-  recordUpload = (e) => {
-      const { onSrcChange } = this.props.player;
+  recordUpload = () => {
+      const { httpOption,onHttpChange } = this.props;
       this.setState({
           loading: true,
       });
-      onSrcChange(e)
-          .then((src) => {
-              this.setState({
-                  audioSrc: src,
-                  loading: false,
-                  success: true,
-                  boldFile: e,
-              });
-          })
-          .catch((error) => {
-              this.setState({
-                  audioSrc: window.URL.createObjectURL(
-                      new Blob([e], { type: "audio/mp3" })
-                  ),
-                  loading: false,
-                  success: false,
-                  boldFile: e,
-              });
+      if(!Object.keys(httpOption).length){
+          return;
+      }
+      http(httpOption).then((res)=>{
+          this.setState({
+              loading: false,
+              success: true,
           });
+          onHttpChange && onHttpChange({success:true,res});
+      }).catch((error)=>{
+          this.setState({
+              loading: false,
+              success: false,
+          });
+          onHttpChange && onHttpChange({success:false,res:error});
+      });
   };
 
   reRender = () => {
-      const { loading, success, boldFile } = this.state;
+      const { loading, success } = this.state;
       if (loading) {
           return (
               <div className="leke-record-loading">
@@ -147,7 +163,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
           上传失败，点击
                   <span
                       className="reUpload"
-                      onClick={() => this.recordUpload(boldFile)}
+                      onClick={() => this.recordUpload()}
                   >
             重新上传
                   </span>
@@ -160,7 +176,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
               onClick={() => {
                   this.props.onReRecorder && this.props.onReRecorder();
                   this.setState({
-                      audioVisible: false,
+                      recorderStatus: false,
                       audioSrc: "",
                   });
               }}
@@ -175,18 +191,18 @@ class AudioRecorder extends React.Component<IProps, IState> {
       if(!player){
           return {};
       }
-      const { onSrcChange,onAudioPlayerVisible,src,...audioProps} = player;
+      const { onAudioPlayerVisible,src,...audioProps} = player;
       return audioProps;
   }
 
   public render() {
-      const { audioVisible, audioSrc, loading } = this.state;
+      const { recorderStatus, audioSrc, loading } = this.state;
       return (
           <div className="leke-record-container">
-              {audioVisible ? (
+              {recorderStatus ? (
                   <div className="leke-record-audio-wrap">
                       <div className="leke-record-audio-container">
-                          {audioSrc ? <AudioPlayer src={audioSrc} {...this.getAudioProps.bind(this)} /> : null}
+                          {audioSrc && !loading ? <AudioPlayer src={audioSrc} {...this.getAudioProps.bind(this)} /> : null}
                       </div>
                       {this.reRender()}
                   </div>
