@@ -11,14 +11,13 @@ interface InputNumberProps{
   min?:number,
   size?:SizeType,
   step?:number,
-  value?:number | '',
+  value?:number,
   onBlur?:()=>void,
   onChange?:(val:string)=>void,
   onFocus?:()=>void,
   parser?:(val:string)=>string,
   formatter?:(val:string)=>string
 }
-
 
 const baseCls = 'leke-input-number';
 
@@ -45,28 +44,32 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
         parser
     } = props;
 
-    const [focus, setFocus] = React.useState(false);
-    const [inputValue, setInputValue] = React.useState(()=>defaultValue?String(defaultValue):'');
-    const displayInputValue = React.useMemo(() => {
+    const [focus, setFocus] = React.useState<boolean>(false);
+    const [inputValue, setInputValue] = React.useState<string>(()=>defaultValue?String(defaultValue):'');
+    
+    // 文本框展示的数值
+    const displayInputValue:string = React.useMemo(() => {
         let formatValue = inputValue;
         if (formatter) {
             formatValue = formatter(formatValue);
         }
         return formatValue;
     },[inputValue,formatter]);
-    const maxPrecision = React.useMemo(() => {
+
+    const maxPrecision:number = React.useMemo(() => {
         return Math.max(
-            getPrecision(+value),
+            getPrecision(value),
             getPrecision(step),
             getPrecision(maxValue),
             getPrecision(minValue),
-            getPrecision(+inputValue));
+            getPrecision(Number(inputValue))
+        );
     }, [value,step, minValue, maxValue,inputValue]);
 
     React.useEffect(() => {
-        // if (value!==undefined||value!==null) {
-        //     setInputValue(String(value));
-        // }
+        if (value!==undefined && value!==null) {
+            setInputValue(String(value));
+        }
     }, [value]);
 
     const getInputClassName:()=>string = () => {
@@ -90,17 +93,17 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
         handleValueChange(inputValue,true);
     };
 
-    const onStepClk:(type:string)=>React.MouseEventHandler =(type)=> (e) => {
+    const onStepClk=(type:string,stepValue:number)=> (e:React.MouseEvent) => {
         let _inputValue = Number.parseFloat(inputValue);
         if (type==='up') {
             // 当数字框为空时，用一个合适的值作为初始值
             if (inputValue === '') return handleValueChange(String(Math.max(minValue,0)),true);
             if (+inputValue>=maxValue) return;
-            _inputValue = +inputValue+step;
+            _inputValue = +inputValue+stepValue;
         }else if(type==='down'){
             if (inputValue === '') return handleValueChange(String(Math.min(maxValue,100)),true);
             if (+inputValue<=minValue) return;
-            _inputValue = +inputValue-step;
+            _inputValue = +inputValue-stepValue;
         }
         handleValueChange(Number(_inputValue).toFixed(maxPrecision));
     };
@@ -109,18 +112,25 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
         handleValueChange(parser(e.target.value));
     };
 
-    const handleValueChange:(value:string,strict?:boolean)=>void = (value,strict=false) => {
-        let result = value;
+    const handleValueChange= (textValue:string,strict:boolean = false) => {
+        let result = textValue;
         if (strict) {
-            result = getValidateValue(value);
+            result = getValidateDisplayValue(textValue);
         }
         setInputValue(pre=>{
-            if (pre!==result) onChange&&onChange(result);
-            return result;
+            let val = pre;
+            if (value===undefined) {
+                val = result;
+            }
+            if (pre!==result) {
+                onChange&&onChange(result);
+            }
+            return val;
         });
+        
     };
 
-    const getValidateValue:(value:any,min?:number,max?:number)=>string = (value,min=minValue,max=maxValue) => {
+    const getValidateDisplayValue = (value:string,min:number=minValue,max:number=maxValue) => {
         const validValue = Number.parseFloat(value);
         if (Number.isNaN(validValue)) return '';
         if(validValue<min) return String(min);
@@ -135,7 +145,7 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
                     className={classNames(`${baseCls}-handle-up`,{
                         [`${baseCls}-handle-up-disabled`]:+inputValue>=maxValue && inputValue!==''
                     })}
-                    onClick={onStepClk('up')}>
+                    onClick={onStepClk('up',step)}>
                     {/* TODO 替换图标 */}
                     <Down />
                 </span>
@@ -143,7 +153,7 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
                     className={classNames(`${baseCls}-handle-down`,{
                         [`${baseCls}-handle-down-disabled`]:+inputValue<=minValue && inputValue!==''
                     })}
-                    onClick={onStepClk('down')}>
+                    onClick={onStepClk('down',step)}>
                     {/* TODO 替换图标 */}
                     <Down />
                 </span>
@@ -166,7 +176,7 @@ InputNumber.defaultProps={
     max:MAX_SAFE_INTEGER,
     min:-MAX_SAFE_INTEGER,
     parser:defaultParser,
-    formatter:(val)=>`& ${val}`,
+    formatter:(val)=>`${val}`,
     onChange:(val)=>{console.log('onchange',val);}
 };
 

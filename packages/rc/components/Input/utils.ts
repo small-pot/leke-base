@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2020-11-13 16:33:54
- * @LastEditTime: 2020-12-14 19:04:23
+ * @LastEditTime: 2021-02-08 15:48:06
  */
 /**
  * @description: 去除对象上的指定属性
@@ -153,7 +153,7 @@ export function calculateNodeHeight(
 
 
 // 获取小数精度
-export const getPrecision:(value:number) => number = value => {
+export const getPrecision = (value:number)=>{
     const valueString = String(value);
     if (valueString.indexOf('e-') >= 0) {
         return parseInt(valueString.slice(valueString.indexOf('e-') + 2), 10);
@@ -164,3 +164,4 @@ export const getPrecision:(value:number) => number = value => {
     }
     return precision;
 };
+console.log(getPrecision(null));
