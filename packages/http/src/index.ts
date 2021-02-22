@@ -1,5 +1,6 @@
 import axios from "axios";
 import createHttp from "./create";
+export * from './types';
 
 const cancelToken = axios.CancelToken;
 

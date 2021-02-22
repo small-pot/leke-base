@@ -22,7 +22,7 @@
   "dependencies": {
     "@leke/AV": "^1.0.5",
     "@leke/hooks": "^1.0.4",
-    "@leke/icons": "^1.0.3",
+    "@leke/icons": "1.0.4-record",
     "classnames": "^2.2.6",
     "omit.js": "^2.0.2"
   }

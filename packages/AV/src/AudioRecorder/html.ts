@@ -1,3 +1,9 @@
+/*
+ * @Descripttion: 
+ * @Author: gulingxin
+ * @Date: 2021-02-02 20:38:10
+ * @LastEditTime: 2021-02-03 11:45:15
+ */
 export const RecordHtml = `
 <div class="record-wrap">
     <div id='recordContainer' class='record-container'>
