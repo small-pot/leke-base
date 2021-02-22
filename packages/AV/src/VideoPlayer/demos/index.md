@@ -49,6 +49,10 @@
 | loop | 循环播放 | boolean | false |
 | poster | 视频封面 | string | - |
 | muted | 静音 | boolean | false |
+| onReady | 媒体SourceBuffer加载完成后的回调 | function | - |
+| onLoad | 媒体信息获取完毕后的回调 | function | - |
+| onStart | 视频开始播放的回调 | function | - |
+| onEnded | 视频结束播放的回调 | function | - |
 
 ## 属性
 | 属性 | 说明 | 类型 | 默认值 | 

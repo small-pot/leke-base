@@ -3,8 +3,13 @@ import { IVideoProps } from "./type";
 import {VideoPlayer} from '@leke/AV';
 
 class Video extends React.PureComponent<IVideoProps>{
-    ref =createRef<HTMLDivElement>()
+    ref: React.RefObject<HTMLDivElement>;
     instance: any;
+    constructor(props){
+        super(props);
+        this.ref=createRef();
+        this.instance=null;
+    }
     componentDidMount(){
         const {
             src,

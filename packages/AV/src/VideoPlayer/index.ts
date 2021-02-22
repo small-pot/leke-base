@@ -7,6 +7,7 @@ import { getVideoSize, checkBrowser,getResourceType, throttle, entryFullscreen, 
 import Control from './components/ControlBar';
 import txt from './template.html';
 
+const prefixCls='leke';
 class Player {
     private uid: number;
     private width: number;
@@ -31,6 +32,7 @@ class Player {
     private control: any;
     private toast: any;
     private error: any;
+    private errorFlag: boolean;
     private proxyPausedChange:(boolean)=>void
 
     constructor(options) {
@@ -45,6 +47,7 @@ class Player {
         };
         this.browser = checkBrowser();
         this.event = new EventBase();
+        this.errorFlag = false;
         this.loadingFlag = false;
         this.loadingTimer = null;
         this.isFullscreen = false;
@@ -66,27 +69,27 @@ class Player {
 
     isSupported() {
         const type=getResourceType(this.options.src);
-        if(['M3U8','MP4','WEBM','OGG'].includes(type)){
+        if('M3U8,MP4,WEBM,OGG'.indexOf(type)>-1){
             if(type==='M3U8'&&!Hls.isSupported()){
-                this.mountNode.innerHTML = `<div class="video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png"/><p>视频播放暂不支持ie10及以下版本，请升级或用其他浏览器打开</p></div>`;
+                this.mountNode.innerHTML = `<div class="${prefixCls}-video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png"/><p>视频播放暂不支持ie10及以下版本，请升级或用其他浏览器打开</p></div>`;
             }else{
-                this.mountNode.innerHTML=this.template.replace('<div class="video-root-container">',`<div class="video-root-container" style="width:${this.width}px;height:${this.height}px;">`);
-                this.el = this.mountNode.querySelector('.video-root-container');
-                this.input = this.el.querySelector(`.video-input`);
+                this.mountNode.innerHTML=this.template.replace(`<div class="${prefixCls}-video-root-container">`,`<div class="${prefixCls}-video-root-container" style="width:${this.width}px;height:${this.height}px;">`);
+                this.el = this.mountNode.querySelector(`.${prefixCls}-video-root-container`);
+                this.input = this.el.querySelector(`.${prefixCls}-video-input`);
                 this.input.id = `video-input-${this.uid}`;
                 this.video = this.el.querySelector(`video`);
                 this.video.id=`video-${this.uid}`;
-                this.mask = this.el.querySelector(`.video-mask`);
-                this.control = this.el.querySelector(`.video-control-bar`);
-                this.loading = this.el.querySelector(`.loading-container`);
-                this.error = this.el.querySelector(`.error-wrap`);
-                this.toast = this.el.querySelector(`.video-fullscreen-toast`);
+                this.mask = this.el.querySelector(`.${prefixCls}-video-mask`);
+                this.control = this.el.querySelector(`.${prefixCls}-video-control-bar`);
+                this.loading = this.el.querySelector(`.${prefixCls}-loading-container`);
+                this.error = this.el.querySelector(`.${prefixCls}-error-wrap`);
+                this.toast = this.el.querySelector(`.${prefixCls}-video-fullscreen-toast`);
                 new Control(this.control,this.video,this.event);
                 this.initConfig();
                 type==='M3U8'?this.hlsHandle():this.video.src=this.options.src;
             }
         }else{
-            this.mountNode.innerHTML = `<div class="video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png"/><p>不支持的视频格式，请转化为Mp4、WebM、Ogg、M3u8等格式</p></div>`;
+            this.mountNode.innerHTML = `<div class="${prefixCls}-video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png"/><p>不支持的视频格式，请转化为Mp4、WebM、Ogg、M3u8等格式</p></div>`;
         }
     }
 
@@ -199,7 +202,7 @@ class Player {
         // const fn = throttle((time) => { this.event.trigger('timeupdate', time); }, 1000, { leading: true });
         this.video.addEventListener('timeupdate', () => {
             this.currentTime=this.video.currentTime;
-            if(this.loading)this.closeLoading();
+            if(this.loadingFlag)this.closeLoading();
             this.event.trigger('timeupdate', this.video.currentTime);
         });
         this.event.on('click', (nextPaused) => {
@@ -226,7 +229,10 @@ class Player {
             }
             this.event.on('error', (err) => {
                 console.error(err);
+                this.errorFlag=true;
+                if(this.loadingFlag)this.closeLoading();
                 this.error.style.display='block';
+                this.control.style.display='none';
             });
         });
         this.event.on('volumeChange', (step) => {
@@ -253,7 +259,7 @@ class Player {
             this.mask.style.display='block';
         });
         this.event.on('playing',()=>{
-            if(this.loading)this.closeLoading();
+            if(this.loadingFlag)this.closeLoading();
         });
         this.event.on('ended', () => {
             this.closeLoading();
@@ -276,6 +282,7 @@ class Player {
     }
 
     showLoading(){
+        if(this.errorFlag)return;
         this.loadingFlag=true;
         this.loading.style.display='block';
     }
