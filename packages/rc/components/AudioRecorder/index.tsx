@@ -18,7 +18,7 @@ interface IProps {
   duration?: number; //录音限时
   audioPlayerVisible?: boolean; //是否展示音频
   player?: Player; //音频组件
-  audioUpload?: AudioUpload; //音频上传
+  uploadParams?: AudioUpload; //音频上传
   onStart?: () => void; //开始录音回调
   onStop?: (e: any) => void; //结束录音回调
   onReRecorder?: () => void; //重录回调
@@ -69,8 +69,8 @@ class AudioRecorder extends React.Component<IProps, IState> {
   //录音音频查看
   componentDidUpdate(preProps: IProps, preState: IState) {
       if (
-          this.props.audioUpload &&
-      this.props.audioUpload.url !== preProps.audioUpload.url
+          this.props.uploadParams &&
+      this.props.uploadParams.url !== preProps.uploadParams.url
       ) {
           this.recordUpload();
       }
@@ -84,7 +84,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
 
   //停止录音
   handleStop = (e) => {
-      const { onStop, audioUpload } = this.props;
+      const { onStop, uploadParams } = this.props;
       onStop && onStop(e);
       const stateParams = {
           audioSrc: window.URL.createObjectURL(
@@ -93,7 +93,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
           boldFile: e,
       };
       this.showAudio();
-      if (audioUpload) {
+      if (uploadParams) {
           this.setState({
               ...stateParams,
           });
@@ -121,27 +121,27 @@ class AudioRecorder extends React.Component<IProps, IState> {
   };
 
   recordUpload = () => {
-      const { audioUpload } = this.props;
+      const { uploadParams } = this.props;
       this.setState({
           loading: true,
       });
-      if (!audioUpload.url) {
+      if (!uploadParams.url) {
           return;
       }
-      http({ ...audioUpload })
+      http({ ...uploadParams })
           .then((res) => {
               this.setState({
                   loading: false,
                   success: true,
               });
-              audioUpload.success && audioUpload.success(res);
+              uploadParams.success && uploadParams.success(res);
           })
           .catch((error) => {
               this.setState({
                   loading: false,
                   success: false,
               });
-              audioUpload.error && audioUpload.error(error);
+              uploadParams.error && uploadParams.error(error);
           });
   };
 

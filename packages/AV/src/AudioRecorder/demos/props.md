@@ -12,4 +12,4 @@ title: API
 | onStart | 开始录音回调 | boolean | - |
 | onStop | 停止录音回调 | function | bold |
 | onReRecorder | 重新录音回调 | function | - |
-| audioUpload | 音频上传 | {...http,success:()=>{}//成功回调，error:()=>{}//失败回调} | - |
+| uploadParams | 音频上传 | {...http,success:()=>{}//成功回调，error:()=>{}//失败回调} | - |

@@ -53,7 +53,7 @@ export default function () {
         duration="300"
         audioPlayerVisible
         onStart={onStart}
-        audioUpload={{
+        uploadParams={{
           ...httpOption,
           success: (e) => {
             console.log("success", e);

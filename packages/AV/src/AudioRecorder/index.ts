@@ -24,7 +24,7 @@ interface IRecorderConfig {
   duration?: number; //录音限时
   player?: Player; //音频组件
   audioPlayerVisible?: boolean; //是否展示音频
-  audioUpload?: AudioUpload; //音频上传
+  uploadParams?: AudioUpload; //音频上传
   onStart?: () => void; //开始录音回调
   onStop?: (e: any) => void; //结束录音回调
   onReRecorder?: () => void; //重录回调
@@ -127,23 +127,23 @@ class Recorder {
   recordUpload() {
       const self = this;
       this.isLoading = true;
-      http({ ...this.cfg.audioUpload })
+      http({ ...this.cfg.uploadParams })
           .then((res) => {
               self.isLoading = false;
               self.isSuccess = true;
               self.audioSrc = res;
-              this.cfg.audioUpload;
-              this.cfg.audioUpload &&
-          this.cfg.audioUpload.success &&
-          this.cfg.audioUpload.success(res);
+              this.cfg.uploadParams;
+              this.cfg.uploadParams &&
+          this.cfg.uploadParams.success &&
+          this.cfg.uploadParams.success(res);
               self.initAudio();
           })
           .catch((error) => {
               self.isLoading = false;
               self.isSuccess = false;
-              this.cfg.audioUpload &&
-          this.cfg.audioUpload.error &&
-          this.cfg.audioUpload.error(error);
+              this.cfg.uploadParams &&
+          this.cfg.uploadParams.error &&
+          this.cfg.uploadParams.error(error);
               self.initAudio();
           });
   }
@@ -154,7 +154,7 @@ class Recorder {
       this.audioSrc = window.URL.createObjectURL(
           new Blob([event], { type: "audio/wav" })
       );
-      if (this.cfg.player && this.cfg.audioUpload) {
+      if (this.cfg.player && this.cfg.uploadParams) {
           this.recordUpload();
       } else {
           this.isLoading = false;
