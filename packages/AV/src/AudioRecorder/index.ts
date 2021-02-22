@@ -62,7 +62,7 @@ class Recorder {
   initAudio() {
       const { el } = this.cfg;
       const self = this;
-      const audioProps = this.cfg.player;
+      const {src,...audioProps} = this.cfg.player;
       el.innerHTML = AudioHtml;
       this.audioContainer = el.querySelector(".leke-record-audio-container");
       if (this.isLoading) {
@@ -89,7 +89,7 @@ class Recorder {
             reRecorder.className = "leke-record-loading";
             reRecorder.innerHTML =
             '<svg t="1612356175047" class="icon" viewBox="0 0 1024 1024" width="1em" height= "1em" fill="currentColor" ><defs><style type="text/css"></style></defs><path d="M62.2 613.5c1-0.2 1.9-0.4 2.9-0.6-0.9 0.2-1.9 0.4-2.9 0.6zM38.7 619.6c0.8-0.2 1.5-0.5 2.3-0.7-0.8 0.2-1.5 0.5-2.3 0.7zM84.6 609.8c1.1-0.1 2.2-0.3 3.3-0.4-1.1 0.1-2.2 0.2-3.3 0.4z" fill="#F5F5F5" p-id="6896"></path><path d="M291.1 231.2m-90 0a90 90 0 1 0 180 0 90 90 0 1 0-180 0Z" fill="#F5F5F5" p-id="6897"></path><path d="M164.7 499.3m-100 0a100 100 0 1 0 200 0 100 100 0 1 0-200 0Z" fill="#F5F5F5" p-id="6898"></path><path d="M325 793.6m-110 0a110 110 0 1 0 220 0 110 110 0 1 0-220 0Z" fill="#F5F5F5" p-id="6899"></path><path d="M565.1 143.2m-75 0a75 75 0 1 0 150 0 75 75 0 1 0-150 0Z" fill="#F5F5F5" p-id="6900"></path><path d="M824 283.4m-60 0a60 60 0 1 0 120 0 60 60 0 1 0-120 0Z" fill="#F5F5F5" p-id="6901"></path><path d="M909.4 526m-50 0a50 50 0 1 0 100 0 50 50 0 1 0-100 0Z" fill="#F5F5F5" p-id="6902"></path><path d="M811.1 785.8m-40 0a40 40 0 1 0 80 0 40 40 0 1 0-80 0Z" fill="#F5F5F5" p-id="6903"></path><path d="M610.1 900.1m-30 0a30 30 0 1 0 60 0 30 30 0 1 0-60 0Z" fill="#F5F5F5" p-id="6904"></path></svg>';
-            self.recordUpload(self.recorderAudio);
+            self.recordUpload();
         });
           return;
       }
@@ -124,7 +124,7 @@ class Recorder {
       }
   }
   /*音频上传 */
-  recordUpload(e) {
+  recordUpload() {
       const self = this;
       this.isLoading = true;
       http({ ...this.cfg.audioUpload })
@@ -141,9 +141,6 @@ class Recorder {
           .catch((error) => {
               self.isLoading = false;
               self.isSuccess = false;
-              self.audioSrc = window.URL.createObjectURL(
-                  new Blob([e], { type: "audio/wav" })
-              );
               this.cfg.audioUpload &&
           this.cfg.audioUpload.error &&
           this.cfg.audioUpload.error(error);
@@ -154,14 +151,14 @@ class Recorder {
   handleStop(event) {
       this.cfg.onStop && this.cfg.onStop(event);
       this.recorderAudio = event;
+      this.audioSrc = window.URL.createObjectURL(
+          new Blob([event], { type: "audio/wav" })
+      );
       if (this.cfg.player && this.cfg.audioUpload) {
-          this.recordUpload(event);
+          this.recordUpload();
       } else {
           this.isLoading = false;
           this.isSuccess = true;
-          this.audioSrc = window.URL.createObjectURL(
-              new Blob([event], { type: "audio/wav" })
-          );
       }
       this.recorderAudio = event;
       this.cfg.el.className += " exit";
