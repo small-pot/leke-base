@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2020-11-13 16:16:51
- * @LastEditTime: 2021-02-07 14:37:25
+ * @LastEditTime: 2021-02-24 15:26:45
 -->
 ---
 title: 配合icon使用
@@ -16,6 +16,7 @@ import {Notice} from "@leke/icons";
 export default function(){
     return  <>
         <Input className="outer" prefix={<Notice />} type='password' placeholder="prefix-icon"/>
+        <br/>
         <br/>
         <Input className="outer" suffix={<Notice />} placeholder="suffix-icon"/>
     </>;

@@ -20,12 +20,21 @@ const Input:React.FC<InputProps> = (props) => {
     const {className,disabled,prefix,size,suffix,type,onChange} = props;
     
     const getInputClassName:()=>string = () => {
-        const inputClassName = classNames(className,`${baseCls}`,{
+        const inputClassName = classNames(`${baseCls}`,{
             [`${baseCls}-sm`]:size==="small",
             [`${baseCls}-lg`]:size==="large",
             [`${baseCls}-disabled`]:disabled
-        });
+        },className);
         return inputClassName;
+    };
+
+    const getDefaultInput = (className=baseCls)=>{
+        return (<input
+            {...omit(props,['className','type','onChange','prefix','suffix'])}
+            className={className}
+            type={type}
+            onChange={onChange}
+        />);
     };
 
     const inputNode = (
@@ -40,14 +49,14 @@ const Input:React.FC<InputProps> = (props) => {
         return(
             <span className={classNames(`${baseCls}-outer-wrap`,getInputClassName())}>
                 {prefix&&<span className="leke-input-prefix">{prefix}</span>}
-                {inputNode}
+                {getDefaultInput()}
                 {suffix&&<span className="leke-input-suffix">{suffix}</span>}
             </span>
         );
     }
     
 
-    return inputNode;
+    return getDefaultInput(getInputClassName());
 };
 
 Input.defaultProps = {
