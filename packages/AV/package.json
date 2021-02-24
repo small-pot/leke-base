@@ -16,8 +16,8 @@
     "index.cjs.js",
     "types",
     "dist",
-    "cjs",
-    "esm"
+    "lib",
+    "es"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.2",
