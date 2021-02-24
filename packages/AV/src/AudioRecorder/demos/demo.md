@@ -14,14 +14,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://static.leke.cn/scripts/common/player/Recorder.min.js"></script>
+    <script src="https://static.leke.cn/scripts/common/player/AudioRecorder.min.js"></script>
 </head>
 <body>
     <div id="wrap"></div>
 </body>
 <script>
     window.onload = function(){
-        new Recorder({
+        new AudioRecorder({
             el:document.getElementById('wrap'),
             duration:300
         })
