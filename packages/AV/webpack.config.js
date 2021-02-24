@@ -1,4 +1,5 @@
 const path = require("path");
+
 module.exports = {
     mode: "production",
     entry: {
@@ -17,10 +18,7 @@ module.exports = {
     },
     target: ["web", "es5"],
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx", ".html"],
-        alias: {
-            "@leke/http":path.resolve(__dirname,'../http/src/index.ts')
-        }
+        extensions: [".ts",".js"]
     },
     module: {
         rules: [

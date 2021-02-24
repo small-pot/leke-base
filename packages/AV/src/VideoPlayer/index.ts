@@ -8,6 +8,7 @@ import Control from './components/ControlBar';
 import txt from './template.html';
 
 const prefixCls='leke';
+
 class Player {
     private uid: number;
     private width: number;

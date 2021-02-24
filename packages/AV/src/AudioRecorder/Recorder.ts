@@ -4,7 +4,6 @@
  * @Date: 2021-02-04 16:26:49
  * @LastEditTime: 2021-02-07 13:36:17
  */
-import { Alert } from "@leke/rc";
 import { RecordHtml, AudioHtml, NoData } from "./html";
 import { timeFormat, blobToDataURI } from "./utils";
 
