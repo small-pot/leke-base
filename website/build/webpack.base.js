@@ -13,8 +13,8 @@ module.exports ={
         extensions: ['.ts','.tsx','.js','.jsx'],
         alias: {
             ...resolvePaths(path.resolve(__dirname,'../../')),
-            '../../node_modules/@leke':path.resolve(__dirname,'../../packages'),
-            "@leke/rc":path.resolve(__dirname,'../../packages/rc')
+            "@leke/rc":path.resolve(__dirname,'../../packages/rc'),
+            "@leke/http":path.resolve(__dirname,'../../packages/http/src/index.ts')
         }
     },
     module: {

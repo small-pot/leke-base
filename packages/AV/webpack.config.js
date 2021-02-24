@@ -1,10 +1,11 @@
 const path = require("path");
+
 module.exports = {
     mode: "production",
     entry: {
         VideoPlayer: path.resolve("./src/VideoPlayer/index.ts"),
         AudioPlayer: path.resolve("./src/AudioPlayer/index.ts"),
-        Recorder: path.resolve("./src/AudioRecorder/index.ts"),
+        AudioRecorder: path.resolve("./src/AudioRecorder/index.ts")
     },
     output: {
         path: path.resolve(__dirname, "dist"),
@@ -16,7 +17,7 @@ module.exports = {
     },
     target: ["web", "es5"],
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx", ".html"],
+        extensions: [".ts",".js"]
     },
     module: {
         rules: [

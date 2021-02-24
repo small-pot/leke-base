@@ -4,5 +4,6 @@
     "target": "ES3",
     "declaration": true,
     "declarationDir": "types"
-  }
+  },
+  "include": ["src"]
 }

@@ -1,3 +1,3 @@
-exports.AudioPlayer = require("./dist/AudioPlayer.min");
-exports.VideoPlayer = require("./dist/VideoPlayer.min");
-exports.VideoPlayer = require("./dist/AudioRecorder.min");
+exports.AudioPlayer = require("./lib/AudioPlayer");
+exports.VideoPlayer = require("./lib/VideoPlayer.cjs");
+exports.VideoPlayer = require("./lib/AudioRecorder.cjs");
