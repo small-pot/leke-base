@@ -1,6 +1,6 @@
 {
   "name": "@leke/rc",
-  "version": "1.1.1",
+  "version": "1.2.6-record",
   "main": "lib/index.js",
   "module": "es/index.js",
   "author": "guoquankai@cnstrong.cn",
@@ -20,8 +20,9 @@
     "react-dom": ">=16.8.6"
   },
   "dependencies": {
-    "@leke/AV": "^1.0.5",
+    "@leke/AV": "^1.2.2-record",
     "@leke/hooks": "^1.0.4",
+    "@leke/http": "^1.0.1-record",
     "@leke/icons": "1.0.4-record",
     "classnames": "^2.2.6",
     "omit.js": "^2.0.2"

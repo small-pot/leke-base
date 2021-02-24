@@ -4,7 +4,8 @@ module.exports = {
     entry: {
         VideoPlayer: path.resolve("./src/VideoPlayer/index.ts"),
         AudioPlayer: path.resolve("./src/AudioPlayer/index.ts"),
-        Recorder: path.resolve("./src/AudioRecorder/index.ts"),
+        AudioRecorder: path.resolve("./src/AudioRecorder/index.ts"),
+        Recorder: path.resolve("./src/AudioRecorder/Recorder.ts"),
     },
     output: {
         path: path.resolve(__dirname, "dist"),
@@ -17,6 +18,9 @@ module.exports = {
     target: ["web", "es5"],
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx", ".html"],
+        alias: {
+            "@leke/http":path.resolve(__dirname,'../http/src/index.ts')
+        }
     },
     module: {
         rules: [

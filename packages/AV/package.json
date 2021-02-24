@@ -1,6 +1,6 @@
 {
   "name": "@leke/AV",
-  "version": "1.0.5",
+  "version": "1.2.2-record",
   "main": "index.cjs.js",
   "module": "index.esm.js",
   "types": "types",
@@ -16,7 +16,7 @@
     "dist"
   ],
   "dependencies": {
-    "@leke/http": "^1.0.0",
+    "@leke/http": "^1.0.1-record",
     "hls.js": "^0.13.2"
   },
   "devDependencies": {
