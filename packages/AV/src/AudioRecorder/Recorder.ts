@@ -388,6 +388,7 @@ class Recorder {
       recording.style.display = "none";
       // const req = await this.getRecorderAudio();
       this.onStop && this.onStop(boldFile);
+      this.Recorder = null;
   };
   //获取音频
   public getRecorderAudio = (type?: string) => {

@@ -1,6 +1,6 @@
 {
   "name": "@leke/AV",
-  "version": "1.2.4-record",
+  "version": "1.2.8-record",
   "main": "index.cjs.js",
   "module": "index.esm.js",
   "types": "types",

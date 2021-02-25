@@ -20,11 +20,29 @@
     <div id="wrap"></div>
 </body>
 <script>
-    window.onload = function(){
-        new AudioRecorder({
-            el:document.getElementById('wrap'),
-            duration:300
+    window.onload = function () {
+        var recorder = new AudioRecorder({
+            el: document.getElementById('wrap'),
+            duration: 300,
+            onStop:(boldFile) => {
+                if (!boldFile) {
+                    return;
+                }
+                const reader = new FileReader();
+                reader.readAsDataURL(boldFile);
+                reader.onload = function (e) {
+                    let baseFile = e.target.result;
+                    console.log(baseFile)
+                    recorder.recorderUpload({
+                        method: "post",
+                        url: "/auth/global/fs/upload/audio/base64.htm",
+                        data:baseFile.split(',')[1],
+                    })
+                };
+
+            }
         })
+        console.log(recorder)
     }
 </script>
 </html>

@@ -27,23 +27,23 @@ interface IProps {
 }
 
 interface IState {}
-let recorder = null;
+
 class AudioRecorder extends React.Component<IProps, IState> {
     recorderRef: React.RefObject<HTMLDivElement>;
+    recorder = null;
     constructor(props) {
         super(props);
         this.recorderRef = React.createRef();
     }
-
     //初始化recorder
     startRecord = () => {
         if (this.recorderRef.current) {
-            recorder = new Recorder({
+            this.recorder = new Recorder({
                 el: this.recorderRef.current,
                 ...this.props
             });
-            recorder.onStart = this.props.onStart;
-            recorder.onStop = (e) => this.handleStop(e);
+            this.recorder.onStart = this.props.onStart;
+            this.recorder.onStop = (e) => this.handleStop(e);
         }
     };
 
@@ -51,11 +51,38 @@ class AudioRecorder extends React.Component<IProps, IState> {
         this.startRecord();
     }
     componentDidUpdate(prevProps: IProps, prevState: IState) {
-        if(this.props.uploadParams && prevProps.uploadParams !== this.props.uploadParams && this.props.uploadParams.url && this.props.uploadParams.url !== prevProps.uploadParams.url){
-            recorder.recorderUpload(this.props.uploadParams);
+        // if(this.recorder && this.props.uploadParams && prevProps.uploadParams !== this.props.uploadParams
+        //     && this.props.uploadParams.data && this.props.uploadParams.data !== prevProps.uploadParams.data){
+        //     this.recorder.recorderUpload(this.props.uploadParams);
+        // }
+        if(this.props.uploadParams && this.props.uploadParams.data && !this.isObjectValueEqual(prevProps.uploadParams,this.props.uploadParams)){
+            this.recorder.recorderUpload(this.props.uploadParams);
         }
+        console.log(this.isObjectValueEqual(prevProps.uploadParams,this.props.uploadParams));
     }
-
+    /**
+     * 判断两个对象是否相等
+     */
+    isObjectValueEqual(a, b) {
+        // 取对象a和b的属性名
+        let aProps = Object.getOwnPropertyNames(a);
+        let bProps = Object.getOwnPropertyNames(b);
+        // 判断属性名的length是否一致
+        if (aProps.length != bProps.length) {
+            return false;
+        }
+        let flag = true;
+        // 循环取出属性名，再判断属性值是否一致
+        aProps.forEach((propName,index)=>{
+            if(typeof a[propName] === "function"){
+                return;
+            }
+            if (a[propName] !== b[propName]) {
+                flag = false;
+            }
+        });
+        return flag;
+    }
     handleStop(e){
         this.props.onStop && this.props.onStop(e);
     }
