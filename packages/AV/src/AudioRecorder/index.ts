@@ -164,6 +164,23 @@ class AudioRecorder {
                 self.initAudio();
                 uploadParams.error && uploadParams.error(error);
             });
+        // let formData = new FormData();
+        // formData.append('file', uploadParams.data)
+        // formData.append('ext', 'mp3')
+        // formData.append('type', 'audio')
+        // const req = new XMLHttpRequest();
+        // req.onreadystatechange = function(){
+        //     if (req.readyState === 4) {
+        //         const response  = JSON.parse(req.responseText);
+        //         if (response.code === '200') {
+        //             console.log('success');
+        //         } else {
+        //             console.log('fail');
+        //         }
+        //     }
+        // };
+        // req.open('post', uploadParams.url, true);
+        // req.send(formData);
     }
 
     /*暂停录音 */

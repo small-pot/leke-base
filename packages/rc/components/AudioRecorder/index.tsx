@@ -40,7 +40,7 @@ class AudioRecorder extends React.Component<IProps, IState> {
         if (this.recorderRef.current) {
             recorder = new Recorder({
                 el: this.recorderRef.current,
-                duration: this.props.duration,
+                ...this.props
             });
             recorder.onStart = this.props.onStart;
             recorder.onStop = (e) => this.handleStop(e);
@@ -50,11 +50,14 @@ class AudioRecorder extends React.Component<IProps, IState> {
     componentDidMount() {
         this.startRecord();
     }
-    handleStop(e){
-        this.props.onStop && this.props.onStop(e);
-        if(this.props.uploadParams && recorder){
+    componentDidUpdate(prevProps: IProps, prevState: IState) {
+        if(this.props.uploadParams && prevProps.uploadParams !== this.props.uploadParams && this.props.uploadParams.url && this.props.uploadParams.url !== prevProps.uploadParams.url){
             recorder.recorderUpload(this.props.uploadParams);
         }
+    }
+
+    handleStop(e){
+        this.props.onStop && this.props.onStop(e);
     }
 
     public render() {
