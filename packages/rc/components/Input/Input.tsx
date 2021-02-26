@@ -37,14 +37,6 @@ const Input:React.FC<InputProps> = (props) => {
         />);
     };
 
-    const inputNode = (
-        <input
-            {...omit(props,['className','type','onChange'])}
-            className={getInputClassName()}
-            type={type}
-            onChange={onChange}
-        />
-    );
     if (suffix || prefix) {
         return(
             <span className={classNames(`${baseCls}-outer-wrap`,getInputClassName())}>
