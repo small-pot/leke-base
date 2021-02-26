@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2020-11-13 16:33:54
- * @LastEditTime: 2021-02-08 15:48:06
+ * @LastEditTime: 2021-02-26 10:46:05
  */
 /**
  * @description: 去除对象上的指定属性
@@ -164,4 +164,3 @@ export const getPrecision = (value:number)=>{
     }
     return precision;
 };
-console.log(getPrecision(null));

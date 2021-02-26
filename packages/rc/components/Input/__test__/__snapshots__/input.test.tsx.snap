@@ -3,7 +3,7 @@
 exports[`Input support prefix and suffix icon 1`] = `
 <div>
   <span
-    class="leke-input-outer-wrap outer leke-input"
+    class="leke-input-outer-wrap leke-input outer"
   >
     <span
       class="leke-input-prefix"
@@ -25,8 +25,7 @@ exports[`Input support prefix and suffix icon 1`] = `
       </i>
     </span>
     <input
-      class="outer leke-input"
-      prefix="[object Object]"
+      class="leke-input"
       type="text"
     />
   </span>
@@ -36,11 +35,10 @@ exports[`Input support prefix and suffix icon 1`] = `
 exports[`Input support prefix and suffix icon 2`] = `
 <div>
   <span
-    class="leke-input-outer-wrap outer leke-input"
+    class="leke-input-outer-wrap leke-input outer"
   >
     <input
-      class="outer leke-input"
-      suffix="[object Object]"
+      class="leke-input"
       type="text"
     />
     <span
