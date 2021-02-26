@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from "classnames";
 import { omit,getPrecision } from './utils';
 import { SizeType } from "./interface";
-import {Down} from "@leke/icons";
+import {Down,Up} from "@leke/icons";
 interface InputNumberProps{
   className?:string,
   defaultValue?:number,
@@ -146,15 +146,13 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
                         [`${baseCls}-handle-up-disabled`]:+inputValue>=maxValue && inputValue!==''
                     })}
                     onClick={onStepClk('up',step)}>
-                    {/* TODO 替换图标 */}
-                    <Down />
+                    <Up />
                 </span>
                 <span
                     className={classNames(`${baseCls}-handle-down`,{
                         [`${baseCls}-handle-down-disabled`]:+inputValue<=minValue && inputValue!==''
                     })}
                     onClick={onStepClk('down',step)}>
-                    {/* TODO 替换图标 */}
                     <Down />
                 </span>
             </div>
@@ -171,13 +169,10 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
     );
 };
 InputNumber.defaultProps={
-    step:1.238,
-    // defaultValue:'',
+    step:1,
     max:MAX_SAFE_INTEGER,
     min:-MAX_SAFE_INTEGER,
     parser:defaultParser,
-    formatter:(val)=>`${val}`,
-    onChange:(val)=>{console.log('onchange',val);}
 };
 
 export default InputNumber;
