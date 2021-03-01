@@ -2,14 +2,14 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-19 14:57:47
- * @LastEditTime: 2021-01-26 10:17:50
+ * @LastEditTime: 2021-02-04 17:22:34
  */
 import React from 'react';
 
 import {AudioPlayer as AudioPlayerCls,AudioPlayerNativeEvent} from '@leke/AV';
 
 const noop = ()=>{};
-interface AudioPlayerProps extends Partial<AudioPlayerNativeEvent> {
+export interface AudioPlayerProps extends Partial<AudioPlayerNativeEvent> {
     // forwardedRef?:React.RefObject<AudioPlayerCls | null>
     className?:string,
     style?:object,

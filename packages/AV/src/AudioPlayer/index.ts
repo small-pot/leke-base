@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-01-28 14:08:10
+ * @LastEditTime: 2021-02-07 10:15:34
  */
 
 import EventEmitter from './EventEmitter';
@@ -30,7 +30,7 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
   private $progressBtn!:HTMLDivElement
   private $timeText!:HTMLSpanElement
   private $container!:HTMLElement
-  private template=`<div class="audio-container">
+  private template=`<div class="leke-audio-container">
     <audio id="audio"></audio>
     <div class="button"></div>
     <div class="progress-outer">
