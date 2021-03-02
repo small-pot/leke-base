@@ -2,15 +2,18 @@ import React from 'react';
 import classNames from "classnames";
 import { omit,getPrecision } from './utils';
 import { SizeType } from "./interface";
-import {Down,Up} from "@leke/icons";
+import {Down,Up,Plus,Minus} from "@leke/icons";
 interface InputNumberProps{
   className?:string,
   defaultValue?:number,
   disabled?:boolean,
+  handleType?: 'column' | 'row',
   max?:number,
   min?:number,
+  prefix?:React.ReactElement | string,
   size?:SizeType,
   step?:number,
+  suffix?:React.ReactElement | string,
   value?:number,
   onBlur?:()=>void,
   onChange?:(val:string)=>void,
@@ -32,10 +35,13 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
         className,
         disabled,
         defaultValue,
+        handleType,
         max:maxValue,
         min:minValue,
+        prefix,
         step,
         size,
+        suffix,
         value,
         onBlur,
         onFocus,
@@ -76,6 +82,7 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
         const inputClassName = classNames(className,{
             [`${baseCls}-sm`]:size==="small",
             [`${baseCls}-lg`]:size==="large",
+            [`${baseCls}-clear-padding`]:handleType==="row",
             [`${baseCls}-disabled`]:disabled,
             [`${baseCls}-focus`]:focus
         });
@@ -138,35 +145,73 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
         return String(validValue);
     };
 
-    return(
-        <div className={classNames(`${baseCls}`,getInputClassName())}>
-            <div className={`${baseCls}-handle-wrap`}>
-                <span 
-                    className={classNames(`${baseCls}-handle-up`,{
-                        [`${baseCls}-handle-up-disabled`]:+inputValue>=maxValue && inputValue!==''
-                    })}
-                    onClick={onStepClk('up',step)}>
-                    <Up />
-                </span>
-                <span
-                    className={classNames(`${baseCls}-handle-down`,{
-                        [`${baseCls}-handle-down-disabled`]:+inputValue<=minValue && inputValue!==''
-                    })}
-                    onClick={onStepClk('down',step)}>
-                    <Down />
-                </span>
+    const getDefaultInput = (cls='')=>{
+        return (<input
+            {...omit(props,['className','placeholder','defaultValue','formatter','type','value','onBlur','onChange','onFocus','parser'])}
+            className={classNames('input-number',cls)}
+            type='text'
+            value={displayInputValue}
+            onChange={onInputChange}
+            onFocus={onInputNumberFocus}
+            onBlur={onInputNumberBlur}
+        />);
+    };
+
+    if (suffix || prefix) {
+        return (
+            <div className={classNames(`${baseCls}`,getInputClassName())}>
+                {
+                    prefix&&<div className={`${baseCls}-prefix-wrap`}>{prefix}</div>
+                }
+                {
+                    getDefaultInput()
+                }
+                {
+                    suffix&&<div className={`${baseCls}-suffix-wrap`}>{suffix}</div>
+                }
+                
             </div>
-            <input
-                {...omit(props,['className','placeholder','defaultValue','formatter','type','value','onBlur','onChange','onFocus','parser'])}
-                className='input-number'
-                type='text'
-                value={displayInputValue}
-                onChange={onInputChange}
-                onFocus={onInputNumberFocus}
-                onBlur={onInputNumberBlur}
-            />
+        );
+    }
+    return (
+        <div className={classNames(`${baseCls}`,getInputClassName())}>
+            {
+                handleType==='row'?<>
+                    <div className={classNames(`${baseCls}-handle-prefix-wrap`)} onClick={onStepClk('down',step)}>
+                        <Minus />
+                    </div>
+                    {getDefaultInput(classNames('input-number-center',{
+                        [`input-number-sm`]:size==="small",
+                        [`input-number-lg`]:size==="large",
+                    }))}
+                    <div className={classNames(`${baseCls}-handle-suffix-wrap`)} onClick={onStepClk('up',step)}>
+                        <Plus />
+                    </div>
+
+                </>:<>
+                    <div className={`${baseCls}-handle-wrap`}>
+                        <span
+                            className={classNames(`${baseCls}-handle-up`,{
+                                [`${baseCls}-handle-up-disabled`]:+inputValue>=maxValue && inputValue!==''
+                            })}
+                            onClick={onStepClk('up',step)}>
+                            <Up />
+                        </span>
+                        <span
+                            className={classNames(`${baseCls}-handle-down`,{
+                                [`${baseCls}-handle-down-disabled`]:+inputValue<=minValue && inputValue!==''
+                            })}
+                            onClick={onStepClk('down',step)}>
+                            <Down />
+                        </span>
+                    </div>
+                    {getDefaultInput()}
+                </>
+            }
+            
         </div>
     );
+    
 };
 InputNumber.defaultProps={
     step:1,
