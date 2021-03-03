@@ -55,7 +55,7 @@ class AudioRecorder {
 
     init() {
         require("./index.less");
-        if (this.cfg && this.cfg.player && Object.keys(this.cfg.player).length) {
+        if (this.cfg && this.cfg.player && Object.keys(this.cfg.player).length && this.cfg.player.src) {
             this.audioSrc = this.cfg.player.src;
             this.initAudio();
         } else {
