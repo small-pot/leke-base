@@ -7,13 +7,13 @@ interface InputNumberProps{
   className?:string,
   defaultValue?:number,
   disabled?:boolean,
-  handleType?: 'column' | 'row',
+  handleDirection?: 'column' | 'row',
   max?:number,
   min?:number,
-  prefix?:React.ReactElement | string,
+  prefix?:React.ReactNode,
   size?:SizeType,
   step?:number,
-  suffix?:React.ReactElement | string,
+  suffix?:React.ReactNode,
   value?:number,
   onBlur?:()=>void,
   onChange?:(val:string)=>void,
@@ -35,7 +35,7 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
         className,
         disabled,
         defaultValue,
-        handleType,
+        handleDirection,
         max:maxValue,
         min:minValue,
         prefix,
@@ -82,7 +82,7 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
         const inputClassName = classNames(className,{
             [`${baseCls}-sm`]:size==="small",
             [`${baseCls}-lg`]:size==="large",
-            [`${baseCls}-clear-padding`]:handleType==="row",
+            [`${baseCls}-clear-padding`]:handleDirection==="row",
             [`${baseCls}-disabled`]:disabled,
             [`${baseCls}-focus`]:focus
         });
@@ -147,7 +147,7 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
 
     const getDefaultInput = (cls='')=>{
         return (<input
-            {...omit(props,['className','placeholder','defaultValue','formatter','type','value','onBlur','onChange','onFocus','parser'])}
+            {...omit(props,['className','placeholder','defaultValue','formatter','handleDirection','type','value','onBlur','onChange','onFocus','parser'])}
             className={classNames('input-number',cls)}
             type='text'
             value={displayInputValue}
@@ -176,7 +176,7 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
     return (
         <div className={classNames(`${baseCls}`,getInputClassName())}>
             {
-                handleType==='row'?<>
+                handleDirection==='row'?<>
                     <div className={classNames(`${baseCls}-handle-prefix-wrap`)} onClick={onStepClk('down',step)}>
                         <Minus />
                     </div>
@@ -187,7 +187,6 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
                     <div className={classNames(`${baseCls}-handle-suffix-wrap`)} onClick={onStepClk('up',step)}>
                         <Plus />
                     </div>
-
                 </>:<>
                     <div className={`${baseCls}-handle-wrap`}>
                         <span
@@ -218,6 +217,7 @@ InputNumber.defaultProps={
     max:MAX_SAFE_INTEGER,
     min:-MAX_SAFE_INTEGER,
     parser:defaultParser,
+    handleDirection:'column'
 };
 
 export default InputNumber;
