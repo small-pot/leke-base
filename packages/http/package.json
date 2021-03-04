@@ -1,6 +1,6 @@
 {
   "name": "@leke/http",
-  "version": "1.0.2-record",
+  "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
