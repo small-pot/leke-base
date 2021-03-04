@@ -33,7 +33,7 @@ const Input:React.FC<InputProps> = (props) => {
     };
 
     const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.keyCode === 13 && onPressEnter) {
+        if (e.key === 'Enter' && onPressEnter) {
             onPressEnter(e);
         }
     };

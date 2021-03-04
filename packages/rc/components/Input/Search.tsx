@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-03-02 16:58:46
- * @LastEditTime: 2021-03-04 10:17:57
+ * @LastEditTime: 2021-03-04 14:51:01
  */
 import React,{useState,useRef} from 'react';
 import classNames from 'classnames';
@@ -12,15 +12,16 @@ import {Button,Select} from '@leke/rc';
 import {Search as SearchIcon} from '@leke/icons';
 
 interface SearchProps{
-  size: 'middle' | 'large',
-  enterButton:React.ReactNode,
-  onSearch:(value)=>void,
+    className?:string,
+    size?: 'middle' | 'large',
+    enterButton?:React.ReactNode,
+    onSearch?:(value)=>void,
 }
 
 
 const baseCls = 'leke-input-search';
 const Search:React.FC<SearchProps> = (props) => {
-    const {size,onSearch,enterButton} = props;
+    const {size,onSearch,enterButton,className} = props;
     const inputValueRef = useRef<string>('');
     let searchButton;
     if (enterButton) {
@@ -78,7 +79,7 @@ const Search:React.FC<SearchProps> = (props) => {
         <div className={classNames(baseCls)}>
             <Input 
                 {...omit(props,['className','size','addonAfter','onChange','onSearch','onPressEnter','enterButton'])}
-                className="search-input" 
+                className={classNames("search-input",className)}
                 size={size}
                 addonAfter={searchButton}
                 onChange={onChange}

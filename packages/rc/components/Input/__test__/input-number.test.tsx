@@ -37,6 +37,13 @@ describe('InputNumber',()=>{
         expect((inputNode as HTMLInputElement).value).toBe('22');
     });
 
+    it('support prefix and suffix icon',async()=>{
+        const {container,rerender}=render(<Input.InputNumber className="outer" prefix={<Notice />} />);
+        expect(container).toMatchSnapshot();
+        rerender(<Input.InputNumber className="outer" suffix={<Notice />} />);
+        expect(container).toMatchSnapshot();
+    });
+
     it('support focus and blur',async()=>{
         const onFocus=jest.fn();
         const onBlur=jest.fn();

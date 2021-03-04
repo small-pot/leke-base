@@ -23,6 +23,14 @@ describe('Input',()=>{
         expect(screen.getByRole('textbox').className.includes('leke-input-disabled')).toBeTruthy();
     });
 
+    it('support keydown',async()=>{
+        const onPressEnter = jest.fn();
+        render(<Input className="outer" onPressEnter={onPressEnter}/>);
+        const input = document.querySelector('.leke-input');
+        fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
+        expect(onPressEnter).toBeCalled();
+    });
+
     it('support prefix and suffix icon',async()=>{
         const {container,rerender}=render(<Input className="outer" prefix={<Notice />} />);
         expect(container).toMatchSnapshot();
