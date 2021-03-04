@@ -17,7 +17,7 @@ interface IRecorderConfig {
   recordConfig?:any;
 }
 
-class AudioRecorder {
+class Recorder {
   private cfg: IRecorderConfig;
   private Recorder: any;
   private count: number = 0; //录音用时
@@ -50,14 +50,13 @@ class AudioRecorder {
   }
   recorderList: [];
   private init() {
-      require("./AudioRecorder.less");
+      require("./Recorder.less");
       this.initHtml();
       this.initEvent();
   }
   //初始化页面
   private initHtml() {
       const { el } = this.cfg;
-      console.log("this.isHasMedia()", this.isHasMedia());
       el.innerHTML = this.isHasMedia() ? RecordHtml : NoData;
       this.record = el.querySelector("#record");
       this.recordContainer = el.querySelector("#recordContainer");
@@ -382,7 +381,6 @@ class AudioRecorder {
   public stopRecord = async () => {
       clearInterval(this.time);
       this.stop();
-      console.log("stop", this.getFullWavData());
       const boldFile = this.getFullWavData();
       const recording: HTMLElement = this.recordContainer.querySelector(
           ".record-recording"
@@ -390,6 +388,7 @@ class AudioRecorder {
       recording.style.display = "none";
       // const req = await this.getRecorderAudio();
       this.onStop && this.onStop(boldFile);
+      this.Recorder = null;
   };
   //获取音频
   public getRecorderAudio = (type?: string) => {
@@ -435,4 +434,4 @@ class AudioRecorder {
   }
 }
 
-export default AudioRecorder;
+export default Recorder;

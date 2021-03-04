@@ -13,3 +13,5 @@ title: API
 | onStop | 停止录音回调 | function | bold |
 | onReRecorder | 重新录音回调 | function | - |
 | uploadParams | 音频上传 | {...http,success:()=>{}//成功回调，error:()=>{}//失败回调} | - |
+| updateAudioSrc | 更新音频地址 | string | - |
+| recordUpload | 手动触发录音上传 | string | - |
