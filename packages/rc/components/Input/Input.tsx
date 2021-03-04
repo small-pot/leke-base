@@ -12,7 +12,7 @@ export interface InputProps {
     suffix?:React.ReactNode,
     size?: SizeType,
     style?:React.CSSProperties;
-    type?:'text' | 'number' | 'password',
+    type?:'text' | 'password',
     onPressEnter?:React.KeyboardEventHandler<HTMLInputElement>;
     onChange?:React.ChangeEventHandler<HTMLInputElement>
 }

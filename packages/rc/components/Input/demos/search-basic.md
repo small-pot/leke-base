@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2020-11-13 16:16:51
- * @LastEditTime: 2021-03-03 19:30:49
+ * @LastEditTime: 2021-03-04 10:19:43
 -->
 ### 搜索框
 ```jsx
@@ -36,5 +36,8 @@ export default function(){
 ```css
 .outer-search{
     width:200px
+}
+.leke-select{
+    border-color:#d9d9d9
 }
 ```

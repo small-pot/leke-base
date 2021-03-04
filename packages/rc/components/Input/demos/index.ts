@@ -4,7 +4,7 @@ export default [
     require('./input-size.md'),
     require('./input-disabled.md'),
     require('./input-withIcon.md'),
-    require('./input-withTag.md'),
+    // require('./input-withTag.md'),
     require('./textarea-basic.md'),
     require('./textarea-maxLength.md'),
     require('./textarea-autoSize.md'),
@@ -12,5 +12,8 @@ export default [
     require('./input-number-row.md'),
     require('./input-number-withIcon.md'),
     require('./search-basic.md'),
-    require('./index-api.md'),
+    require('./input-api.md'),
+    require('./input-number-api.md'),
+    require('./textarea-api.md'),
+    require('./search-api.md'),
 ];

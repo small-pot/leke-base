@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-03-02 16:58:46
- * @LastEditTime: 2021-03-03 19:26:08
+ * @LastEditTime: 2021-03-04 10:17:57
  */
 import React,{useState,useRef} from 'react';
 import classNames from 'classnames';
@@ -74,12 +74,6 @@ const Search:React.FC<SearchProps> = (props) => {
         }
     };
 
-    const options=[
-        {label:'1-1',value:'1-1'},
-        {label:'1-2',value:'1-2'},
-        {label:'1-3',value:'1-3'},
-    ];
-
     return (
         <div className={classNames(baseCls)}>
             <Input 
@@ -95,7 +89,6 @@ const Search:React.FC<SearchProps> = (props) => {
 };
 Search.defaultProps={
     size:'middle',
-    // enterButton:'搜索'
 };
 
 export default Search;
