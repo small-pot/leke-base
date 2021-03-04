@@ -2,9 +2,12 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2020-11-13 16:16:51
- * @LastEditTime: 2021-03-02 16:54:30
+ * @LastEditTime: 2021-03-04 11:22:18
 -->
-### 数字输入框-三种大小
+---
+title: 数字输入框-三种大小
+description: large、middle、small三种尺寸
+---
 ```jsx
 import React from 'react';
 import {Input} from '@leke/rc';

@@ -2,9 +2,12 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2020-11-13 16:16:51
- * @LastEditTime: 2021-03-02 16:53:43
+ * @LastEditTime: 2021-03-04 11:25:13
 -->
-### 数字输入框-前置或者后置标签
+---
+title: 数字输入框-标签
+description: 为输入框带上前置或者后置文字或者icon
+---
 ```jsx
 import React from 'react';
 import {Input} from '@leke/rc';
@@ -16,6 +19,9 @@ export default function(){
         <br />
         <br />
         <Input.InputNumber suffix={`%`} className="outer-number" />
+        <br />
+        <br />
+        <Input.InputNumber prefix={<Warn />} className="outer-number" />
     </>;
 }
 ```

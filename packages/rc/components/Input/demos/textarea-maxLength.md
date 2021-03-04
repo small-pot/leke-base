@@ -2,10 +2,11 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2020-11-13 16:16:51
- * @LastEditTime: 2021-02-22 15:10:47
+ * @LastEditTime: 2021-03-04 11:20:29
 -->
 ---
 title: 限制字数的文本域
+description: 适合有字数限制的表单输入
 ---
 ```jsx
 import React from 'react';
