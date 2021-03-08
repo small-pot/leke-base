@@ -1,4 +1,4 @@
-export const animationDuration = 120; // 动画过渡时间为180ms
+export const animationDuration = 180; // 动画过渡时间为180ms
 
 export const prefix = 'leke-modal';
 
