@@ -51,14 +51,9 @@ class AudioRecorder extends React.Component<IProps, IState> {
         this.startRecord();
     }
     componentDidUpdate(prevProps: IProps, prevState: IState) {
-        // if(this.recorder && this.props.uploadParams && prevProps.uploadParams !== this.props.uploadParams
-        //     && this.props.uploadParams.data && this.props.uploadParams.data !== prevProps.uploadParams.data){
-        //     this.recorder.recorderUpload(this.props.uploadParams);
-        // }
         if(this.props.uploadParams && this.props.uploadParams.data && !this.isObjectValueEqual(prevProps.uploadParams,this.props.uploadParams)){
             this.recorder.recorderUpload(this.props.uploadParams);
         }
-        console.log(this.isObjectValueEqual(prevProps.uploadParams,this.props.uploadParams));
     }
     /**
      * 判断两个对象是否相等
