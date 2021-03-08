@@ -36,6 +36,10 @@ export default {
         {
             key:'Spin',
             title:'加载中'    
+        },
+        {
+            key:'Modal',
+            title:'对话框'    
         }
     ]
 };
