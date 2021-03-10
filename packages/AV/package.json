@@ -1,13 +1,13 @@
 {
   "name": "@leke/AV",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "index.cjs.js",
   "module": "index.esm.js",
   "types": "types",
   "scripts": {
     "rollup": "rimraf lib && rimraf es && rollup -c rollup.config.js",
     "webpack": "rimraf dist && rimraf types && webpack --config webpack.config.js",
-    "build": "npm run rollup && npm run webpack"
+    "build": "cd ../http && npm run build && cd ../AV && npm run rollup && npm run webpack"
   },
   "license": "ISC",
   "files": [
@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.2",
-    "@leke/http": "^1.0.0",
+    "@leke/http": "^1.0.1",
     "hls.js": "^0.13.2"
   },
   "devDependencies": {

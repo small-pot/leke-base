@@ -20,6 +20,8 @@ export interface IVideoProps {
     volume?:number;
     // 全屏
     fullscreen?: boolean;
+    // 视频不支持下提示的图片样式
+    unsupportImgStyle?:any;
     // 组件SourceBuffer加载完成后的回调
     onReady?:()=>void;
     // 组件媒体信息获取完毕后的回调

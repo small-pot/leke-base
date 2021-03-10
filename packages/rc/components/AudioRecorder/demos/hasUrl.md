@@ -32,7 +32,7 @@ export default function () {
     };
     return (
         <>
-            <AudioRecorder player={player} duration="5" onStart={onStart} onStop={onStop} isViewAudio onReRecorder={onReRecorder} />
+            <AudioRecorder player={player} duration="5" onStart={onStart} onStop={onStop} audioPlayerVisible onReRecorder={onReRecorder} />
         </>
     );
 }
