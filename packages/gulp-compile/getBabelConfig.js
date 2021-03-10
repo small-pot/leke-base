@@ -1,4 +1,4 @@
-module.exports=function getBabelConfig(modules){
+module.exports=function getBabelConfig(modules=false){
     return {
         presets:[
             ['@babel/preset-env',
@@ -24,7 +24,7 @@ module.exports=function getBabelConfig(modules){
             ["import",
                 {
                     libraryName: "@leke/icons",
-                    libraryDirectory: modules==='commonjs'?"lib":'es',
+                    libraryDirectory: modules===false?"es":"lib",
                     camel2DashComponentName: false,
                     style:false
                 },
@@ -33,7 +33,7 @@ module.exports=function getBabelConfig(modules){
             ["import",
                 {
                     libraryName: "@leke/hooks",
-                    libraryDirectory: modules==='commonjs'?"lib":'es',
+                    libraryDirectory: modules===false?"es":"lib",
                     camel2DashComponentName: false,
                     style:false
                 },

@@ -1,13 +1,15 @@
 @import "../../../packages/rc/less/theme.less";
 .left-container{
   width:260px;
-  height: calc(100vh - 50px);
-  overflow-y: auto;
   position: relative;
 }
 .left-tab{
   width:260px;
   position: fixed;
+  height: calc(100vh - 50px);
+  border-right:1px solid #f0f0f0;
+  background-color: #fff;
+  overflow-y: auto;
   .tab-item{
     height:40px;
     line-height: 40px;
@@ -45,7 +47,7 @@
     margin-left:6px;
   }
   .tab-group{
-    font-size:16px;
+    font-size:14px;
   }
   .group-title{
     margin-top:15px;

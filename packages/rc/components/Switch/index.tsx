@@ -3,7 +3,7 @@
  * @description Switch开关组件
  * @updated ###### Fri Dec 25 15:25:10 PHT 2020
  */
-import React, { FC, memo, ReactNode, useCallback } from "react";
+import React, { FC, memo, ReactNode } from "react";
 import classNames from "classnames";
 import { useControl } from "@leke/hooks";
 import { Loading } from "@leke/icons";
@@ -22,7 +22,7 @@ interface SwitchProps {
   onClick?:(checked, e) =>void;
 }
 
-const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked: checkedProp, defaultChecked, disabled, className, loading, checkedChildren, unCheckedChildren, onChange, onClick, onKeyDown }) => {
+const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked: checkedProp, defaultChecked, disabled, className, loading, checkedChildren, unCheckedChildren, onChange, onClick, onKeyDown, ...props }) => {
     const [checked, setChecked] = useControl(checkedProp,onChange,defaultChecked);
     disabled = loading || disabled;
   
@@ -57,6 +57,7 @@ const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked: checkedProp, d
     };
     
     const switchProps = {
+        ...props,
         autoFocus,
         onClick: onHandler,
         onKeyDown: onInternalKeyDown,
@@ -64,7 +65,7 @@ const Switch: FC<SwitchProps> = memo(({ autoFocus, size, checked: checkedProp, d
             ['leke-switch-small']: size === 'small',
             ['leke-switch-checked']: checked,
             ['leke-switch-disabled']: disabled,
-        }, className),
+        }, className)
     };
 
     return (

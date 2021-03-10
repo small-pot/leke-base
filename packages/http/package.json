@@ -12,7 +12,9 @@
     "package.json",
     "lib"
   ],
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp-typescript": "^6.0.0-alpha.1"
+  },
   "dependencies": {
     "axios": "^0.21.0",
     "qs": "^6.9.4"

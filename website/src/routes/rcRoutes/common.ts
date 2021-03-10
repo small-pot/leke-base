@@ -36,6 +36,10 @@ export default {
         {
             key:'Select',
             title:'选择器'
+        },
+        {
+            key:'Spin',
+            title:'加载中'    
         }
         
     ]

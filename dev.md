@@ -12,7 +12,6 @@
     "build:hooks": gulp打包packages/hooks  
     "build:rc": gulp打包packages/rc
     "build:website": webpack打包website
-    "build": 按先后顺序打包icons，hooks，rc
     "dev:website": 官网开发环境
     "dev": 先打包icons，然后启动开发环境
     "test": 启动单元测试，输出覆盖率文档
@@ -50,10 +49,9 @@
 通过import(`path/${key}/demos/index.ts`)的形式按需加载
 ```
 
-## git
-```
-推荐每个事业线都创建一个dev与pro分支，如：homework-dev，homework-pro。
-一个组件或者hooks通常只有一人维护，在同一分支上开发基本不会有冲突。
-dev=>pro=>master,最终由郭全凯合并master并进行publish
-```
+## npm测试包版本
+- 修改package.json，如"version": "1.0.1-test"
+- npm publish --tag=test
+- npm install \<packageName\>@test
+- test可以随意命名
 

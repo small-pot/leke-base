@@ -2,8 +2,9 @@ import React, {useMemo} from "react";
 import StoreContext from './context';
 import {storeType} from "./types";
 
-export default function StoreProvider<T=object> ({children,data}:{children:React.ReactNode,data:T}) {
+export default function StoreProvider<T=object> (props:{children:React.ReactNode,data:T}) {
     const store:storeType<T>=useMemo(()=>{
+        let data=props.data;
         return {
             getData(){
                 return data;
@@ -13,8 +14,8 @@ export default function StoreProvider<T=object> ({children,data}:{children:React
                 data={...data,...state};
             }
         };
-    },[data])
+    },[props.data]);
     return(
-        <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
+        <StoreContext.Provider value={store}>{props.children}</StoreContext.Provider>
     );
 }

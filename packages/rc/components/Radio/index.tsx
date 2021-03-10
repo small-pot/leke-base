@@ -5,13 +5,7 @@ import Group from './group';
 import Button from './radioButton';
 
 export {
-  RadioGroupButtonStyle,
-  RadioGroupOptionType,
-  RadioGroupProps,
-  RadioGroupContextProps,
-  RadioProps,
-  RadioChangeEventTarget,
-  RadioChangeEvent,
+  RadioProps
 } from './interface';
 interface CompoundedComponent
   extends React.ForwardRefExoticComponent<RadioProps & React.RefAttributes<HTMLElement>> {

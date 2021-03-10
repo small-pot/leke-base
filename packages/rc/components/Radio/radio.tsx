@@ -1,6 +1,6 @@
 import * as React from 'react';
-import RcCheckbox from 'rc-checkbox';
 import classNames from 'classnames';
+import Checkbox from './checkBox'
 import { RadioProps, RadioChangeEvent } from './interface';
 import RadioGroupContext from './context';
 
@@ -40,7 +40,7 @@ const InternalRadio: React.ForwardRefRenderFunction<HTMLElement, RadioProps> = (
         onMouseEnter={props.onMouseEnter}
         onMouseLeave={props.onMouseLeave}
       >
-        <RcCheckbox {...radioProps} prefixCls={prefixCls} />
+        <Checkbox {...radioProps} prefixCls={prefixCls} />
         {children !== undefined ? <span>{children}</span> : null}
       </label>
   );
@@ -55,3 +55,4 @@ Radio.defaultProps = {
 };
 
 export default Radio;
+

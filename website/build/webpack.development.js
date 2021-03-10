@@ -9,6 +9,25 @@ module.exports=merge(baseConfig,{
         filename:'js/[name].js',
         publicPath:'/'
     },
+    module:{
+        rules:[
+            {
+                test:/\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'less-loader'
+                ]
+            }
+        ]
+    },
     plugins:[
         new webpack.HotModuleReplacementPlugin()
     ],
@@ -20,16 +39,9 @@ module.exports=merge(baseConfig,{
         historyApiFallback:true,
         disableHostCheck: true,
         proxy: {
-            context: ['/auth', '/proxy'],
-            target: 'https://webapp.leke.cn',
-            changeOrigin: true
+            // context: ['/auth', '/proxy'],
+            // target: 'https://webapp.leke.cn',
+            // changeOrigin: true
         }
-        // proxy:{
-        //     '/auth':{
-        //         target: 'https://webapp.leke.cn',
-        //         changeOrigin: true,
-        //         secure: false
-        //     }
-        // }
     }
 });

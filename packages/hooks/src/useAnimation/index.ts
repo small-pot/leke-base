@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {useRef, RefObject, useEffect,useLayoutEffect} from "react";
 import classNames from 'classnames';
 import omit from 'omit.js';
@@ -32,7 +33,7 @@ function getAnimationEventName(type='animation') {
 
 export default function useAnimation(params:useAnimationProps) {
     if(typeof window!=='object'){
-        return
+        return;
     }
     const {
         ref,
@@ -57,7 +58,7 @@ export default function useAnimation(params:useAnimationProps) {
             el.className=classNames(classNameRef.current,exit);
             typeof onExit==='function'&&onExit();
         }
-    },[open,ref,omitRef]);
+    },[open,ref]);
     useEffect(()=>{
         const el=ref.current;
         if(!el){
@@ -87,5 +88,5 @@ export default function useAnimation(params:useAnimationProps) {
             el.removeEventListener(eventName,eventCallback);
         }
         el.addEventListener(eventName,eventCallback);
-    },[open,ref,omitRef]);
+    },[open,ref]);
 }

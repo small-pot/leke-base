@@ -16,7 +16,6 @@
       "@leke/hooks": ["packages/hooks/src/index.ts"],
       "@leke/gulp-compile": ["packages/gulp-compile/index.js"],
       "@leke/store": ["packages/store/src/index.ts"],
-      "@leke/http": ["packages/http/src/index.ts"],
       "@leke/AV": ["packages/AV/src/index.ts"],
       "testUtil": ["testUtil/index.ts"]
     }
