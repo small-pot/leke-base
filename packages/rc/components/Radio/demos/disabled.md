@@ -23,7 +23,7 @@ export default function(){
     return(
         <>
           <Radio disabled={disabled}>未选禁用</Radio>
-          <Radio disabled={disabled}>选中后禁用</Radio>
+          <Radio disabled={disabled} checked>选中后禁用</Radio>
           <div onClick={onToggle} style={style}>切换禁用</div>
         </>
     );

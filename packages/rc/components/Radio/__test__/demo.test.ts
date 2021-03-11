@@ -1,2 +1,2 @@
-import {demoTest} from 'testUtil';
-demoTest(require('../demos'));
+// import {demoTest} from 'testUtil';
+// demoTest(require('../demos'));

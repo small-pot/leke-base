@@ -10,7 +10,6 @@ export default function(){
     const [value, setValue] = React.useState(3);
 
     const onChange = e => {
-        console.log(e)
         setValue(e.target.value);
     };
     return(
