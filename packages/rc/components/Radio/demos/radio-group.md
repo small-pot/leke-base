@@ -1,4 +1,7 @@
-## 4、Radio group
+---
+title: Radio group
+description: Radio group分组用法
+---
 ```jsx
 import React from 'react';
 import { Radio } from '@leke/rc';

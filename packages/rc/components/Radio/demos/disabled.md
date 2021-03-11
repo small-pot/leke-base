@@ -1,4 +1,7 @@
-## 2、不可用
+---
+title: 不可用
+description: radio 不可用状态
+---
 ```jsx
 import React from 'react';
 import { Radio } from '@leke/rc';

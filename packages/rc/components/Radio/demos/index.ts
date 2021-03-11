@@ -1,4 +1,5 @@
 export default [
+    require('./introduction.md'),
     require('./basics.md'),
     require('./disabled.md'),
     require('./size.md'),

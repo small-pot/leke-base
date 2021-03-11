@@ -1,5 +1,7 @@
-## 3、常用尺寸
-#### 尺寸：40px，32px，24px
+---
+title: 常用尺寸
+description: 尺寸：40px，32px，24px
+---
 ```jsx
 import React from 'react';
 import { Radio } from '@leke/rc';
