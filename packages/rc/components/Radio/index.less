@@ -1,3 +1,4 @@
+@import "../../less/theme.less";
 .leke-radio-wrapper{
     font-size: 14px;
     color: #444444;
@@ -10,7 +11,7 @@
         cursor: pointer;
     }
     &:hover .leke-radio-inner{
-        border-color: #40C2B5;
+        border-color: @hover-color;
     }
 }
 span.leke-radio + * {
@@ -29,14 +30,14 @@ span.leke-radio + * {
     left: 0px;
     width: 16px;
     height: 16px;
-    background-color: #fff;
-    border: 1px solid  #BFBFBF; 
+    background-color: @background-color;
+    border: 1px solid  @border-color; 
     border-radius: 50%;
     transition: all 0.3s ease 0s;
 }
 .leke-radio-checked{
     .leke-radio-inner{
-        border-color: #40C2B5;
+        border-color: @hover-color;
     }
     .leke-radio-inner::after{
         content: '';
@@ -45,7 +46,7 @@ span.leke-radio + * {
         top: 50%;
         width: 6px;
         height: 6px;
-        background: #1FB5AB;
+        background: @base-color;
         border-radius: 50%;
         transform: translate(-50%,-50%);
     }
@@ -53,16 +54,16 @@ span.leke-radio + * {
 .leke-radio-wrapper-disabled{
     .leke-radio-inner{
         background: #F0F0F0;
-        border: 1px solid #D9D9D9;
+        border: 1px solid @disable-color;
     }
     .leke-radio-inner::after{
-        background: #D9D9D9;
+        background: @disable-color;
     }
     &:hover {
         cursor: not-allowed;
     }
     &:hover .leke-radio-inner{
-        border-color: #D9D9D9
+        border-color: @disable-color
     }
 }
 //button
@@ -75,28 +76,28 @@ span.leke-radio + * {
     color:#444;
     font-size: 14px;
     line-height: 30px;
-    background: #fff;
-    border-color: #d9d9d9;
+    background: @background-color;
+    border-color: @disable-color;
     border-style: solid;
     border-width: 1.02px 1px 1px 0;
     cursor: pointer;
     -webkit-transition: all .3s;
     transition: all .3s;
     &:hover{
-        color: #1FB5AB;
+        color: @base-color;
     }
     &::before{
         content: "";
     }
 }
 .leke-button-wrapper:first-child {
-    border-left: 1px solid #d9d9d9;
+    border-left: 1px solid @disable-color;
     border-radius: 2px 0 0 2px;
 }
 .leke-button-wrapper-checked{
     position: relative;
-    color: #1FB5AB;
-    border-color: #1FB5AB;
+    color: @base-color;
+    border-color: @base-color;
     &::before{
         position: absolute;
         top: -1px;
@@ -107,7 +108,7 @@ span.leke-radio + * {
         width: 1px;
         height: 100%;
         padding: 1px 0;
-        background-color: #1FB5AB;
+        background-color: @base-color;
         -webkit-transition: background-color .3s;
         transition: background-color .3s;
         content: "";
@@ -116,7 +117,7 @@ span.leke-radio + * {
 .leke-button-wrapper-disabled{
     color: #8C8C8C;
     background: #F0F0F0;
-    border-color:#D9D9D9;
+    border-color:@disable-color;
     &:hover {
         color: #8C8C8C;
         cursor: not-allowed;
@@ -127,8 +128,8 @@ span.leke-radio + * {
 }
 .leke-button-wrapper-checked.leke-button-wrapper-disabled{
     color: #8C8C8C;
-    background: #D9D9D9;
-    border-color: #D9D9D9;
+    background: @disable-color;
+    border-color: @disable-color;
 }
 
 // size
@@ -157,8 +158,8 @@ span.leke-radio + * {
 //buttonstyle
 .leke-group-solid{
     .leke-button-wrapper-checked:not(.leke-button-wrapper-disabled) {
-        color: #fff;
-        background: #1FB5AB;
-        border-color: #1FB5AB;
+        color: @background-color;
+        background: @base-color;
+        border-color: @base-color;
     }
 }
