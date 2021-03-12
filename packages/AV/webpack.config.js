@@ -4,7 +4,7 @@ module.exports = {
     mode: "production",
     entry: {
         VideoPlayer: path.resolve("./src/VideoPlayer/index.ts"),
-        AudioPlayer: path.resolve("./src/AudioPlayer/index.ts"),
+        AudioPlayer: ['core-js/es/promise',path.resolve("./src/AudioPlayer/index.ts")],
         AudioRecorder: path.resolve("./src/AudioRecorder/index.ts")
     },
     output: {

@@ -13,6 +13,7 @@ class Player {
     private uid: number;
     private width: number;
     private height: number;
+    private unsupportImgStyle:any;
     private paused:boolean;
     private currentTime:number;
     private duration:number;
@@ -37,9 +38,10 @@ class Player {
     private proxyPausedChange:(boolean)=>void
 
     constructor(options) {
-        const { el, ...opts } = options;
+        const { el,unsupportImgStyle, ...opts } = options;
         this.uid = newUID();
         this.mountNode = el;
+        this.unsupportImgStyle=unsupportImgStyle;
         const { width, height } = getVideoSize(options.width, options.height);
         this.width = width;
         this.height = height;
@@ -70,9 +72,10 @@ class Player {
 
     isSupported() {
         const type=getResourceType(this.options.src);
+        const style=Dom.getStyle(this.unsupportImgStyle);
         if('M3U8,MP4,WEBM,OGG'.indexOf(type)>-1){
             if(type==='M3U8'&&!Hls.isSupported()){
-                this.mountNode.innerHTML = `<div class="${prefixCls}-video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png"/><p>视频播放暂不支持ie10及以下版本，请升级或用其他浏览器打开</p></div>`;
+                this.mountNode.innerHTML = `<div class="${prefixCls}-video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png" style="${style}" /><p>视频播放暂不支持ie10及以下版本，请升级或用其他浏览器打开</p></div>`;
             }else{
                 this.mountNode.innerHTML=this.template.replace(`<div class="${prefixCls}-video-root-container">`,`<div class="${prefixCls}-video-root-container" style="width:${this.width}px;height:${this.height}px;">`);
                 this.el = this.mountNode.querySelector(`.${prefixCls}-video-root-container`);
@@ -90,7 +93,7 @@ class Player {
                 type==='M3U8'?this.hlsHandle():this.video.src=this.options.src;
             }
         }else{
-            this.mountNode.innerHTML = `<div class="${prefixCls}-video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png"/><p>不支持的视频格式，请转化为Mp4、WebM、Ogg、M3u8等格式</p></div>`;
+            this.mountNode.innerHTML = `<div class="${prefixCls}-video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png" style="${style}" /><p>不支持的视频格式，请转化为Mp4、WebM、Ogg、M3u8等格式</p></div>`;
         }
     }
 
