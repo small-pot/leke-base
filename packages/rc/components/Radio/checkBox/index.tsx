@@ -1,10 +1,10 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { RadioProps, RadioChangeEvent } from '../interface';
+import { RadioProps } from '../interface';
 
 class Checkbox extends React.Component<any, RadioProps> {
     static defaultProps = {
-      prefixCls: 'rc-checkbox',
+      prefixCls: 'leke-checkbox',
       className: '',
       style: {},
       type: 'checkbox',
