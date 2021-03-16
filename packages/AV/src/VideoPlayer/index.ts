@@ -108,7 +108,7 @@ class Player {
             this.event.trigger('fragInit');
         });
         hls.on(Hls.Events.ERROR, (err,errorContent) => {
-            console.log(err,errorContent);
+            console.error(err,errorContent);
             if(!this.loadingFlag)this.showLoading();
             try {
                 if(errorContent.response.code >= 400){
@@ -117,7 +117,7 @@ class Player {
                     this.control.style.display='none';
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         });
         hls.on(Hls.Events.FRAG_LOADING, () => {
