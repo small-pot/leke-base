@@ -3,7 +3,7 @@ import classNames from "classnames";
 import {omit} from './utils';
 import { SizeType } from "./interface";
 
-export interface InputProps {
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>,'prefix'|'size'>  {
     addonBefore?:React.ReactNode, 
     addonAfter?:React.ReactNode,
     className?:string,

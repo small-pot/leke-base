@@ -3,7 +3,7 @@ import classNames from "classnames";
 // import ResizeObserver from 'resize-observer-polyfill';
 import {omit,calculateNodeHeight} from './utils';
 
-export interface TextAreaProps{
+export interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement>{
     autoSize?: boolean | {
         minRows:number,
         maxRows:number

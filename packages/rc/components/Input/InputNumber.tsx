@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { omit,getPrecision } from './utils';
 import { SizeType } from "./interface";
 import {Down,Up,Plus,Minus} from "@leke/icons";
-interface InputNumberProps{
+interface InputNumberProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>,'prefix'|'size'|'onChange'>{
   className?:string,
   defaultValue?:number,
   disabled?:boolean,

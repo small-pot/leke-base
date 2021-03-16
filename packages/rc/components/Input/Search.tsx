@@ -2,16 +2,16 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-03-02 16:58:46
- * @LastEditTime: 2021-03-04 14:51:01
+ * @LastEditTime: 2021-03-16 17:07:13
  */
 import React,{useState,useRef} from 'react';
 import classNames from 'classnames';
-import Input from './Input';
+import Input,{InputProps} from './Input';
 import {omit} from './utils';
 import {Button,Select} from '@leke/rc';
 import {Search as SearchIcon} from '@leke/icons';
 
-interface SearchProps{
+interface SearchProps extends InputProps{
     className?:string,
     size?: 'middle' | 'large',
     enterButton?:React.ReactNode,
