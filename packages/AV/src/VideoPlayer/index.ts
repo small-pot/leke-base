@@ -107,9 +107,18 @@ class Player {
         hls.on(Hls.Events.FRAG_PARSING_INIT_SEGMENT,()=>{
             this.event.trigger('fragInit');
         });
-        hls.on(Hls.Events.ERROR, (err) => {
-            console.error(err);
+        hls.on(Hls.Events.ERROR, (err,errorContent) => {
+            console.error(err,errorContent);
             if(!this.loadingFlag)this.showLoading();
+            try {
+                if(errorContent.response.code >= 400){
+                    if(this.loadingFlag)this.closeLoading();
+                    this.error.style.display='block';
+                    this.control.style.display='none';
+                }
+            } catch (error) {
+                console.error(error);
+            }
         });
         hls.on(Hls.Events.FRAG_LOADING, () => {
             this.loadingTimer = setTimeout(() => {
