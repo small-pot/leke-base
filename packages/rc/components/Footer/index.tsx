@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.less';
+
 export default function Footer() {
     return(
         <><link rel="stylesheet" href="https://static.leke.cn/styles/common/iconfont/iconfont.css"/>
