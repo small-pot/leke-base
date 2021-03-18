@@ -1,4 +1,5 @@
 export { default as MiniHeader } from "./MiniHeader";
+export { default as Footer } from "./Footer";
 export { default as configure } from "./configure";
 export { default as Button } from "./Button";
 export { default as Dropdown } from "./Dropdown";
