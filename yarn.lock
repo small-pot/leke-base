@@ -1230,13 +1230,6 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@leke/icons@1.0.4-record":
-  version "1.0.4-record"
-  resolved "http://192.168.20.146:4873/@leke%2ficons/-/icons-1.0.4-record.tgz#a16122b195e19e990e5ef2125fb969fd1006c1bf"
-  integrity sha512-qJJ5ItEfEhP1S2uj1rW29Fq5bNsM89rW3CSIaJ+scrSTFTGEV6udOlFPARxaxWbow0NIL+B3WRIYXAwShBHjBg==
-  dependencies:
-    classnames "^2.2.6"
-
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents":
   version "2.1.8-no-fsevents"
   resolved "https://registry.npm.taobao.org/@nicolo-ribaudo/chokidar-2/download/@nicolo-ribaudo/chokidar-2-2.1.8-no-fsevents.tgz#da7c3996b8e6e19ebd14d82eaced2313e7769f9b"

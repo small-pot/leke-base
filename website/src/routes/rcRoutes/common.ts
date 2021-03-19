@@ -36,6 +36,10 @@ export default {
         {
             key:'Spin',
             title:'加载中'    
+        },
+        {
+            key:'Upload',
+            title:'上传'
         }
     ]
 };
