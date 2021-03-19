@@ -36,6 +36,10 @@ export default {
         {
             key:'Spin',
             title:'加载中'    
+        },
+        {
+            key:'Input',
+            title:'输入框'    
         }
     ]
 };
