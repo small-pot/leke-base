@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2020-11-13 16:33:54
- * @LastEditTime: 2021-02-26 10:46:05
+ * @LastEditTime: 2021-03-19 14:19:44
  */
 /**
+ * @deprecated 使用 omit 包代替
  * @description: 去除对象上的指定属性
  * @param {Object} object
  * @param {string[]} fields

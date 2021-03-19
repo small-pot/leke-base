@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from "classnames";
-import {omit} from './utils';
+import omit from 'omit.js';
 import { SizeType } from "./interface";
 
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>,'prefix'|'size'>  {
@@ -40,7 +40,7 @@ const Input:React.FC<InputProps> = (props) => {
 
     const getDefaultInput = (className=baseCls)=>{
         return (<input
-            {...omit(props,['className','type','onChange','prefix','suffix','addonBefore','addonAfter','onPressEnter'])}
+            {...omit(props,['className','type','onChange','prefix','size','suffix','addonBefore','addonAfter','onPressEnter'])}
             className={className}
             type={type}
             onChange={onChange}

@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from "classnames";
-import { omit,getPrecision } from './utils';
+import omit from 'omit.js';
+import { getPrecision } from './utils';
 import { SizeType } from "./interface";
 import {Down,Up,Plus,Minus} from "@leke/icons";
 interface InputNumberProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>,'prefix'|'size'|'onChange'>{
@@ -147,7 +148,7 @@ const InputNumber:React.FC<InputNumberProps> = (props) => {
 
     const getDefaultInput = (cls='')=>{
         return (<input
-            {...omit(props,['className','placeholder','defaultValue','formatter','handleDirection','type','value','onBlur','onChange','onFocus','parser'])}
+            {...omit(props,['className','placeholder','size','prefix','defaultValue','formatter','handleDirection','type','value','onBlur','onChange','onFocus','parser'])}
             className={classNames('input-number',cls)}
             type='text'
             value={displayInputValue}

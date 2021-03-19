@@ -1,7 +1,8 @@
 import React,{useState,useEffect,useRef} from 'react';
 import classNames from "classnames";
+import omit from 'omit.js';
 // import ResizeObserver from 'resize-observer-polyfill';
-import {omit,calculateNodeHeight} from './utils';
+import {calculateNodeHeight} from './utils';
 
 export interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement>{
     autoSize?: boolean | {
