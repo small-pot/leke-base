@@ -2,13 +2,13 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-03-02 16:58:46
- * @LastEditTime: 2021-03-19 14:19:15
+ * @LastEditTime: 2021-03-19 16:54:00
  */
 import React,{useState,useRef} from 'react';
 import classNames from 'classnames';
 import Input,{InputProps} from './Input';
 import omit from 'omit.js';
-import {Button,Select} from '@leke/rc';
+import Button from '../Button';
 import {Search as SearchIcon} from '@leke/icons';
 
 interface SearchProps extends InputProps{

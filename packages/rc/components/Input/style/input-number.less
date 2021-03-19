@@ -1,9 +1,11 @@
 @baseCls:~'leke-input-number';
+@import "./vars.less";
+@import './mixin.less';
 
-.@{baseCls}{
+.leke-input-number{
   .base-input();
   display: inline-flex;
-  .@{baseCls}-handle-wrap{
+  .leke-input-number-handle-wrap{
     height: 100%;
     position: absolute;
     top: 0;
@@ -19,7 +21,7 @@
     font-size: 10px;
     background-color: #fff;
     border-radius: 0 @border-radius-base @border-radius-base 0;
-    .@{baseCls}-handle-up,.@{baseCls}-handle-down{
+    .leke-input-number-handle-up,.leke-input-number-handle-down{
       width: 100%;
       height: 50%;
       display: flex;
@@ -34,7 +36,7 @@
         background-color: #f3f3f3;
       }
     }
-    .@{baseCls}-handle-down{
+    .leke-input-number-handle-down{
       border-top: 1px solid #bfbfbf;
     }
   }
@@ -43,7 +45,7 @@
   }
   &:hover{
     .hover();
-    .@{baseCls}-handle-wrap{
+    .leke-input-number-handle-wrap{
       opacity: 1;
     }
   }
@@ -63,15 +65,15 @@
       padding: @input-padding-vertical-small @input-padding-vertical-base;
     }
   }
-  .@{baseCls}-prefix-wrap{
+  .leke-input-number-prefix-wrap{
     .flex-center();
     margin-right: 10px;
   }
-  .@{baseCls}-suffix-wrap{
+  .leke-input-number-suffix-wrap{
     .flex-center();
     margin-left: 10px;
   }
-  .@{baseCls}-handle-prefix-wrap,.@{baseCls}-handle-suffix-wrap{
+  .leke-input-number-handle-prefix-wrap,.leke-input-number-handle-suffix-wrap{
     .flex-center();
     width: 26px;
     font-size: 10px;
@@ -79,19 +81,19 @@
     cursor: pointer;
     user-select: none;
   }
-  .@{baseCls}-handle-prefix-wrap{
+  .leke-input-number-handle-prefix-wrap{
     border-right: 1px solid #d9d9d9;
   }
-  .@{baseCls}-handle-suffix-wrap{
+  .leke-input-number-handle-suffix-wrap{
     border-left: 1px solid #d9d9d9;
   }
 }
-.@{baseCls}-clear-padding{
+.leke-input-number-clear-padding{
   padding: 0;
 }
-.@{baseCls}-lg>.@{baseCls}-handle-wrap{
+.leke-input-number-lg>.leke-input-number-handle-wrap{
   font-size: 12px;
 }
-.@{baseCls}-sm>.@{baseCls}-handle-wrap{
+.leke-input-number-sm>.leke-input-number-handle-wrap{
   font-size: 8px;
 }
