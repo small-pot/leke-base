@@ -35,7 +35,7 @@ export default function(){
           </Radio.Group>
 
           <div style={style}>填充样式：</div>
-          <Radio.Group onChange={onChange} defaultValue="a" buttonStyle="solid" style={style}>
+          <Radio.Group onChange={onChange} defaultValue="c" buttonStyle="solid" style={style}>
             <Radio.Button value="a">选项一</Radio.Button>
             <Radio.Button value="b">选项一</Radio.Button>
             <Radio.Button value="c">选中状态</Radio.Button>
