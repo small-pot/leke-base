@@ -61,41 +61,46 @@ class Player {
 
     init() {
         require('./index.less');
-        this.validate();
-        this.isSupported();
-    }
-
-    validate() {
         if (!this.mountNode) return console.error('请传入挂载实例');
         if (!this.options.src) return console.error('请传入视频路径');
-    }
-
-    isSupported() {
         const type=getResourceType(this.options.src);
         const style=Dom.getStyle(this.unsupportImgStyle);
-        if('M3U8,MP4,WEBM,OGG'.indexOf(type)>-1){
-            if(type==='M3U8'&&!Hls.isSupported()){
-                this.mountNode.innerHTML = `<div class="${prefixCls}-video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png" style="${style}" /><p>视频播放暂不支持ie10及以下版本，请升级或用其他浏览器打开</p></div>`;
+        if(type==='M3U8'){
+            if(Hls.isSupported()){
+                this.initVideo();
+                this.hlsHandle();
             }else{
-                this.mountNode.innerHTML=this.template.replace(`<div class="${prefixCls}-video-root-container">`,`<div class="${prefixCls}-video-root-container" style="width:${this.width}px;height:${this.height}px;">`);
-                this.el = this.mountNode.querySelector(`.${prefixCls}-video-root-container`);
-                this.input = this.el.querySelector(`.${prefixCls}-video-input`);
-                this.input.id = `video-input-${this.uid}`;
-                this.video = this.el.querySelector(`video`);
-                this.video.id=`video-${this.uid}`;
-                this.mask = this.el.querySelector(`.${prefixCls}-video-mask`);
-                this.control = this.el.querySelector(`.${prefixCls}-video-control-bar`);
-                this.loading = this.el.querySelector(`.${prefixCls}-loading-container`);
-                this.error = this.el.querySelector(`.${prefixCls}-error-wrap`);
-                this.toast = this.el.querySelector(`.${prefixCls}-video-fullscreen-toast`);
-                new Control(this.control,this.video,this.event);
-                this.initConfig();
-                type==='M3U8'?this.hlsHandle():this.video.src=this.options.src;
+                const video=document.createElement('video');
+                if(video.canPlayType('application/vnd.apple.mpegurl')){
+                    this.initVideo();
+                    this.video.src=this.options.src;
+                }else{
+                    this.mountNode.innerHTML = `<div class="${prefixCls}-video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png" style="${style}" /><p>浏览器版本过低，请升级或用其他浏览器打开</p></div>`;
+                }
             }
+        }else if(['MP4','WEBM','OGG'].indexOf(type)!==-1){
+            this.video.src=this.options.src;
         }else{
             this.mountNode.innerHTML = `<div class="${prefixCls}-video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png" style="${style}" /><p>不支持的视频格式，请转化为Mp4、WebM、Ogg、M3u8等格式</p></div>`;
         }
     }
+
+    initVideo(){
+        this.mountNode.innerHTML=this.template.replace(`<div class="${prefixCls}-video-root-container">`,`<div class="${prefixCls}-video-root-container" style="width:${this.width}px;height:${this.height}px;">`);
+        this.el = this.mountNode.querySelector(`.${prefixCls}-video-root-container`);
+        this.input = this.el.querySelector(`.${prefixCls}-video-input`);
+        this.input.id = `video-input-${this.uid}`;
+        this.video = this.el.querySelector(`video`);
+        this.video.id=`video-${this.uid}`;
+        this.mask = this.el.querySelector(`.${prefixCls}-video-mask`);
+        this.control = this.el.querySelector(`.${prefixCls}-video-control-bar`);
+        this.loading = this.el.querySelector(`.${prefixCls}-loading-container`);
+        this.error = this.el.querySelector(`.${prefixCls}-error-wrap`);
+        this.toast = this.el.querySelector(`.${prefixCls}-video-fullscreen-toast`);
+        new Control(this.control,this.video,this.event);
+        this.initConfig();
+    }
+
 
     hlsHandle() {
         const hls = new Hls();
