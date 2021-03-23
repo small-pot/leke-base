@@ -7,8 +7,9 @@ import {VideoPlayer} from '@leke/rc';
 
 export default function(){
     return <VideoPlayer 
-        src='https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8' 
+        src='https://file.leke.cn/group1/M00/9D/FF/wKgURF0LEHKAaIGLAAAG30LNZoo39.m3u8' 
         autoplay
+        resourceType='audio'
     />
     ;
 }

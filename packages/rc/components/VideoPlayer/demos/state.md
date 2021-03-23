@@ -15,7 +15,7 @@ export default function(){
 
     return <div>
         <VideoPlayer 
-            src='https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8' 
+            src='https://file.leke.cn/group1/M00/D7/65/wKgURF3nbCGAPa0_AAAopHOOv_E71.m3u8' 
             paused={paused}
             volume={volume}
             fullscreen={full}

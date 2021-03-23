@@ -49,6 +49,7 @@
 | loop | 循环播放 | boolean | false |
 | poster | 视频封面 | string | - |
 | muted | 静音 | boolean | false |
+| resourceType | 播放的资源类型 | "video"\|"audio" | "video" |
 | unsupportImgStyle | 视频不支持下提示的图片样式 | style object | - |
 | onReady | 媒体SourceBuffer加载完成后的回调 | function | - |
 | onLoad | 媒体信息获取完毕后的回调 | function | - |

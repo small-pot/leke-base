@@ -12,6 +12,7 @@ description: 可以用ref获取到实例
 | loop | 循环播放 | boolean | false |
 | poster | 视频封面 | string | - |
 | paused | 是否暂停 | boolean | false |
+| resourceType | 播放的资源类型 | "video"\|"audio" | "video" |
 | volume | 音量 | number | 100 |
 | fullscreen | 是否全屏(不支持初始化为true) | boolean | false |
 | unsupportImgStyle | 视频不支持下提示的图片样式 | style object | - |

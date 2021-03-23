@@ -44,9 +44,6 @@ class AudioRecorder {
     recorder: any;
     isLoading: boolean = false;
     isSuccess: boolean = true;
-    onStart?: () => void; //开始录音回调
-    onStop?: (e: any) => void; //结束录音回调
-    onReRecorder?: () => void; //重录回调
 
     constructor(cfg) {
         this.cfg = arguments.length ? cfg : null;
@@ -115,7 +112,7 @@ class AudioRecorder {
         reRecorder.innerHTML = "重录";
         reRecorder.addEventListener("click", function () {
             const {el} = self.cfg;
-            self.onReRecorder && self.onReRecorder();
+            self.cfg.onReRecorder && self.cfg.onReRecorder();
             el.innerHTML = "";
             self.audio = null;
             self.initRecorder(true);

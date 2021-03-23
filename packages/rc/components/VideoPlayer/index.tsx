@@ -21,6 +21,7 @@ class Video extends React.PureComponent<IVideoProps>{
             paused,
             volume,
             fullscreen,
+            resourceType,
             unsupportImgStyle={},
             onReady,
             onLoad,
@@ -42,6 +43,7 @@ class Video extends React.PureComponent<IVideoProps>{
             loop,
             poster,
             muted:volume===0,
+            resourceType,
             unsupportImgStyle,
             onReady,
             onLoad,
@@ -50,7 +52,7 @@ class Video extends React.PureComponent<IVideoProps>{
             onTimeChange,
             onPausedChange:paused!==undefined?onPausedChange:null,
             onVolumeChange:volume!==undefined?onVolumeChange:null,
-            onFullscreenChange:fullscreen!==undefined?onFullscreenChange:null,
+            onFullscreenChange:fullscreen!==undefined?onFullscreenChange:null
         });
 
         paused===undefined&&onPausedChange&&this.instance.on('click',(nextStatus)=>{
