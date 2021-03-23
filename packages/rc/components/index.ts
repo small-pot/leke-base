@@ -1,4 +1,5 @@
 export { default as MiniHeader } from "./MiniHeader";
+export { default as Footer } from "./Footer";
 export { default as configure } from "./configure";
 export { default as Button } from "./Button";
 export { default as Dropdown } from "./Dropdown";
@@ -12,3 +13,4 @@ export { default as VideoPlayer } from "./VideoPlayer";
 export { default as AudioPlayer } from "./AudioPlayer";
 export { default as AudioRecorder } from "./AudioRecorder";
 export {default as Spin} from './Spin';
+export {default as Input} from './Input';
