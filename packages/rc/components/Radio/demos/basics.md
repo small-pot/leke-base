@@ -15,7 +15,7 @@ export default function(){
     return(
         <Radio.Group onChange={onChange} value={value}>
             <Radio value={1}>常态</Radio>
-            <Radio value={2}>悬停</Radio>
+            <Radio value={2}>常态</Radio>
             <Radio value={3}>选中</Radio>
         </Radio.Group>
     );

@@ -4,7 +4,7 @@ description: Radio group分组用法
 ---
 ```jsx
 import React from 'react';
-import { Radio } from '@leke/rc';
+import { Radio, Input } from '@leke/rc';
 
 export default function(){
     const [value, setValue] = React.useState(1);
@@ -22,7 +22,7 @@ export default function(){
             <Radio style={radioStyle} value={2}>常态</Radio>
             <Radio style={radioStyle} value={3}>常态</Radio>
             <Radio style={radioStyle} value={4}>更多
-              {value === 4 ? <input style={{ width: 100, marginLeft: 10 }} /> : null}
+              {value === 4 ? <Input size="middle" style={{ width: 100, marginLeft: 10 }} /> : null}
             </Radio>
         </Radio.Group>
     );
