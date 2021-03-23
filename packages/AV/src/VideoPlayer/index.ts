@@ -3,7 +3,7 @@ import { newUID } from './utils/uid';
 import EventBase from './utils/event';
 import * as Dom from './utils/dom';
 import { VIDEO_EVENTS } from './utils/config';
-import { getVideoSize, checkBrowser,getResourceType, throttle, entryFullscreen, exitFullscreen } from './utils/share';
+import { getVideoSize, checkBrowser,getResourceType, throttle, entryFullscreen, exitFullscreen,calcDefaultProps } from './utils/share';
 import Control from './components/ControlBar';
 import txt from './template.html';
 
@@ -31,6 +31,9 @@ class Player {
     private video: any;
     private loading: any;
     private mask: any;
+    private audioPlay: any;
+    private audioSuspend: any;
+    private audioInit: any;
     private control: any;
     private toast: any;
     private error: any;
@@ -45,9 +48,7 @@ class Player {
         const { width, height } = getVideoSize(options.width, options.height);
         this.width = width;
         this.height = height;
-        this.options = {
-            ...opts,
-        };
+        this.options = calcDefaultProps({resourceType:'video'},opts);
         this.browser = checkBrowser();
         this.event = new EventBase();
         this.errorFlag = false;
@@ -83,11 +84,14 @@ class Player {
                 this.input.id = `video-input-${this.uid}`;
                 this.video = this.el.querySelector(`video`);
                 this.video.id=`video-${this.uid}`;
-                this.mask = this.el.querySelector(`.${prefixCls}-video-mask`);
                 this.control = this.el.querySelector(`.${prefixCls}-video-control-bar`);
                 this.loading = this.el.querySelector(`.${prefixCls}-loading-container`);
                 this.error = this.el.querySelector(`.${prefixCls}-error-wrap`);
                 this.toast = this.el.querySelector(`.${prefixCls}-video-fullscreen-toast`);
+                this.mask = this.el.querySelector(`.${prefixCls}-video-mask`);
+                this.audioPlay = this.el.querySelector(`.${prefixCls}-audio-play`);
+                this.audioSuspend = this.el.querySelector(`.${prefixCls}-audio-suspend`);
+                this.audioInit = this.el.querySelector(`.${prefixCls}-audio-init`);
                 new Control(this.control,this.video,this.event);
                 this.initConfig();
                 type==='M3U8'?this.hlsHandle():this.video.src=this.options.src;
@@ -97,6 +101,12 @@ class Player {
         }
     }
 
+    handleError(){
+        if(this.loadingFlag)this.closeLoading();
+        this.error.style.display='block';
+        this.control.style.display='none';
+        this.pause();
+    }
     hlsHandle() {
         const hls = new Hls();
         hls.loadSource(this.options.src);
@@ -112,9 +122,7 @@ class Player {
             if(!this.loadingFlag)this.showLoading();
             try {
                 if(errorContent.response.code >= 400){
-                    if(this.loadingFlag)this.closeLoading();
-                    this.error.style.display='block';
-                    this.control.style.display='none';
+                    this.handleError();
                 }
             } catch (error) {
                 console.error(error);
@@ -212,7 +220,6 @@ class Player {
             this.duration=this.video.duration;
             this.event.trigger('loadedmetadata');
         });
-        // const fn = throttle((time) => { this.event.trigger('timeupdate', time); }, 1000, { leading: true });
         this.video.addEventListener('timeupdate', () => {
             this.currentTime=this.video.currentTime;
             if(this.loadingFlag)this.closeLoading();
@@ -225,17 +232,13 @@ class Player {
                 this.proxyPausedChange(nextPaused);
             }
         });
-        // this.event.on('dblclick', () => {
-        //     if(this.isFullscreen){
-        //         this.event.trigger('exitFullscreen');
-        //     }else{
-        //         this.event.trigger('entryFullscreen');
-        //     }
-        // });
         this.event.on('containerClick', () => {
             this.input.focus();
         });
         this.event.on('ready', () => {
+            if(this.options.resourceType==='audio'){
+                this.audioInit.style.display='block';
+            }
             if (this.options.muted||this.browser==='FF') {
                 this.video.defaultMuted = true;
                 this.event.trigger('volumeChange', 0);
@@ -243,9 +246,7 @@ class Player {
             this.event.on('error', (err) => {
                 console.error(err);
                 this.errorFlag=true;
-                if(this.loadingFlag)this.closeLoading();
-                this.error.style.display='block';
-                this.control.style.display='none';
+                this.handleError();
             });
         });
         this.event.on('volumeChange', (step) => {
@@ -266,17 +267,28 @@ class Player {
             Dom.removeClass(this.el, 'full-video-container');
         });
         this.event.on('play', () => {
-            this.mask.style.display='';
-        });        
+            if(this.options.resourceType==='video'){
+                this.mask.style.display='';
+            }else{
+                this.audioPlay.style.display='block';
+                this.audioSuspend.style.display='';
+                this.mask.style.display='';
+            }
+        });
         this.event.on('pause', () => {
-            this.mask.style.display='block';
+            if(this.options.resourceType==='video'){
+                this.mask.style.display='block';
+            }else{
+                this.audioPlay.style.display='';
+                this.audioSuspend.style.display='block';
+            }
         });
         this.event.on('playing',()=>{
             if(this.loadingFlag)this.closeLoading();
         });
         this.event.on('ended', () => {
             this.closeLoading();
-            this.mask.style.display='block';
+            this.pause();
         });
         // 空格符控制暂停/播放
         const keyDown = e => {

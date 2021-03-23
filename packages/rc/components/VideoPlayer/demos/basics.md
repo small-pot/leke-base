@@ -7,8 +7,9 @@ import {VideoPlayer} from '@leke/rc';
 
 export default function(){
     return <VideoPlayer 
-        src='https://hls.cntv.kcdnvip.com/asp/hls/1200/0303000a/3/default/c9d6fcb3ff7e42f6b6db4199768ff249/1200.m3u8?maxbr=2048' 
+        src='https://file.leke.cn/group1/M00/9D/FF/wKgURF0LEHKAaIGLAAAG30LNZoo39.m3u8' 
         autoplay
+        resourceType='audio'
     />
     ;
 }
