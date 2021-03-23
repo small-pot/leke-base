@@ -1,13 +1,13 @@
 {
   "name": "@leke/AV",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "index.cjs.js",
   "module": "index.esm.js",
   "types": "types",
   "scripts": {
     "rollup": "rimraf lib && rimraf es && rollup -c rollup.config.js",
     "webpack": "rimraf dist && rimraf types && webpack --config webpack.config.js",
-    "build": "cd ../http && npm run build && cd ../AV && npm run rollup && npm run webpack"
+    "build": "npm run rollup && npm run webpack"
   },
   "license": "ISC",
   "files": [
