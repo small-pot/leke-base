@@ -23,11 +23,3 @@ title: Radio/Radio.Button
 | size | 大小，只对按钮样式生效 | large  middle  small | - |
 | onChange | 选项变化时的回调函数 | function(e:Event) | - | 
 
-## 方法.
-
-## Radio。
-
-| 名称 | 描述 | 
-| --- | --- |
-| blur() | 移除焦点 | 
-| focus() | 获取焦点 |
