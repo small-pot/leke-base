@@ -14,124 +14,122 @@ import { RadioGroupContextProvider } from './context';
 // }
 
 function useControlledState (defaultStateValue,option) {
-  if(option.value){
-    let value = option.value;
-    function setValue(val){
-      value = val;
-    }
-    return [ value, setValue]
-  }else{
     const [ value, setValue ] = React.useState(defaultStateValue);
-    return [ value, setValue ]
-  }
-  
+    if(option.value){
+        let value = option.value;
+        function setValue(val){
+            value = val;
+        }
+        return [ value, setValue];
+    }
+    return [ value, setValue ];
 }
 const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>((props, ref) => {
   
-  let [value, setValue] = useControlledState(props.defaultValue, {
-    value: props.value,
-  });
+    let [value, setValue] = useControlledState(props.defaultValue, {
+        value: props.value,
+    });
 
 
-  const onRadioChange = (ev: RadioChangeEvent) => {
-    const lastValue = value;
-    const val = ev.target.value;
-    if (!('value' in props)) {
-      setValue(val);
-    }
-    const { onChange } = props;
-    if (onChange && val !== lastValue) {
-      onChange(ev);
-    }
-  };
-
-  const renderGroup = () => {
-    const {
-      prefixCls,
-      className = '',
-      options,
-      optionType,
-      buttonStyle,
-      disabled,
-      children,
-      size,
-      style,
-      id,
-      onMouseEnter,
-      onMouseLeave,
-    } = props;
-    const mergedSize = size || 'middle';
-    const groupPrefixCls = prefixCls || 'leke-group';
-    let childrenToRender = children;
-    if (options && options.length > 0) {
-      const optionsPrefixCls = optionType === 'button' ? `${groupPrefixCls}-button` : groupPrefixCls;
-      childrenToRender = options.map(option => {
-        if (typeof option === 'string') {
-          // 此处类型自动推导为 string
-          return (
-            <Radio
-              key={option}
-              prefixCls={optionsPrefixCls}
-              disabled={disabled}
-              value={option}
-              checked={value === option}
-            >
-              {option}
-            </Radio>
-          );
+    const onRadioChange = (ev: RadioChangeEvent) => {
+        const lastValue = value;
+        const val = ev.target.value;
+        if (!('value' in props)) {
+            setValue(val);
         }
-        // 此处类型自动推导为 { label: string value: string }
-        return (
-          <Radio
-            key={`radio-group-value-options-${option.value}`}
-            prefixCls={optionsPrefixCls}
-            disabled={option.disabled || disabled}
-            value={option.value}
-            checked={value === option.value}
-            style={option.style}
-          >
-            {option.label}
-          </Radio>
+        const { onChange } = props;
+        if (onChange && val !== lastValue) {
+            onChange(ev);
+        }
+    };
+
+    const renderGroup = () => {
+        const {
+            prefixCls,
+            className = '',
+            options,
+            optionType,
+            buttonStyle,
+            disabled,
+            children,
+            size,
+            style,
+            id,
+            onMouseEnter,
+            onMouseLeave,
+        } = props;
+        const mergedSize = size || 'middle';
+        const groupPrefixCls = prefixCls || 'leke-group';
+        let childrenToRender = children;
+        if (options && options.length > 0) {
+            const optionsPrefixCls = optionType === 'button' ? `${groupPrefixCls}-button` : groupPrefixCls;
+            childrenToRender = options.map(option => {
+                if (typeof option === 'string') {
+                    // 此处类型自动推导为 string
+                    return (
+                        <Radio
+                            key={option}
+                            prefixCls={optionsPrefixCls}
+                            disabled={disabled}
+                            value={option}
+                            checked={value === option}
+                        >
+                            {option}
+                        </Radio>
+                    );
+                }
+                // 此处类型自动推导为 { label: string value: string }
+                return (
+                    <Radio
+                        key={`radio-group-value-options-${option.value}`}
+                        prefixCls={optionsPrefixCls}
+                        disabled={option.disabled || disabled}
+                        value={option.value}
+                        checked={value === option.value}
+                        style={option.style}
+                    >
+                        {option.label}
+                    </Radio>
+                );
+            });
+        }
+        const classString = classNames(
+            groupPrefixCls,
+            `${groupPrefixCls}-${buttonStyle}`,
+            {
+                [`${groupPrefixCls}-${mergedSize}`]: mergedSize,
+            },
+            className,
         );
-      });
-    }
-    const classString = classNames(
-      groupPrefixCls,
-      `${groupPrefixCls}-${buttonStyle}`,
-      {
-        [`${groupPrefixCls}-${mergedSize}`]: mergedSize,
-      },
-      className,
-    );
+        return (
+            <div
+                className={classString}
+                style={style}
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
+                id={id}
+                ref={ref}
+            >
+                {childrenToRender}
+            </div>
+        );
+    };
     return (
-      <div
-        className={classString}
-        style={style}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        id={id}
-        ref={ref}
-      >
-        {childrenToRender}
-      </div>
+        <RadioGroupContextProvider
+            value={{
+                onChange: onRadioChange,
+                value,
+                disabled: props.disabled,
+                name: props.name,
+            }}
+        >
+            {renderGroup()}
+        </RadioGroupContextProvider>
     );
-  };
-  return (
-    <RadioGroupContextProvider
-      value={{
-        onChange: onRadioChange,
-        value,
-        disabled: props.disabled,
-        name: props.name,
-      }}
-    >
-      {renderGroup()}
-  </RadioGroupContextProvider>
-  );
 });
 
 RadioGroup.defaultProps = {
-  buttonStyle: 'outline' as RadioGroupButtonStyle,
+    buttonStyle: 'outline' as RadioGroupButtonStyle,
 };
 
 export default React.memo(RadioGroup);

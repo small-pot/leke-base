@@ -9,17 +9,17 @@ import { Radio, Button } from '@leke/rc';
 export default function(){
     const [disabled, setDisabled] = React.useState(true);
     const onToggle = () => {
-        setDisabled(!disabled)
-    }
+        setDisabled(!disabled);
+    };
     const style={
         marginTop:'20px'
-    }
+    };
     return(
         <>
-          <Radio disabled={disabled}>未选禁用</Radio>
-          <Radio disabled={disabled} checked>选中后禁用</Radio>
-          <br/>
-          <Button onClick={onToggle} style={style} type='main'>切换禁用</Button>
+            <Radio disabled={disabled}>未选禁用</Radio>
+            <Radio disabled={disabled} checked>选中后禁用</Radio>
+            <br/>
+            <Button onClick={onToggle} style={style} type='main'>切换禁用</Button>
         </>
     );
 }

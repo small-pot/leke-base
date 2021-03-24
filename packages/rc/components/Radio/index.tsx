@@ -5,7 +5,7 @@ import Group from './group';
 import Button from './radioButton';
 
 export {
-  RadioProps
+    RadioProps
 } from './interface';
 interface CompoundedComponent
   extends React.ForwardRefExoticComponent<RadioProps & React.RefAttributes<HTMLElement>> {
