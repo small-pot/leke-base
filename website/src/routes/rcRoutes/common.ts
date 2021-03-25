@@ -40,6 +40,10 @@ export default {
         {
             key:'Input',
             title:'输入框'    
+        },
+        {
+            key:'Upload',
+            title:'上传'
         }
     ]
 };
