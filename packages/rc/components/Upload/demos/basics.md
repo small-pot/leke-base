@@ -9,8 +9,8 @@ import {Upload,Button} from '@leke/rc';
 export default function(){
     return(
         <Upload 
-            action={'/a'}
-            onFail={e=>console.log(e)}
+            url={'https://yapi.leke.cn/mock/629/upload'}
+            onSuccess={res=>console.log(res)}
         >
             <Button>上传文件</Button>
         </Upload>

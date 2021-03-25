@@ -1,14 +1,13 @@
 ---    
 title: API
 ---
-| 属性 | 说明 | 类型 | 默认值 | 是否必填 |
-| --- | --- | --- | --- | --- |
-| text | 标签展示内容 | string | - | 是 |
-| colorType | 预设标签类型 | string | - | 否 |
-| icon | 标签左侧图标 | ReactNode | - | 否 |
-| closable | 是否可关闭 | boolean | - | 否 |
-| onClose | 标签关闭时的回调 | ()=>void | - | 否 |
-| visible | 控制标签显示或隐藏 | boolean | true | 否 |
-| onClick | 标签点击时的回调 | ()=>void | - | 否 |
-| className | 自定义样式名称 | string | - | 否 |
-| ref | 接管dom | RefObject\<HTMLDivElement\> | - | 否 |
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| headers | 请求头 | object | {"Content-Type": "multipart/form-data"} |
+| name | 发到后台的文件参数名 | string | file |
+| multiple | 对应input原生multiple属性 | boolean | false |
+| accept | 对应input原生accept属性 | string | - |
+| url | 上传的后端接口路径 | ()=>void | - | 
+| onSuccess | 上传成功后的回调 | (any)=>void | - | 
+| onFail | 上传失败后的回调 | (any)=>void | - |
+| onUploadProgress | 上传进度事件 | (any)=>void | - |

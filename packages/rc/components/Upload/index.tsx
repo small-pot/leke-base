@@ -1,5 +1,4 @@
 import React, {useRef} from "react";
-//import {http} from '../configure';
 import http from '@leke/http';
 
 export interface UploadProps {
@@ -7,14 +6,15 @@ export interface UploadProps {
     headers:object,
     name:string,
     multiple:boolean,
-    action:string,
+    url:string,
     onSuccess?:(res:any)=>void,
     onFail?:(err:any)=>void
-    accept?:string
+    accept?:string,
+    onUploadProgress?:(progressEvent:any)=>void
 }
 
 export default function Upload(props:UploadProps) {
-    const {children,headers,name,multiple,action,accept,onSuccess,onFail}=props;
+    const {children,headers,name,multiple,url,accept,onSuccess,onFail,onUploadProgress}=props;
     const child=React.Children.only(children);
     const inputRef=useRef<HTMLInputElement>(null);
 
@@ -33,9 +33,18 @@ export default function Upload(props:UploadProps) {
             http({
                 headers,
                 method:'post',
-                url:action,
-                data:formData
-            }).then(onSuccess).catch(onFail);
+                url,
+                data:formData,
+                onUploadProgress
+            }).then((res)=>{
+                input.type='text';
+                input.type='file';
+                onSuccess&&onSuccess(res);
+            }).catch(err=>{
+                input.type='text';
+                input.type='file';
+                onFail&&onFail(err);
+            });
         }
     }
     return (
