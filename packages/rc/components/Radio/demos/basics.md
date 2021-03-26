@@ -12,12 +12,17 @@ export default function(){
     const onChange = e => {
         setValue(e.target.value);
     };
+    const onChangeUnBind = e => {
+        
+    };
     return(
-        <Radio.Group onChange={onChange} value={value}>
-            <Radio value={1}>常态</Radio>
-            <Radio value={2}>常态</Radio>
-            <Radio value={3}>选中</Radio>
-        </Radio.Group>
+        <>
+            <Radio.Group onChange={onChange} value={value}>
+                <Radio value={1}>常态</Radio>
+                <Radio value={2}>常态</Radio>
+                <Radio value={3}>选中</Radio>
+            </Radio.Group>
+        </>
     );
 }
 ```

@@ -3,33 +3,11 @@ import classNames from 'classnames';
 import Radio from './radio';
 import { RadioGroupProps, RadioChangeEvent, RadioGroupButtonStyle } from './interface';
 import { RadioGroupContextProvider } from './context';
+import { useControl } from "@leke/hooks";
 
-// function useControlledState (defaultStateValue,option) {
-//   let { value } = option;
-//   let val = value || defaultStateValue;
-//   function setValue(val){
-//     val = val;
-//   }
-//   return [ val, setValue]
-// }
-
-function useControlledState (defaultStateValue,option) {
-    const [ value, setValue ] = React.useState(defaultStateValue);
-    if(option.value){
-        let value = option.value;
-        function setValue(val){
-            value = val;
-        }
-        return [ value, setValue];
-    }
-    return [ value, setValue ];
-}
 const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>((props, ref) => {
-  
-    let [value, setValue] = useControlledState(props.defaultValue, {
-        value: props.value,
-    });
 
+    const [value, setValue] = useControl(props.value,'',props.defaultValue);
 
     const onRadioChange = (ev: RadioChangeEvent) => {
         const lastValue = value;
