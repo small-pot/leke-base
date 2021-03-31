@@ -21,5 +21,5 @@ title: Radio/Radio.Button
 | disabled | 禁选所有子单选器 | boolean | false |
 | options | 以配置形式设置子元素 | string[] | Array<{ label: string value: string disabled?: boolean }> | - |
 | size | 大小，只对按钮样式生效 | large  middle  small | - |
-| onChange | 选项变化时的回调函数 | function(e:Event) | - | 
+| onChange | 选项变化时的回调函数 | function(val:选中值) | - | 
 

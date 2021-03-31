@@ -8,8 +8,8 @@ import { Radio, Input } from '@leke/rc';
 
 export default function(){
     const [value, setValue] = React.useState(1);
-    const onChange = e => {
-        setValue(e.target.value);
+    const onChange = val => {
+        setValue(val);
     };
     const radioStyle = {
         display: 'block',

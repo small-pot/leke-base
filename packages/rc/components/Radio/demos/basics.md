@@ -9,8 +9,8 @@ import { Radio } from '@leke/rc';
 export default function(){
     const [value, setValue] = React.useState(3);
 
-    const onChange = e => {
-        setValue(e.target.value);
+    const onChange = val => {
+        setValue(val);
     };
     const onChangeUnBind = e => {
         

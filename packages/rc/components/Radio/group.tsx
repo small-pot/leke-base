@@ -13,11 +13,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>((props, ref
     
     const onRadioChange = (ev: RadioChangeEvent) => {
         const value = ev.target.value;
-        if(!('value' in props)){
-            setValue(value)
-        } else if (onChange){
-            setValue(ev);
-        }
+        setValue(value);
     };
 
     const renderGroup = () => {
