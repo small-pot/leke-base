@@ -7,17 +7,16 @@ import { useControl } from "@leke/hooks";
 
 const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>((props, ref) => {
 
-    const [value, setValue] = useControl(props.value,'',props.defaultValue);
+    const { onChange } = props;
 
+    const [value, setValue] = useControl(props.value,onChange,props.defaultValue);
+    
     const onRadioChange = (ev: RadioChangeEvent) => {
-        const lastValue = value;
-        const val = ev.target.value;
-        if (!('value' in props)) {
-            setValue(val);
-        }
-        const { onChange } = props;
-        if (onChange && val !== lastValue) {
-            onChange(ev);
+        const value = ev.target.value;
+        if(!('value' in props)){
+            setValue(value)
+        } else if (onChange){
+            setValue(ev);
         }
     };
 

@@ -8,7 +8,7 @@ import { Radio } from '@leke/rc';
 
 export default function(){
     const onChange = e => {
-        console.log(`radio checked:${e.target.value}`);
+        console.log(`radio checked:${e}`);
     };
     const radioStyle = {
         display: 'block',
