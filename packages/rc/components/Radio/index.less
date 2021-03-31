@@ -35,10 +35,8 @@ span.leke-radio + * {
     border-radius: 50%;
     transition: all 0.3s ease 0s;
 }
-.leke-radio-checked{
-    .leke-radio-inner{
-        border-color: @hover-color;
-    }
+
+.leke-radio {
     .leke-radio-inner::after{
         content: '';
         position: absolute;
@@ -46,11 +44,21 @@ span.leke-radio + * {
         top: 50%;
         width: 6px;
         height: 6px;
-        background: @base-color;
         border-radius: 50%;
         transform: translate(-50%,-50%);
+        transition: linear .15s;
     }
 }
+.leke-radio-checked{
+    .leke-radio-inner{
+        border-color: @hover-color;
+    }
+    .leke-radio-inner::after{
+        background: @base-color;
+    }
+}
+
+
 .leke-radio-wrapper-disabled{
     .leke-radio-inner{
         background: #F0F0F0;
