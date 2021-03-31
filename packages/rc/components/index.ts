@@ -15,3 +15,4 @@ export { default as AudioRecorder } from "./AudioRecorder";
 export {default as Spin} from './Spin';
 export {default as Input} from './Input';
 export {default as Upload} from './Upload';
+export {default as Radio} from './Radio';
