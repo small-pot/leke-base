@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const {buildTs,buildLess,createStream}=require('@leke/gulp-compile');
 const glob = require('glob');
 const path = require('path');
-const tsEntry=["components/*/*.{tsx,ts}","components/*/!(__test__|demos)/*.{tsx,ts}",'components/*.ts'];
+const tsEntry=["components/*/*.{tsx,ts}","components/*/!(__test__|demos)/**/*.{tsx,ts}",'components/*.ts'];
 const lessEntry=['components/**/*.less','less/base.less'];
 
 function createIndexStream(){
