@@ -2,7 +2,23 @@ import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.module.less';
 
-export default class Modal extends Component{
+interface Props{
+    visible?:boolean;
+    size?:string;
+    title?:string;
+    iframe?:any;
+    onCancel?:()=>void;
+}
+
+interface State{
+    visible:boolean;
+    size?:string;
+    title?:string;
+    iframe?:any;
+}
+
+export default class Modal extends Component<Props,State>{
+    modal:any;
     constructor(props){
         super(props);
         this.state = {

@@ -3,11 +3,29 @@ import React, { Component, Fragment } from "react";
 import Modal from "./modal";
 import "./index.module.less";
 
+
+
 const iframeBaseUrl =
   typeof window !== "undefined" && window.location.hostname.includes("homework")
       ? ""
       : "https://webapp.leke.cn";
-export default class Toolbar extends Component {
+
+
+
+interface Props{
+    leke?:any;
+}
+interface State{
+    show:boolean;
+    goTopShow:boolean;
+    noteVisible:boolean;
+    questionVisible:boolean;
+    cross:number;
+}
+export default class Toolbar extends Component<Props,State> {
+    delegation:any;
+    hasRegisterQuestionDialog:any;
+    questionTimeout:number;
     constructor(props) {
         super(props);
         // const Leke = JSON.parse(localStorage.getItem('Leke'));
@@ -25,7 +43,8 @@ export default class Toolbar extends Component {
         };
         // 创建委托者
         if (typeof window !== "undefined") {
-            this.delegation = window.TOOLBAR_DELEGATION = {
+            let newWindow:any = window;
+            this.delegation = newWindow.TOOLBAR_DELEGATION = {
                 questionSubmit: [],
                 closeQuestionDialog: this.closeQuestionDialog,
             };
@@ -103,7 +122,7 @@ export default class Toolbar extends Component {
       setTimeout(() => {
       // 监听我要提问弹窗的按钮事件
           if (typeof window !== "undefined") {
-              let iframe = document.getElementById("questionIframe");
+              let iframe:any = document.getElementById("questionIframe");
               let loadFn = () => {
                   let iDom = iframe.contentWindow.document;
                   iDom.getElementById("jSubmitBtn").addEventListener("click", () => {
@@ -255,7 +274,7 @@ export default class Toolbar extends Component {
                       ></a>
                   </li>
                   <li className="gotop">
-                      <a onClick={() => window.scrollTo("0", "0")}></a>
+                      <a onClick={() => window.scrollTo(0, 0)}></a>
                   </li>
               </ul>
               <div
@@ -263,7 +282,7 @@ export default class Toolbar extends Component {
                       goTopShow ? 'gotop-extra-show' : ""
                   }`}
               >
-                  <a onClick={() => window.scrollTo("0", "0")}></a>
+                  <a onClick={() => window.scrollTo(0, 0)}></a>
               </div>
           </Fragment>
       );

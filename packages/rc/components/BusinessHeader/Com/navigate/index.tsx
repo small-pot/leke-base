@@ -6,7 +6,25 @@ import config from '../config';
 import Secondary from './secondary';
 import './index.module.less';
 
-export default class Navigate extends Component{
+interface Props{
+    icon?:string;
+    title?:string;
+    leke?:any;
+    subs?:any;
+    defaultSubs?:any;
+    activeKey?:number;
+    hideSecondary?:boolean;
+    extraTitle?:string;
+}
+
+interface State{
+    roleId:number;
+    currentSubs:any[];
+    sub:any[];
+    icon:string;
+    title:string;
+}
+export default class Navigate extends Component<Props,State>{
     constructor(props){
         super(props);
         // const Leke = JSON.parse(localStorage.getItem('Leke'));
@@ -20,6 +38,16 @@ export default class Navigate extends Component{
         };
     }
 
+    static propTypes = {
+        subs: PropTypes.array,
+        customProp: function(props, propName, componentName) {
+            if (props.icon === undefined || props.title === undefined) {
+                return new Error(
+                    'Icon or title cannot be undefined'
+                );
+            }
+        },
+    };
     // 设置当前子标题的配置项
     setSubs = () =>{
         const { leke, icon, subs } = this.props;
@@ -73,7 +101,7 @@ export default class Navigate extends Component{
     */
     concatArray = (defaultSubs, newSubs) =>{
         let oldSubs = Array.from(defaultSubs);
-        oldSubs.map((defaultItem, i)=>{
+        oldSubs.map((defaultItem:any, i)=>{
             newSubs.map((newItem, j)=>{
                 if(defaultItem.key === newItem.key){
                     oldSubs[i] = newSubs[j];
@@ -217,14 +245,3 @@ export default class Navigate extends Component{
         return nav;
     }
 }
-
-Navigate.propTypes = {
-    subs: PropTypes.array,
-    customProp: function(props, propName, componentName) {
-        if (props.icon === undefined || props.title === undefined) {
-            return new Error(
-                'Icon or title cannot be undefined'
-            );
-        }
-    },
-};

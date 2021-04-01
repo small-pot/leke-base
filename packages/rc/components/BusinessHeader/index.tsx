@@ -2,19 +2,49 @@ import React, { Component } from "react";
 
 import Header from "./Header";
 import PropTypes from "prop-types";
-import { getUserInfo } from "../FetchUtils";
-import { userInfo } from "../meta";
+import { getUserInfo } from "./FetchUtils";
+import { userInfo } from "./meta";
 
 userInfo();
-// localStorage.removeItem('Leke');
 
-export default class BusinessHeader extends Component {
+interface Props{
+    projectName?:string;
+    saveUserInfo?:(params:any)=>void;
+    hide?:boolean;
+}
+
+interface State{
+    userReady:boolean;
+    leke?:any;
+
+}
+
+export default class BusinessHeader extends Component<Props,State> {
     constructor(props) {
         super(props);
         this.state = {
             userReady: false,
         };
     }
+
+    static propTypes = {
+        projectName: PropTypes.string.isRequired, //项目名称，用户获取用户信息数据请求
+        saveUserInfo: PropTypes.func, //用于提供用户信息,每个项目可以单独存储数据
+        hide: PropTypes.bool, //控制业务头是否展示
+    };
+    
+    static defaultProps = {
+        projectName: "",
+        icon: "",
+        title: "",
+        extraTitle: "",
+        activeKey: "",
+        defaultSubs: true,
+        hide: false,
+        hideToolbar: false,
+        hidePhoto: false,
+        fullScreen: false,
+    };
 
     componentDidMount() {
     // 请求用户信息
@@ -24,7 +54,7 @@ export default class BusinessHeader extends Component {
   fetchData = async () => {
       const { projectName, saveUserInfo } = this.props;
       const res = await getUserInfo(projectName);
-      let Leke = {};
+      let Leke:any = {};
       Leke.domain = {
           payServerName: "https://pay.leke.cn",
           learnServerName: "https://learn.leke.cn",
@@ -70,7 +100,7 @@ export default class BusinessHeader extends Component {
           rtmpServerName: "rtmp://vod1.leke.cn/vod",
           onlineServerName: "http://onlineclass.leke.cn",
       };
-      const datas = res;
+      const datas:any = res;
       Leke.assets = datas.assets;
       Leke.context = datas.context;
       Leke.device = datas.device;
@@ -91,21 +121,5 @@ export default class BusinessHeader extends Component {
       return !hide && userReady ? <Header {...this.props} leke={leke} /> : null;
   }
 }
-BusinessHeader.propTypes = {
-    projectName: PropTypes.string.isRequired, //项目名称，用户获取用户信息数据请求
-    saveUserInfo: PropTypes.func, //用于提供用户信息,每个项目可以单独存储数据
-    hide: PropTypes.bool, //控制业务头是否展示
-};
 
-BusinessHeader.defaultProps = {
-    projectName: "",
-    icon: "",
-    title: "",
-    extraTitle: "",
-    activeKey: "",
-    defaultSubs: true,
-    hide: false,
-    hideToolbar: false,
-    hidePhoto: false,
-    fullScreen: false,
-};
+

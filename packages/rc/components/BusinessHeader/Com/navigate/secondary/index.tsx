@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import config from './config';
 import './index.module.less';
 
-class Secondary extends Component{
+interface Props{
+    roleId?:number;
+    title?:string;
+}
+class Secondary extends Component<Props>{
     constructor(props){
         super(props);
     }

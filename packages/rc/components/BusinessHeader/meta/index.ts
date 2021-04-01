@@ -3,7 +3,7 @@ function userInfo(){
     if (typeof window !== 'undefined') {
         if (/android|webos|iphone|ipad|ipod|blackberry/i.test(navigator.userAgent)) {
             let w = window.screen.width;
-            const _meta = document.getElementsByName('viewport')[0];
+            const _meta:any = document.getElementsByName('viewport')[0];
             if (_meta) {
                 if (w >= 1200) {
                     _meta.content = 'width=device-width, maximum-scale=1.0, user-scalable=yes';

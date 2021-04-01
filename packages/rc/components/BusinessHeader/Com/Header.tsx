@@ -3,14 +3,34 @@ import Navigator from './navigate';
 import Toolbar from '../toolbar';
 import './index.module.less';
 
-export default class BusinessHeader extends Component{
+interface Props{
+    hidePhoto?:boolean;
+    renderHeader?:any;
+    fullScreen?:boolean;
+    icon?:string;
+    title?:string;
+    extraTitle?:string;
+    subs?:any;
+    leke?:any;
+    activeKey?:number;
+    hideSecondary?:boolean;
+    defaultSubs?:any;
+    hideToolbar?:boolean;
+}
+interface State{
+    userInfo_currentPhoto:string;
+    currentUserName:string;
+    currentSchoolId:number;
+    hover:boolean;
+}
+export default class BusinessHeader extends Component<Props,State>{
     constructor(props){
         super(props);
         // let { currentPhoto, currentUserName, currentSchoolId } = JSON.parse(localStorage.getItem('Leke')).user;
         let { currentPhoto, currentUserName, currentSchoolId } = props.leke.user;
         this.state = {
             userInfo_currentPhoto: !!currentPhoto ? 'https://file.leke.cn'+currentPhoto : 'https://static.leke.cn/images/home/photo.png',	// 用户头像
-            currentUserName: currentUserName,	// 用户名
+            currentUserName,	// 用户名
             currentSchoolId: currentSchoolId,	// 学校类型id
             hover: false,	// 是否显示操作列表
         };
