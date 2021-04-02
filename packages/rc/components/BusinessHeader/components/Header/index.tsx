@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
-import Navigator from './navigate';
-import Toolbar from '../toolbar';
-import './index.module.less';
+import Navigator from '../Navigate';
+import Toolbar from '../Toolbar';
 
 interface Props{
     hidePhoto?:boolean;

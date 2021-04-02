@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 
-import Modal from "./modal";
-import "./index.module.less";
+import Modal from "../Modal";
 
 
 

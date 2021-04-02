@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-
-import Header from "./Header";
+import Header from "./components/Header";
 import PropTypes from "prop-types";
-import { getUserInfo } from "./FetchUtils";
-import { userInfo } from "./meta";
+import { getUserInfo } from "./fetch";
+import { userInfo } from "./utils";
 
 userInfo();
 

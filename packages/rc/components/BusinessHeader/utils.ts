@@ -1,8 +1,35 @@
-export default function (Leke) {
-    return {
-    // 预习
-        prepareclass: [],
+export function userInfo(){
+    // 设备判断
+    if (typeof window !== 'undefined') {
+        if (/android|webos|iphone|ipad|ipod|blackberry/i.test(navigator.userAgent)) {
+            let w = window.screen.width;
+            const _meta:any = document.getElementsByName('viewport')[0];
+            if (_meta) {
+                if (w >= 1200) {
+                    _meta.content = 'width=device-width, maximum-scale=1.0, user-scalable=yes';
+                } else {
+                    _meta.content = 'width=1200,  maximum-scale=1.0, user-scalable=yes';
+                }
+                document.getElementsByTagName('head')[0].appendChild(_meta);
+            }
+            const _evt = 'orientationchange';
+            window.addEventListener(_evt, function () {
+                w = window.screen.width;
+                if (w >= 1200) {
+                    _meta.content = 'width=device-width, maximum-scale=1.0, user-scalable=yes';
+                } else {
+                    _meta.content = 'width=1200,  maximum-scale=1.0, user-scalable=yes';
+                }
+            }, false);
+        }
+    }
+}
 
+export function getConfig(Leke){
+    return {
+        // 预习
+        prepareclass: [],
+        
         // 学习报告
         studyreport: [
             {
@@ -11,12 +38,12 @@ export default function (Leke) {
                     {
                         key: "作业成绩报告",
                         url:
-              "https://webapp.leke.cn/study-report/pc/student/studyReport.html#/",
+                      "https://webapp.leke.cn/study-report/pc/student/studyReport.html#/",
                     },
                     {
                         key: "行为分析报告",
                         url:
-              "https://webapp.leke.cn/study-report/pc/student/studyReport.html#/behavior",
+                      "https://webapp.leke.cn/study-report/pc/student/studyReport.html#/behavior",
                     },
                 ],
             },
@@ -26,31 +53,31 @@ export default function (Leke) {
                     {
                         key: "综合分析报告",
                         url:
-              "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm?spm=102028",
+                      "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm?spm=102028",
                     },
                     {
                         key: "学科分析报告",
                         url:
-              "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm?spm=102029",
+                      "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm?spm=102029",
                     },
                     {
                         key: "行为分析报告",
                         url:
-              "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm?spm=102030",
+                      "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm?spm=102030",
                     },
                 ],
             },
         ],
-
+        
         // 复习
         review: [],
-
+        
         // 微课通
         microclassthrough: [],
-
+        
         // 提分王
         brushquestionking: [],
-
+        
         // 备课
         preparelessons: [
             {
@@ -59,17 +86,17 @@ export default function (Leke) {
                     {
                         key: "章节备课",
                         url:
-              "https://beike.leke.cn/auth/teacher/pc/beikepkg/section/list.htm",
+                      "https://beike.leke.cn/auth/teacher/pc/beikepkg/section/list.htm",
                     },
                     {
                         key: "自定义备课",
                         url:
-              "https://beike.leke.cn/auth/teacher/pc/beikepkg/custom/list.htm",
+                      "https://beike.leke.cn/auth/teacher/pc/beikepkg/custom/list.htm",
                     },
                 ],
             },
         ],
-
+        
         // 考试
         testicon: [
             {
@@ -82,7 +109,7 @@ export default function (Leke) {
                     {
                         key: "成绩单",
                         url:
-              "https://diag.leke.cn/auth/student/examReport/toShowExamReport.htm",
+                      "https://diag.leke.cn/auth/student/examReport/toShowExamReport.htm",
                     },
                 ],
             },
@@ -100,7 +127,7 @@ export default function (Leke) {
                     {
                         key: "成绩单",
                         url:
-              "https://diag.leke.cn/auth/teacher/examReport/toShowExamReport.htm",
+                      "https://diag.leke.cn/auth/teacher/examReport/toShowExamReport.htm",
                     },
                 ],
             },
@@ -114,7 +141,7 @@ export default function (Leke) {
                     {
                         key: "成绩单",
                         url:
-              "https://diag.leke.cn/auth/parent/examReport/toShowExamReport.htm",
+                      "https://diag.leke.cn/auth/parent/examReport/toShowExamReport.htm",
                     },
                 ],
             },
@@ -128,7 +155,7 @@ export default function (Leke) {
                     {
                         key: "成绩单",
                         url:
-              "https://diag.leke.cn/auth/classTeacher/examReport/toShowExamReport.htm",
+                      "https://diag.leke.cn/auth/classTeacher/examReport/toShowExamReport.htm",
                     },
                 ],
             },
@@ -146,7 +173,7 @@ export default function (Leke) {
                     {
                         key: "成绩单",
                         url:
-              "https://diag.leke.cn/auth/provost/examReport/toShowExamReport.htm",
+                      "https://diag.leke.cn/auth/provost/examReport/toShowExamReport.htm",
                     },
                     {
                         key: "区域联考",
@@ -168,7 +195,7 @@ export default function (Leke) {
                     {
                         key: "成绩单",
                         url:
-              "https://diag.leke.cn/auth/provost/examReport/toShowExamReport.htm",
+                      "https://diag.leke.cn/auth/provost/examReport/toShowExamReport.htm",
                     },
                 ],
             },
@@ -191,7 +218,7 @@ export default function (Leke) {
                 ],
             },
         ],
-
+        
         // 作业
         homework: [
             {
@@ -200,20 +227,20 @@ export default function (Leke) {
                     {
                         key: "作业管理",
                         url:
-              "https://homework.leke.cn/auth/student/exercise/homework/myHomework.htm?ord=2",
+                      "https://homework.leke.cn/auth/student/exercise/homework/myHomework.htm?ord=2",
                     },
                     {
                         key: "寒暑假作业",
                         url:
-              "https://homework.leke.cn/auth/student/homework/vacationHomeworkList.htm",
+                      "https://homework.leke.cn/auth/student/homework/vacationHomeworkList.htm",
                     },
                     {
                         key: "批改任务",
                         url:
-              "https://homework.leke.cn/auth/student/homework/correctHomeworkList.htm",
+                      "https://homework.leke.cn/auth/student/homework/correctHomeworkList.htm",
                         data:
-              "https://homework.leke.cn/auth/student/homework/getStuHwDoingCorrectTotal.htm?studentId=" +
-              Leke.user.userId,
+                      "https://homework.leke.cn/auth/student/homework/getStuHwDoingCorrectTotal.htm?studentId=" +
+                        Leke.user.userId,
                     },
                 ],
             },
@@ -223,20 +250,20 @@ export default function (Leke) {
                     {
                         key: "作业管理",
                         url:
-              "https://homework.leke.cn/auth/teacher/homework/homeworkList.htm",
+                      "https://homework.leke.cn/auth/teacher/homework/homeworkList.htm",
                     },
                     {
                         key: "寒暑假作业",
                         url:
-              "https://homework.leke.cn/auth/teacher/homework/vacationHomeworkList.htm",
+                      "https://homework.leke.cn/auth/teacher/homework/vacationHomeworkList.htm",
                     },
                     {
                         key: "口语中心",
                         url:
-              "https://homework.leke.cn/auth/teacher/pc/successAssignedHomworkList.htm",
+                      "https://homework.leke.cn/auth/teacher/pc/successAssignedHomworkList.htm",
                     },
                 ],
-
+        
                 // 乐桃学院
                 airclass: [
                     {
@@ -245,12 +272,12 @@ export default function (Leke) {
                             {
                                 key: "我的课程",
                                 url:
-                  "https://course.leke.cn/auth/course/common/lesson/intoStudentCourse.htm",
+                          "https://course.leke.cn/auth/course/common/lesson/intoStudentCourse.htm",
                             },
                             {
                                 key: "选课中心",
                                 url:
-                  "https://course.leke.cn/auth/student/course/electiveCenter.htm?enterType=1",
+                          "https://course.leke.cn/auth/student/course/electiveCenter.htm?enterType=1",
                             },
                         ],
                     },
@@ -260,17 +287,17 @@ export default function (Leke) {
                             {
                                 key: "周课表",
                                 url:
-                  "https://course.leke.cn/auth/course/common/schedule/week/intoWeekSchedule.htm",
+                          "https://course.leke.cn/auth/course/common/schedule/week/intoWeekSchedule.htm",
                             },
                             {
                                 key: "课程管理",
                                 url:
-                  "https://course.leke.cn/auth/course/common/manage/intoCourseManage.htm",
+                          "https://course.leke.cn/auth/course/common/manage/intoCourseManage.htm",
                             },
                             {
                                 key: "点播库",
                                 url:
-                  "https://resource.leke.cn/auth/cware/common/coursewareList.htm",
+                          "https://resource.leke.cn/auth/cware/common/coursewareList.htm",
                             },
                         ],
                     },
@@ -280,12 +307,12 @@ export default function (Leke) {
                             {
                                 key: "课程列表",
                                 url:
-                  "https://course.leke.cn/auth/course/common/lesson/intoStudentCourse.htm",
+                          "https://course.leke.cn/auth/course/common/lesson/intoStudentCourse.htm",
                             },
                             {
                                 key: "选课中心",
                                 url:
-                  "https://course.leke.cn/auth/parent/course/electiveCenter.htm?enterType=1",
+                          "https://course.leke.cn/auth/parent/course/electiveCenter.htm?enterType=1",
                             },
                         ],
                     },
@@ -295,12 +322,12 @@ export default function (Leke) {
                             {
                                 key: "日课表",
                                 url:
-                  "https://course.leke.cn/auth/course/common/schedule/day/intoDaySchedule.htm",
+                          "https://course.leke.cn/auth/course/common/schedule/day/intoDaySchedule.htm",
                             },
                             {
                                 key: "选修班级",
                                 url:
-                  "https://lesson.leke.cn/auth/classTeacher/roster/studentManager.htm",
+                          "https://lesson.leke.cn/auth/classTeacher/roster/studentManager.htm",
                             },
                         ],
                     },
@@ -310,17 +337,17 @@ export default function (Leke) {
                             {
                                 key: "日课表",
                                 url:
-                  "https://course.leke.cn/auth/course/common/schedule/day/intoDaySchedule.htm",
+                          "https://course.leke.cn/auth/course/common/schedule/day/intoDaySchedule.htm",
                             },
                             {
                                 key: "课程管理",
                                 url:
-                  "https://course.leke.cn/auth/course/common/manage/intoCourseManage.htm",
+                          "https://course.leke.cn/auth/course/common/manage/intoCourseManage.htm",
                             },
                             {
                                 key: "点播库",
                                 url:
-                  "https://resource.leke.cn/auth/cware/common/coursewareList.htm",
+                          "https://resource.leke.cn/auth/cware/common/coursewareList.htm",
                             },
                         ],
                     },
@@ -330,7 +357,7 @@ export default function (Leke) {
                             {
                                 key: "日课表",
                                 url:
-                  "https://course.leke.cn/auth/course/common/schedule/day/intoDaySchedule.htm",
+                          "https://course.leke.cn/auth/course/common/schedule/day/intoDaySchedule.htm",
                             },
                         ],
                     },
@@ -342,12 +369,12 @@ export default function (Leke) {
                     {
                         key: "作业管理",
                         url:
-              "https://homework.leke.cn/auth/classTeacher/homework/homeworkList.htm",
+                      "https://homework.leke.cn/auth/classTeacher/homework/homeworkList.htm",
                     },
                     {
                         key: "寒暑假作业",
                         url:
-              "https://homework.leke.cn/auth/classTeacher/homework/vacationHomeworkList.htm",
+                      "https://homework.leke.cn/auth/classTeacher/homework/vacationHomeworkList.htm",
                     },
                 ],
             },
@@ -357,12 +384,12 @@ export default function (Leke) {
                     {
                         key: "班级作业",
                         url:
-              "https://homework.leke.cn/auth/provost/homework/homeworkList.htm",
+                      "https://homework.leke.cn/auth/provost/homework/homeworkList.htm",
                     },
                     {
                         key: "学生作业",
                         url:
-              "https://homework.leke.cn/auth/provost/homework/homeworkSubmitStatusDetail.htm",
+                      "https://homework.leke.cn/auth/provost/homework/homeworkSubmitStatusDetail.htm",
                     },
                 ],
             },
@@ -372,7 +399,7 @@ export default function (Leke) {
                     {
                         key: "班级作业",
                         url:
-              "https://homework.leke.cn/auth/provost/homework/homeworkList.htm",
+                      "https://homework.leke.cn/auth/provost/homework/homeworkList.htm",
                     },
                     {
                         key: "作业勤奋报告",
@@ -381,16 +408,16 @@ export default function (Leke) {
                 ],
             },
         ],
-
+        
         // 错题本
         wrongnote: [],
-
+        
         // 笔记
         noteicon: [],
-
+        
         // 乐答
         answer: [],
-
+        
         // 教学诊断
         teachingdiagnosis: [
             {
@@ -399,12 +426,12 @@ export default function (Leke) {
                     {
                         key: "班级作业分析",
                         url:
-              "https://webapp.leke.cn/teaching-diagnosis/pc/classHomework.html",
+                      "https://webapp.leke.cn/teaching-diagnosis/pc/classHomework.html",
                     },
                     {
                         key: "班级行为分析",
                         url:
-              "https://webapp.leke.cn/teaching-diagnosis/pc/classBehavior.html",
+                      "https://webapp.leke.cn/teaching-diagnosis/pc/classBehavior.html",
                     },
                     {
                         key: "红花激励统计",
@@ -413,10 +440,10 @@ export default function (Leke) {
                 ],
             },
         ],
-
+        
         // 办公系统
         officesystem: [],
-
+        
         // 空中课堂
         airclass: [
             {
@@ -425,12 +452,12 @@ export default function (Leke) {
                     {
                         key: "我的课程",
                         url:
-              "https://course.leke.cn/auth/course/common/lesson/intoStudentCourse.htm",
+                      "https://course.leke.cn/auth/course/common/lesson/intoStudentCourse.htm",
                     },
                     {
                         key: "选课中心",
                         url:
-              "https://course.leke.cn/auth/student/course/electiveCenter.htm?enterType=1",
+                      "https://course.leke.cn/auth/student/course/electiveCenter.htm?enterType=1",
                     },
                 ],
             },
@@ -440,17 +467,17 @@ export default function (Leke) {
                     {
                         key: "周课表",
                         url:
-              "https://course.leke.cn/auth/course/common/schedule/week/intoWeekSchedule.htm",
+                      "https://course.leke.cn/auth/course/common/schedule/week/intoWeekSchedule.htm",
                     },
                     {
                         key: "课程管理",
                         url:
-              "https://course.leke.cn/auth/course/common/manage/intoCourseManage.htm",
+                      "https://course.leke.cn/auth/course/common/manage/intoCourseManage.htm",
                     },
                     {
                         key: "点播库",
                         url:
-              "https://resource.leke.cn/auth/cware/common/coursewareList.htm",
+                      "https://resource.leke.cn/auth/cware/common/coursewareList.htm",
                     },
                 ],
             },
@@ -460,12 +487,12 @@ export default function (Leke) {
                     {
                         key: "课程列表",
                         url:
-              "https://course.leke.cn/auth/course/common/lesson/intoStudentCourse.htm",
+                      "https://course.leke.cn/auth/course/common/lesson/intoStudentCourse.htm",
                     },
                     {
                         key: "选课中心",
                         url:
-              "https://course.leke.cn/auth/parent/course/electiveCenter.htm?enterType=1",
+                      "https://course.leke.cn/auth/parent/course/electiveCenter.htm?enterType=1",
                     },
                 ],
             },
@@ -475,12 +502,12 @@ export default function (Leke) {
                     {
                         key: "日课表",
                         url:
-              "https://course.leke.cn/auth/course/common/schedule/day/intoDaySchedule.htm",
+                      "https://course.leke.cn/auth/course/common/schedule/day/intoDaySchedule.htm",
                     },
                     {
                         key: "选修班级",
                         url:
-              "https://lesson.leke.cn/auth/classTeacher/roster/studentManager.htm",
+                      "https://lesson.leke.cn/auth/classTeacher/roster/studentManager.htm",
                     },
                 ],
             },
@@ -490,17 +517,17 @@ export default function (Leke) {
                     {
                         key: "日课表",
                         url:
-              "https://course.leke.cn/auth/course/common/schedule/day/intoDaySchedule.htm",
+                      "https://course.leke.cn/auth/course/common/schedule/day/intoDaySchedule.htm",
                     },
                     {
                         key: "课程管理",
                         url:
-              "https://course.leke.cn/auth/course/common/manage/intoCourseManage.htm",
+                      "https://course.leke.cn/auth/course/common/manage/intoCourseManage.htm",
                     },
                     {
                         key: "点播库",
                         url:
-              "https://resource.leke.cn/auth/cware/common/coursewareList.htm",
+                      "https://resource.leke.cn/auth/cware/common/coursewareList.htm",
                     },
                 ],
             },
@@ -510,12 +537,12 @@ export default function (Leke) {
                     {
                         key: "日课表",
                         url:
-              "https://course.leke.cn/auth/course/common/schedule/day/intoDaySchedule.htm",
+                      "https://course.leke.cn/auth/course/common/schedule/day/intoDaySchedule.htm",
                     },
                 ],
             },
         ],
-
+        
         // 班务管理
         classmanagement: [
             {
@@ -524,7 +551,7 @@ export default function (Leke) {
                     {
                         key: "家长管理",
                         url:
-              "https://tutor.leke.cn/auth/classTeacher/parentManager/manager.htm",
+                      "https://tutor.leke.cn/auth/classTeacher/parentManager/manager.htm",
                     },
                     {
                         key: "用户审核",
@@ -533,10 +560,10 @@ export default function (Leke) {
                 ],
             },
         ],
-
+        
         // 财务管理
         financialcontrol: [],
-
+        
         // 学情监控
         learningtomonitor: [
             {
@@ -545,37 +572,37 @@ export default function (Leke) {
                     {
                         key: "班级分析",
                         url:
-              "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm?spm=103034",
+                      "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm?spm=103034",
                     },
                     {
                         key: "学科分析",
                         url:
-              "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm?spm=103035",
+                      "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm?spm=103035",
                     },
                     {
                         key: "课堂考勤",
                         url:
-              "https://lesson.leke.cn/auth/classTeacher/attendance/enterAttendanceByCourse.htm",
+                      "https://lesson.leke.cn/auth/classTeacher/attendance/enterAttendanceByCourse.htm",
                     },
                     {
                         key: "学生考勤",
                         url:
-              "https://lesson.leke.cn/auth/classTeacher/attendance/viewStuAttendStatis.htm",
+                      "https://lesson.leke.cn/auth/classTeacher/attendance/viewStuAttendStatis.htm",
                     },
                     {
                         key: "旁听考勤",
                         url:
-              "https://lesson.leke.cn/auth/classTeacher/attendance/classTeacherAttendances.htm",
+                      "https://lesson.leke.cn/auth/classTeacher/attendance/classTeacherAttendances.htm",
                     },
                     {
                         key: "点播进度",
                         url:
-              "https://resource.leke.cn/auth/classTeacher/resource/study/stuStatis.htm",
+                      "https://resource.leke.cn/auth/classTeacher/resource/study/stuStatis.htm",
                     },
                     {
                         key: "红花激励",
                         url:
-              "https://incentive.leke.cn/auth/teacher/diag/headTeacherSpace.htm",
+                      "https://incentive.leke.cn/auth/teacher/diag/headTeacherSpace.htm",
                     },
                 ],
             },
@@ -585,22 +612,22 @@ export default function (Leke) {
                     {
                         key: "学科优劣分析",
                         url:
-              "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm?spm=104018",
+                      "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm?spm=104018",
                     },
                     {
                         key: "学生行为分析",
                         url:
-              "https://diag.leke.cn/auth/provost/studentMonitor/homeworkAnalyse/homeworkAnalysePage.htm",
+                      "https://diag.leke.cn/auth/provost/studentMonitor/homeworkAnalyse/homeworkAnalysePage.htm",
                     },
                     {
                         key: "学生考勤",
                         url:
-              "https://diag.leke.cn/auth/provost/studentMonitor/studentAttend/toShowStudentAttend.htm",
+                      "https://diag.leke.cn/auth/provost/studentMonitor/studentAttend/toShowStudentAttend.htm",
                     },
                     {
                         key: "上课人数统计",
                         url:
-              "https://monitor.leke.cn/auth/provost/course/classPeopleTotal.htm",
+                      "https://monitor.leke.cn/auth/provost/course/classPeopleTotal.htm",
                     },
                 ],
             },
@@ -610,27 +637,27 @@ export default function (Leke) {
                     {
                         key: "学科优劣分析",
                         url:
-              "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm",
+                      "https://diag.leke.cn/auth/common/report/tchanaly/klass-score-inDevelopment.htm",
                     },
                     {
                         key: "学生行为分析",
                         url:
-              "https://diag.leke.cn/auth/provost/studentMonitor/homeworkAnalyse/homeworkAnalysePage.htm",
+                      "https://diag.leke.cn/auth/provost/studentMonitor/homeworkAnalyse/homeworkAnalysePage.htm",
                     },
                     {
                         key: "学生考勤",
                         url:
-              "https://diag.leke.cn/auth/provost/studentMonitor/studentAttend/toShowStudentAttend.htm",
+                      "https://diag.leke.cn/auth/provost/studentMonitor/studentAttend/toShowStudentAttend.htm",
                     },
                     {
                         key: "上课人数统计",
                         url:
-              "https://monitor.leke.cn/auth/president/course/classPeopleTotal.htm",
+                      "https://monitor.leke.cn/auth/president/course/classPeopleTotal.htm",
                     },
                 ],
             },
         ],
-
+        
         // 教务管理
         educationaladministration: [
             {
@@ -639,12 +666,12 @@ export default function (Leke) {
                     {
                         key: "人员管理",
                         url:
-              "https://tutor.leke.cn/auth/schoolAdmin/user/struct/struct_list.htm",
+                      "https://tutor.leke.cn/auth/schoolAdmin/user/struct/struct_list.htm",
                     },
                     {
                         key: "教学班管理",
                         url:
-              "https://webapp.leke.cn/lesson-web/index.html#/classesManage/index",
+                      "https://webapp.leke.cn/lesson-web/index.html#/classesManage/index",
                     },
                     {
                         key: "教材管理",
@@ -661,7 +688,7 @@ export default function (Leke) {
                     {
                         key: "校历设置",
                         url:
-              "https://webapp.leke.cn/schoolCalendar-web/index.html#/schoolCalendar",
+                      "https://webapp.leke.cn/schoolCalendar-web/index.html#/schoolCalendar",
                         urls: [
                             "https://webapp.leke.cn/schoolCalendar-web/index.html#/schoolCalendar",
                             "https://webapp.leke.cn/schoolCalendar-web/index.html#/calendarDetail",
@@ -670,7 +697,7 @@ export default function (Leke) {
                 ],
             },
         ],
-
+        
         // 教学监控
         monitoringofteaching: [
             {
@@ -679,12 +706,12 @@ export default function (Leke) {
                     {
                         key: "教学常规",
                         url:
-              "https://diag.leke.cn/auth/provost/teachingMonitor/lessonAttend/toShowLessonAttendRateStat.htm",
+                      "https://diag.leke.cn/auth/provost/teachingMonitor/lessonAttend/toShowLessonAttendRateStat.htm",
                     },
                     {
                         key: "统计总表",
                         url:
-              "https://diag.leke.cn/auth/provost/teachingMonitor/statsum/toShowStatSum.htm",
+                      "https://diag.leke.cn/auth/provost/teachingMonitor/statsum/toShowStatSum.htm",
                     },
                 ],
             },
@@ -694,17 +721,17 @@ export default function (Leke) {
                     {
                         key: "教学常规",
                         url:
-              "https://diag.leke.cn/auth/provost/teachingMonitor/lessonAttend/toShowLessonAttendRateStat.htm",
+                      "https://diag.leke.cn/auth/provost/teachingMonitor/lessonAttend/toShowLessonAttendRateStat.htm",
                     },
                     {
                         key: "统计总表",
                         url:
-              "https://diag.leke.cn/auth/provost/teachingMonitor/statsum/toShowStatSum.htm",
+                      "https://diag.leke.cn/auth/provost/teachingMonitor/statsum/toShowStatSum.htm",
                     },
                 ],
             },
         ],
-
+        
         // 平台管理
         pluponform: [
             {
@@ -729,13 +756,13 @@ export default function (Leke) {
                 ],
             },
         ],
-
+        
         // 校园课堂
         schoolclass: [],
-
+        
         // 教师研修
         train: [],
-
+        
         // 财务管理
         financialstatistics: [
             {
@@ -744,7 +771,7 @@ export default function (Leke) {
                     {
                         key: "班级订单",
                         url:
-              "https://pay.leke.cn/auth/teacher/order/orderListForClassTeacher.htm",
+                      "https://pay.leke.cn/auth/teacher/order/orderListForClassTeacher.htm",
                     },
                 ],
             },
@@ -754,17 +781,17 @@ export default function (Leke) {
                     {
                         key: "财务统计",
                         url:
-              "https://pay.leke.cn/auth/platformFinance/statistics/statisticsSchoolDetail.htm",
+                      "https://pay.leke.cn/auth/platformFinance/statistics/statisticsSchoolDetail.htm",
                     },
                     {
                         key: "账户管理",
                         url:
-              "https://pay.leke.cn/auth/provost/virtualCurrency/virtualCurrencyDetail.htm",
+                      "https://pay.leke.cn/auth/provost/virtualCurrency/virtualCurrencyDetail.htm",
                     },
                     {
                         key: "学校订单",
                         url:
-              "https://pay.leke.cn/auth/provost/order/orderListForProvost.htm",
+                      "https://pay.leke.cn/auth/provost/order/orderListForProvost.htm",
                     },
                 ],
             },
@@ -778,25 +805,25 @@ export default function (Leke) {
                     {
                         key: "课程财务统计",
                         url:
-              "https://pay.leke.cn/auth/common/statis/financeStatisticsListBySchool.htm",
+                      "https://pay.leke.cn/auth/common/statis/financeStatisticsListBySchool.htm",
                     },
                     {
                         key: "订单统计",
                         url:
-              "https://pay.leke.cn/auth/common/orderStatis/orderStatisView.htm",
+                      "https://pay.leke.cn/auth/common/orderStatis/orderStatisView.htm",
                     },
                     {
                         key: "订单查询",
                         url:
-              "https://pay.leke.cn/auth/common/order/orderListForFinance.htm",
+                      "https://pay.leke.cn/auth/common/order/orderListForFinance.htm",
                     },
                 ],
             },
         ],
-
+        
         // 预习检查
         preparecheck: [],
-
+        
         // 资源库(个人、区域、学校)
         resource: [
             // TODO:
@@ -809,10 +836,10 @@ export default function (Leke) {
             // url : BK_SVR + '/auth/teacher/courseware/personal/list.htm',
             // spm : SPM_ID + '007'
         ],
-
+        
         // 主页管理
         homemanage: [],
-
+        
         // 选课排课
         selectlesson: [
             {
@@ -821,12 +848,12 @@ export default function (Leke) {
                     {
                         key: "智能排课",
                         url:
-              "https://lesson.leke.cn/auth/provost/paike/manage/taskManage.htm",
+                      "https://lesson.leke.cn/auth/provost/paike/manage/taskManage.htm",
                     },
                     {
                         key: " 智能分班",
                         url:
-              "https://lesson.leke.cn/auth/provost/paike/choiceExam/requiredList.htm",
+                      "https://lesson.leke.cn/auth/provost/paike/choiceExam/requiredList.htm",
                     },
                     {
                         key: "课表导入",
@@ -835,12 +862,12 @@ export default function (Leke) {
                     {
                         key: "选修课选课",
                         url:
-              "https://webapp.leke.cn/lesson-web/index.html#/electiveTakeCourse/electiveList",
+                      "https://webapp.leke.cn/lesson-web/index.html#/electiveTakeCourse/electiveList",
                     },
                 ],
             },
         ],
-
+        
         // 智慧评价
         evaluation: [
             {
@@ -853,7 +880,7 @@ export default function (Leke) {
                     {
                         key: "评价设置",
                         url:
-              "https://webapp.leke.cn/evaluation-web/index.html#/evaluationSet",
+                      "https://webapp.leke.cn/evaluation-web/index.html#/evaluationSet",
                     },
                     {
                         key: "报表导出",
@@ -862,7 +889,7 @@ export default function (Leke) {
                 ],
             },
         ],
-
+        
         // 老师动态
         teacherDynamics: [
             {
@@ -871,7 +898,7 @@ export default function (Leke) {
                     {
                         key: "课堂",
                         url:
-              "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/?statuId=0",
+                      "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/?statuId=0",
                         urls: [
                             "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/?statuId=0",
                             "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/?statuId=1",
@@ -883,17 +910,17 @@ export default function (Leke) {
                     {
                         key: "备课",
                         url:
-              "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/lessonPreparation",
+                      "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/lessonPreparation",
                     },
                     {
                         key: "作业",
                         url:
-              "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/homework",
+                      "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/homework",
                     },
                     {
                         key: "答疑",
                         url:
-              "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/question",
+                      "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/question",
                     },
                 ],
             },
@@ -903,7 +930,7 @@ export default function (Leke) {
                     {
                         key: "课堂",
                         url:
-              "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/?statuId=0",
+                      "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/?statuId=0",
                         urls: [
                             "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/?statuId=0",
                             "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/?statuId=1",
@@ -915,22 +942,22 @@ export default function (Leke) {
                     {
                         key: "备课",
                         url:
-              "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/lessonPreparation",
+                      "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/lessonPreparation",
                     },
                     {
                         key: "作业",
                         url:
-              "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/homework",
+                      "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/homework",
                     },
                     {
                         key: "答疑",
                         url:
-              "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/question",
+                      "https://webapp.leke.cn/diag-teaching-dynamics/pc/teachDynamics.html#/question",
                     },
                 ],
             },
         ],
-
+        
         // 学生动态
         studentDynamics: [
             {
@@ -939,12 +966,12 @@ export default function (Leke) {
                     {
                         key: "考勤",
                         url:
-              "https://webapp.leke.cn/diag-teaching-dynamics/pc/studentDynamics.html#/",
+                      "https://webapp.leke.cn/diag-teaching-dynamics/pc/studentDynamics.html#/",
                     },
                     {
                         key: "提问",
                         url:
-              "https://webapp.leke.cn/diag-teaching-dynamics/pc/studentDynamics.html#/ask",
+                      "https://webapp.leke.cn/diag-teaching-dynamics/pc/studentDynamics.html#/ask",
                     },
                 ],
             },
@@ -954,12 +981,12 @@ export default function (Leke) {
                     {
                         key: "考勤",
                         url:
-              "https://webapp.leke.cn/diag-teaching-dynamics/pc/studentDynamics.html#/",
+                      "https://webapp.leke.cn/diag-teaching-dynamics/pc/studentDynamics.html#/",
                     },
                     {
                         key: "提问",
                         url:
-              "https://webapp.leke.cn/diag-teaching-dynamics/pc/studentDynamics.html#/ask",
+                      "https://webapp.leke.cn/diag-teaching-dynamics/pc/studentDynamics.html#/ask",
                     },
                 ],
             },
@@ -968,3 +995,4 @@ export default function (Leke) {
         classGroup: [],
     };
 }
+

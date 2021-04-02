@@ -1,7 +1,7 @@
-import {http} from '../../configure';
+import {http} from '../configure';
 
 export const getUserInfo=(projectName)=>{
-    const url=`/auth/global/${projectName}/common/getMiniMenu.htm`;
+    const url=`/auth/global/${projectName}/common/getContextInfo.htm`;
     return http({
         url,
         method: 'get',

@@ -1,6 +1,6 @@
 {
   "name": "@leke/rc",
-  "version": "1.1.12",
+  "version": "1.1.18",
   "main": "lib/index.js",
   "module": "es/index.js",
   "author": "guoquankai@cnstrong.cn",

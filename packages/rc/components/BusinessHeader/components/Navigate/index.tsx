@@ -2,9 +2,8 @@ import React,{Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import jsonp from 'jsonp';
 import _ from 'lodash';
-import config from '../config';
-import Secondary from './secondary';
-import './index.module.less';
+import {getConfig} from '../../utils';
+import Secondary from '../Secondary';
 
 interface Props{
     icon?:string;
@@ -54,7 +53,7 @@ export default class Navigate extends Component<Props,State>{
         const { currentRoleId } = leke.user;
         let currentSubs = [], defaultSubs = [];
         // 获取默认的子标题配置
-        config(leke)[icon].map(item =>{
+        getConfig(leke)[icon].map(item =>{
             if(item.roleId === currentRoleId){
                 defaultSubs = item.menus;
             }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import config from './config';
-import './index.module.less';
 
 interface Props{
     roleId?:number;
