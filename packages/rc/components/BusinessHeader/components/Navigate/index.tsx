@@ -1,7 +1,6 @@
 import React,{Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import jsonp from 'jsonp';
-import _ from 'lodash';
 import {getConfig} from '../../utils';
 import Secondary from '../Secondary';
 
@@ -135,7 +134,7 @@ export default class Navigate extends Component<Props,State>{
     }
 
     componentDidUpdate(prevProps){
-        if(!this.props.defaultSubs && !_.isEqual(this.props.subs, prevProps.subs)){
+        if(!this.props.defaultSubs && (JSON.stringify(this.props.subs)!==JSON.stringify(prevProps.subs))){
             this.setState({ currentSubs: this.setSubs() });
         }
     }
