@@ -8,6 +8,10 @@ export default {
         {
             key: "Footer",
             title: "业务底部",
+        },
+        {
+            key: "BusinessHeader",
+            title: "二级头",
         }
     ],
 };

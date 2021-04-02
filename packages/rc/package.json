@@ -1,6 +1,6 @@
 {
   "name": "@leke/rc",
-  "version": "1.1.9",
+  "version": "1.1.18",
   "main": "lib/index.js",
   "module": "es/index.js",
   "author": "guoquankai@cnstrong.cn",
@@ -25,6 +25,7 @@
     "@leke/http": "^1.0.1",
     "@leke/icons": "^1.0.5",
     "classnames": "^2.2.6",
-    "omit.js": "^2.0.2"
+    "omit.js": "^2.0.2",
+    "jsonp": "^0.2.1"
   }
 }
