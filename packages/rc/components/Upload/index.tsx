@@ -10,11 +10,12 @@ export interface UploadProps {
     onSuccess?:(res:any)=>void,
     onFail?:(err:any)=>void
     accept?:string,
-    onUploadProgress?:(progressEvent:any)=>void
+    onUploadProgress?:(progressEvent:any)=>void,
+    validate?:(files:any)=>boolean
 }
 
 export default function Upload(props:UploadProps) {
-    const {children,headers,name,multiple,url,accept,onSuccess,onFail,onUploadProgress}=props;
+    const {children,headers,name,multiple,url,accept,onSuccess,onFail,onUploadProgress,validate}=props;
     const child=React.Children.only(children);
     const inputRef=useRef<HTMLInputElement>(null);
 
@@ -26,8 +27,11 @@ export default function Upload(props:UploadProps) {
         const input:HTMLInputElement=e.target;
         const files=input.files;
         if(files&&files.length){
+            if(typeof validate==='function' && !validate(files)){
+                return false;
+            }
             const formData=new FormData();
-            Array.from(input.files).forEach(file=>{
+            Array.from(files).forEach(file=>{
                 formData.append(name,file);
             });
             http({
