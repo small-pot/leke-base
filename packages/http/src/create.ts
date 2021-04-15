@@ -1,21 +1,19 @@
 import axios from 'axios';
-import {httpRequest,createOption} from './types';
-import qs from 'qs';
+import {httpInstance,createOption} from "./types";
 
 function validateStatus(){
     return true;
 }
-export default function createHttp (opt?:createOption):<T>(options:httpRequest)=>Promise<T> {
+
+export default function createHttp (opt?:createOption):httpInstance {
     const headers=Object.assign({'X-Requested-With':'XMLHttpRequest'},opt&&opt.headers);
-    const option=Object.assign({timeout: 30000},opt);
-    option.headers=headers;
+    const option={
+        ...opt,
+        headers
+    };
     const {requestInterceptor,responseInterceptor}=option;
     const http = axios.create(option);
-    http.interceptors.request.use(function (config:httpRequest) {
-        if(config.reset){
-            config.headers['Content-Type']='application/x-www-form-urlencoded';
-            config.data=qs.stringify(config.data);
-        }
+    http.interceptors.request.use(function (config) {
         if(typeof window==='undefined'){
             config.validateStatus=validateStatus;
         }

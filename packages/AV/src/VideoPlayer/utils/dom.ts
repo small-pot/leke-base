@@ -59,7 +59,7 @@ export function removeClass(element, classToRemove) {
     return element;
 }
 
-export function getStyle(styles){
+export function getStyle(styles={}){
     const keys=Object.keys(styles);
     return keys.length?keys.reduce((s,i)=>{
         return s+=`${i}:${styles[i]};`;

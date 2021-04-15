@@ -26,6 +26,10 @@ export default {
             title:'标签'
         },
         {
+            key:'Radio',
+            title:'单选'
+        },
+        {
             key: 'Switch',
             title: '开关'
         },
@@ -36,6 +40,15 @@ export default {
         {
             key:'Spin',
             title:'加载中'    
+        },
+        {
+            key:'Input',
+            title:'输入框'    
+        },
+        {
+            key:'Upload',
+            title:'上传'
         }
+        
     ]
 };

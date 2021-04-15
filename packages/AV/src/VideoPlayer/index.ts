@@ -3,7 +3,7 @@ import { newUID } from './utils/uid';
 import EventBase from './utils/event';
 import * as Dom from './utils/dom';
 import { VIDEO_EVENTS } from './utils/config';
-import { getVideoSize, checkBrowser,getResourceType, throttle, entryFullscreen, exitFullscreen } from './utils/share';
+import { getVideoSize, checkBrowser,getResourceType, throttle, entryFullscreen, exitFullscreen,calcDefaultProps } from './utils/share';
 import Control from './components/ControlBar';
 import txt from './template.html';
 
@@ -31,6 +31,9 @@ class Player {
     private video: any;
     private loading: any;
     private mask: any;
+    private audioPlay: any;
+    private audioSuspend: any;
+    private audioInit: any;
     private control: any;
     private toast: any;
     private error: any;
@@ -45,9 +48,7 @@ class Player {
         const { width, height } = getVideoSize(options.width, options.height);
         this.width = width;
         this.height = height;
-        this.options = {
-            ...opts,
-        };
+        this.options = calcDefaultProps({resourceType:'video'},opts);
         this.browser = checkBrowser();
         this.event = new EventBase();
         this.errorFlag = false;
@@ -61,41 +62,55 @@ class Player {
 
     init() {
         require('./index.less');
-        this.validate();
-        this.isSupported();
-    }
-
-    validate() {
         if (!this.mountNode) return console.error('请传入挂载实例');
         if (!this.options.src) return console.error('请传入视频路径');
-    }
-
-    isSupported() {
         const type=getResourceType(this.options.src);
         const style=Dom.getStyle(this.unsupportImgStyle);
-        if('M3U8,MP4,WEBM,OGG'.indexOf(type)>-1){
-            if(type==='M3U8'&&!Hls.isSupported()){
-                this.mountNode.innerHTML = `<div class="${prefixCls}-video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png" style="${style}" /><p>视频播放暂不支持ie10及以下版本，请升级或用其他浏览器打开</p></div>`;
+        if(type==='M3U8'){
+            if(Hls.isSupported()){
+                this.initVideo();
+                this.hlsHandle();
             }else{
-                this.mountNode.innerHTML=this.template.replace(`<div class="${prefixCls}-video-root-container">`,`<div class="${prefixCls}-video-root-container" style="width:${this.width}px;height:${this.height}px;">`);
-                this.el = this.mountNode.querySelector(`.${prefixCls}-video-root-container`);
-                this.input = this.el.querySelector(`.${prefixCls}-video-input`);
-                this.input.id = `video-input-${this.uid}`;
-                this.video = this.el.querySelector(`video`);
-                this.video.id=`video-${this.uid}`;
-                this.mask = this.el.querySelector(`.${prefixCls}-video-mask`);
-                this.control = this.el.querySelector(`.${prefixCls}-video-control-bar`);
-                this.loading = this.el.querySelector(`.${prefixCls}-loading-container`);
-                this.error = this.el.querySelector(`.${prefixCls}-error-wrap`);
-                this.toast = this.el.querySelector(`.${prefixCls}-video-fullscreen-toast`);
-                new Control(this.control,this.video,this.event);
-                this.initConfig();
-                type==='M3U8'?this.hlsHandle():this.video.src=this.options.src;
+                const video=document.createElement('video');
+                if(video.canPlayType('application/vnd.apple.mpegurl')){
+                    this.initVideo();
+                    this.video.src=this.options.src;
+                }else{
+                    this.mountNode.innerHTML = `<div class="${prefixCls}-video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png" style="${style}" /><p>浏览器版本过低，请升级或用其他浏览器打开</p></div>`;
+                }
             }
+        }else if(['MP4','WEBM','OGG'].indexOf(type)!==-1){
+            this.video.src=this.options.src;
         }else{
             this.mountNode.innerHTML = `<div class="${prefixCls}-video-unsupport" style="width:${this.width}px;height:${this.height}px;"><img src="https://static.leke.cn/scripts/common/player/images/upgrade.png" style="${style}" /><p>不支持的视频格式，请转化为Mp4、WebM、Ogg、M3u8等格式</p></div>`;
         }
     }
+
+    handleError(){
+        if(this.loadingFlag)this.closeLoading();
+        this.error.style.display='block';
+        this.control.style.display='none';
+        this.pause();
+    }
+    initVideo(){
+        this.mountNode.innerHTML=this.template.replace(`<div class="${prefixCls}-video-root-container">`,`<div class="${prefixCls}-video-root-container" style="width:${this.width}px;height:${this.height}px;">`);
+        this.el = this.mountNode.querySelector(`.${prefixCls}-video-root-container`);
+        this.input = this.el.querySelector(`.${prefixCls}-video-input`);
+        this.input.id = `video-input-${this.uid}`;
+        this.video = this.el.querySelector(`video`);
+        this.video.id=`video-${this.uid}`;
+        this.mask = this.el.querySelector(`.${prefixCls}-video-mask`);
+        this.audioPlay = this.el.querySelector(`.${prefixCls}-audio-play`);
+        this.audioSuspend = this.el.querySelector(`.${prefixCls}-audio-suspend`);
+        this.audioInit = this.el.querySelector(`.${prefixCls}-audio-init`);
+        this.control = this.el.querySelector(`.${prefixCls}-video-control-bar`);
+        this.loading = this.el.querySelector(`.${prefixCls}-loading-container`);
+        this.error = this.el.querySelector(`.${prefixCls}-error-wrap`);
+        this.toast = this.el.querySelector(`.${prefixCls}-video-fullscreen-toast`);
+        new Control(this.control,this.video,this.event);
+        this.initConfig();
+    }
+
 
     hlsHandle() {
         const hls = new Hls();
@@ -107,9 +122,16 @@ class Player {
         hls.on(Hls.Events.FRAG_PARSING_INIT_SEGMENT,()=>{
             this.event.trigger('fragInit');
         });
-        hls.on(Hls.Events.ERROR, (err) => {
-            console.error(err);
+        hls.on(Hls.Events.ERROR, (err,errorContent) => {
+            console.error(err,errorContent);
             if(!this.loadingFlag)this.showLoading();
+            try {
+                if(errorContent.response.code >= 400){
+                    this.handleError();
+                }
+            } catch (error) {
+                console.error(error);
+            }
         });
         hls.on(Hls.Events.FRAG_LOADING, () => {
             this.loadingTimer = setTimeout(() => {
@@ -203,7 +225,6 @@ class Player {
             this.duration=this.video.duration;
             this.event.trigger('loadedmetadata');
         });
-        // const fn = throttle((time) => { this.event.trigger('timeupdate', time); }, 1000, { leading: true });
         this.video.addEventListener('timeupdate', () => {
             this.currentTime=this.video.currentTime;
             if(this.loadingFlag)this.closeLoading();
@@ -216,17 +237,13 @@ class Player {
                 this.proxyPausedChange(nextPaused);
             }
         });
-        // this.event.on('dblclick', () => {
-        //     if(this.isFullscreen){
-        //         this.event.trigger('exitFullscreen');
-        //     }else{
-        //         this.event.trigger('entryFullscreen');
-        //     }
-        // });
         this.event.on('containerClick', () => {
             this.input.focus();
         });
         this.event.on('ready', () => {
+            if(this.options.resourceType==='audio'){
+                this.audioInit.style.display='block';
+            }
             if (this.options.muted||this.browser==='FF') {
                 this.video.defaultMuted = true;
                 this.event.trigger('volumeChange', 0);
@@ -234,9 +251,7 @@ class Player {
             this.event.on('error', (err) => {
                 console.error(err);
                 this.errorFlag=true;
-                if(this.loadingFlag)this.closeLoading();
-                this.error.style.display='block';
-                this.control.style.display='none';
+                this.handleError();
             });
         });
         this.event.on('volumeChange', (step) => {
@@ -257,17 +272,28 @@ class Player {
             Dom.removeClass(this.el, 'full-video-container');
         });
         this.event.on('play', () => {
-            this.mask.style.display='';
-        });        
+            if(this.options.resourceType==='video'){
+                this.mask.style.display='';
+            }else{
+                this.audioPlay.style.display='block';
+                this.audioSuspend.style.display='';
+                this.mask.style.display='';
+            }
+        });
         this.event.on('pause', () => {
-            this.mask.style.display='block';
+            if(this.options.resourceType==='video'){
+                this.mask.style.display='block';
+            }else{
+                this.audioPlay.style.display='';
+                this.audioSuspend.style.display='block';
+            }
         });
         this.event.on('playing',()=>{
             if(this.loadingFlag)this.closeLoading();
         });
         this.event.on('ended', () => {
             this.closeLoading();
-            this.mask.style.display='block';
+            this.pause();
         });
         // 空格符控制暂停/播放
         const keyDown = e => {
