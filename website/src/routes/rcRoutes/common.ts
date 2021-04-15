@@ -48,6 +48,10 @@ export default {
         {
             key:'Upload',
             title:'上传'
+        },
+        {
+            key:'Tooltip',
+            title:'文字提示'
         }
         
     ]
