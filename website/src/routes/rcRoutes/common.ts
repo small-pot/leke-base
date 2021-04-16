@@ -48,7 +48,10 @@ export default {
         {
             key:'Upload',
             title:'上传'
+        },
+        {
+            key:'Rate',
+            title:'评分'
         }
-        
     ]
 };
