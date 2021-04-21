@@ -9,5 +9,5 @@
 | value | 当前数，受控值 | number | _ |
 | onChange | 选择时的回调 | function() | _ |
 | onHoverChange | 鼠标经过时数值变化的回调 | function() | _ |
-| character | 自定义字符 | ReactNode | (RateProps) => ReactNode | _ |
+| character | 自定义字符 | ReactNode \| (RateProps) => ReactNode | _ |
 | className | 自定义样式类名 | string | _ |

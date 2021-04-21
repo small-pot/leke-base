@@ -26,6 +26,7 @@ const Rate: FC<IRateProps> = memo(
 
         /**点选 */
         const handleClick = useCallback((e, i: number) => {
+            if(disabled) return;
             let node = e.target;
             let newSource = 0;
             // 寻找父级元素
@@ -52,10 +53,11 @@ const Rate: FC<IRateProps> = memo(
                 setHoverSource(newSource);
             }
             
-        },[allowClear,allowHalf, source, onChange]);
+        },[allowClear,allowHalf, source, onChange, disabled]);
         
         /**悬浮 */
         const handleHover = useCallback((e, i) => {
+            if (disabled) return;
             let newSource = 0;
             let node = e.target;
             // 寻找父级元素
@@ -72,14 +74,14 @@ const Rate: FC<IRateProps> = memo(
             onHoverChange?.(newSource);
             setHoverSource(newSource);
 
-        },[onHoverChange, allowHalf]);
+        },[onHoverChange, allowHalf, disabled]);
 
-        /**移入事件监听 */
+        /**hover移入事件监听 */
         const onMouseEnter = () => {
             isHover.current = true;
         };
 
-        /**移出事件监听 */
+        /**hover移出事件监听 */
         const onMouseLeave = () => {
             isHover.current = false;
             setHoverSource(0);
@@ -91,13 +93,14 @@ const Rate: FC<IRateProps> = memo(
             setSource(value);
             setHoverSource(value);
         },[value]);
-
+        
+        // 容器样式
         const containerClass = useMemo(() => classnames('leke-rate-container', {
             ['leke-rate-disabled']: disabled,
             [className]: !!className
         }), [disabled, className]);
         
-        /**渲染上层star */
+        /**渲染star */
         const renderStar = (i) => {
             let RateComponent: any = character || <Star />;
 
