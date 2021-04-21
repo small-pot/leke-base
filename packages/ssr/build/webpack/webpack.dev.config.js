@@ -50,8 +50,7 @@ const serverConfig = merge(baseWebpackConfig,{
     optimization: {
         minimize:false
     },
-    target: "node",  // 指定node运行环境
-    ///externals: [nodeExternals()],  // 不绑定node模块，保留为 require()
+    target: "node",
     module: {
         rules:getRules('node')
     },
@@ -60,6 +59,10 @@ const serverConfig = merge(baseWebpackConfig,{
             "process.env.NODE_ENV": JSON.stringify('development'),
             "process.env.WEB": JSON.stringify(false)
         }),
+        new webpack.ProvidePlugin({
+            process:'process',
+            Buffer:['buffer','Buffer']
+        })
     ]
 });
 
