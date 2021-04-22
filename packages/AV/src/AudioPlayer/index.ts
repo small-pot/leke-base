@@ -2,12 +2,13 @@
  * @Description: 
  * @Author: linchaoting
  * @Date: 2021-01-12 18:51:00
- * @LastEditTime: 2021-02-07 10:15:34
+ * @LastEditTime: 2021-03-24 17:33:52
  */
 
 import EventEmitter from './EventEmitter';
 import {AudioPlayerOptions,AudioPlayerNativeEvent} from './interface';
 import { str2dom,formatTime,getDuration } from './utils';
+import * as Dom from '../VideoPlayer/utils/dom';
 
 
 
@@ -104,10 +105,12 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
       if (autoplay) {
           this.playing = true;
           this.$audio.autoplay = true;
-          this.$playBtn.classList.add('button-pause');
+          Dom.addClass(this.$playBtn,'button-pause');
+          //   this.$playBtn.classList.add('button-pause');
       }else{
           this.playing = false;
-          this.$playBtn.classList.add('button-start');
+          Dom.addClass(this.$playBtn,'button-start');
+          //   this.$playBtn.classList.add('button-start');
       }
 
       if (src) {
@@ -155,15 +158,19 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
   private addPlayStyle() {
       const playBtnClass = 'button-start';
       const pauseBtnClass = 'button-pause';
-      this.$playBtn.classList.remove(playBtnClass);
-      this.$playBtn.classList.add(pauseBtnClass);
+      //   this.$playBtn.classList.remove(playBtnClass);
+      //   this.$playBtn.classList.add(pauseBtnClass);
+      Dom.removeClass(this.$playBtn,playBtnClass);
+      Dom.addClass(this.$playBtn,pauseBtnClass);
   }
 
   private addPauseStyle() {
       const playBtnClass = 'button-start';
       const pauseBtnClass = 'button-pause';
-      this.$playBtn.classList.remove(pauseBtnClass);
-      this.$playBtn.classList.add(playBtnClass);
+      //   this.$playBtn.classList.remove(pauseBtnClass);
+      //   this.$playBtn.classList.add(playBtnClass);
+      Dom.removeClass(this.$playBtn,pauseBtnClass);
+      Dom.addClass(this.$playBtn,playBtnClass);
   }
 
   private onProgressClk(e){
@@ -177,7 +184,8 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
       if (!this.options.allowSeek) return;
       let seekPercent;
       this.dragging = true;
-      this.$progressBtn.classList.add('progress-button-dragging');
+      Dom.addClass(this.$progressBtn,'progress-button-dragging');
+      //   this.$progressBtn.classList.add('progress-button-dragging');
 
       const onDragMove = (e)=>{
           const x = e.touches?e.touches[0].clientX:e.clientX;
@@ -199,7 +207,8 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
           if (seekPercent) {
               this.seek(this.duration*seekPercent);
           }
-          this.$progressBtn.classList.remove('progress-button-dragging');
+          //   this.$progressBtn.classList.remove('progress-button-dragging');
+          Dom.removeClass(this.$progressBtn,'progress-button-dragging');
           document.removeEventListener('mousemove',onDragMove);
           document.removeEventListener('mouseup',onDragEnd);
       };
@@ -214,7 +223,6 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
   async onDurationChange(e:Event){
       const {timeFormat:customFormat,src} = this.options;
       let duration:number = this.$audio.duration;
-      
       // Hack 解决谷歌下部分音频长度为 Infinity 的情况 
       // https://stackoverflow.com/questions/21522036/html-audio-tag-duration-always-infinity
       if (duration === Infinity) {
@@ -234,8 +242,10 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
       const playBtnClass = 'button-start';
       const pauseBtnClass = 'button-pause';
       this.playing = false;
-      this.$playBtn.classList.remove(pauseBtnClass);
-      this.$playBtn.classList.add(playBtnClass);
+      //   this.$playBtn.classList.remove(pauseBtnClass);
+      //   this.$playBtn.classList.add(playBtnClass);
+      Dom.removeClass(this.$playBtn,pauseBtnClass);
+      Dom.addClass(this.$playBtn,playBtnClass);
       this.emit('ended',e);
   }
 
@@ -274,12 +284,16 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
   }
 
   onPlay(e:Event) {
-      this.addPlayStyle();
-      this.playing = true;
       this.emit('play',e);
   }
 
   onPlaying(e:Event) {
+      // IE11下 play事件在循环播放模式下，
+      // 第二次播放onPlay事件无法正常触发，故用playing事件代替play事件
+      if(!this.playing){
+          this.addPlayStyle();
+          this.playing = true;
+      }
       this.emit('playing',e);
   }
 
@@ -349,8 +363,10 @@ class AudioPlayer extends EventEmitter implements AudioPlayerNativeEvent{
       const pauseBtnClass = 'button-pause';
       this.playing = false;
       this.$audio.pause();
-      this.$playBtn.classList.remove(pauseBtnClass);
-      this.$playBtn.classList.add(playBtnClass);
+      //   this.$playBtn.classList.remove(pauseBtnClass);
+      //   this.$playBtn.classList.add(playBtnClass);
+      Dom.removeClass(this.$playBtn,pauseBtnClass);
+      Dom.addClass(this.$playBtn,playBtnClass);
   }
 
   /**
