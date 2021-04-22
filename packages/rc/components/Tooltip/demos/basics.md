@@ -1,20 +1,20 @@
 ---    
 title: 基本用法
-description: 默认状态鼠标移入就会显示弹层,还有颜色换整套背景颜色和字体颜色
+description: 最基本的，鼠标移入就出现tooltip提示
 ---
 
 ```jsx
 import React from 'react';
-import {Tooltip} from '@leke/rc';
+import {Tooltip, Button} from '@leke/rc';
 
 export default function(){
     return(
         <>
             <Tooltip 
                 popup={<div className="popup">popup</div>}
-                // placement={"rightBottom"}
+                placement={"topLeft"}
             >
-                <span className="childrens">tooltip</span>
+                <span className="childrens">鼠标移入显示Tooltip</span>
             </Tooltip>
         </>
     );
@@ -26,13 +26,9 @@ export default function(){
     display: inline-block;
 }
 .childrens{
-    display: inline-block;
-    width: 200px;
-    height: 200px;
+    margin-right: 20px;
 }
 .popup{
     display: inline-block;
-    /* width: 200px; */
-    height: 100px;
 }
 ```

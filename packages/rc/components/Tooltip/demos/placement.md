@@ -1,94 +1,96 @@
 ---    
-popup: 弹出内容，支持纯文本或dom
-placement: 支持 12 个弹出位置
+title: 位置
+placement: 位置有 12 个方向
 ---
+
 ```jsx
 import React from 'react';
 import {Tooltip, Button} from '@leke/rc';
 
 export default function(){
+    const popup = 'prompt text';
     return(
         <div className='Tooltip-demo'>
             <div>
                 <Tooltip 
-                    popup={"啊哈哈哈哈哈哈哈"}
+                    popup={popup}
                     placement={'topLeft'}
                 >
-                    <Button>topLeft</Button>
+                    <Button>TL</Button>
                 </Tooltip>
                 <Tooltip 
-                    popup={"啊哈哈哈哈哈哈哈"}
+                    popup={popup}
                     placement={'topCenter'}
                 >
-                    <Button>topCenter</Button>
+                    <Button>TC</Button>
                 </Tooltip>
                 <Tooltip 
-                    popup={"啊哈哈哈哈哈哈哈"}
+                    popup={popup}
                     placement={'topRight'}
                 >
-                    <Button>topRight</Button>
+                    <Button>TR</Button>
                 </Tooltip>
             </div>
             <div style={{display:'flex',justifyContent: 'space-between'}}>
                 <div className='Tooltip-demo-block'>
                     <Tooltip 
-                        popup={"啊哈哈哈哈哈哈哈"}
+                        popup={popup}
                         placement={'leftTop'}
                     >
-                        <Button>leftTop</Button>
+                        <Button>LT</Button>
                     </Tooltip>
                     <Tooltip 
-                        popup={"啊哈哈哈哈哈哈哈"}
+                        popup={popup}
                         placement={'leftCenter'}
                     >
-                        <Button>leftCenter</Button>
+                        <Button>LC</Button>
                     </Tooltip>
                     <Tooltip 
-                        popup={"啊哈哈哈哈哈哈哈"}
+                        popup={popup}
                         placement={'leftBottom'}
                     >
-                        <Button>leftBottom</Button>
+                        <Button>LB</Button>
                     </Tooltip>                
                 </div>
                 <div className='Tooltip-demo-block'>
                     <Tooltip 
-                        popup={"啊哈哈哈哈哈哈哈"}
+                        popup={popup}
                         placement={'rightTop'}
                     >
-                        <Button>rightTop</Button>
+                        <Button>RT</Button>
                     </Tooltip>
                     <Tooltip 
-                        popup={"啊哈哈哈哈哈哈哈"}
+                        popup={popup}
                         placement={'rightCenter'}
                     >
-                        <Button>rightCenter</Button>
+                        <Button>RC</Button>
                     </Tooltip>
                     <Tooltip 
-                        popup={"啊哈哈哈哈哈哈哈"}
+                        popup={popup}
                         placement={'rightBottom'}
                     >
-                        <Button>rightBottom</Button>
+                        <Button>RB</Button>
                     </Tooltip>                
                 </div>
             </div>
             <div>
                 <Tooltip 
-                    popup={"啊哈哈哈哈哈哈哈"}
+                    popup={popup}
                     placement={'bottomLeft'}
                 >
-                    <Button>bottomLeft</Button>
+                    <Button>BL</Button>
                 </Tooltip>
                 <Tooltip 
-                    popup={"啊哈哈哈哈哈哈哈"}
+                    popup={popup}
                     placement={'bottomCenter'}
                 >
-                    <Button>bottomCenter</Button>
+                    <Button>BC</Button>
                 </Tooltip>
                 <Tooltip 
-                    popup={"啊哈哈哈哈哈哈哈"}
+                    popup={popup}
                     placement={'bottomRight'}
                 >
-                    <Button>bottomRight</Button>
+                    <Button>BR</Button>
                 </Tooltip>
             </div>
         </div>
@@ -97,23 +99,23 @@ export default function(){
 ```
 ```css
 .Tooltip-demo{
-    width:600px;
+    width:450px;
     text-align: center;
 }
 .Tooltip-demo>div+div{
-    margin-top: 40px
+    margin-top: 8px
 }
 .Tooltip-demo .Tooltip-demo-block{
     display: flex;
     flex-direction: column;
 }
 .Tooltip-demo .Tooltip-demo-block button+button{
-     margin-top: 20px;
+     margin-top: 8px;
 }
 .Tooltip-demo Button{
-    margin-right: 50px;
-    height: 100px;
-    width: 100px;
+    margin-right: 8px;
+    /* height: 100px;
+    width: 100px; */
 }
 ```
 
