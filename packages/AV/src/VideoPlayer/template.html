@@ -2,6 +2,11 @@
     <input class="leke-video-input">
     <video></video>
     <div class="leke-video-mask"><img class="paused-icon" src="https://static.leke.cn/scripts/common/player/images/paused.png"></div>
+    <div class="leke-audio-suspend">
+        <img class="paused-icon" src="https://static.leke.cn/scripts/common/player/images/paused.png">
+    </div>
+    <div class="leke-audio-play"></div>
+    <div class="leke-audio-init"></div>
     <div class="leke-video-control-bar">
         <div class="video-play-wrap"><i class="video-icon icon_weikebofang"></i></div>
         <div class="video-time-wrap"><span class="currentTime">00:00</span>/<span class="duration">00:00</span></div>
@@ -37,7 +42,7 @@
     <div class="leke-error-wrap">
         <div class="error-container"><img class="error-icon"
                 src="https://static.leke.cn/scripts/common/player/images/failed.png" />
-            <p>抱歉，您访问的视频无法播放，您可以尝试以下方式</p><button class='error-btn' onclick="window.location.reload()">刷新一下</button>
+            <p>抱歉，您访问的音/视频无法播放，您可以尝试以下方式</p><button class='error-btn' onclick="window.location.reload()">刷新一下</button>
         </div>
     </div>
     <div class="leke-loading-container"><img class="loading-icon"

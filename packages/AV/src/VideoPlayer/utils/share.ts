@@ -133,3 +133,9 @@ export function removeFullscreenListener(listener) {
     document.removeEventListener("fullscreenchange", listener);
     document.removeEventListener("MSFullscreenChange", listener);
 }
+
+export function calcDefaultProps(defaultProps,options){
+    const result = {};
+    Object.keys(options).filter((key) => options[key] !== undefined).forEach((key) => result[key] = options[key]);
+    return {...defaultProps,...result};
+}
