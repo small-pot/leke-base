@@ -8,39 +8,27 @@ import React from 'react';
 import {Tooltip, Button} from '@leke/rc';
 
 export default function(){
+    const colorList = ['white', 'green', 'red', 'orange', 'purple', 'yellow', 'blue', 'geekblue', 'purple', 'magenta', 'volcano', 'gold', 'lime', 'polargreen'];
     return(
         <div className="buttons-style">  
             <div>
-                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'red'}>
-                    <Button>red</Button>
-                </Tooltip>
-                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'white'}>
-                    <Button>white</Button>
-                </Tooltip>
-                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'cyan'}>
-                    <Button>cyan</Button>
-                </Tooltip>
-                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'orange'}>
-                    <Button>orange</Button>
-                </Tooltip>
-                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'purple'}>
-                    <Button>purple</Button>
-                </Tooltip>
-                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'yellow'}>
-                    <Button>yellow</Button>
-                </Tooltip>
+                {colorList.map((item, index) => (
+                    <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={item} key={index} placement={'topLeft'}>
+                        <Button>{item}</Button>
+                    </Tooltip>
+                ))}
             </div>
             <div>
-                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'#f50'}>
+                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'#f50'} placement={'topLeft'}>
                     <Button>#f50</Button>
                 </Tooltip>
-                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'#2db7f5'}>
+                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'#2db7f5'} placement={'topLeft'}>
                     <Button>#2db7f5</Button>
                 </Tooltip>
-                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'#87d068'}>
+                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'#87d068'} placement={'topLeft'}>
                     <Button>#87d068</Button>
                 </Tooltip>
-                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'#108ee9'}>
+                <Tooltip popup={'啊哈哈哈哈哈哈哈'} color={'#108ee9'} placement={'topLeft'}>
                     <Button>#108ee9</Button>
                 </Tooltip>
             </div>

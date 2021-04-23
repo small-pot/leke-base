@@ -25,7 +25,7 @@ export interface dropdownPropsType {
 export default function Tooltip(props: dropdownPropsType) {
     const { color, popup, placement, children, arrowPointAtCenter = false} = props;
     const arrowPoint = useRef<HTMLDivElement>(null);
-    const colorArray = ['white', 'cyan', 'red', 'orange', 'purple', 'yellow'];
+    const colorArray = ['white', 'green', 'red', 'orange', 'purple', 'yellow', 'blue', 'geekblue', 'purple', 'magenta', 'volcano', 'gold', 'lime', 'polargreen'];
     const isColorType = colorArray.includes(color) ? true : false;
     const triggerRef=useRef<HTMLElement>(null);
     const child=Children.only(children);
