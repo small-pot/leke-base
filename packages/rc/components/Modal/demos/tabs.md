@@ -1,6 +1,6 @@
 ---    
-title: 异步关闭
-description: 异步关闭
+title: 多标题模式
+description: tab+modal模式
 ---
 ```jsx
 import React,{useState,useCallback} from 'react';
@@ -9,27 +9,30 @@ import {Button,Modal} from '@leke/rc';
 
 export default function(){
     const [visible,setVisible]=useState(false);
-    const [confirmLoading,setConfirmLoading]=useState(false);
+    const [tab,setTab]=useState(0);
     const handleOk=useCallback(()=>{
-        setConfirmLoading(true);
-        setTimeout(() => {
-            setVisible(false);
-            setConfirmLoading(false);
-        }, 2000);
+        setVisible(false);
     });
+    const onChangeTitle = (_,index) => {
+        setTab(index);
+    };
     return  <div>
-        <Button type='main' onClick={()=>{setVisible(true);}}>异步关闭</Button>
+        <Button type='main' onClick={()=>{setVisible(true);}}>标签modal</Button>
         <Modal 
-            title='异步关闭弹窗'
+            title={['标题1','标题2','标题3']}
             visible={visible} 
-            confirmLoading={confirmLoading}
             onCancel={()=>{setVisible(false);}}
             onOk={handleOk}
+            onChangeTitle={onChangeTitle}
         >
             <div className="center">
-                <p>balabala~</p>
-                <p>balabala~</p>
-                <p>balabala~</p>
+                {tab === 0 ? (
+                    <p>第一页啊啊啊啊阿</p>
+                ) : tab === 1 ? (
+                    <p>第二页啊啊啊啊阿</p>
+                ) : (
+                    <p>第三页啊啊啊啊阿</p>
+                )}
             </div>
         </Modal>
     </div>;

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState, useCallback, useLayoutEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseCircleFill } from "@leke/icons";
 import { animationDuration, prefix,SIZE } from './config';
@@ -10,7 +10,7 @@ import './index.less';
 
 export interface ModalProps {
     visible: boolean,
-    title: React.ReactElement | string,
+    title: React.ReactElement | string | string[],
     getContainer?: () => HTMLElement,
     onOk?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
     okText?: string,
@@ -35,11 +35,14 @@ export interface ModalProps {
     zIndex?: number,
     show?: boolean,
     children?: React.ReactNode,
+    onChangeTitle?: (title: string, index: number) => void 
 }
 
 const Modal = (props: ModalProps) => {
     const ref = useRef(null);
-    const initRef=useRef({INIT:false});
+    const initRef = useRef({ INIT: false });
+    const [currentTitleIndex, setCurrentTitleIndex] = useState(-1);
+    const currentTabInfo = useRef({});
 
     const {
         visible = false,
@@ -68,7 +71,16 @@ const Modal = (props: ModalProps) => {
         zIndex = 1000,
         show = false,
         children,
+        onChangeTitle
     } = props;
+
+    /**多标题切换 */
+    const handleTitleCilck = useCallback((item: string, index: number) => {
+        const currentEle = ref.current?.getElementsByClassName(`${prefix}-tab-title`)?.[0]?.getElementsByTagName('p')?.[index];
+        currentTabInfo.current = currentEle ? { width: currentEle.clientWidth, left: currentEle.offsetLeft } : {};
+        setCurrentTitleIndex(index);
+        onChangeTitle?.(item, index);
+    }, [onChangeTitle]);
 
     useEffect(() => {
         if (!initRef.current.INIT) {
@@ -94,17 +106,38 @@ const Modal = (props: ModalProps) => {
     }, [visible, afterClose, destroyOnClose]);
 
     useEffect(() => {
+        // 仅执行一次，多标题指标初始位置
+        if (currentTitleIndex === -1 && Array.isArray(title) && ref.current && visible) {
+            const current = ref.current.getElementsByClassName(`${prefix}-tab-title`)[0].getElementsByTagName('p')[0];
+            currentTabInfo.current = { width: current.clientWidth, left: current.offsetLeft };
+            setCurrentTitleIndex(0);
+        }
+    }, [title, visible,currentTitleIndex]);
+
+    useEffect(() => {
         return () => { ref.current = null; };
     }, []);
 
     const render = () => <div className={cx(`${prefix}-wrap`, wrapClassName)}>
-        <div className={cx(prefix, size, className,visible?'zoom-enter':'zoom-leave')} style={{ zIndex }} ref={ref}>
-            {header !== undefined ? header : <div className={`${prefix}-header`}>
-                <div className={`${prefix}-title`}>{title}</div>
-                {closable && (!closeIcon ? <CloseCircleFill className={`${prefix}-close-icon`} onClick={onCancel} /> : closeIcon)}
-            </div>}
+        <div className={cx(prefix, size, className, visible ? 'zoom-enter' : 'zoom-leave')} style={{ zIndex }} ref={ref}>
+            {header !== undefined ? header : (Array.isArray(title) ? (
+                <div className={`${prefix}-tab-header`}>
+                    <div className={cx(`${prefix}-tab-title`)}>
+                        {title.map((item, index) => <p onClick={() => handleTitleCilck(item, index)} className={cx({[`${prefix}-tab-title-active`]: currentTitleIndex === index })} key={item}>{item}</p>)}
+                    </div>
+                    {closable && (!closeIcon ? <CloseCircleFill className={`${prefix}-close-icon`} onClick={onCancel} /> : closeIcon)}
+                    <div style={currentTabInfo.current} className={`${prefix}-tab-bar`} />
+                </div>
+            ) : (
+                <div className={`${prefix}-header`}>
+                    <div className={`${prefix}-title`}>{title}</div>
+                    {closable && (!closeIcon ? <CloseCircleFill className={`${prefix}-close-icon`} onClick={onCancel} /> : closeIcon)}
+                </div>
+            ))}
             <div className={`${prefix}-body`}>
-                {children}
+                <div className={`${prefix}-content`}>
+                    {children}
+                </div>
             </div>
             {footer !== null ? <div className={`${prefix}-footer`}>
                 {footer || <>

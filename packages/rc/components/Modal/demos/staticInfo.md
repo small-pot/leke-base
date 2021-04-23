@@ -1,4 +1,7 @@
-## 信息提示框
+---    
+title: 信息提示框
+description: 信息提示框
+---
 ```jsx
 import React,{useState} from 'react';
 import cx from 'classnames';
@@ -13,14 +16,14 @@ export default function(){
                 setCurrent(item);
                 if(item==='info'){
                     Modal.info({
-                        content:<div>
+                        content:<div className="center2">
                             <p>一些简单的信息提示</p>
                             <p>一些简单的信息提示</p>
                         </div>
                     });
                 }else{
                     Modal.miniInfo({
-                        content:<div>
+                        content:<div className="center2">
                             <p>一些简单的信息提示</p>
                             <p>一些简单的信息提示</p>
                         </div>
@@ -30,4 +33,15 @@ export default function(){
         </div>
     </div>;
 }
+```
+
+```css
+.center2 {
+    height: 144px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 ```
