@@ -12,4 +12,4 @@ title: API
 | popupClassName | 弹层类名 | string | _ |
 | placement | 弹出位置 | 'bottomLeft' \| 'bottomCenter' \| 'bottomRight' \| 'topLeft' \| 'topCenter' \| 'topRight' \| 'leftCenter' \| 'leftTop' \| 'leftBottom' \| 'rightCenter' \| 'rightTop' \| 'rightBottom' | bottomLeft |
 | color | 背景颜色，已有部分预设样式 | 'white' \| 'cyan' \| 'red' \| 'orange' \| 'purple' \| 'yellow' \| string |  _  |
-| event | 触发下拉的行为 | Array<"focus" \| "hover"> | \["focus"\] |
+| eventType | 触发下拉的行为 | Array<"focus" \| "hover"> | \["focus"\] |

@@ -1,4 +1,4 @@
-export type placementType=
+type placementType =
     'topLeft'|
     'topCenter'|
     'topRight'|
@@ -15,10 +15,12 @@ export type placementType=
 export function setPopupPosition(popup:HTMLElement, trigger:HTMLElement, placement:placementType) {
     const top = popup.offsetTop;
     const left = popup.offsetLeft;
+    const transverse = 24;  //左右偏移量
+    const portrait = 16;    //上下偏移量
     const triggerWidth = trigger.offsetWidth;
     const triggerHeight = trigger.offsetHeight;
-    const topAndBottom = triggerWidth / 2 - 24;
-    const leftAndRight = triggerHeight / 2 - 16;
+    const topAndBottom = triggerWidth / 2 - transverse;
+    const leftAndRight = triggerHeight / 2 - portrait;
     switch (placement) {
     case "topLeft":
         popup.style.left = left + topAndBottom + 'px';

@@ -2,31 +2,28 @@ import React, { Children, ReactElement, CSSProperties, useRef, useEffect } from 
 import Trigger from "../Trigger";
 import { setPopupPosition } from "./util";
 
-export interface tooltipPropsType {
-    popup: ReactElement | string,
-    defaultVisible?: boolean;
-    visible?: boolean,
-    onVisibleChange?: (boolean) => void,
-    children: React.ReactElement<HTMLElement>,
-    eventType?: Array<'focus'|'hover'|'click'>,
-    popupStyle?: CSSProperties,
-    popupClassName?: string,
-    getPopupContainer?: (HTMLElement) => HTMLElement,
-    arrowPointAtCenter?: boolean;
-}
 export interface childPropsType {
     ref?:React.RefObject<HTMLElement>|React.RefCallback<HTMLElement>,
     tabIndex?:number,
     onMouseEnter?:(e)=>void,
     onMouseLeave?:(e)=>void,
 }
-export interface dropdownPropsType extends Omit<tooltipPropsType, keyof 'autoFill' | 'placement'> {
-    placement?: 'bottomLeft' | 'bottomCenter' | 'bottomRight' | 'topLeft' | 'topCenter' | 'topRight' | 'leftCenter' | 'leftTop' | 'leftBottom' | 'rightCenter' | 'rightTop' | 'rightBottom',
-    fontColor?: string,
+export interface dropdownPropsType {
+    popup: ReactElement | string,
+    children: React.ReactElement<HTMLElement>,
     color?: string,
+    visible?: boolean,
+    popupClassName?: string,
+    defaultVisible?: boolean;
+    popupStyle?: CSSProperties,
+    arrowPointAtCenter?: boolean
+    onVisibleChange?: (boolean) => void,
+    eventType?: Array<'focus'|'hover'|'click'>,
+    getPopupContainer?: (HTMLElement) => HTMLElement,
+    placement?: 'bottomLeft' | 'bottomCenter' | 'bottomRight' | 'topLeft' | 'topCenter' | 'topRight' | 'leftCenter' | 'leftTop' | 'leftBottom' | 'rightCenter' | 'rightTop' | 'rightBottom',
 }
 export default function Tooltip(props: dropdownPropsType) {
-    const { color = '', popup, placement, children, arrowPointAtCenter = false} = props;
+    const { color, popup, placement, children, arrowPointAtCenter = false} = props;
     const arrowPoint = useRef<HTMLDivElement>(null);
     const colorArray = ['white', 'cyan', 'red', 'orange', 'purple', 'yellow'];
     const isColorType = colorArray.includes(color) ? true : false;
@@ -59,12 +56,12 @@ export default function Tooltip(props: dropdownPropsType) {
         return (
             <div ref={popupRef} className={`leke-tooltip-container`} >
                 <div {...modifyProps}>
-                    <span className="leke-modifyStyle-content" 
+                    <span className={`leke-modifyStyle-content`}
                         style={{ background: color && !isColorType ? color : ''}}></span>
                 </div>
                 <div className={`leke-contentStyle`}
                     style={{ background: color && !isColorType ? color : '' }}>
-                    {typeof popup === 'string' ? <span className="leke-contentSpanSty">{popup}</span> : popup}
+                    {typeof popup === 'string' ? <span className={`leke-contentSpanSty`}>{popup}</span> : popup}
                 </div>
             </div>
         );
@@ -74,8 +71,8 @@ export default function Tooltip(props: dropdownPropsType) {
         <>
             <Trigger
                 {...props}
-                popupClassName={`leke-popup-shadowRewrite${color && isColorType ? ' leke-popup-' + color : ''}`}
                 popup={<TooltipContent />}
+                popupClassName={`leke-popup-shadowRewrite${color && isColorType ? ' leke-popup-' + color : ''}`}
             >
                 {React.cloneElement(child,cloneProps)}
             </Trigger>
