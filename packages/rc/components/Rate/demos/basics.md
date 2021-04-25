@@ -9,7 +9,7 @@ import {Rate} from '@leke/rc';
 
 export default function(){
     return(
-        <Rate/>
+        <Rate allowClear={false}/>
     );
 }
 ```
