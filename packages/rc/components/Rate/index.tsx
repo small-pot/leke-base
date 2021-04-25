@@ -5,18 +5,7 @@
 import React, { FC, memo, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import classnames from "classnames";
 import {Star} from '@leke/icons';
-interface IRateProps {
-    count?: number;
-    allowClear?: boolean;
-    allowHalf?: boolean;
-    disabled?: boolean;
-    defaultValue?: number;
-    value?: number;
-    onChange?: (value: number) => void;
-    onHoverChange?: (value: number) => void;
-    character?: ReactNode | ((rateProps: any) => ReactNode);
-    className?: string;
-}
+import { IRateProps, TRatePropsType, TCharacterType } from './type';
 
 const Rate: FC<IRateProps> = memo(
     ({ count, allowClear, allowHalf, defaultValue, disabled, value, onChange, onHoverChange, className, character }) => {
@@ -102,10 +91,10 @@ const Rate: FC<IRateProps> = memo(
         
         /**渲染star */
         const renderStar = (i) => {
-            let RateComponent: any = character || <Star />;
+            let RateComponent: TCharacterType = character || <Star />;
 
             if (character && Object.prototype.toString.call(character) === '[object Function]') {
-                RateComponent = (character as (rateProps: any) => ReactNode)({ index: i });
+                RateComponent = (character as (rateProps: TRatePropsType) => ReactNode)({ index: i });
             }
             
             const topStarClass = classnames('leke-rate-ele-top',{
