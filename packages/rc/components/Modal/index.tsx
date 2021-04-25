@@ -9,7 +9,7 @@ import cx from 'classnames';
 import './index.less';
 
 export interface ModalProps {
-    visible: boolean,
+    visible?: boolean,
     title: React.ReactElement | string | string[],
     getContainer?: () => HTMLElement,
     onOk?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
