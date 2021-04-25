@@ -33,7 +33,7 @@ describe('Modal', function () {
         await waitFor(() => expect(ele).not.toBeInTheDocument(), {
             timeout: 500
         });
-        
+        expect(document.body).toMatchSnapshot();
     });
 
     it('render destroyOnClose', async () => {
@@ -44,12 +44,10 @@ describe('Modal', function () {
             children: 'Hello',
             onCancel: jest.fn()
         };
-        const { rerender, container } = render(<Modal {...defaultProps} />);
-        let ele = container.querySelector('.leke-modal');
-        expect(ele).not.toBeInTheDocument();
+        const { rerender } = render(<Modal {...defaultProps} />);
         defaultProps.visible = true;
         rerender(<Modal {...defaultProps} />);
-        ele = document.querySelector('.leke-modal');
+        let ele = document.querySelector('.leke-modal');
         const maskEle = document.querySelector('.leke-modal-mask');
         expect(ele).toHaveClass('zoom-enter', { exact: false });
         expect(maskEle).toHaveClass('fade-enter', { exact: false });
@@ -60,10 +58,11 @@ describe('Modal', function () {
         expect(ele).toBeInTheDocument();
         defaultProps.visible = false;
         rerender(<Modal {...defaultProps} />);
-        
+        ele = document.querySelector('.leke-modal');
         await waitFor(() => expect(ele).toHaveClass('zoom-leave', { exact: false }), {
-            timeout: 500
+            timeout: 1000
         });
+        expect(document.body).toMatchSnapshot();
     });
 
     it('render confirm', async () => {
@@ -72,12 +71,10 @@ describe('Modal', function () {
             destroyOnClose: true,
             content:<div>
                 <p style={{ color: '#000000' }}>确定要删除这条信息吗？</p>
-                {Array(30).fill('').map((_,i) => <p key={i}>简单的信息描述</p>)}
-                <p>看得到我吗</p>
+                <p>简单的信息描述</p>
             </div>
         });
         
-        // expect(defaultProps.onCancel).toHaveBeenCalled();
 
         Modal.miniConfirm({
             destroyOnClose: true,
@@ -87,9 +84,8 @@ describe('Modal', function () {
                 <p>简单的信息描述</p>
             </div>
         });
-        await waitFor(() => { }, { timeout: 500 });
-        const closeEle = document.querySelector('.leke-modal-footer').querySelector('button');
-        fireEvent.click(closeEle);
+
+        expect(document.body).toMatchSnapshot();
     });
 
     it('render info', async () => {
@@ -109,6 +105,7 @@ describe('Modal', function () {
         await waitFor(() => { }, { timeout: 500 });
         const closeEle = document.querySelector('.leke-modal-close-icon');
         fireEvent.click(closeEle);
+        expect(document.body).toMatchSnapshot();
     });
 
     it('render tabs', async () => {
@@ -126,5 +123,6 @@ describe('Modal', function () {
         const title2 = document.querySelector('.leke-modal-tab-title').querySelectorAll('p')[1];
         fireEvent.click(title2);
         expect(defaultProps.onChangeTitle).toHaveBeenCalled();
+        expect(document.body).toMatchSnapshot();
     });
 });
