@@ -3,6 +3,7 @@ const baseWebpackConfig=require('./webpack.base.config');
 const {merge}=require('webpack-merge');
 const MiniCssExtractPlugin=require("mini-css-extract-plugin");
 const CaseSensitivePathsPlugin=require('case-sensitive-paths-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 const ResourcePlugin=require('./resource-plugin');
 const getRules=require('./getRules');
 const {resolveEntry,webpackConfig}=require('../resolveConfig');
@@ -51,6 +52,7 @@ const serverConfig = merge(baseWebpackConfig,{
         minimize:false
     },
     target: "node",
+    externals: [nodeExternals()],
     module: {
         rules:getRules('node')
     },
@@ -58,10 +60,6 @@ const serverConfig = merge(baseWebpackConfig,{
         new webpack.DefinePlugin({
             "process.env.NODE_ENV": JSON.stringify('development'),
             "process.env.WEB": JSON.stringify(false)
-        }),
-        new webpack.ProvidePlugin({
-            process:'process',
-            Buffer:['buffer','Buffer']
         })
     ]
 });

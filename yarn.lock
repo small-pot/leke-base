@@ -6097,6 +6097,13 @@ less-loader@^7.3.0:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
+less-loader@^8.1.1:
+  version "8.1.1"
+  resolved "http://192.168.20.146:4873/less-loader/-/less-loader-8.1.1.tgz#ababe912580457ad00a4318146aac5b53e023f42"
+  integrity sha1-q6vpElgEV60ApDGBRqrFtT4CP0I=
+  dependencies:
+    klona "^2.0.4"
+
 "less@2.6.x || ^3.7.1", less@^3.11.1, less@^3.11.3:
   version "3.13.1"
   resolved "https://registry.npm.taobao.org/less/download/less-3.13.1.tgz?cache=0&sync_timestamp=1610244658051&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fless%2Fdownload%2Fless-3.13.1.tgz#0ebc91d2a0e9c0c6735b83d496b0ab0583077909"
@@ -10374,6 +10381,11 @@ webpack-merge@^5.4.0, webpack-merge@^5.7.3:
   dependencies:
     clone-deep "^4.0.1"
     wildcard "^2.0.0"
+
+webpack-node-externals@^3.0.0:
+  version "3.0.0"
+  resolved "http://192.168.20.146:4873/webpack-node-externals/-/webpack-node-externals-3.0.0.tgz#1a3407c158d547a9feb4229a9e3385b7b60c9917"
+  integrity sha1-GjQHwVjVR6n+tCKanjOFt7YMmRc=
 
 webpack-sources@^1.1.0, webpack-sources@^1.4.3:
   version "1.4.3"
