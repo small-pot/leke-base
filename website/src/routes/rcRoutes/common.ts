@@ -48,7 +48,10 @@ export default {
         {
             key:'Upload',
             title:'上传'
+        },
+        {
+            key:'Tabs',
+            title:'标签页'
         }
-        
     ]
 };

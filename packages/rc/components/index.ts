@@ -17,3 +17,4 @@ export {default as Input} from './Input';
 export {default as Upload} from './Upload';
 export {default as Radio} from './Radio';
 export { default as BusinessHeader } from "./BusinessHeader";
+export { default as Tabs } from "./Tabs";
