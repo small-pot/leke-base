@@ -5,7 +5,7 @@ export default [
     require('./center.md'),
     require('./custom.md'),
     require('./scroll.md'),
-    // require('./position.md'),
+    require('./type.md'),
     require('./props.md')
 ];
 

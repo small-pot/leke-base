@@ -31,7 +31,7 @@ export interface ITabPaneProps {
 type navType = ITabPaneProps;
 
 const Tabs = (props: ITabsProps) => {
-    const { children, onChange, centered, animated, tabPosition, style } = props;
+    const { children, onChange, centered, animated, tabPosition, style, type } = props;
     const navRef = useRef(null); // tab导航元素
     const scrollEventLister = useRef(null); // 滚动监听
     const currentTabInfoStyle = useRef({}); // 当前选中tab样式
@@ -42,15 +42,16 @@ const Tabs = (props: ITabsProps) => {
     const [isShowScroll, setIsShowScroll] = useState(false); // 是否显示滚动
     const [navList, setNavList] = useState<navType[]>([]); // 导航栏tab数组
     
+    // 不同方向布局配置
     const postionOpt = useMemo(() => returnTabPositionAttribute(tabPosition),[tabPosition]);
 
     /**元素是否在可见区域 */
     const isInVisibleArea = useCallback((ele) => {
         if ((ele[postionOpt.start] + scrollLength) < navRef.current[postionOpt.start]) {
-            return { status: false, type: 1 };
+            return { status: false, type: 1 }; // 左边
         }
         if ((ele[postionOpt.start] + ele[postionOpt.length] + scrollLength) > (navRef.current[postionOpt.start] + navRef.current[postionOpt.length])) {
-            return { status: false, type: 2 };
+            return { status: false, type: 2 }; // 右边
         }
         return { status: true, type: 0 };
     }, [scrollLength, postionOpt]);
@@ -96,13 +97,14 @@ const Tabs = (props: ITabsProps) => {
 
     useEffect(() => {
         // 仅执行一次，多标题指标初始位置
-        if (navRef.current && navList.length) {
+        if (currentTabKey === -1 && navRef.current && navList.length) {
             const currentEle = navRef.current.getElementsByClassName(`leke-tabs-nav-item`)[0];
             currentTabInfoStyle.current = postionOpt.barStyle(currentEle[postionOpt.length], currentEle[postionOpt.start]);
             setCurrentTabKey(navList[0]?.key);
         }
-    }, [navList, postionOpt]);
+    }, [navList, postionOpt, currentTabKey]);
 
+    // 监听生成新的tabs
     useEffect(() => {
         setNavList(() => {
             return React.Children.map(children, (item) => {
@@ -115,6 +117,7 @@ const Tabs = (props: ITabsProps) => {
         });
     }, [children]);
 
+    // 监听是否显示更多下拉
     useEffect(() => {
         setTimeout(() => {
             setIsShowScroll(navRef.current.getElementsByClassName('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll] - navRef.current[postionOpt.length] > 0);
@@ -127,8 +130,25 @@ const Tabs = (props: ITabsProps) => {
             window.removeEventListener('resize', onResize);
         };
     }, [postionOpt]);
+
+    // 监听布局变化
+    useEffect(() => {
+        const currentEle = navRef.current.getElementsByClassName(`leke-tabs-nav-item`)[currentTabIndex.current];
+        if (!currentEle) return;
+        currentTabInfoStyle.current = postionOpt.barStyle(currentEle[postionOpt.length], currentEle[postionOpt.start]);
+        const visibleType = isInVisibleArea(currentEle);
+        if (visibleType.status) {
+            return;
+        }
+        if (visibleType.type === 1) {
+            setScrollLength(-currentEle[postionOpt.start]);
+        } else if (visibleType.type === 2) {
+            setScrollLength(-currentEle[postionOpt.start] - currentEle[postionOpt.length] + navRef.current[postionOpt.length]);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [postionOpt]);
     
-    /**更多下拉框 */
+    // 渲染更多下拉框
     const renderMoreDrop = useMemo(() => {
         if(!isShowScroll) return;
         const showMoreNavList = [];
@@ -154,6 +174,7 @@ const Tabs = (props: ITabsProps) => {
         );
     },[isShowScroll, isInVisibleArea, navList, handleTitleCilck]);
 
+    // 渲染导航
     const renderNav = useMemo(() => navList.map((item, index) => {
         const { key, disabled, tab } = item;
         const cls = cn('leke-tabs-nav-item', {
@@ -168,6 +189,7 @@ const Tabs = (props: ITabsProps) => {
         );
     }), [navList, currentTabKey, handleTitleCilck]);
 
+    // 渲染内容
     const renderContent = useMemo(() => navList.map(item => {
         const cls = cn("leke-tabs-tabpane", {
             ["leke-tabs-tabpane-hide"]: item.key !== currentTabKey
@@ -179,7 +201,9 @@ const Tabs = (props: ITabsProps) => {
         );
     }), [navList, currentTabKey]);
 
-    const tabsCls = cn("leke-tabs", `leke-tabs-${tabPosition}`);
+    const tabsCls = cn("leke-tabs", `leke-tabs-${tabPosition}`, {
+        [`leke-tabs-nav-card`]: ['card','editable-card'].includes(type)
+    });
     
     const navListCls = cn("leke-tabs-nav-list", { ["leke-tabs-nav-list-center"]: centered });
 
@@ -209,8 +233,10 @@ const Tabs = (props: ITabsProps) => {
                     </Trigger>
                 )}
             </div>
-            <div style={{ marginLeft: - currentTabIndex.current * 100 + '%' }} className={contentCls}>
-                {renderContent}
+            <div className="leke-tabs-content-wrap">
+                <div style={{ marginLeft: - currentTabIndex.current * 100 + '%' }} className={contentCls}>
+                    {renderContent}
+                </div>
             </div>
         </div>
     );

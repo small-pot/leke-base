@@ -1,6 +1,6 @@
 ---    
-title: 滑动
-description: 可以左右、上下滑动，容纳更多标签
+title: 卡片式
+description: 另一种样式的页签，不提供对应的垂直样式。
 ---
 
 ```jsx
@@ -28,7 +28,7 @@ export default function(){
                 切换动画：<Switch onChange={setAnimated} />
             </div>
             <br />
-            <Tabs animated={animated} tabPosition={state} defaultActiveKey="1" onChange={callback} style={{ height: 220 }}>
+            <Tabs type="card" animated={animated} tabPosition={state} defaultActiveKey="1" onChange={callback} style={{ height: 220 }}>
                 {Array(30).fill('').map((_,i) => (
                     <TabPane tab={`Tab ${i + 1}`} key={i+1} disabled={i===20}>
                         Content of Tab Pane {i + 1}

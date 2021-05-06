@@ -1,26 +1,32 @@
 @import "../../less/theme.less";
 @prefix: leke-tabs;
 
+// 基础
 .@{prefix} {
   display: flex;
   flex-direction: column;
   overflow: hidden;
 
   .@{prefix}-nav {
-    // width: 100%;
     background-color: #ffffff;
     font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
-    margin-bottom: 11px;
+    &::before {
+      border-bottom: 1px solid #f0f0f0;
+      content: "";
+      left: 0;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
 
     .@{prefix}-nav-wrap {
       position: relative;
       flex: 1;
       overflow: hidden;
-      border-bottom: 1px solid #f0f0f0;
 
       .@{prefix}-nav-list {
         display: flex;
@@ -66,7 +72,7 @@
           height: 2px;
           border-radius: 1px;
           background-color: @base-color;
-          transition: .3s;
+          transition: width .3s, left .3s, background-color .3s;
         }
       }
   
@@ -85,6 +91,7 @@
         top: 0;
         box-shadow: inset 10px 0 8px -8px rgba(0,0,0,0.08);
         pointer-events: none;
+        z-index: 1;
       }
     }
 
@@ -98,105 +105,225 @@
         top: 0;
         box-shadow: inset -10px 0 8px -8px rgba(0,0,0,0.08);
         pointer-events: none;
+        z-index: 1;
       }
     }
 
     .@{prefix}-more-btn {
-      height: 45px;
       width: 45px;
-      line-height: 45px;
       font-size: 18px;
       text-align: center;
     }
   }
 
-  .@{prefix}-content {
-    width: 100%;
-    display: flex;
+  .@{prefix}-content-wrap {
+    flex: auto;
+    min-width: 0;
+    min-height: 0;
 
-    .@{prefix}-tabpane {
-      flex: none;
+    .@{prefix}-content {
       width: 100%;
-      overflow: hidden;
-    }
-
-    .@{prefix}-tabpane-hide {
-      visibility: hidden;
-    }
-  }
+      display: flex;
   
-  .@{prefix}-content-animated {
-    transition: margin .3s;
-  }
-}
-
-.@{prefix}-top {
-  flex-direction: column;
-}
-
-.@{prefix}-bottom {
-  flex-direction: column-reverse;
-}
-
-.@{prefix}-left {
-  flex-direction: row;
-
-  .@{prefix}-nav{
-    flex-direction: column;
-    
-    .@{prefix}-nav-wrap {
-      border-bottom: none;
-      border-right: 1px solid #f0f0f0;
-      
-      .@{prefix}-nav-list {
-        flex-direction: column;
-    
-        .@{prefix}-nav-item {
-          margin: 36px 0 0 0!important;
-          padding: 0 12px!important;
-
-          &:first-child {
-            margin: 0!important;
-          }
-        }
-
-        .@{prefix}-nav-bar {
-          left: inherit;
-          bottom: inherit;
-          right: 0;
-          top: 0;
-          width: 2px;
-          height: 0px;
-        }
+      .@{prefix}-tabpane {
+        flex: none;
+        width: 100%;
+        overflow: hidden;
+      }
+  
+      .@{prefix}-tabpane-hide {
+        visibility: hidden;
+        // display: none;
       }
     }
-
-    .@{prefix}-nav-wrap-ping-left::before {
-      content: "";
-      width: 100%;
-      height: 40px;
-      left: 0;
-      top: 0;
-      right: inherit;
-      bottom: inherit;
-      box-shadow: inset 0 10px 8px -8px rgba(0,0,0,0.08);
+    
+    .@{prefix}-content-animated {
+      transition: margin .3s;
     }
+  }
+}
 
-    .@{prefix}-nav-wrap-ping-right::after {
+// 纵向布局
+.postionVertical(@postion) {
+  .@{prefix}-@{postion} {
+    flex-direction: row;
+
+    .@{prefix}-nav{
+      flex-direction: column;
+      margin: 0 11px 0;
+      &::before {
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-bottom: none;
+        border-right: 1px solid #f0f0f0;
+      }
+      
+      .@{prefix}-nav-wrap {
+        
+        .@{prefix}-nav-list {
+          flex-direction: column;
+      
+          .@{prefix}-nav-item {
+            margin: 36px 0 0 0;
+            padding: 0 12px;
+
+            &:first-child {
+              margin: 0;
+            }
+          }
+
+          .@{prefix}-nav-bar {
+            left: inherit;
+            bottom: inherit;
+            right: 0;
+            top: 0;
+            width: 2px;
+            height: 0px;
+            transition: height .3s, top .3s, background-color .3s;
+          }
+        }
+      }
+
+      .@{prefix}-nav-wrap-ping-left::before {
         content: "";
         width: 100%;
         height: 40px;
         left: 0;
-        bottom: 0;
+        top: 0;
         right: inherit;
-        top: inherit;
-        box-shadow: inset 0 -10px 8px -8px rgba(0,0,0,0.08);
+        bottom: inherit;
+        box-shadow: inset 0 10px 8px -8px rgba(10, 9, 9, 0.08);
+      }
+
+      .@{prefix}-nav-wrap-ping-right::after {
+          content: "";
+          width: 100%;
+          height: 40px;
+          left: 0;
+          bottom: 0;
+          right: inherit;
+          top: inherit;
+          box-shadow: inset 0 -10px 8px -8px rgba(0,0,0,0.08);
+      }
     }
   }
 }
 
-.@{prefix}-right {
-  flex-direction: row-reverse;
+// 右侧布局
+.postionVertical(@postion) when (@postion = right) {
+  .@{prefix}-@{postion} {
+    flex-direction: row-reverse;
+
+    .@{prefix}-nav {
+      margin: 0;
+      &::before {
+        left: 0;
+        right: inherit;
+        border-bottom: none;
+      }
+      .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-bar {
+          left: 0;
+          right: inherit;
+      }
+    }
+  }
+}
+
+// top布局
+// .postionHorizontal('top');
+.@{prefix}-top {
+  flex-direction: column;
+
+  .@{prefix}-nav {
+    margin: 0 0 11px;
+  }
+}
+
+// bottom布局
+// .postionHorizontal('bottom');
+.@{prefix}-bottom {
+  flex-direction: column-reverse;
+
+  .@{prefix}-nav {
+    margin: 11px 0 0;
+    &::before {
+      border-bottom: none;
+      border-top: 1px solid #f0f0f0;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: inherit;
+    }
+  }
+
+  .@{prefix}-nav-bar {
+    top: 0;
+  }
+}
+
+// left布局
+.postionVertical(left);
+
+// right布局
+.postionVertical(right);
+
+// card布局
+.@{prefix}-nav-card {
+  &.@{prefix}-left .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-item {
+    padding: 8px 16px;
+    margin: 2px 0 0 0;
+  }
+
+  &.@{prefix}-right .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-item {
+    padding: 8px 16px;
+    margin: 2px 0 0 0;
+  }
+
+  .@{prefix}-nav {
+    .@{prefix}-nav-wrap {
+      .@{prefix}-nav-list {
+        .@{prefix}-nav-item {
+          transition: background-color .3s;
+          background-color: #fafafa;
+          padding: 8px 16px;
+          margin: 0 0 0 2px;
+          border: 1px solid #f0f0f0;
+          border-radius: 2px;
+          color: #595959;
+
+          &:hover {
+            color: @hover-color
+          }
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+      
+        .@{prefix}-nav-active {
+            background-color: #ffffff;
+            color: @base-color;
+            &:hover {
+              color: @base-color;
+            }
+        }
+
+        .@{prefix}-nav-disabled {
+          color: @disable-color;
+          cursor: not-allowed;
+            &:hover {
+              color: @disable-color;
+            }
+        }
+
+        .@{prefix}-nav-bar {
+          background-color: #ffffff;
+          bottom: -1px;
+          transition: none;
+        }
+      }
+    }
+  }
 }
 
 .@{prefix}-nav-more {
