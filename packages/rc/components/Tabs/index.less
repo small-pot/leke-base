@@ -41,25 +41,38 @@
             color: #8c8c8c;
             user-select: none;
             flex: none;
-            &:hover {
-              color: @hover-color
+            display: flex;
+            align-items: center;
+            &:hover span {
+                color: @hover-color
             }
+
             &:first-child {
               margin-left: 0;
             }
-        }
-      
-        .@{prefix}-nav-active {
-            color: @base-color;
-            &:hover {
-              color: @base-color;
+
+            .@{prefix}-tabpane-close-icon {
+              font-size: 12px;
+              padding: 1px 6px;
+              margin-left: 8px;
+              color: rgba(0, 0, 0, 0.45);
+              transition: .3s;
+
+              &:hover {
+                color: rgba(0, 0, 0, 0.85);
+                transform: scale(1.1);
+              }
             }
+        }
+
+        .@{prefix}-nav-active {
+          color: @base-color;
         }
   
         .@{prefix}-nav-disabled {
           color: @disable-color;
           cursor: not-allowed;
-            &:hover {
+            &:hover span {
               color: @disable-color;
             }
         }
@@ -159,29 +172,26 @@
         border-right: 1px solid #f0f0f0;
       }
       
-      .@{prefix}-nav-wrap {
-        
-        .@{prefix}-nav-list {
-          flex-direction: column;
-      
-          .@{prefix}-nav-item {
-            margin: 36px 0 0 0;
-            padding: 0 12px;
+      .@{prefix}-nav-wrap .@{prefix}-nav-list {
+        flex-direction: column;
+    
+        .@{prefix}-nav-item {
+          margin: 36px 0 0 0;
+          padding: 0 12px;
 
-            &:first-child {
-              margin: 0;
-            }
+          &:first-child {
+            margin: 0;
           }
+        }
 
-          .@{prefix}-nav-bar {
-            left: inherit;
-            bottom: inherit;
-            right: 0;
-            top: 0;
-            width: 2px;
-            height: 0px;
-            transition: height .3s, top .3s, background-color .3s;
-          }
+        .@{prefix}-nav-bar {
+          left: inherit;
+          bottom: inherit;
+          right: 0;
+          top: 0;
+          width: 2px;
+          height: 0px;
+          transition: height .3s, top .3s, background-color .3s;
         }
       }
 
@@ -231,7 +241,6 @@
 }
 
 // top布局
-// .postionHorizontal('top');
 .@{prefix}-top {
   flex-direction: column;
 
@@ -241,7 +250,6 @@
 }
 
 // bottom布局
-// .postionHorizontal('bottom');
 .@{prefix}-bottom {
   flex-direction: column-reverse;
 
@@ -280,52 +288,39 @@
     margin: 2px 0 0 0;
   }
 
-  .@{prefix}-nav {
-    .@{prefix}-nav-wrap {
-      .@{prefix}-nav-list {
-        .@{prefix}-nav-item {
-          transition: background-color .3s;
-          background-color: #fafafa;
-          padding: 8px 16px;
-          margin: 0 0 0 2px;
-          border: 1px solid #f0f0f0;
-          border-radius: 2px;
-          color: #595959;
+  .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list {
+    .@{prefix}-nav-item {
+      transition: background-color .3s;
+      background-color: #fafafa;
+      padding: 8px 16px;
+      margin: 0 0 0 2px;
+      border: 1px solid #f0f0f0;
+      border-radius: 2px;
+      color: #595959;
+    }
+  
+    .@{prefix}-nav-active {
+      color: @base-color;
+      background-color: #ffffff;
+    }
 
-          &:hover {
-            color: @hover-color
-          }
-          &:first-child {
-            margin-left: 0;
-          }
-        }
-      
-        .@{prefix}-nav-active {
-            background-color: #ffffff;
-            color: @base-color;
-            &:hover {
-              color: @base-color;
-            }
-        }
-
-        .@{prefix}-nav-disabled {
+    .@{prefix}-nav-disabled {
+      color: @disable-color;
+      cursor: not-allowed;
+        &:hover {
           color: @disable-color;
-          cursor: not-allowed;
-            &:hover {
-              color: @disable-color;
-            }
         }
+    }
 
-        .@{prefix}-nav-bar {
-          background-color: #ffffff;
-          bottom: -1px;
-          transition: none;
-        }
-      }
+    .@{prefix}-nav-bar {
+      background-color: #ffffff;
+      bottom: -1px;
+      transition: none;
     }
   }
 }
 
+// 更多按钮
 .@{prefix}-nav-more {
   max-height: 200px;
   overflow-y: auto;
@@ -344,5 +339,27 @@
       &:hover {
         color: @disable-color;
       }
+  }
+}
+
+// 添加按钮
+.@{prefix}-add-button {
+  font-size: 14px;
+  background-color: #fafafa;
+  width: 14px;
+  height: 14px;
+  box-sizing: content-box;
+  padding: 9px 12px;
+  border: 1px solid #f0f0f0;
+  border-radius: 2px;
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+
+  &:hover {
+    color: @hover-color;
+  }
+
+  &:active {
+    color: @click-color;
   }
 }

@@ -4,19 +4,22 @@
  */
 import React, { CSSProperties, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import cn from 'classnames';
-import { More } from "@leke/icons";
+import { More, Close, Plus } from "@leke/icons";
+import { useControl } from "@leke/hooks";
 import { Trigger } from "@leke/rc";
 import { addMouseWheel, removeMouseWheel, returnTabPositionAttribute } from './utils';
 
 export interface ITabsProps {
-    defaultActiveKey?: number;
+    defaultActiveKey?: string | number,
     onChange?: (activeKey: string | number) => void;
+    onEdit?: (activeKey: string | number, action: 'add' | 'remove') => void;
     children: React.ReactElement<HTMLElement & ITabPaneProps, any>,
     centered?: boolean;
     animated?: boolean;
     type?: 'line' | 'card' |'editable-card';
     tabPosition?: 'top' | 'right' | 'bottom' | 'left';
     style?: CSSProperties;
+    activeKey?: string | number,
 }
 
 export interface ITabPaneProps {
@@ -25,25 +28,37 @@ export interface ITabPaneProps {
     closeIcon?: ReactNode;
     forceRender?: boolean;
     disabled?: boolean;
-    children: React.ReactElement<HTMLElement>
+    children: React.ReactElement<HTMLElement>,
+    closable?: boolean;
 }
 
 type navType = ITabPaneProps;
 
 const Tabs = (props: ITabsProps) => {
-    const { children, onChange, centered, animated, tabPosition, style, type } = props;
+    const { children, onChange, centered, animated, tabPosition, style, type, onEdit, activeKey, defaultActiveKey } = props;
     const navRef = useRef(null); // tab导航元素
     const scrollEventLister = useRef(null); // 滚动监听
-    const currentTabInfoStyle = useRef({}); // 当前选中tab样式
-    const currentTabIndex = useRef(0); // 当前选中tab的下标
-    const [currentTabKey, setCurrentTabKey] = useState<string | number>(-1); // 当前选中tabd的key
+    const currentTabInfo = useRef({
+        key: null, // 选中nav的key
+        index: null, // 选中nav的下标
+        currentEle: null // 选中的元素
+    }); // 当前选中tab样式
     const maxScrollLength = useRef(-1); // 最大滚动长度
+    const [barStyle, setBarStyle] = useState({}); // bar行内样式
+    const [currentTabKey, setCurrentTabKey] = useControl<string | number>(activeKey ? String(activeKey) : undefined, onChange, defaultActiveKey ? String(defaultActiveKey) : undefined); // 当前选中tabd的key
     const [scrollLength, setScrollLength] = useState(0); // 滚动长度
     const [isShowScroll, setIsShowScroll] = useState(false); // 是否显示滚动
     const [navList, setNavList] = useState<navType[]>([]); // 导航栏tab数组
-    
+    const [allowEdit, setAllowEdit] = useState(false); // 允许编辑
+
     // 不同方向布局配置
-    const postionOpt = useMemo(() => returnTabPositionAttribute(tabPosition),[tabPosition]);
+    const postionOpt = useMemo(() => returnTabPositionAttribute(tabPosition), [tabPosition]);
+    
+    /**编辑回调 */
+    const handleEdit = useCallback((key, action,e) => {
+        onEdit?.(key, action);
+        e.stopPropagation();
+    }, [onEdit]);
 
     /**元素是否在可见区域 */
     const isInVisibleArea = useCallback((ele) => {
@@ -56,14 +71,15 @@ const Tabs = (props: ITabsProps) => {
         return { status: true, type: 0 };
     }, [scrollLength, postionOpt]);
 
-    /**tab点击切换 */
-    const handleTitleCilck = useCallback((item: navType, index: number) => {
-        if(item.disabled) return;
+    /**跳转交互 */
+    const scrollToTab = useCallback((key, index) => {
         const currentEle = navRef.current.getElementsByClassName(`leke-tabs-nav-item`)[index];
-        currentTabInfoStyle.current = currentEle ? postionOpt.barStyle(currentEle[postionOpt.length], currentEle[postionOpt.start]) : {};
-        setCurrentTabKey(item.key);
-        currentTabIndex.current = index;
-        onChange?.(item.key);
+        currentTabInfo.current = {
+            ...currentTabInfo.current,
+            index,
+            key
+        };
+        setBarStyle(currentEle ? postionOpt.barStyle(currentEle[postionOpt.length], currentEle[postionOpt.start]) : {});
         const visibleType = isInVisibleArea(currentEle);
         if (visibleType.status) {
             return;
@@ -73,7 +89,14 @@ const Tabs = (props: ITabsProps) => {
         } else if (visibleType.type === 2) {
             setScrollLength(-currentEle[postionOpt.start] - currentEle[postionOpt.length] + navRef.current[postionOpt.length]);
         }
-    }, [onChange, isInVisibleArea, postionOpt]);
+    },[isInVisibleArea, postionOpt]);
+
+    /**tab点击切换 */
+    const handleTitleCilck = useCallback((item: navType, index: number) => {
+        if(item.disabled) return;
+        setCurrentTabKey(item.key);
+        scrollToTab(item.key, index);
+    }, [setCurrentTabKey, scrollToTab]);
 
     /**鼠标移入事件 */
     const onMouseEnter = useCallback(() => {
@@ -96,13 +119,41 @@ const Tabs = (props: ITabsProps) => {
     }, []);
 
     useEffect(() => {
-        // 仅执行一次，多标题指标初始位置
-        if (currentTabKey === -1 && navRef.current && navList.length) {
-            const currentEle = navRef.current.getElementsByClassName(`leke-tabs-nav-item`)[0];
-            currentTabInfoStyle.current = postionOpt.barStyle(currentEle[postionOpt.length], currentEle[postionOpt.start]);
-            setCurrentTabKey(navList[0]?.key);
+        if (!navRef.current) return;
+        
+        if (currentTabInfo.current.key === null) {
+            // 第一次进来,初始化
+            if (navList.length) {
+                const currentEle = navRef.current.getElementsByClassName(`leke-tabs-nav-item`)[0];
+                currentTabInfo.current = {
+                    ...currentTabInfo.current,
+                    key: navList[0]?.key,
+                    index: 0,
+                    currentEle
+                };
+                setBarStyle(postionOpt.barStyle(currentEle[postionOpt.length], currentEle[postionOpt.start]));
+                setCurrentTabKey(navList[0]?.key);
+            }
+        } else {
+            const index = navList.findIndex(item => item.key === currentTabKey);
+            // 再次进来,更新
+            if (navList.length && index !== -1) {
+                // 更新
+                scrollToTab(currentTabKey,index);
+            } else {
+                // 清空
+                currentTabInfo.current = {
+                    ...currentTabInfo.current,
+                    key: null,
+                    index: 0,
+                    currentEle: null
+                };
+                setBarStyle({});
+                setCurrentTabKey(-1);
+            }
         }
-    }, [navList, postionOpt, currentTabKey]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [navList, postionOpt]);
 
     // 监听生成新的tabs
     useEffect(() => {
@@ -111,8 +162,8 @@ const Tabs = (props: ITabsProps) => {
                 if (item.type.name !== 'TabPane') {
                     return { key: null, tab: null, children: item };
                 }
-                const { disabled } = item.props;
-                return { key: item.key, tab: item.props.tab, disabled, children: item };
+                const { disabled, closable } = item.props;
+                return { key: item.key, tab: item.props.tab, disabled, closable, children: item };
             }).filter(item => item.key !== null);
         });
     }, [children]);
@@ -129,24 +180,28 @@ const Tabs = (props: ITabsProps) => {
         return () => {
             window.removeEventListener('resize', onResize);
         };
-    }, [postionOpt]);
+    }, [postionOpt, navList]);
 
     // 监听布局变化
     useEffect(() => {
-        const currentEle = navRef.current.getElementsByClassName(`leke-tabs-nav-item`)[currentTabIndex.current];
-        if (!currentEle) return;
-        currentTabInfoStyle.current = postionOpt.barStyle(currentEle[postionOpt.length], currentEle[postionOpt.start]);
-        const visibleType = isInVisibleArea(currentEle);
-        if (visibleType.status) {
-            return;
-        }
-        if (visibleType.type === 1) {
-            setScrollLength(-currentEle[postionOpt.start]);
-        } else if (visibleType.type === 2) {
-            setScrollLength(-currentEle[postionOpt.start] - currentEle[postionOpt.length] + navRef.current[postionOpt.length]);
-        }
+        const { key, index } = currentTabInfo.current;
+        if(index === null) return;
+        scrollToTab(key,index);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [postionOpt]);
+
+    // 监听类型
+    useEffect((() => {
+        setAllowEdit(type === 'editable-card');
+    }),[type]);
+
+    const renderAdd = useMemo(() => {
+        return allowEdit ? (
+            <button className="leke-tabs-add-button" onClick={(e) => handleEdit('add', 'add', e)}>
+                <Plus />
+            </button>
+        ) : null;
+    }, [allowEdit, handleEdit]);
     
     // 渲染更多下拉框
     const renderMoreDrop = useMemo(() => {
@@ -175,8 +230,8 @@ const Tabs = (props: ITabsProps) => {
     },[isShowScroll, isInVisibleArea, navList, handleTitleCilck]);
 
     // 渲染导航
-    const renderNav = useMemo(() => navList.map((item, index) => {
-        const { key, disabled, tab } = item;
+    const renderNav = navList.map((item, index) => {
+        const { key, disabled, tab, closable } = item;
         const cls = cn('leke-tabs-nav-item', {
             [`leke-tabs-nav-active`]: currentTabKey === key,
             [`leke-tabs-nav-disabled`]: disabled
@@ -184,16 +239,22 @@ const Tabs = (props: ITabsProps) => {
         const onClick = () => handleTitleCilck(item, index);
         return (
             <div key={key} onClick={onClick} className={cls}>
-                {tab}
+                <span>{tab}</span>
+                {(allowEdit && !closable && !disabled) && (
+                    <div onClick={(e) => handleEdit(key, 'remove', e)} className="leke-tabs-tabpane-close-icon">
+                        <Close />
+                    </div>
+                )}
             </div>
         );
-    }), [navList, currentTabKey, handleTitleCilck]);
+    });
 
     // 渲染内容
     const renderContent = useMemo(() => navList.map(item => {
         const cls = cn("leke-tabs-tabpane", {
             ["leke-tabs-tabpane-hide"]: item.key !== currentTabKey
         });
+        // console.log('currentTabKedasdasdasdsady =>',currentTabKey,item.key);
         return (
             <div key={item.key} className={cls}>
                 {item.children}
@@ -220,21 +281,25 @@ const Tabs = (props: ITabsProps) => {
                 <div ref={navRef} className={navWrapCls}>
                     <div className={navListCls} style={{ transform: postionOpt.transform(scrollLength) }}>
                         {renderNav}
-                        <div style={currentTabInfoStyle.current} className="leke-tabs-nav-bar" />
+                        {!isShowScroll && renderAdd}
+                        <div style={barStyle} className="leke-tabs-nav-bar" />
                     </div>
                 </div>
                 {isShowScroll && (
-                    <Trigger 
-                        popup={renderMoreDrop}
-                    >
-                        <div className="leke-tabs-more-btn">
-                            <More />
-                        </div>
-                    </Trigger>
+                    <>
+                        <Trigger 
+                            popup={renderMoreDrop}
+                        >
+                            <div className="leke-tabs-more-btn">
+                                <More />
+                            </div>
+                        </Trigger>
+                        {renderAdd}
+                    </>
                 )}
             </div>
             <div className="leke-tabs-content-wrap">
-                <div style={{ marginLeft: - currentTabIndex.current * 100 + '%' }} className={contentCls}>
+                <div style={{ marginLeft: - currentTabInfo.current.index * 100 + '%' }} className={contentCls}>
                     {renderContent}
                 </div>
             </div>

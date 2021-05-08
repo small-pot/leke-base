@@ -14,7 +14,7 @@ export default function(){
         console.log(key);
     };
     return(
-        <Tabs defaultActiveKey="1" onChange={callback}>
+        <Tabs onChange={callback}>
             <TabPane tab="Tab 122323232323" key="1">
       Content of Tab Pane 1
             </TabPane>
