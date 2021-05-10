@@ -17,8 +17,8 @@ export function setPopupPosition(popup:HTMLElement, trigger:HTMLElement, placeme
     const left = popup.offsetLeft;
     const height = popup.offsetHeight;
     const width = popup.offsetWidth;
-    const transverse = 24;  //左右偏移量
-    const portrait = 16;    //上下偏移量
+    const transverse = 22;  //左右偏移量
+    const portrait = 14;    //上下偏移量
     const triggerWidth = trigger.offsetWidth;
     const triggerHeight = trigger.offsetHeight;
     const topAndBottom = triggerWidth / 2 - transverse;

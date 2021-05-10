@@ -29,9 +29,6 @@ export default function(){
 ```
 
 ```css
-.linksty{
-    display: inline-block;
-}
 .childrens{
     margin-right: 20px;
 }

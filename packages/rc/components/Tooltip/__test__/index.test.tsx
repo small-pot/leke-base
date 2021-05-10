@@ -57,27 +57,6 @@ describe('Tooltip ', function() {
         expect(popupContainer.offsetLeft).toBeDefined();
         
     });
-    it('test color',async function () {
-        const {rerender, getByText} = render(
-            <Tooltip
-                {...defaultProps}
-                color={'yellow'}
-            />
-        );
-        const tooltip=getByText('tooltip');
-        userEvent.hover(tooltip);
-        await waitFor(()=>screen.getByText('prompt text'));
-        const popupContainer:HTMLDivElement=document.body.querySelector('.leke-popup');
-        expect(popupContainer.className.includes('yellow')).toBe(true);
-        rerender(
-            <Tooltip
-                {...defaultProps}
-                color={'rgb(135, 208, 104)'}
-            />
-        );
-        const popupContent:HTMLDivElement=document.body.querySelector('.leke-contentStyle');
-        expect(popupContent.style.background).toBe('rgb(135, 208, 104)');
-    });
     it('test ref',async function () {
         const ref=React.createRef<HTMLDivElement>();
         const {rerender} = render(

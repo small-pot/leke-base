@@ -1,5 +1,6 @@
 import React, { Children, ReactElement, CSSProperties, useRef, useEffect } from "react";
 import Trigger from "../Trigger";
+import classNames from "classnames";
 import { setPopupPosition } from "./util";
 
 export interface childPropsType {
@@ -11,36 +12,22 @@ export interface childPropsType {
 export interface dropdownPropsType {
     popup: ReactElement | string,
     children: React.ReactElement<HTMLElement>,
-    color?: string,
+    style?: CSSProperties,
+    className?: string,
     visible?: boolean,
-    popupClassName?: string,
-    defaultVisible?: boolean;
-    popupStyle?: CSSProperties,
     arrowPointAtCenter?: boolean
-    onVisibleChange?: (boolean) => void,
     eventType?: Array<'focus'|'hover'|'click'>,
+    onVisibleChange?: (boolean) => void,
     getPopupContainer?: (HTMLElement) => HTMLElement,
     placement?: 'bottomLeft' | 'bottomCenter' | 'bottomRight' | 'topLeft' | 'topCenter' | 'topRight' | 'leftCenter' | 'leftTop' | 'leftBottom' | 'rightCenter' | 'rightTop' | 'rightBottom',
 }
 export default function Tooltip(props: dropdownPropsType) {
-    const { color, popup, placement, children, arrowPointAtCenter = false} = props;
+    const {style, className, popup, placement, children, arrowPointAtCenter = false} = props;
     const arrowPoint = useRef<HTMLDivElement>(null);
-    const colorArray = ['white', 'green', 'red', 'orange', 'purple', 'yellow', 'blue', 'geekblue', 'purple', 'magenta', 'volcano', 'gold', 'lime', 'polargreen'];
-    const isColorType = colorArray.includes(color) ? true : false;
     const triggerRef=useRef<HTMLElement>(null);
     const child=Children.only(children);
-    const modifyProps={
-        ref:arrowPoint,
-        className: 'leke-modifyStyle'
-    };
     const cloneProps:childPropsType={
         ref(node){
-            const childRef=(child as any).ref;
-            if(typeof childRef==='function'){
-                childRef(node);
-            }else if(Object.prototype.toString.call(childRef)==='[object Object]'){
-                childRef.current=node;
-            }
             triggerRef.current=node;
         }
     };
@@ -54,13 +41,11 @@ export default function Tooltip(props: dropdownPropsType) {
             }
         }, [popupRef]);
         return (
-            <div ref={popupRef} className={`leke-tooltip-container`} >
-                <div {...modifyProps}>
-                    <span className={`leke-modifyStyle-content`}
-                        style={{ background: color && !isColorType ? color : ''}}></span>
+            <div ref={popupRef} className={classNames('leke-tooltip-container', className)} style={style}>
+                <div ref={arrowPoint} className={'leke-modifyStyle'}>
+                    <span className={`leke-modifyStyle-content`}></span>
                 </div>
-                <div className={`leke-contentStyle`}
-                    style={{ background: color && !isColorType ? color : '' }}>
+                <div className={`leke-contentStyle`}>
                     {typeof popup === 'string' ? <span className={`leke-contentSpanSty`}>{popup}</span> : popup}
                 </div>
             </div>
@@ -72,7 +57,7 @@ export default function Tooltip(props: dropdownPropsType) {
             <Trigger
                 {...props}
                 popup={<TooltipContent />}
-                popupClassName={`leke-popup-shadowRewrite${color && isColorType ? ' leke-popup-' + color : ''}`}
+                popupClassName={`leke-popup-shadowRewrite`}
             >
                 {React.cloneElement(child,cloneProps)}
             </Trigger>
