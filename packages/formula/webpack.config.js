@@ -1,6 +1,5 @@
 const path = require('path');
 const cssOptions=[
-    "style-loader",
     "css-loader",
     {
         loader: "postcss-loader",
@@ -66,6 +65,7 @@ module.exports = {
             {
                 test: /\.less$/,
                 use: [
+                    "style-loader",
                     ...cssOptions,
                     "less-loader",
                 ]

@@ -4,8 +4,14 @@ window.jQuery = $;
 import './mathquill';
 import Sketchpad from './sketchpad';
 import template from "./template";
-import html2canvas from 'html2canvas';
-import './index.css';
+import rasterizeHTML from 'rasterizehtml';
+import './index.less';
+import css from './mathquill.css';
+
+const cssString=css.toString();
+const style=document.createElement('style');
+style.innerHTML=cssString;
+document.head.appendChild(style);
 
 const config = {
     restrictMismatchedBrackets: true
@@ -38,7 +44,18 @@ export default class Formula {
         if (!latex || !el) {
             return Promise.resolve(null);
         }
-        return html2canvas(el).then(function (canvas) {
+        const canvas = document.createElement("canvas");
+        canvas.width=el.offsetWidth;
+        canvas.height=el.offsetHeight;
+        const cloneNode=this.root.cloneNode(true);
+        cloneNode.style.width=this.root.clientWidth+'px';
+        const context = canvas.getContext('2d');
+        const html=`
+            <style>body{margin:0;padding:0;}${cssString}</style>
+            ${cloneNode.outerHTML}
+        `;
+        return rasterizeHTML.drawHTML(html).then(res=>{
+            context.drawImage(res.image,el.offsetLeft,el.offsetTop,el.offsetWidth,el.offsetHeight,0,0,el.offsetWidth,el.offsetHeight);
             return canvas.toDataURL();
         });
     }
