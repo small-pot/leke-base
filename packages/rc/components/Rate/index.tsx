@@ -15,21 +15,8 @@ const Rate: FC<IRateProps> = memo(
         const isHover = useRef(false);
 
         /**点选 */
-        const handleClick = useCallback((e, i: number) => {
+        const handleClick = useCallback((newSource: number) => {
             if(disabled) return;
-            let node = e.target;
-            let newSource = 0;
-            // 寻找父级元素
-            while (!!node.className && node.className !== "leke-rate-ele") {
-                node = node.parentNode;
-            }
-
-            if (allowHalf && e.clientX < node.offsetLeft + (node.offsetWidth / 2)) {
-                // 一半
-                newSource = i + 0.5;
-            } else {
-                newSource = i + 1;
-            }
 
             // 相同表示清空
             if (allowClear && source === newSource) {
@@ -38,27 +25,13 @@ const Rate: FC<IRateProps> = memo(
 
             setSource(newSource);
             setHoverSource(newSource);
-        },[allowClear,allowHalf, source, disabled, setHoverSource, setSource]);
+        },[allowClear, source, disabled, setHoverSource, setSource]);
         
         /**悬浮 */
-        const handleHover = useCallback((e, i) => {
+        const handleHover = useCallback((newSource) => {
             if (disabled) return;
-            let newSource = 0;
-            let node = e.target;
-            // 寻找父级元素
-            while (!!node.className && node.className !== "leke-rate-ele") {
-                node = node.parentNode;
-            }
-
-            if (allowHalf && e.clientX < node.offsetLeft + (node.offsetWidth / 2)) {
-                // 一半
-                newSource = i + 0.5;
-            } else {
-                newSource = i + 1;
-            }
             setHoverSource(newSource);
-
-        },[setHoverSource, allowHalf, disabled]);
+        },[setHoverSource, disabled]);
 
         /**hover移入事件监听 */
         const onMouseEnter = () => {
@@ -90,6 +63,7 @@ const Rate: FC<IRateProps> = memo(
                 ['leke-rate-ele-top-half']: i + 0.5 === (isHover.current ? hoverSource : source), // 半星
                 ["leke-rate-ele-top-hover"]: isHover.current && hoverSource !== source, // 悬浮
             });
+            const halfSource = allowHalf ? i + 0.5 : i + 1;
             return (
                 <>
                     <div className="leke-rate-ele-bottom">
@@ -98,13 +72,15 @@ const Rate: FC<IRateProps> = memo(
                     <div className={topStarClass}>
                         {RateComponent}
                     </div>
+                    <div className="leke-rate-ghost-ele-half"  onClick={() => handleClick(halfSource)} onMouseEnter={() => handleHover(halfSource)}></div>
+                    <div className="leke-rate-ghost-ele" onClick={() => handleClick(i + 1)} onMouseEnter={() => handleHover(i + 1)}></div>
                 </>
             );
         };
 
         return <div className={containerClass} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
             {Array(count).fill('').map((_, i) => (
-                <div key={i} className="leke-rate-ele" onClick={(e) => handleClick(e, i)} onMouseMove={(e) => handleHover(e,i)}>
+                <div key={i} className="leke-rate-ele">
                     {renderStar(i)}
                 </div>
             ))}
