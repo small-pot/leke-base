@@ -9,7 +9,7 @@ describe('Rate', function() {
         const {container} = render(
             <Rate />
         );
-        const RateComponentBottom4 = container.querySelectorAll('.leke-rate-ele-bottom')[3];
+        const RateComponentBottom4 = container.querySelectorAll('.leke-rate-ghost-ele')[3];
 
         userEvent.hover(RateComponentBottom4);
 
@@ -24,7 +24,7 @@ describe('Rate', function() {
         const {container} = render(
             <Rate />
         );
-        const RateComponentBottom4 = container.querySelectorAll('.leke-rate-ele-bottom')[3];
+        const RateComponentBottom4 = container.querySelectorAll('.leke-rate-ghost-ele')[3];
         fireEvent.click(RateComponentBottom4);
 
         const RateComponentTop1 = container.querySelectorAll('.leke-rate-ele-top')[0]; 
@@ -37,7 +37,7 @@ describe('Rate', function() {
         const {container} = render(
             <Rate disabled />
         );
-        const RateComponentBottom4 = container.querySelectorAll('.leke-rate-ele-bottom')[3];
+        const RateComponentBottom4 = container.querySelectorAll('.leke-rate-ghost-ele')[3];
         userEvent.hover(RateComponentBottom4);
         fireEvent.click(RateComponentBottom4);
         const RateComponentTop1 = container.querySelectorAll('.leke-rate-ele-top')[0];
@@ -47,19 +47,14 @@ describe('Rate', function() {
         const {container} = render(
             <Rate allowHalf/>
         );
-        const RateComponent = container.querySelector('.leke-rate-ele');
-        userEvent.click(RateComponent, {
-            clientX: RateComponent.clientLeft + RateComponent.clientWidth / 2 - 2,
-            clientY: RateComponent.clientTop + RateComponent.clientHeight / 2
-        });
+        const RateComponent = container.querySelectorAll('.leke-rate-ghost-ele-half')[0];
+        userEvent.click(RateComponent);
 
         const RateComponentTop1 = container.querySelectorAll('.leke-rate-ele-top')[0]; 
         expect(RateComponentTop1).toHaveClass('leke-rate-ele-top-half', { exact: false });
-
-        userEvent.click(RateComponent, {
-            clientX: RateComponent.clientLeft + RateComponent.clientWidth / 2,
-            clientY: RateComponent.clientTop + RateComponent.clientHeight / 2
-        });
+        
+        const RateComponent2 = container.querySelectorAll('.leke-rate-ghost-ele')[0];
+        userEvent.click(RateComponent2);
 
         expect(RateComponentTop1).toHaveClass('leke-rate-ele-top-full', { exact: false });
     });
@@ -69,20 +64,14 @@ describe('Rate', function() {
         const {container} = render(
             <Rate onChange={onChange} onHoverChange={onHoverChange} value={2}/>
         );
-        const RateComponent = container.querySelector('.leke-rate-ele');
+        const RateComponent = container.querySelectorAll('.leke-rate-ghost-ele')[0];
         const RateComponentTop = container.querySelectorAll('.leke-rate-ele-top'); 
         expect(RateComponentTop[2]).not.toHaveClass('leke-rate-ele-top-full', { exact: false });
         expect(RateComponentTop[1]).toHaveClass('leke-rate-ele-top-full', { exact: false });
 
-        userEvent.hover(RateComponent, {
-            clientX: RateComponent.clientLeft + RateComponent.clientWidth / 2,
-            clientY: RateComponent.clientTop + RateComponent.clientHeight / 2
-        });
+        userEvent.hover(RateComponent);
         expect(onHoverChange).toBeCalled();
-        userEvent.click(RateComponent, {
-            clientX: RateComponent.clientLeft + RateComponent.clientWidth / 2,
-            clientY: RateComponent.clientTop + RateComponent.clientHeight / 2
-        });
+        userEvent.click(RateComponent);
         expect(onChange).toBeCalled();
     });
     it('test custom', async function () {
