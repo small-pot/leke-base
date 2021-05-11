@@ -6,11 +6,12 @@ import React, { FC, memo, ReactNode, useCallback, useEffect, useMemo, useRef, us
 import classnames from "classnames";
 import {Star} from '@leke/icons';
 import { IRateProps, TRatePropsType, TCharacterType } from './type';
+import { useControl } from "@leke/hooks";
 
 const Rate: FC<IRateProps> = memo(
     ({ count, allowClear, allowHalf, defaultValue, disabled, value, onChange, onHoverChange, className, character }) => {
-        const [source, setSource] = useState(value || defaultValue || 0);
-        const [hoverSource, setHoverSource] = useState(value || defaultValue || 0);
+        const [source, setSource] = useControl(value, onChange, defaultValue);
+        const [hoverSource, setHoverSource] = useControl(undefined, onHoverChange, value ?? defaultValue);
         const isHover = useRef(false);
 
         /**点选 */
@@ -35,14 +36,9 @@ const Rate: FC<IRateProps> = memo(
                 newSource = 0;
             }
 
-            if (onChange) {
-                onChange(newSource);
-            } else {
-                setSource(newSource);
-                setHoverSource(newSource);
-            }
-            
-        },[allowClear,allowHalf, source, onChange, disabled]);
+            setSource(newSource);
+            setHoverSource(newSource);
+        },[allowClear,allowHalf, source, disabled, setHoverSource, setSource]);
         
         /**悬浮 */
         const handleHover = useCallback((e, i) => {
@@ -60,10 +56,9 @@ const Rate: FC<IRateProps> = memo(
             } else {
                 newSource = i + 1;
             }
-            onHoverChange?.(newSource);
             setHoverSource(newSource);
 
-        },[onHoverChange, allowHalf, disabled]);
+        },[setHoverSource, allowHalf, disabled]);
 
         /**hover移入事件监听 */
         const onMouseEnter = () => {
@@ -75,13 +70,6 @@ const Rate: FC<IRateProps> = memo(
             isHover.current = false;
             setHoverSource(0);
         };
-
-        /**监听外部value改变 */
-        useEffect(() => {
-            if(value === null || value === undefined) return;
-            setSource(value);
-            setHoverSource(value);
-        },[value]);
         
         // 容器样式
         const containerClass = useMemo(() => classnames('leke-rate-container', {
