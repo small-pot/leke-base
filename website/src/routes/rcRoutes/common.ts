@@ -52,7 +52,10 @@ export default {
         {
             key:'Tooltip',
             title:'文字提示'
+        },
+        {
+            key:'Rate',
+            title:'评分'
         }
-        
     ]
 };
