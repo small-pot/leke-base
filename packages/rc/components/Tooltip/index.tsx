@@ -28,6 +28,12 @@ export default function Tooltip(props: dropdownPropsType) {
     const child=Children.only(children);
     const cloneProps:childPropsType={
         ref(node){
+            const childRef=(child as any).ref;
+            if(typeof childRef==='function'){
+                childRef(node);
+            }else if(Object.prototype.toString.call(childRef)==='[object Object]'){
+                childRef.current=node;
+            }
             triggerRef.current=node;
         }
     };
