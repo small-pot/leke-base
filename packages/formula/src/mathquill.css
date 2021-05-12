@@ -62,15 +62,6 @@
   display: inline-block;
   min-width: 1em;
 }
-.mq-math-mode .mq-root-block {
-  display: -moz-inline-box;
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  white-space: nowrap;
-  vertical-align: middle;
-}
 .mq-root-block.mq-empty:before{
   display: block;
   content:'在此处键入公式';
@@ -114,6 +105,17 @@
   -moz-user-select: none;
   user-select: none;
   box-sizing: border-box;
+}
+.mq-math-mode .mq-root-block {
+  display: -moz-inline-box;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  white-space: nowrap;
+  vertical-align: middle;
+  padding-left:3px;
+  padding-right:3px;
 }
 .mq-math-mode .mq-empty {
   background: #ccc;
