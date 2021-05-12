@@ -50,6 +50,14 @@ export default {
             title:'上传'
         },
         {
+            key:'Tooltip',
+            title:'文字提示'
+        },
+        {
+            key:'Rate',
+            title:'评分'
+        },
+        {
             key:'Tabs',
             title:'标签页'
         }
