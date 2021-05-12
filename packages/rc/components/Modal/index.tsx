@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback, useLayoutEffect } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseCircleFill } from "@leke/icons";
 import { animationDuration, prefix,SIZE } from './config';
@@ -6,7 +6,6 @@ import {ButtonType} from '../Button/type';
 import {Button} from '@leke/rc';
 import Mask from './Mask';
 import cx from 'classnames';
-import './index.less';
 
 export interface ModalProps {
     visible?: boolean,
