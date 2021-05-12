@@ -1,0 +1,97 @@
+@import "../../less/theme.less";
+@import "../Trigger/index.less";
+
+@background-color-black: rgba(0, 0, 0, 0.85);
+.leke-popup-shadowRewrite{
+    box-shadow: unset !important;
+    background: unset !important;
+}
+
+.leke-tooltip-container{
+    position: relative;
+}
+
+.leke-modifyStyle {
+    position: absolute;
+    display: block;
+    width: 12px;
+    height: 12px;
+    overflow: hidden;
+    background: transparent;
+    pointer-events: none;
+}
+
+.leke-modifyStyle > .leke-modifyStyle-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 8.5px;
+    height: 8.5px;
+    margin: auto;
+    background-color: @background-color-black;
+    pointer-events: auto;
+}
+
+.leke-contentStyle {
+    box-sizing: border-box;
+    min-width: 30px;
+    min-height: 37px;
+    padding: 0 16px;
+    color: #fff;
+    line-height: 37px;
+    text-align: left;
+    text-decoration: none;
+    word-wrap: break-word;
+    background-color: @background-color-black;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 9px 28px 8px rgba(0, 0, 0, 0.05), 
+    0px 6px 16px 0px rgba(0, 0, 0, 0.08), 
+    0px 3px 6px -4px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 9px 28px 8px rgba(0, 0, 0, 0.05), 
+    0px 6px 16px 0px rgba(0, 0, 0, 0.08), 
+    0px 3px 6px -4px rgba(0, 0, 0, 0.12);
+}
+
+.leke-contentSpanSty {
+   display: inline-block;
+   line-height: 20px;
+   height: 20px;
+   font-size: 14px;
+}
+
+.leke-popup-leftCenter .leke-modifyStyle{top: 50%; transform: translateY(-50%);}
+.leke-popup-leftTop .leke-modifyStyle{top: 8px;}
+.leke-popup-leftBottom .leke-modifyStyle{bottom: 8px;}
+.leke-popup-leftTop,.leke-popup-leftCenter, .leke-popup-leftBottom{padding-right: 12px;.leke-modifyStyle {right: -12px;>.leke-modifyStyle-content{transform: translateX(-6.2px)rotateZ(45deg);border-radius: 0 2px 0 0;}}}
+
+.leke-popup-topCenter .leke-modifyStyle{left: 50%;transform: translateX(-50%);}
+.leke-popup-topLeft .leke-modifyStyle{left: 16px;}
+.leke-popup-topRight .leke-modifyStyle{right: 16px;}
+.leke-popup-topLeft, .leke-popup-topCenter, .leke-popup-topRight{padding-bottom: 12px;.leke-modifyStyle{bottom: -12px;> .leke-modifyStyle-content{transform: translateY(-6.8px) rotateZ(45deg);border-radius: 0 0 2px 0;}}}
+
+.leke-popup-rightCenter .leke-modifyStyle{top: 50%; transform: translateY(-50%);}
+.leke-popup-rightTop .leke-modifyStyle{top: 8px;}
+.leke-popup-rightBottom .leke-modifyStyle{bottom: 8px;}
+.leke-popup-rightTop, .leke-popup-rightCenter, .leke-popup-rightBottom{padding-left: 12px;.leke-modifyStyle{left: -12px;> .leke-modifyStyle-content{transform: translateX(6.2px) rotateZ(45deg);border-radius: 0 0 0 2px;}}}
+
+.leke-popup-bottomCenter .leke-modifyStyle{left: 50%;transform: translateX(-50%);}
+.leke-popup-bottomLeft .leke-modifyStyle{left: 16px;}
+.leke-popup-bottomRight .leke-modifyStyle{right: 16px;}
+.leke-popup-bottomLeft, .leke-popup-bottomCenter, .leke-popup-bottomRight{padding-top: 12px;.leke-modifyStyle{top: -12px;> .leke-modifyStyle-content{transform: translateY(6.8px) rotateZ(45deg);border-radius: 2px 0 0 0;}}}
+
+.leke-popup-white {.leke-modifyStyle-content, .leke-contentStyle{background: @background-color;color: #262626;}}
+.leke-popup-green {.leke-modifyStyle-content, .leke-contentStyle{background: #1fb5ab;}}
+.leke-popup-red {.leke-modifyStyle-content, .leke-contentStyle{background: #ff4848;}}
+.leke-popup-orange {.leke-modifyStyle-content, .leke-contentStyle{background: #f90;}}
+.leke-popup-blue {.leke-modifyStyle-content, .leke-contentStyle{background: #479fff;}}
+.leke-popup-geekblue {.leke-modifyStyle-content, .leke-contentStyle{background: #1d39c4;}}
+.leke-popup-purple {.leke-modifyStyle-content, .leke-contentStyle{background: #722ed1;}}
+.leke-popup-magenta {.leke-modifyStyle-content, .leke-contentStyle{background: #eb2f96;}}
+.leke-popup-volcano {.leke-modifyStyle-content, .leke-contentStyle{background: #fa541c;}}
+.leke-popup-gold {.leke-modifyStyle-content, .leke-contentStyle{background: #fab52c;}}
+.leke-popup-lime {.leke-modifyStyle-content, .leke-contentStyle{background: #a0d911;}}
+.leke-popup-polargreen {.leke-modifyStyle-content, .leke-contentStyle{background: #52c41a;}}
+.leke-popup-yellow {.leke-modifyStyle-content, .leke-contentStyle{background: #FADB14;}}

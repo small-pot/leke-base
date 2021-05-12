@@ -12,10 +12,11 @@ export { default as Select } from "./Select";
 export { default as VideoPlayer } from "./VideoPlayer";
 export { default as AudioPlayer } from "./AudioPlayer";
 export { default as AudioRecorder } from "./AudioRecorder";
+export { default as Tooltip} from './Tooltip';
 export {default as Spin} from './Spin';
 export {default as Input} from './Input';
 export {default as Upload} from './Upload';
 export {default as Radio} from './Radio';
 export { default as BusinessHeader } from "./BusinessHeader";
+export { default as Rate } from "./Rate";
 export { default as Modal } from "./Modal";
-
