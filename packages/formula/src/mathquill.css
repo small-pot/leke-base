@@ -1,11 +1,8 @@
-#math{
-  min-height:88px;
-  border:solid rgba(0, 0, 0, 0.25) 1px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  outline: none;
-  position: relative;
+.mq-editable-field{
+  position: absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%);
 }
 .mq-editable-field .mq-cursor {
   border-left: 1px solid black;
@@ -19,17 +16,12 @@
 .mq-editable-field .mq-cursor.mq-blink {
   visibility: hidden;
 }
-.mq-editable-field,
-.mq-math-mode .mq-editable-field {
-  border: 1px solid gray;
-}
 .mq-math-mode .mq-editable-field {
   margin: 1px;
 }
 .mq-editable-field .mq-latex-command-input {
   color: inherit;
   font-family: "Courier New", monospace;
-  border: 1px solid gray;
   padding-right: 1px;
   margin-right: 1px;
   margin-left: 2px;
@@ -61,6 +53,16 @@
 .mq-root-block .mq-empty,.mq-root-block .mq-hasCursor{
   display: inline-block;
   min-width: 1em;
+}
+.mq-math-mode .mq-root-block {
+  display: -moz-inline-box;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 3px;
 }
 .mq-root-block.mq-empty:before{
   display: block;
@@ -105,17 +107,6 @@
   -moz-user-select: none;
   user-select: none;
   box-sizing: border-box;
-}
-.mq-math-mode .mq-root-block {
-  display: -moz-inline-box;
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  white-space: nowrap;
-  vertical-align: middle;
-  padding-left:3px;
-  padding-right:3px;
 }
 .mq-math-mode .mq-empty {
   background: #ccc;
@@ -341,6 +332,7 @@
   border-top: 1px solid black;
   margin-top: 1px;
   padding-top: 0.2em;
+  min-width: 1em;
 }
 .mq-math-mode .mq-overarrow:before {
   display: block;

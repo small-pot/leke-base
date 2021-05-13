@@ -4,7 +4,7 @@ window.jQuery = $;
 import './mathquill';
 import Sketchpad from './sketchpad';
 import template from "./template";
-import rasterizeHTML from 'rasterizehtml';
+import html2canvas from 'html2canvas';
 import './index.less';
 import css from './mathquill.css';
 
@@ -19,46 +19,72 @@ const config = {
 export default class Formula {
     constructor(el) {
         el.innerHTML = template();
-        this.$root = $('#math');
-        this.root = this.$root[0];
-        const MQ = MathQuill.getInterface(2);
-        this.mathField = MQ.MathField(this.root, config);
+        // this.$root = $('#math');
+        // this.root = this.$root[0];
+        // const MQ = MathQuill.getInterface(2);
+        // this.mathField = MQ.MathField(this.root, config);
         this.init();
     }
-
-    latex(latex) {
-        if (latex === undefined) {
+    latex(latex){
+        if(latex===undefined){
             return this.mathField.latex();
         }
         return this.mathField.latex(latex);
     }
-
-    init() {
+    init(){
+        const iframe=this.iframe=document.createElement('iframe');
+        $('#_formula_result').append(iframe);
+        const doc=iframe.contentWindow.document;
+        doc.write(`<style>body{margin:0;padding:0;}${css.toString()}</style>`);
+        doc.write('<div id="math"></div>');
+        doc.write(`
+            <script>
+                window.toDataURL=function(latex) {
+                    var el=document.querySelector("#math .mq-root-block")
+                    if(!latex||!el){
+                        return Promise.resolve(null)
+                    }
+                    return window.html2canvas(el,{scale:1}).then(function (canvas) {
+                        return canvas.toDataURL()
+                    })
+                }
+            </script>
+        `);
+        const root=doc.getElementById('math');
+        const MQ = MathQuill.getInterface(2);
+        this.mathField = MQ.MathField(root, config);
         this.bindEvent();
-        this.latex('');
+    }
+    toDataURL(){
+        const latex=this.mathField.latex();
+        const iframeWindow=this.iframe.contentWindow;
+        if(!iframeWindow.html2canvas){
+            iframeWindow.html2canvas=html2canvas;
+        }
+        return this.iframe.contentWindow.toDataURL(latex);
     }
 
-    toDataURL() {
-        const latex = this.mathField.latex();
-        const el = $('#math .mq-root-block')[0];
-        if (!latex || !el) {
-            return Promise.resolve(null);
-        }
-        const canvas = document.createElement("canvas");
-        canvas.width=el.offsetWidth;
-        canvas.height=el.offsetHeight;
-        const cloneNode=this.root.cloneNode(true);
-        cloneNode.style.width=this.root.clientWidth+'px';
-        const context = canvas.getContext('2d');
-        const html=`
-            <style>body{margin:0;padding:0;}${cssString}</style>
-            ${cloneNode.outerHTML}
-        `;
-        return rasterizeHTML.drawHTML(html).then(res=>{
-            context.drawImage(res.image,el.offsetLeft,el.offsetTop,el.offsetWidth,el.offsetHeight,0,0,el.offsetWidth,el.offsetHeight);
-            return canvas.toDataURL();
-        });
-    }
+    // toDataURL() {
+    //     const latex = this.mathField.latex();
+    //     const el = $('#math .mq-root-block')[0];
+    //     if (!latex || !el) {
+    //         return Promise.resolve(null);
+    //     }
+    //     const canvas = document.createElement("canvas");
+    //     canvas.width=el.offsetWidth;
+    //     canvas.height=el.offsetHeight;
+    //     const cloneNode=this.root.cloneNode(true);
+    //     cloneNode.style.width=this.root.clientWidth+'px';
+    //     const context = canvas.getContext('2d');
+    //     const html=`
+    //         <style>body{margin:0;padding:0;}${cssString}</style>
+    //         ${cloneNode.outerHTML}
+    //     `;
+    //     return rasterizeHTML.drawHTML(html).then(res=>{
+    //         context.drawImage(res.image,el.offsetLeft,el.offsetTop,el.offsetWidth,el.offsetHeight,0,0,el.offsetWidth,el.offsetHeight);
+    //         return canvas.toDataURL();
+    //     });
+    // }
 
     bindEvent() {
         let sketchpad = null;

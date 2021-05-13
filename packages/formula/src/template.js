@@ -6,8 +6,9 @@ const jmeMath = [
         x:0,
         y:0,
         list:[
-            "{/}frac{}{}","^{}/_{}","{/}newSup{}{}","{/}newSub{}{}","{/}newSupSub{}{}{}","{/}bar{}","{/}sqrt{}","{/}nthroot{}{}",
-            "{/}sum^{}_{}","{/}log_{}","{/}int_{}^{}","{/}oint_{}^{}"
+            "\\frac{}{}","^{}/_{}","\\newSup{}{}","\\newSub{}{}","\\newSupSub{}{}{}","\\bar{}",
+            "\\sqrt{}","\\nthroot{}{}","\\sum^{}_{}","\\log_{}","\\int_{}^{}","\\oint_{}^{}",
+            "\\overrightarrow{}"
         ]
     },
     {
@@ -15,21 +16,23 @@ const jmeMath = [
         x:0,
         y:-56,
         list:[
-            "+","-","{/}pm","{/}times","{/}ast","{/}div","/","{/}bigtriangleup",
-            "=","{/}ne","{/}approx",">","<","{/}ge","{/}le","{/}infty",
-            "{/}cap","{/}cup","{/}because","{/}therefore","{/}subset","{/}supset","{/}subseteq","{/}supseteq",
-            "{/}nsubseteq","{/}nsupseteq","{/}in","{/}ni","{/}notin","{/}mapsto","{/}leftarrow","{/}rightarrow",
-            "{/}Leftarrow","{/}Rightarrow","{/}leftrightarrow","{/}Leftrightarrow"
+            "+","-","\\pm","\\times","\\div","\\ast","/","\\bigtriangleup",
+            "=","\\ne","\\approx",">","<","\\ge","\\le","\\infty",
+            "\\cap","\\cup","\\because","\\therefore","\\supset","\\subset","\\supseteq","\\subseteq",
+            "\\nsupseteq","\\nsubseteq","\\in","\\ni","\\notin","\\mapsto","\\leftarrow","\\rightarrow",
+            "\\Leftarrow","\\Rightarrow","\\leftrightarrow","\\Leftrightarrow","\\perp","\\circ",
+            "\\bigotimes","\\bigodot","\\angle","\\measuredangle","\\lbrace","\\rbrace","[","]",
+            "(",")"
         ]
     },
     {
         title:"字母",
         x:0,
-        y:-(56+32+32+24+12),
+        y:-(56+32+32+24+12+32+12),
         list:[
-            "{/}alpha","{/}beta","{/}gamma","{/}delta","{/}varepsilon","{/}varphi","{/}lambda","{/}mu",
-            "{/}rho","{/}sigma","{/}omega","{/}Gamma","{/}Delta","{/}Theta","{/}Lambda","{/}Xi",
-            "{/}Pi","{/}Sigma","{/}Upsilon","{/}Phi","{/}Psi","{/}Omega"
+            "\\alpha","\\beta","\\gamma","\\delta","\\varepsilon","\\varphi","\\lambda","\\mu",
+            "\\rho","\\sigma","\\omega","\\Gamma","\\Delta","\\Theta","\\Lambda","\\Xi",
+            "\\Pi","\\Sigma","\\Upsilon","\\Phi","\\Psi","\\Omega","\\pi","\\theta"
         ]
     }
 ];

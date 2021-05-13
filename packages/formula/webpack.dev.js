@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cssOptions=[
     "css-loader",
     {
@@ -16,18 +18,13 @@ const cssOptions=[
     },
 ];
 module.exports = {
-    mode: 'production',
-    devtool: false,
-    entry: {Formula:path.resolve(__dirname, 'src', 'index.js')},
+    mode:'development',
+    devtool: 'eval-source-map',
+    entry: './index.js',
+    target:['web','es3'],
     output: {
-        path: path.resolve(__dirname, "dist"),
-        filename: "[name].min.js",
-        library: "[name]",
-        libraryTarget: "umd",
-        libraryExport: "default",
-        globalObject: "this",
+        path: path.resolve(__dirname, './dist')
     },
-    target: ["web", "es5"],
     resolve: {
         extensions: [".ts",".js"]
     },
@@ -71,5 +68,20 @@ module.exports = {
                 ]
             }
         ]
+    },
+    plugins:[
+        new HtmlWebpackPlugin({
+            filename:'index.html',
+            template:path.join(__dirname,'./index.html')
+        }),
+        new webpack.HotModuleReplacementPlugin()
+    ],
+    devServer: {
+        port:8989,
+        host: '0.0.0.0',
+        hot:true,
+        compress:true,
+        historyApiFallback:true,
+        disableHostCheck: true,
     }
 };
