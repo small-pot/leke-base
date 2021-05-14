@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import { CloseCircleFill } from "@leke/icons";
 import { animationDuration, prefix,SIZE } from './config';
 import {ButtonType} from '../Button/type';
-import {Button} from '@leke/rc';
 import Mask from './Mask';
 import cx from 'classnames';
+import Button from '../Button';
 
 export interface ModalProps {
     visible?: boolean,
