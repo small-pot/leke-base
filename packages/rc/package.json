@@ -23,7 +23,7 @@
     "@leke/AV": "^1.0.9",
     "@leke/hooks": "^1.0.4",
     "@leke/http": "^1.0.1",
-    "@leke/icons": "^1.0.5",
+    "@leke/icons": "^1.0.6",
     "classnames": "^2.2.6",
     "omit.js": "^2.0.2",
     "jsonp": "^0.2.1"
