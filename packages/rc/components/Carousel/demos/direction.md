@@ -11,14 +11,14 @@ export default function(){
     return(
         <div className='carousel-demo'>
             <Carousel style={{width:120,height:60}} dots={false}>
-                <div style={{backgroundColor:'red'}}></div>
-                <div style={{backgroundColor:'green'}}></div>
-                <div style={{backgroundColor:'blue'}}></div>
+                <div style={{backgroundColor:'#60D195'}}></div>
+                <div style={{backgroundColor:'#ff9900'}}></div>
+                <div style={{backgroundColor:'#479FFF'}}></div>
             </Carousel>   
             <Carousel style={{width:120,height:60}} vertical dots={false}>
-                <div style={{backgroundColor:'red'}}></div>
-                <div style={{backgroundColor:'green'}}></div>
-                <div style={{backgroundColor:'blue'}}></div>
+                <div style={{backgroundColor:'#60D195'}}></div>
+                <div style={{backgroundColor:'#ff9900'}}></div>
+                <div style={{backgroundColor:'#479FFF'}}></div>
             </Carousel> 
         </div>
     );
