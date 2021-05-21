@@ -3,6 +3,7 @@ const baseWebpackConfig=require('./webpack.base.config');
 const {merge}=require('webpack-merge');
 const MiniCssExtractPlugin=require("mini-css-extract-plugin");
 const CaseSensitivePathsPlugin=require('case-sensitive-paths-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 const ResourcePlugin=require('./resource-plugin');
 const getRules=require('./getRules');
 const {resolveEntry,webpackConfig}=require('../resolveConfig');
@@ -50,8 +51,8 @@ const serverConfig = merge(baseWebpackConfig,{
     optimization: {
         minimize:false
     },
-    target: "node",  // 指定node运行环境
-    ///externals: [nodeExternals()],  // 不绑定node模块，保留为 require()
+    target: "node",
+    externals: [nodeExternals()],
     module: {
         rules:getRules('node')
     },
@@ -59,7 +60,7 @@ const serverConfig = merge(baseWebpackConfig,{
         new webpack.DefinePlugin({
             "process.env.NODE_ENV": JSON.stringify('development'),
             "process.env.WEB": JSON.stringify(false)
-        }),
+        })
     ]
 });
 

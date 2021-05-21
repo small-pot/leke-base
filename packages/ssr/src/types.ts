@@ -1,6 +1,5 @@
 import {ComponentClass, FunctionComponent, ReactNode} from "react";
 import {Request, Response,NextFunction} from "express";
-import {AxiosInstance} from 'axios';
 
 type headContentType=ReactNode|((req:Request)=>ReactNode)
 
@@ -18,7 +17,7 @@ interface baseData{
 }
 
 export interface getInitialDataType<T> {
-    (http:AxiosInstance,req:Request,res:Response):Promise<T>
+    (http:any,req:Request,res:Response):Promise<T>
 }
 export interface pageFC<T> extends FunctionComponent<dataType<T>&baseData>{
     getInitialData:getInitialDataType<T>,
