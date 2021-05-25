@@ -29,14 +29,3 @@ export default function(){
     );
 }
 ```
-
-```css
-.spin-basics {
-  display: inline-flex;
-  align-items: center;
-}
-
-.spin-basics .leke-spin-animation {
-  margin-right: 20px;
-}
-```

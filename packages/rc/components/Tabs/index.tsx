@@ -10,7 +10,7 @@ import { ITabsProps, navType, ITabPaneProps, IDefaultTabBar } from './types';
 import DefaultTabBar from "./DefaultTabBar";
 
 const Tabs = (props: ITabsProps) => {
-    const { children, onChange, animated, tabPosition, style, type, activeKey, defaultActiveKey, renderTabBar } = props;
+    const { children, onChange, animated, tabPosition, style, type, activeKey, defaultActiveKey, size, renderTabBar } = props;
     const tabBarRef = useRef(null);
     const [navList, setNavList] = useState<navType[]>([]); // 导航栏tab数组
     const [barStyle, setBarStyle] = useState({}); // bar行内样式
@@ -42,13 +42,16 @@ const Tabs = (props: ITabsProps) => {
     }, [children]);
 
     const tabsCls = cn("leke-tabs", `leke-tabs-${tabPosition}`, {
-        [`leke-tabs-nav-card`]: ['card','editable-card'].includes(type)
+        [`leke-tabs-nav-card`]: ['card','editable-card'].includes(type),
+        [`leke-tabs-nav-separate`]: ['separate'].includes(type),
+        [`leke-tabs-nav-${size}`]: !!size
     });
 
     const contentCls = cn("leke-tabs-content", { ["leke-tabs-content-animated"]: animated });
 
     const defaultProps: IDefaultTabBar = {
         ...props,
+        ref: tabBarRef,
         currentTabKey,
         setCurrentTabKey,
         barStyle,
@@ -59,7 +62,7 @@ const Tabs = (props: ITabsProps) => {
 
     return (
         <div className={tabsCls} style={style}>
-            { renderTabBar ? renderTabBar(defaultProps, DefaultTabBar) : <DefaultTabBar ref={tabBarRef} {...defaultProps}/> }
+            { renderTabBar ? renderTabBar(defaultProps, DefaultTabBar) : <DefaultTabBar {...defaultProps}/> }
             <div className="leke-tabs-content-wrap">
                 <div style={{ marginLeft: - currentTabIndex * 100 + '%' }} className={contentCls}>
                     {renderContent}
@@ -79,6 +82,7 @@ Tabs.TabPane = TabPane;
 Tabs.defaultProps = {
     tabPosition: 'top',
     type: 'line',
+    size: 'default',
     centered: false,
     hideAdd: false,
     addIcon: <Plus />,

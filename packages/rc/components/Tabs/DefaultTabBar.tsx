@@ -20,7 +20,6 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
         currentEle: null // 选中的元素
     }); // 当前选中tab样式
     const maxScrollLength = useRef(-1); // 最大滚动长度
-    // const [currentTabKey, setCurrentTabKey] = useControl<string | number>(activeKey ? String(activeKey) : undefined, onChange, defaultActiveKey ? String(defaultActiveKey) : undefined); // 当前选中tab的key
     const [scrollLength, setScrollLength] = useState(0); // 滚动长度
     const [isShowScroll, setIsShowScroll] = useState(false); // 是否显示滚动
     const [navList, setNavList] = useState<navType[]>([]); // 导航栏tab数组
@@ -52,7 +51,7 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
 
     /**跳转交互 */
     const scrollToTab = useCallback((key, index) => {
-        const currentEle = navRef.current.getElementsByClassName(`leke-tabs-nav-item`)[index];
+        const currentEle = navRef.current.getElementsByClassName(`leke-tabs-nav-item-text`)[index];
         currentTabInfo.current = {
             ...currentTabInfo.current,
             index,
@@ -83,7 +82,8 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
         // 监听滚动事件
         scrollEventLister.current = (e) => {
             setScrollLength(v => {
-                const newLength = e.deltaY > 0 ? v - 100 : v + 100;
+                const isPlus = e.wheelDelta ? e.wheelDelta > 0 : e.detail ? e.detail < 0 : false;
+                const newLength = isPlus ? v + 100 : v - 100;
                 const maxLength = maxScrollLength.current = navRef.current.getElementsByClassName('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll] - navRef.current[postionOpt.length];
                 return newLength > 0 ? 0 : newLength < -maxLength ? -maxLength : newLength;
             } );
@@ -108,7 +108,7 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
                 let index = navList.findIndex(item => item.key === key);
                 index = index === -1 ? 0 : index; // 初始下标
 
-                const currentEle = navRef.current.getElementsByClassName(`leke-tabs-nav-item`)[index];
+                const currentEle = navRef.current.getElementsByClassName(`leke-tabs-nav-item-text`)[index];
                 currentTabInfo.current = {
                     ...currentTabInfo.current,
                     key,
@@ -120,20 +120,18 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
             }
         } else {
             const index = navList.findIndex(item => item.key === currentTabKey);
-            // 再次进来,更新
+            // 再次进来,表示内容有更新
             if (navList.length && index !== -1) {
-                // 更新
+                // 滚动到当前选中的tab
                 scrollToTab(currentTabKey,index);
-            } else {
-                // 清空
-                currentTabInfo.current = {
-                    ...currentTabInfo.current,
-                    key: null,
-                    index: 0,
-                    currentEle: null
-                };
-                setBarStyle({});
-                setCurrentTabKey(-1);
+            }
+
+            if(isShowScroll) {
+                // 校正是否超出最大和最小长度
+                setScrollLength(v => {
+                    const maxLength = maxScrollLength.current = navRef.current?.getElementsByClassName('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll] - navRef.current[postionOpt.length];
+                    return v > 0 ? 0 : v < -maxLength ? -maxLength : v;
+                } );
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -146,8 +144,8 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
                 if (item.type.name !== 'TabPane') {
                     return { key: null, tab: null, children: item };
                 }
-                const { disabled, closable } = item.props;
-                return { key: item.key, tab: item.props.tab, disabled, closable, children: item };
+                const { disabled, closable, tabIcon } = item.props;
+                return { key: item.key, tab: item.props.tab, disabled, closable, tabIcon, children: item };
             }).filter(item => item.key !== null);
         });
     }, [children]);
@@ -201,19 +199,19 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
             }
         }
         return (
-            <div className="leke-tabs-nav-more">
+            <ul className="leke-tabs-nav-more">
                 {showMoreNavList.map(item => (
-                    <p className={cn({ ['leke-tabs-nav-more-disabled']: item.disabled })} key={item.key} onClick={() => handleTitleCilck(item, item.index)}>
+                    <li className={cn({ ['leke-tabs-nav-more-disabled']: item.disabled })} key={item.key} onClick={() => handleTitleCilck(item, item.index)}>
                         {item.tab}
-                    </p>
+                    </li>
                 ))}
-            </div>
+            </ul>
         );
     },[isShowScroll, isInVisibleArea, navList, handleTitleCilck]);
 
     // 渲染导航
     const renderNav = navList.map((item, index) => {
-        const { key, disabled, tab, closable } = item;
+        const { key, disabled, tab, closable, tabIcon } = item;
         const cls = cn('leke-tabs-nav-item', {
             [`leke-tabs-nav-active`]: currentTabKey === key,
             [`leke-tabs-nav-disabled`]: disabled
@@ -221,7 +219,10 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
         const onClick = () => handleTitleCilck(item, index);
         return (
             <div key={key} onClick={onClick} className={cls}>
-                <span>{tab}</span>
+                { tabIcon ? <span>
+                    <span className="leke-tabs-nav-item-icon">{tabIcon}</span>
+                    <span className="leke-tabs-nav-item-text">{tab}</span>
+                </span> : <span className="leke-tabs-nav-item-text">{tab}</span>}
                 {(allowEdit && !closable && !disabled) && (
                     <div onClick={(e) => handleEdit(key, 'remove', e)} className="leke-tabs-tabpane-close-icon">
                         <Close />

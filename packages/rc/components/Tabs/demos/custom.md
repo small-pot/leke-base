@@ -16,7 +16,7 @@ export default function(){
     };
     return(
         <Tabs defaultActiveKey="2" onChange={callback}>
-            <TabPane tab={<span><ExclamationcCircleFill /> 332222332</span>} key="1">
+            <TabPane tabIcon={<ExclamationcCircleFill />} tab="Tab1" key="1">
       Content of Tab Pane 1
             </TabPane>
             <TabPane tab="Tab 2" key="2">
@@ -27,16 +27,5 @@ export default function(){
             </TabPane>
         </Tabs>
     );
-}
-```
-
-```css
-.spin-basics {
-  display: inline-flex;
-  align-items: center;
-}
-
-.spin-basics .leke-spin-animation {
-  margin-right: 20px;
 }
 ```

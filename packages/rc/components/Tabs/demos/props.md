@@ -7,3 +7,9 @@
 | spinning | 是否为加载中状态 | boolean | true |
 | tip | 当作为包裹元素时，可以自定义描述文案 | string | _ |
 | wrapperClassName | 包装器的类属性 | string | _ |
+| wrapperClassName | 包装器的类属性 | string | _ |
+| wrapperClassName | 包装器的类属性 | string | _ |
+| wrapperClassName | 包装器的类属性 | string | _ |
+| wrapperClassName | 包装器的类属性 | string | _ |
+| wrapperClassName | 包装器的类属性 | string | _ |
+| wrapperClassName | 包装器的类属性 | string | _ |

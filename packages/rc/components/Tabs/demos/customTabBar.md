@@ -1,10 +1,10 @@
 ---    
-title: 居中显示
-description: 支持居中显示
+title: 自定义页签头
+description: 支持自定义页签头
 ---
 
 ```jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {Tabs} from '@leke/rc';
 
 const { TabPane } = Tabs;
@@ -13,8 +13,17 @@ export default function(){
     const callback = (key) => {
         console.log(key);
     };
+
+    const renderTabBar = (props,DefaultTabBar) => {
+        return (
+            <div className="leke-tabs-tabbar-bg">
+                <DefaultTabBar {...props} />
+            </div>
+        );
+    };
+
     return(
-        <Tabs centered defaultActiveKey="1" onChange={callback}>
+        <Tabs onChange={callback} renderTabBar={renderTabBar}>
             <TabPane tab="Tab 1" key="1">
       Content of Tab Pane 1
             </TabPane>
@@ -28,4 +37,13 @@ export default function(){
         </Tabs>
     );
 }
+```
+
+```css
+.leke-tabs-tabbar-bg {
+  /* position: sticky;
+  top: 300px; */
+  color: red!important;
+}
+
 ```

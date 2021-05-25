@@ -15,7 +15,7 @@ export default function(){
     };
     return(
         <Tabs onChange={callback}>
-            <TabPane tab="Tab 122323232323" key="1">
+            <TabPane tab="Tab 1 long" key="1">
       Content of Tab Pane 1
             </TabPane>
             <TabPane tab="Tab 2" key="2">
@@ -27,16 +27,5 @@ export default function(){
             <div>22312312312</div>
         </Tabs>
     );
-}
-```
-
-```css
-.spin-basics {
-  display: inline-flex;
-  align-items: center;
-}
-
-.spin-basics .leke-spin-animation {
-  margin-right: 20px;
 }
 ```

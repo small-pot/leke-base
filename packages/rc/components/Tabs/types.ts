@@ -5,7 +5,8 @@ export interface ITabsProps {
   children: React.ReactElement<HTMLElement & ITabPaneProps, any>;
   centered?: boolean;
   animated?: boolean;
-  type?: "line" | "card" | "editable-card";
+  size?: 'large' | 'default' | 'small';
+  type?: "line" | "card" | "editable-card" | "separate";
   tabPosition?: "top" | "right" | "bottom" | "left";
   style?: CSSProperties;
   activeKey?: string | number;
@@ -21,6 +22,7 @@ export interface ITabsProps {
 export interface ITabPaneProps {
   key: string | number;
   tab?: string;
+  tabIcon?: ReactNode;
   closeIcon?: ReactNode;
   forceRender?: boolean;
   disabled?: boolean;
@@ -30,6 +32,7 @@ export interface ITabPaneProps {
 
 
 export interface IDefaultTabBar extends ITabsProps {
+  ref: any;
   currentTabKey: string | number;
   setCurrentTabKey: any;
   barStyle: {};

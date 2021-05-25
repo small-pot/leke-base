@@ -21,21 +21,29 @@ export default function(){
         content: `Content of Tab Pane ${i + 1}`
     })));
     const onChange = (key) => {
-        // console.log(key);
         setActiveKey(key);
     };
     const onEdit = (key, action) => {
+        // console.log('key =>',key, action);
         if(action === 'add') {
             setData(d => d.concat({
                 key: d[d.length - 1].key+1,
                 tab: `Tab ${d[d.length - 1].key + 1}`,
                 content: `Content of Tab Pane ${d[d.length - 1].key + 1}`
             }));
-            // console.log(data[data.length - 1].key+1+'');
-            // setTimeout(() => {
+            console.log('new ======>', data[data.length - 1].key+1);
             setActiveKey(data[data.length - 1].key+1);
-            // },1000);
         } else if(action === 'remove') {
+            let newKey = activeKey == key ? undefined : activeKey;
+            const findIndex = data.findIndex(i => i.key == key);
+            if(!newKey && findIndex !== -1 && data.length > 1) {
+                if(findIndex === 0) {
+                    newKey = data[1].key;
+                }else {
+                    newKey = data[findIndex - 1].key;
+                }
+                setActiveKey(newKey);
+            }
             setData(d => d.filter(i => i.key != key));
         }
     };
@@ -63,16 +71,5 @@ export default function(){
             </Tabs>
         </>
     );
-}
-```
-
-```css
-.spin-basics {
-  display: inline-flex;
-  align-items: center;
-}
-
-.spin-basics .leke-spin-animation {
-  margin-right: 20px;
 }
 ```

@@ -13,41 +13,41 @@ export const returnTabPositionAttribute = (tabPosition) => {
     switch (tabPosition) {
     case 'top':
         return {
-            length: 'clientWidth',
+            length: 'offsetWidth',
             start: 'offsetLeft',
-            barStyle: (length, postion) => ({ width: length, left: postion }),
+            barStyle: (length, postion) => ({ left: postion + length / 2 - 14 }),
             scroll: 'scrollWidth',
             transform: (scrollLength) => `translateX(${scrollLength}px)`
         };
     case 'bottom':
         return {
-            length: 'clientWidth',
+            length: 'offsetWidth',
             start: 'offsetLeft',
-            barStyle: (length, postion) => ({ width: length, left: postion }),
+            barStyle: (length, postion) => ({ left: postion + length / 2 - 14 }),
             scroll: 'scrollWidth',
             transform: (scrollLength) => `translateX(${scrollLength}px)`
         };
     case 'left':
         return {
-            length: 'clientHeight',
+            length: 'offsetHeight',
             start: 'offsetTop',
-            barStyle: (length, postion) => ({ height: length, top: postion }),
+            barStyle: (length, postion) => ({ top: postion + length / 2 - 14 }),
             scroll: 'scrollHeight',
             transform: (scrollLength) => `translateY(${scrollLength}px)`
         };
     case 'right':
         return {
-            length: 'clientHeight',
+            length: 'offsetHeight',
             start: 'offsetTop',
-            barStyle: (length, postion) => ({ height: length, top: postion }),
+            barStyle: (length, postion) => ({ top: postion + length / 2 - 14 }),
             scroll: 'scrollHeight',
             transform: (scrollLength) => `translateY(${scrollLength}px)`
         };
     default:
         return {
-            length: 'clientWidth',
+            length: 'offsetWidth',
             start: 'offsetLeft',
-            barStyle: (length, postion) => ({ width: length, left: postion }),
+            barStyle: (length, postion) => ({ left: postion + length / 2 - 14 }),
             scroll: 'scrollWidth',
             transform: (scrollLength) => `translateX(${scrollLength}px)`
         };

@@ -1,7 +1,185 @@
 @import "../../less/theme.less";
+
+/*****************************变量************************************************/
+
 @prefix: leke-tabs;
 
-// 基础
+// 字体大小
+@small-font-size: 14px;
+@default-font-size: 14px;
+@large-font-size: 16px;
+
+// 普通边距
+@small-horizontal-padding: 8px 0;
+@default-horizontal-padding: 12px 0;
+@large-horizontal-padding: 15px 0;
+
+// 卡片边距
+@small-card-padding: 6px 16px;
+@default-card-padding: 8px 16px;
+@large-card-padding: 8px 16px;
+
+/*****************************函数************************************************/
+
+// 预设大小
+.leke-tabs-nav-size(@size) {
+  // 通用字体大小
+  .@{prefix}.@{prefix}-nav-@{size} .@{prefix}-nav{
+    font-size: ~"@{@{size}-font-size}";
+  }
+
+  // 普通样式
+  .@{prefix}.@{prefix}-nav-@{size}:not(.@{prefix}-nav-separate):not(.@{prefix}-nav-card):not(.@{prefix}-right):not(.@{prefix}-left) .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-item {
+      padding: ~"@{@{size}-horizontal-padding}";
+  }
+
+  // 卡片样式
+  .@{prefix}.@{prefix}-nav-@{size}.@{prefix}-nav-card:not(.@{prefix}-right):not(.@{prefix}-left) .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-item {
+      padding: ~"@{@{size}-card-padding}";
+  }
+}
+
+// 纵向布局
+.postionVertical(@postion) {
+  .@{prefix}-@{postion} {
+    flex-direction: row;
+
+    .@{prefix}-nav{
+      flex-direction: column;
+      margin: 0 11px 0;
+      align-items: inherit;
+      &::before {
+        left: inherit;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-bottom: none;
+        border-right: 1px solid #f0f0f0;
+      }
+      
+      .@{prefix}-nav-wrap .@{prefix}-nav-list {
+        flex-direction: column;
+    
+        .@{prefix}-nav-item {
+          margin: 8px 0 0 0;
+          padding: 8px 24px;
+
+          &:first-child {
+            margin: 0;
+          }
+        }
+
+        .@{prefix}-nav-bar {
+          left: inherit;
+          bottom: inherit;
+          right: 0;
+          top: 0;
+          width: 4px;
+          height: 28px;
+          transition: height .3s, top .3s, background-color .3s;
+        }
+      }
+
+      .@{prefix}-nav-wrap-ping-left::before {
+        content: "";
+        width: 100%;
+        height: 40px;
+        left: 0;
+        top: 0;
+        right: inherit;
+        bottom: inherit;
+        box-shadow: inset 0 10px 8px -8px rgba(10, 9, 9, 0.08);
+      }
+
+      .@{prefix}-nav-wrap-ping-right::after {
+          content: "";
+          width: 100%;
+          height: 40px;
+          left: 0;
+          bottom: 0;
+          right: inherit;
+          top: inherit;
+          box-shadow: inset 0 -10px 8px -8px rgba(0,0,0,0.08);
+      }
+    }
+  }
+
+  .@{prefix}-nav-card.@{prefix}-left .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-active {
+      border-right: 1px solid #fff;
+  }
+
+  .@{prefix}-nav-card.@{prefix}-right  .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-active {
+      border-left: 1px solid #fff;
+  }
+}
+
+// 右侧布局
+.postionVertical(@postion) when (@postion = right) {
+  .@{prefix}-@{postion} {
+    flex-direction: row-reverse;
+
+    .@{prefix}-nav {
+      margin: 0;
+      &::before {
+        left: 0;
+        right: inherit;
+        border-bottom: none;
+      }
+      .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-bar {
+          left: 0;
+          right: inherit;
+      }
+    }
+  }
+}
+
+.postionHorizontal(@postion) {
+  .@{prefix}-nav-card.@{prefix}-top .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-active {
+      border-bottom: 1px solid #fff;
+  }
+
+  .@{prefix}-nav-card.@{prefix}-bottom .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-active {
+      border-top: 1px solid #fff;
+  }
+}
+
+// top布局
+.postionHorizontal(@postion) when (@postion = top) {
+  .@{prefix}-@{postion} {
+    flex-direction: column;
+
+    .@{prefix}-nav {
+      margin: 0 0 11px;
+    }
+  }
+}
+
+// bottom布局
+.postionHorizontal(@postion) when (@postion = bottom) {
+  .@{prefix}-@{postion} {
+    flex-direction: column-reverse;
+
+    .@{prefix}-nav {
+      margin: 11px 0 0;
+      &::before {
+        border-bottom: none;
+        border-top: 1px solid #f0f0f0;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: inherit;
+      }
+    }
+
+    .@{prefix}-nav-bar {
+      top: 0;
+    }
+  }
+}
+
+/*****************************样式************************************************/
+
+// 基础样式
 .@{prefix} {
   display: flex;
   flex-direction: column;
@@ -11,9 +189,8 @@
     background-color: #ffffff;
     font-size: 14px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
     position: relative;
+
     &::before {
       border-bottom: 1px solid #f0f0f0;
       content: "";
@@ -28,11 +205,14 @@
       position: relative;
       flex: 1;
       overflow: hidden;
+      display: flex;
+      align-items: center;
 
       .@{prefix}-nav-list {
         display: flex;
         transition: transform .3s;
         position: relative;
+        height: 100%;
       
         .@{prefix}-nav-item {
             white-space: nowrap;
@@ -45,23 +225,39 @@
             display: flex;
             align-items: center;
             &:hover span {
-                color: @hover-color
+              color: @hover-color
+            }
+
+            &:active span {
+              color: @click-color
             }
 
             &:first-child {
               margin-left: 0;
             }
 
+            .@{prefix}-nav-item-icon {
+              display: inline-block;
+              text-align: center;
+              text-rendering: optimizeLegibility;
+              text-transform: none;
+              vertical-align: -.125em;
+              margin-right: 12px
+            }
+
             .@{prefix}-tabpane-close-icon {
+              display: inline-block;
               font-size: 12px;
-              padding: 1px 6px;
               margin-left: 8px;
               color: rgba(0, 0, 0, 0.45);
               transition: .3s;
+              
+              & i {
+                vertical-align: -.125em;
+              }
 
               &:hover {
                 color: rgba(0, 0, 0, 0.85);
-                transform: scale(1.1);
               }
             }
         }
@@ -83,8 +279,9 @@
           left: 0;
           bottom: 0;
           width: 0px;
-          height: 2px;
-          border-radius: 1px;
+          width: 28px;
+          height: 4px;
+          border-radius: 2px;
           background-color: @base-color;
           transition: width .3s, left .3s, background-color .3s;
         }
@@ -159,121 +356,11 @@
   }
 }
 
-// 纵向布局
-.postionVertical(@postion) {
-  .@{prefix}-@{postion} {
-    flex-direction: row;
-
-    .@{prefix}-nav{
-      flex-direction: column;
-      margin: 0 11px 0;
-      align-items: inherit;
-      &::before {
-        left: inherit;
-        right: 0;
-        bottom: 0;
-        top: 0;
-        border-bottom: none;
-        border-right: 1px solid #f0f0f0;
-      }
-      
-      .@{prefix}-nav-wrap .@{prefix}-nav-list {
-        flex-direction: column;
-    
-        .@{prefix}-nav-item {
-          margin: 36px 0 0 0;
-          padding: 0 12px;
-
-          &:first-child {
-            margin: 0;
-          }
-        }
-
-        .@{prefix}-nav-bar {
-          left: inherit;
-          bottom: inherit;
-          right: 0;
-          top: 0;
-          width: 2px;
-          height: 0px;
-          transition: height .3s, top .3s, background-color .3s;
-        }
-      }
-
-      .@{prefix}-nav-wrap-ping-left::before {
-        content: "";
-        width: 100%;
-        height: 40px;
-        left: 0;
-        top: 0;
-        right: inherit;
-        bottom: inherit;
-        box-shadow: inset 0 10px 8px -8px rgba(10, 9, 9, 0.08);
-      }
-
-      .@{prefix}-nav-wrap-ping-right::after {
-          content: "";
-          width: 100%;
-          height: 40px;
-          left: 0;
-          bottom: 0;
-          right: inherit;
-          top: inherit;
-          box-shadow: inset 0 -10px 8px -8px rgba(0,0,0,0.08);
-      }
-    }
-  }
-}
-
-// 右侧布局
-.postionVertical(@postion) when (@postion = right) {
-  .@{prefix}-@{postion} {
-    flex-direction: row-reverse;
-
-    .@{prefix}-nav {
-      margin: 0;
-      &::before {
-        left: 0;
-        right: inherit;
-        border-bottom: none;
-      }
-      .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-bar {
-          left: 0;
-          right: inherit;
-      }
-    }
-  }
-}
-
 // top布局
-.@{prefix}-top {
-  flex-direction: column;
-
-  .@{prefix}-nav {
-    margin: 0 0 11px;
-  }
-}
+.postionHorizontal(top);
 
 // bottom布局
-.@{prefix}-bottom {
-  flex-direction: column-reverse;
-
-  .@{prefix}-nav {
-    margin: 11px 0 0;
-    &::before {
-      border-bottom: none;
-      border-top: 1px solid #f0f0f0;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: inherit;
-    }
-  }
-
-  .@{prefix}-nav-bar {
-    top: 0;
-  }
-}
+.postionHorizontal(bottom);
 
 // left布局
 .postionVertical(left);
@@ -318,20 +405,60 @@
     }
 
     .@{prefix}-nav-bar {
-      background-color: #ffffff;
-      bottom: -1px;
-      transition: none;
+      display: none;
     }
   }
 }
+
+// separate布局
+.@{prefix}-nav-separate .@{prefix}-nav { 
+&::before {
+  display: none;
+}
+
+.@{prefix}-nav-wrap {
+    background-color: #fff;
+
+    .@{prefix}-nav-list .@{prefix}-nav-item {
+      margin: 0;
+      padding: 18px 32px;
+      position: relative;
+
+      &:first-child::before {
+        display: none;
+      }
+
+      &::before {
+        content: '';
+        width: 1px;
+        height: 14px;
+        background: #D9D9D9;
+        position: absolute;
+        left: 0;
+        top: calc(50% - 7px);
+      }
+    }
+
+    .@{prefix}-nav-bar {
+      display: none;
+    }
+  }
+}
+
 
 // 更多按钮
 .@{prefix}-nav-more {
   max-height: 200px;
   overflow-y: auto;
-  p {
+  overflow-x: hidden;
+  background-color: #ffffff;
+
+  li {
     padding: 8px 16px;
     cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-width: 120px;
   }
 
   p:hover {
@@ -367,3 +494,10 @@
     color: @click-color;
   }
 }
+
+// 预设大小
+@sizes: small, default, large;
+
+each(@sizes, {
+  .leke-tabs-nav-size(@value);
+});
