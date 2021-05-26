@@ -5,13 +5,12 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import cn from 'classnames';
 import { Close } from "@leke/icons";
-import { useControl } from "@leke/hooks";
 import { addMouseWheel, removeMouseWheel, returnTabPositionAttribute } from './utils';
 import { IDefaultTabBar, navType } from './types';
 import Trigger from "../Trigger";
  
 const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
-    const { children, centered, tabPosition, type, onEdit, addIcon, moreIcon, hideAdd, tabBarExtraContent, setCurrentTabKey, currentTabKey, setBarStyle, barStyle } = props;
+    const { children, centered, tabPosition, type, onEdit, addIcon, moreIcon, hideAdd, tabBarExtraContent, setCurrentTabKey, currentTabKey, setBarStyle, barStyle, tabBarGutter, tabBarStyle, onTabClick, onTabScroll } = props;
     const navRef = useRef(null); // tab导航元素
     const scrollEventLister = useRef(null); // 滚动监听 
     const currentTabInfo = useRef({
@@ -23,7 +22,7 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
     const [scrollLength, setScrollLength] = useState(0); // 滚动长度
     const [isShowScroll, setIsShowScroll] = useState(false); // 是否显示滚动
     const [navList, setNavList] = useState<navType[]>([]); // 导航栏tab数组
-    const [allowEdit] = useControl(type === 'editable-card'); // 是否允许编辑
+    const allowEdit = type === 'editable-card'; // 是否允许编辑
 
     useImperativeHandle(ref, () => ({
         currentTabInfo
@@ -70,17 +69,21 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
     },[isInVisibleArea, postionOpt, setBarStyle]);
 
     /**tab点击切换 */
-    const handleTitleCilck = useCallback((item: navType, index: number) => {
+    const handleTitleCilck = useCallback((item: navType, index: number, e: React.MouseEvent<HTMLDivElement | HTMLLIElement, MouseEvent>) => {
+        onTabClick?.(item.key, e);
         if(item.disabled) return;
-        setCurrentTabKey(item.key);
+        if(item.key !== currentTabKey) {
+            setCurrentTabKey(item.key);
+        }
         scrollToTab(item.key, index);
-    }, [setCurrentTabKey, scrollToTab]);
+    }, [setCurrentTabKey, scrollToTab,onTabClick,currentTabKey]);
 
     /**鼠标移入事件 */
     const onMouseEnter = useCallback(() => {
         if (!isShowScroll) return;
         // 监听滚动事件
         scrollEventLister.current = (e) => {
+            onTabScroll?.({ direction: tabPosition, event: e });
             setScrollLength(v => {
                 const isPlus = e.wheelDelta ? e.wheelDelta > 0 : e.detail ? e.detail < 0 : false;
                 const newLength = isPlus ? v + 100 : v - 100;
@@ -90,7 +93,7 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
             e?.preventDefault?.();
         };
         addMouseWheel(navRef.current, scrollEventLister.current);
-    }, [isShowScroll, postionOpt]);
+    }, [isShowScroll, postionOpt, tabPosition, onTabScroll]);
    
     /**鼠标移除事件 */
     const onMouseLeave = useCallback(() => {
@@ -201,7 +204,7 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
         return (
             <ul className="leke-tabs-nav-more">
                 {showMoreNavList.map(item => (
-                    <li className={cn({ ['leke-tabs-nav-more-disabled']: item.disabled })} key={item.key} onClick={() => handleTitleCilck(item, item.index)}>
+                    <li className={cn({ ['leke-tabs-nav-more-disabled']: item.disabled })} key={item.key} onClick={(e) => handleTitleCilck(item, item.index, e)}>
                         {item.tab}
                     </li>
                 ))}
@@ -216,9 +219,8 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
             [`leke-tabs-nav-active`]: currentTabKey === key,
             [`leke-tabs-nav-disabled`]: disabled
         });
-        const onClick = () => handleTitleCilck(item, index);
         return (
-            <div key={key} onClick={onClick} className={cls}>
+            <div key={key} onClick={(e) => handleTitleCilck(item, index, e)} className={cls} style={postionOpt.tabBarGutterStyle(tabBarGutter)}>
                 { tabIcon ? <span>
                     <span className="leke-tabs-nav-item-icon">{tabIcon}</span>
                     <span className="leke-tabs-nav-item-text">{tab}</span>
@@ -240,7 +242,7 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
     });
 
     return (
-        <div className="leke-tabs-nav" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <div className="leke-tabs-nav" style={tabBarStyle} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
             {tabBarExtraContent?.left || null}
             <div ref={navRef} className={navWrapCls}>
                 <div className={navListCls} style={{ transform: postionOpt.transform(scrollLength) }}>

@@ -10,7 +10,7 @@ import { ITabsProps, navType, ITabPaneProps, IDefaultTabBar } from './types';
 import DefaultTabBar from "./DefaultTabBar";
 
 const Tabs = (props: ITabsProps) => {
-    const { children, onChange, animated, tabPosition, style, type, activeKey, defaultActiveKey, size, renderTabBar } = props;
+    const { children, onChange, animated, tabPosition, style, type, activeKey, defaultActiveKey, size, renderTabBar, className } = props;
     const tabBarRef = useRef(null);
     const [navList, setNavList] = useState<navType[]>([]); // 导航栏tab数组
     const [barStyle, setBarStyle] = useState({}); // bar行内样式
@@ -45,7 +45,7 @@ const Tabs = (props: ITabsProps) => {
         [`leke-tabs-nav-card`]: ['card','editable-card'].includes(type),
         [`leke-tabs-nav-separate`]: ['separate'].includes(type),
         [`leke-tabs-nav-${size}`]: !!size
-    });
+    }, className);
 
     const contentCls = cn("leke-tabs-content", { ["leke-tabs-content-animated"]: animated });
 

@@ -15,6 +15,11 @@ export default function(){
     const callback = (key) => {
         console.log(key);
     };
+
+    const onTabScroll = ({ direction, event }) => {
+        console.log("onTabScroll =====>", direction);
+        console.log("event =====>", event);
+    };
     return(
         <>
             <Radio.Group value={state} onChange={setState} style={{ marginTop: 16 }}>
@@ -26,7 +31,7 @@ export default function(){
                 切换动画：<Switch onChange={setAnimated} />
             </div>
             <br />
-            <Tabs animated={animated} tabPosition={state} defaultActiveKey="1" onChange={callback} style={{ height: 220 }}>
+            <Tabs  animated={animated} tabPosition={state} defaultActiveKey="1" onChange={callback} style={{ height: 220 }}>
                 {Array(3).fill('').map((_,i) => (
                     <TabPane tab={`Tab ${i + 1}`} key={i+1} disabled={i===20}>
                         Content of Tab Pane {i + 1}
@@ -38,7 +43,7 @@ export default function(){
                 超出样式：
             </div>
             <br />
-            <Tabs animated={animated} tabPosition={state} defaultActiveKey="1" onChange={callback} style={{ height: 220 }}>
+            <Tabs onTabScroll={onTabScroll} animated={animated} tabPosition={state} defaultActiveKey="1" onChange={callback} style={{ height: 220 }}>
                 {Array(30).fill('').map((_,i) => (
                     <TabPane tab={`Tab ${i + 1}`} key={i+1} disabled={i===20}>
                         Content of Tab Pane {i + 1}

@@ -10,11 +10,15 @@ import {Tabs} from '@leke/rc';
 const { TabPane } = Tabs;
 
 export default function(){
-    const callback = (key) => {
-        console.log(key);
+    const onChange = (key) => {
+        console.log('onChange =>',key);
+    };
+
+    const onTabClick = (key) => {
+        console.log('onTabClick =>',key);
     };
     return(
-        <Tabs onChange={callback}>
+        <Tabs onChange={onChange} onTabClick={onTabClick}>
             <TabPane tab="Tab 1 long" key="1">
       Content of Tab Pane 1
             </TabPane>

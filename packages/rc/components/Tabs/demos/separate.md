@@ -3,8 +3,6 @@ title: 分隔式
 description: 通过分隔线区分tab
 ---
 
----
-
 ```jsx
 import React, { useState } from 'react';
 import { Tabs, Radio, Switch } from '@leke/rc';
@@ -39,22 +37,5 @@ export default function(){
   padding: 20px;
   background: #f5f5f5;
 }
-/* .card-container > .leke-tabs {
-    background: #fff;
-}
-
-.card-container > .leke-tabs > .leke-tabs-nav > .leke-tabs-nav-wrap > .leke-tabs-nav-list > .leke-tabs-nav-item {
-    border: none;
-    margin: 0;
-    background: #f5f5f5;
-}
-
-.card-container > .leke-tabs > .leke-tabs-nav > .leke-tabs-nav-wrap > .leke-tabs-nav-list > .leke-tabs-nav-active {
-    background: #fff;
-}
-
-.content {
-    margin-left: 20px;
-} */
 
 ```
