@@ -27,6 +27,6 @@
 | tab         | 选项卡头显示文字                          	 |  string           | _ |  
 | tabIcon     | 显示在tab左侧的图标                          |  ReactNode        | _ |     
 | closeIcon   | 自定义关闭图标，在 type="editable-card"时有效	 |  ReactNode        | _ |     
-| forceRender | 被隐藏时是否渲染 DOM 结构                      |  boolean          | _ |   
+| forceRender | 被隐藏时是否渲染 DOM 结构                      |  boolean          | false |   
 | disabled    | 是否禁用                                     |  boolean          | false |   
 | closable    | 是否显示关闭按钮                              |  boolean          | false |   

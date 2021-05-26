@@ -16,7 +16,7 @@ export default function(){
     };
     return(
         <Tabs defaultActiveKey="2" tabBarExtraContent={{ left: <Button style={{ marginRight: '16px' }}>左边按钮</Button>,right: <Button>右边按钮</Button> }}>
-            <TabPane tab={<span><ExclamationcCircleFill /> 自定义tab</span>} key="1">
+            <TabPane tab="Tab 1" key="1">
       Content of Tab Pane 1
             </TabPane>
             <TabPane tab="Tab 2" key="2">

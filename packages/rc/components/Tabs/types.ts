@@ -33,6 +33,7 @@ export interface ITabPaneProps {
   disabled?: boolean;
   children: React.ReactElement<HTMLElement>;
   closable?: boolean;
+  active?: boolean; 
 }
 
 
@@ -45,3 +46,8 @@ export interface IDefaultTabBar extends ITabsProps {
 }
 
 export type navType = ITabPaneProps;
+
+export interface ITabpaneContentProps extends ITabPaneProps {
+  tabKey: string | number;
+  currentTabKey: string | number;
+}

@@ -8,6 +8,7 @@ import { More, Plus } from "@leke/icons";
 import { useControl } from "@leke/hooks";
 import { ITabsProps, navType, ITabPaneProps, IDefaultTabBar } from './types';
 import DefaultTabBar from "./DefaultTabBar";
+import TabpaneContent from "./TabpaneContent";
 
 const Tabs = (props: ITabsProps) => {
     const { children, onChange, animated, tabPosition, style, type, activeKey, defaultActiveKey, size, renderTabBar, className } = props;
@@ -17,16 +18,9 @@ const Tabs = (props: ITabsProps) => {
     const [currentTabKey, setCurrentTabKey] = useControl<string | number>(activeKey ? String(activeKey) : undefined, onChange, defaultActiveKey ? String(defaultActiveKey) : undefined); // 当前选中tab的key
 
     // 渲染内容
-    const renderContent = useMemo(() => navList.map(item => {
-        const cls = cn("leke-tabs-tabpane", {
-            ["leke-tabs-tabpane-hide"]: item.key !== currentTabKey
-        });
-        return (
-            <div key={item.key} className={cls}>
-                {item.children}
-            </div>
-        );
-    }), [navList, currentTabKey]);
+    const renderContent = useMemo(() => navList.map(item => 
+        <TabpaneContent key={item.key} tabKey={item.key} currentTabKey={currentTabKey} {...item} />
+    ),  [navList, currentTabKey]);
 
     // 监听生成新的tabs
     useEffect(() => {
@@ -78,6 +72,12 @@ const TabPane = (props: ITabPaneProps) => {
 };
 
 Tabs.TabPane = TabPane;
+
+TabPane.defaultProps = {
+    forceRender: false,
+    disabled: false,
+    closable: false,
+};
 
 Tabs.defaultProps = {
     tabPosition: 'top',
