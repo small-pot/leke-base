@@ -2,7 +2,7 @@ import React, { CSSProperties, ReactNode } from "react";
 
 export interface ITabsProps {
   defaultActiveKey?: string | number;
-  children: React.ReactElement<HTMLElement & ITabPaneProps, any>;
+  children: any;
   centered?: boolean;
   animated?: boolean;
   size?: 'large' | 'default' | 'small';
@@ -21,7 +21,7 @@ export interface ITabsProps {
   onTabScroll?: ({ direction, event }: { direction: 'left' | 'right' | 'top' | 'bottom', event: MouseEvent }) => void;
   onChange?: (activeKey: string | number) => void;
   onEdit?: (activeKey: string | number, action: "add" | "remove") => void;
-  renderTabBar?: (props: any, DefaultTabBar: (props: any) => ReactNode) => ReactNode;
+  renderTabBar?: (props: IDefaultTabBar, DefaultTabBar: (props: IDefaultTabBar) => ReactNode) => ReactNode;
 }
 
 export interface ITabPaneProps {
@@ -31,7 +31,7 @@ export interface ITabPaneProps {
   closeIcon?: ReactNode;
   forceRender?: boolean;
   disabled?: boolean;
-  children: React.ReactElement<HTMLElement>;
+  children: any;
   closable?: boolean;
   active?: boolean; 
 }

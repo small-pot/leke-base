@@ -15,7 +15,7 @@ export default function(){
         console.log(key);
     };
     return(
-        <Tabs defaultActiveKey="2" tabBarExtraContent={{ left: <Button style={{ marginRight: '16px' }}>左边按钮</Button>,right: <Button>右边按钮</Button> }}>
+        <Tabs defaultActiveKey="2" tabBarExtraContent={{ left: <Button  size="small" style={{ marginRight: '16px' }}>左边按钮</Button>,right: <Button size="small">右边按钮</Button> }}>
             <TabPane tab="Tab 1" key="1">
       Content of Tab Pane 1
             </TabPane>

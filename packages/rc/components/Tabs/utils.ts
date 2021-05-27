@@ -13,12 +13,12 @@ export const returnTabPositionAttribute = (tabPosition) => {
     switch (tabPosition) {
     case 'top':
         return {
-            length: 'offsetWidth',
-            start: 'offsetLeft',
-            tabBarGutterStyle: (gutter) => (gutter || gutter === 0 ? { marginLeft: gutter + 'px'  } : {}),
-            barStyle: (length, postion) => ({ left: postion + length / 2 - 14 }),
-            scroll: 'scrollWidth',
-            transform: (scrollLength) => `translateX(${scrollLength}px)`
+            length: 'offsetWidth', // 该方向计算长度属性
+            start: 'offsetLeft', // 该方向计算起始位置属性
+            tabBarGutterStyle: (gutter) => (gutter || gutter === 0 ? { marginLeft: gutter + 'px'  } : {}),// 该方向tab间距控制
+            barStyle: (length, postion) => ({ left: postion + length / 2 - 14 }), // 该方向滑动bar控制
+            scroll: 'scrollWidth', // 该方向滚动计算属性
+            transform: (scrollLength) => `translateX(${scrollLength}px)` // 该方向tab头滚动样式
         };
     case 'bottom':
         return {

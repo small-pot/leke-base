@@ -44,7 +44,7 @@ export default function(){
             </Tabs>
             <br />
             <br />
-            <Tabs type="card" onChange={callback} size={size} tabPosition={postion}>
+            <Tabs type="card" onChange={callback} size={size}>
                 <TabPane tab="Tab 1" key="1">
       Content of Tab Pane 1
                 </TabPane>

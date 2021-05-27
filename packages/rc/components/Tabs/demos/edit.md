@@ -51,13 +51,6 @@ export default function(){
     // const 
     return(
         <>
-            <Radio.Group value={state} onChange={setState} style={{ marginTop: 16 }}>
-                <Radio.Button value="top">top</Radio.Button>
-                <Radio.Button value="bottom">bottom</Radio.Button>
-                <Radio.Button value="left">left</Radio.Button>
-                <Radio.Button value="right">right</Radio.Button>
-            </Radio.Group>
-            <br />
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 切换动画：<Switch onChange={setAnimated} />
             </div>

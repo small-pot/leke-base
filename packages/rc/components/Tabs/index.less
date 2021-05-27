@@ -111,6 +111,10 @@
   .@{prefix}-nav-card.@{prefix}-right  .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-active {
       border-left: 1px solid #fff;
   }
+
+  .@{prefix}:not(.@{prefix}-nav-separate):not(.@{prefix}-nav-card):not(.@{prefix}-top):not(.@{prefix}-bottom) .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list {
+    padding: 12px 0;
+  }
 }
 
 // 右侧布局
@@ -132,7 +136,7 @@
     }
   }
 }
-
+// 水平布局
 .postionHorizontal(@postion) {
   .@{prefix}-nav-card.@{prefix}-top .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-active {
       border-bottom: 1px solid #fff;
@@ -140,6 +144,10 @@
 
   .@{prefix}-nav-card.@{prefix}-bottom .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-active {
       border-top: 1px solid #fff;
+  }
+
+  .@{prefix}:not(.@{prefix}-nav-separate):not(.@{prefix}-nav-card):not(.@{prefix}-right):not(.@{prefix}-left) .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list {
+    padding: 0 12px;
   }
 }
 
@@ -184,12 +192,14 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  width: 100%;
 
   .@{prefix}-nav {
     background-color: #ffffff;
     font-size: 14px;
     display: flex;
     position: relative;
+    align-items: center;
 
     &::before {
       border-bottom: 1px solid #f0f0f0;

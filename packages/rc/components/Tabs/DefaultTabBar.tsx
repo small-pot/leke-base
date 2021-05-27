@@ -2,7 +2,7 @@
  * @author zhoujunda
  * @description DefaultTabBar 默认标签页头
  */
-import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
 import cn from 'classnames';
 import { Close } from "@leke/icons";
 import { addMouseWheel, removeMouseWheel, returnTabPositionAttribute } from './utils';
@@ -39,14 +39,14 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
 
     /**判断元素是否在可见区域 */
     const isInVisibleArea = useCallback((ele) => {
-        if ((ele[postionOpt.start] + scrollLength) < navRef.current[postionOpt.start]) {
+        if (isShowScroll && (ele[postionOpt.start] + scrollLength) < navRef.current[postionOpt.start]) {
             return { status: false, type: 1 }; // 左边
         }
-        if ((ele[postionOpt.start] + ele[postionOpt.length] + scrollLength) > (navRef.current[postionOpt.start] + navRef.current[postionOpt.length])) {
+        if (isShowScroll && (ele[postionOpt.start] + ele[postionOpt.length] + scrollLength) > (navRef.current[postionOpt.start] + navRef.current[postionOpt.length])) {
             return { status: false, type: 2 }; // 右边
         }
         return { status: true, type: 0 };
-    }, [scrollLength, postionOpt]);
+    }, [scrollLength, postionOpt, isShowScroll]);
 
     /**跳转交互 */
     const scrollToTab = useCallback((key, index) => {
@@ -153,14 +153,15 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
         });
     }, [children]);
 
-    // 监听是否显示更多下拉
-    useEffect(() => {
-        // 延迟等待渲染，判断是否超出
-        setTimeout(() => {
+    // 监听是否显示更多下拉（同步渲染效果较好）
+    useLayoutEffect(() => {
+        // 判断是否超出
+        if(navRef.current) {
             setIsShowScroll(navRef.current.getElementsByClassName('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll] - navRef.current[postionOpt.length] > 0);
-        },100);
+        }
         const onResize = () => {
-            setIsShowScroll(navRef.current.getElementsByClassName('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll] - navRef.current[postionOpt.length] > 0);
+            console.log('navRef ======================>',navRef.current?.getElementsByClassName?.('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll]);
+            setIsShowScroll(navRef.current?.getElementsByClassName?.('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll] - navRef.current?.[postionOpt.length] > 0);
         };
         // 监听窗口变化，重新计算
         window.addEventListener('resize', onResize);
