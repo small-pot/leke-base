@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import Portal from './Portal';
 import { animationDuration, prefix } from './config';
 import cx from 'classnames';
-import "./index.less";
 
 export interface MaskProps {
     visible: boolean,
