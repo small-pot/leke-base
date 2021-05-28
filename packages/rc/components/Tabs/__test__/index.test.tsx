@@ -1,10 +1,12 @@
 import React from "react";
 import Tabs from "../";
 import '@testing-library/jest-dom/extend-expect';
-import {render, waitFor,screen,act, fireEvent } from '@testing-library/react';
+import {render, waitFor,screen,act, fireEvent,cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 window.resizeTo = function resizeTo(width, height) {
+    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', { configurable: true, value: height });
+    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', { configurable: true, value: width});
     Object.assign(this, {
         innerWidth: width,
         innerHeight: height,
@@ -13,6 +15,20 @@ window.resizeTo = function resizeTo(width, height) {
     }).dispatchEvent(new this.Event('resize'));
 };
 
+const originalOffsetHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetHeight');
+const originalOffsetWidth = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetWidth');
+
+beforeAll(() => {
+    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', { configurable: true, value: 1080 });
+    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', { configurable: true, value: 400 });
+});
+
+afterAll(() => {
+    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', originalOffsetHeight);
+    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', originalOffsetWidth);
+});
+afterEach(cleanup);
+jest.useFakeTimers();
 describe('Rate', function() {
     it('test basis',async function () {
         const onChange = jest.fn();
@@ -41,54 +57,32 @@ describe('Rate', function() {
         expect(onTabClick).toBeCalled();
         expect(tab1).not.toHaveClass('leke-tabs-nav-active',{ exact: false });
         expect(tab2).toHaveClass('leke-tabs-nav-active',{ exact: false });
-        // expect(container).toMatchSnapshot();
     });
     it('test scroll',async function () {
         
         const {container} = render(
-            // <div style={{ width: '100px' }}>
-            <Tabs type="card" defaultActiveKey="2">
-                {Array(30).fill('').map((_,i) => (
-                    <Tabs.TabPane tab={`Tab ${i + 1}`} key={i+1} disabled={i===20}>
+            <div style={{ width: '100px', overflow: 'hidden' }}>
+                <Tabs type="card" defaultActiveKey="2">
+                    {Array(30).fill('').map((_,i) => (
+                        <Tabs.TabPane tab={`Tab ${i + 1}`} key={i+1} disabled={i===20}>
                         Content of Tab Pane {i + 1}
-                    </Tabs.TabPane>
-                ))}
-            </Tabs>
-            // </div>
+                        </Tabs.TabPane>
+                    ))}
+                </Tabs>
+            </div>
         );
-        
-        act(() => {
-            window.resizeTo(500, 500);
-            // fireEvent(window, new Event("resize"));
-        });
-        const wrap = container.querySelector('.leke-tabs-nav-wrap');
-        const list = container.querySelector('.leke-tabs-nav-list');
-        
-        const tab1 = container.querySelectorAll('.leke-tabs-nav-item')[0];
-        const tab2 = container.querySelectorAll('.leke-tabs-nav-item')[1];
-        expect(tab1).not.toHaveClass('leke-tabs-nav-active',{ exact: false });
-        expect(tab2).toHaveClass('leke-tabs-nav-active',{ exact: false });
-        
-        act(() => {
-            // console.log('container.wrap ========>',wrap);
-            // console.log('container.list ========>',list.scrollWidth);
-            // const moreBtn = container.querySelector('.leke-tabs-more-btn');
-            // console.log('container.list ========>',container);
-            // expect(moreBtn).toBeInTheDocument();
-        });
-        // await waitFor(() => {
-        
-        // }, { timeout: 1000 });
-        // act(()=>{
-        //     jest.useFakeTimers();
-        //     console.log('container.wrap ========>',wrap.scrollWidth);
-        //     console.log('container.list ========>',list.scrollWidth);
-            
+
+        // screen.debug();
+        // const listWrap = container.querySelector('.leke-tabs-nav');
+        // console.log('clientWidth  =======================>',listWrap.clientWidth);
+        // act(() => {
+        //     window.resizeTo(500, 500);
         // });
         
-        // console.log('container.wrap ========>',wrap.scrollWidth);
-        // console.log('container.list ========>',list.scrollWidth);
+        // const moreBtn = container.querySelector('.leke-tabs-more-btn');
         // expect(moreBtn).toBeInTheDocument();
+
         
     });
 });
+

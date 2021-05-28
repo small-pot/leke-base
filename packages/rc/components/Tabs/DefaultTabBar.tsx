@@ -160,7 +160,6 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
             setIsShowScroll(navRef.current.getElementsByClassName('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll] - navRef.current[postionOpt.length] > 0);
         }
         const onResize = () => {
-            console.log('navRef ======================>',navRef.current?.getElementsByClassName?.('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll]);
             setIsShowScroll(navRef.current?.getElementsByClassName?.('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll] - navRef.current?.[postionOpt.length] > 0);
         };
         // 监听窗口变化，重新计算
