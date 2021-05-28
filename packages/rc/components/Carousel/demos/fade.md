@@ -10,9 +10,9 @@ import {Carousel} from '@leke/rc';
 export default function(){
     return(
         <Carousel style={{width:500,height:300}} type='fade'>
-            <div style={{backgroundColor:'red'}}></div>
-            <div style={{backgroundColor:'green'}}></div>
-            <div style={{backgroundColor:'blue'}}></div>
+            <div style={{backgroundColor:'#60D195'}}></div>
+            <div style={{backgroundColor:'#ff9900'}}></div>
+            <div style={{backgroundColor:'#479FFF'}}></div>
         </Carousel>
     );
 }

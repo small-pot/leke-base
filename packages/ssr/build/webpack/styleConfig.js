@@ -12,7 +12,8 @@ const lessConfig={
     loader: "less-loader",
     options: {
         lessOptions:{
-            modifyVars
+            modifyVars,
+            javascriptEnabled: true
         }
     }
 };

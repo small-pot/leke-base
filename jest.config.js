@@ -50,7 +50,8 @@ module.exports = {
         "/node_modules/",
         "/demos/",
         "/es/",
-        "/lib/"
+        "/lib/",
+        "/formula/"
     ],
     collectCoverage: true
 };
