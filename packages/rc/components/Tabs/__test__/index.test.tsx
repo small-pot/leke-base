@@ -77,7 +77,9 @@ describe('Rate', function() {
         expect(onEdit).toBeCalled();
         userEvent.hover(container.querySelector('.leke-tabs-nav-list'));
         userEvent.unhover(container.querySelector('.leke-tabs-nav-list'));
-        window.resizeTo(500,500);
+        act(() => {
+            window.resizeTo(500,500);
+        });
     });
 });
 
