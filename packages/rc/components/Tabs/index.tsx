@@ -17,11 +17,6 @@ const Tabs = (props: ITabsProps) => {
     const [barStyle, setBarStyle] = useState({}); // bar行内样式
     const [currentTabKey, setCurrentTabKey] = useControl<string | number>(activeKey ? String(activeKey) : undefined, onChange, defaultActiveKey ? String(defaultActiveKey) : undefined); // 当前选中tab的key
 
-    // 渲染内容
-    const renderContent = useMemo(() => navList.map(item => 
-        <TabpaneContent key={item.key} tabKey={item.key} currentTabKey={currentTabKey} {...item} />
-    ),  [navList, currentTabKey]);
-
     // 监听生成新的tabs
     useEffect(() => {
         setNavList(() => {
@@ -29,8 +24,8 @@ const Tabs = (props: ITabsProps) => {
                 if (item.type.name !== 'TabPane') {
                     return { key: null, tab: null, children: item };
                 }
-                const { disabled, closable } = item.props;
-                return { key: item.key, tab: item.props.tab, disabled, closable, children: item };
+                const { disabled, closable, tabIcon } = item.props;
+                return { key: item.key, tab: item.props.tab, disabled, closable, tabIcon, children: item };
             }).filter(item => item.key !== null);
         });
     }, [children]);
@@ -46,20 +41,23 @@ const Tabs = (props: ITabsProps) => {
     const defaultProps: IDefaultTabBar = {
         ...props,
         ref: tabBarRef,
+        navList,
         currentTabKey,
         setCurrentTabKey,
         barStyle,
         setBarStyle
     };
     
-    const currentTabIndex = tabBarRef?.current?.currentTabInfo?.current?.index ?? 0;
+    const currentTabIndex = tabBarRef.current?.currentTabInfo?.current?.index ?? 0;
 
     return (
         <div className={tabsCls} style={style}>
             { renderTabBar ? renderTabBar(defaultProps, DefaultTabBar) : <DefaultTabBar {...defaultProps}/> }
             <div className="leke-tabs-content-wrap">
                 <div style={{ marginLeft: - currentTabIndex * 100 + '%' }} className={contentCls}>
-                    {renderContent}
+                    {navList.map(item => 
+                        <TabpaneContent key={item.key} tabKey={item.key} currentTabKey={currentTabKey} {...item} />
+                    )}
                 </div>
             </div>
         </div>

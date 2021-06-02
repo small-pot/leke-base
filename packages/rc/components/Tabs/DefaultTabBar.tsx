@@ -8,9 +8,9 @@ import { Close } from "@leke/icons";
 import { addMouseWheel, removeMouseWheel, returnTabPositionAttribute } from './utils';
 import { IDefaultTabBar, navType } from './types';
 import Trigger from "../Trigger";
- 
-const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
-    const { children, centered, tabPosition, type, onEdit, addIcon, moreIcon, hideAdd, tabBarExtraContent, setCurrentTabKey, currentTabKey, setBarStyle, barStyle, tabBarGutter, tabBarStyle, onTabClick, onTabScroll } = props;
+
+const DefaultTabBar = forwardRef((props: IDefaultTabBar, ref: any) => {
+    const { navList, centered, tabPosition, type, onEdit, addIcon, moreIcon, hideAdd, tabBarExtraContent, setCurrentTabKey, currentTabKey, setBarStyle, barStyle, tabBarGutter, tabBarStyle, onTabClick, onTabScroll } = props;
     const navRef = useRef(null); // tab导航元素
     const scrollEventLister = useRef(null); // 滚动监听 
     const currentTabInfo = useRef({
@@ -21,7 +21,6 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
     const maxScrollLength = useRef(-1); // 最大滚动长度
     const [scrollLength, setScrollLength] = useState(0); // 滚动长度
     const [isShowScroll, setIsShowScroll] = useState(false); // 是否显示滚动
-    const [navList, setNavList] = useState<navType[]>([]); // 导航栏tab数组
     const allowEdit = type === 'editable-card'; // 是否允许编辑
 
     useImperativeHandle(ref, () => ({
@@ -30,9 +29,9 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
 
     // 不同方向布局配置
     const postionOpt = useMemo(() => returnTabPositionAttribute(tabPosition), [tabPosition]);
-   
+
     /**编辑回调 */
-    const handleEdit = useCallback((key, action,e) => {
+    const handleEdit = useCallback((key, action, e) => {
         onEdit?.(key, action);
         e.stopPropagation();
     }, [onEdit]);
@@ -66,17 +65,17 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
         } else if (visibleType.type === 2) {
             setScrollLength(-currentEle[postionOpt.start] - currentEle[postionOpt.length] + navRef.current[postionOpt.length]);
         }
-    },[isInVisibleArea, postionOpt, setBarStyle]);
+    }, [isInVisibleArea, postionOpt, setBarStyle]);
 
     /**tab点击切换 */
     const handleTitleCilck = useCallback((item: navType, index: number, e: React.MouseEvent<HTMLDivElement | HTMLLIElement, MouseEvent>) => {
         onTabClick?.(item.key, e);
-        if(item.disabled) return;
-        if(item.key !== currentTabKey) {
+        if (item.disabled) return;
+        if (item.key !== currentTabKey) {
             setCurrentTabKey(item.key);
         }
         scrollToTab(item.key, index);
-    }, [setCurrentTabKey, scrollToTab,onTabClick,currentTabKey]);
+    }, [setCurrentTabKey, scrollToTab, onTabClick, currentTabKey]);
 
     /**鼠标移入事件 */
     const onMouseEnter = useCallback(() => {
@@ -89,12 +88,12 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
                 const newLength = isPlus ? v + 100 : v - 100;
                 const maxLength = maxScrollLength.current = navRef.current.getElementsByClassName('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll] - navRef.current[postionOpt.length];
                 return newLength > 0 ? 0 : newLength < -maxLength ? -maxLength : newLength;
-            } );
+            });
             e?.preventDefault?.();
         };
         addMouseWheel(navRef.current, scrollEventLister.current);
     }, [isShowScroll, postionOpt, tabPosition, onTabScroll]);
-   
+
     /**鼠标移除事件 */
     const onMouseLeave = useCallback(() => {
         removeMouseWheel(navRef.current, scrollEventLister.current);
@@ -103,11 +102,11 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
     // 内容变化监听
     useEffect(() => {
         if (!navRef.current) return;
-       
+
         if (currentTabInfo.current.key === null) {
             // 第一次进来,初始化
             if (navList.length) {
-                const key = currentTabKey ? String(currentTabKey) :  navList[0]?.key; // 初始key
+                const key = currentTabKey ? String(currentTabKey) : navList[0]?.key; // 初始key
                 let index = navList.findIndex(item => item.key === key);
                 index = index === -1 ? 0 : index; // 初始下标
 
@@ -126,37 +125,25 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
             // 再次进来,表示内容有更新
             if (navList.length && index !== -1) {
                 // 滚动到当前选中的tab
-                scrollToTab(currentTabKey,index);
+                scrollToTab(currentTabKey, index);
             }
 
-            if(isShowScroll) {
+            if (isShowScroll) {
+                console.log(88888);
                 // 校正是否超出最大和最小长度
                 setScrollLength(v => {
                     const maxLength = maxScrollLength.current = navRef.current?.getElementsByClassName('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll] - navRef.current[postionOpt.length];
                     return v > 0 ? 0 : v < -maxLength ? -maxLength : v;
-                } );
+                });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navList, postionOpt]);
 
-    // 监听生成新的tabs
-    useEffect(() => {
-        setNavList(() => {
-            return React.Children.map(children, (item) => {
-                if (item.type.name !== 'TabPane') {
-                    return { key: null, tab: null, children: item };
-                }
-                const { disabled, closable, tabIcon } = item.props;
-                return { key: item.key, tab: item.props.tab, disabled, closable, tabIcon, children: item };
-            }).filter(item => item.key !== null);
-        });
-    }, [children]);
-
     // 监听是否显示更多下拉（同步渲染效果较好）
     useLayoutEffect(() => {
         // 判断是否超出
-        if(navRef.current) {
+        if (navRef.current) {
             setIsShowScroll(navRef.current.getElementsByClassName('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll] - navRef.current[postionOpt.length] > 0);
         }
         const onResize = () => {
@@ -172,8 +159,8 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
     // 监听布局变化
     useEffect(() => {
         const { key, index } = currentTabInfo.current;
-        if(index === null) return;
-        scrollToTab(key,index);
+        if (index === null) return;
+        scrollToTab(key, index);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [postionOpt]);
 
@@ -185,10 +172,10 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
             </button>
         ) : null;
     }, [allowEdit, addIcon, hideAdd, handleEdit]);
-   
+
     // 渲染更多下拉框
     const renderMoreDrop = useMemo(() => {
-        if(!isShowScroll) return;
+        if (!isShowScroll) return;
         const showMoreNavList = [];
         const navItemList = navRef.current.getElementsByClassName(`leke-tabs-nav-item`);
         for (let i = 0; i < navItemList.length; i++) {
@@ -210,7 +197,7 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
                 ))}
             </ul>
         );
-    },[isShowScroll, isInVisibleArea, navList, handleTitleCilck]);
+    }, [isShowScroll, isInVisibleArea, navList, handleTitleCilck]);
 
     // 渲染导航
     const renderNav = navList.map((item, index) => {
@@ -233,7 +220,7 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
             </div>
         );
     });
-   
+
     const navListCls = cn("leke-tabs-nav-list", { ["leke-tabs-nav-list-center"]: centered });
 
     const navWrapCls = cn("leke-tabs-nav-wrap", {
@@ -267,6 +254,5 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar,ref:any) => {
         </div>
     );
 });
- 
+
 export default DefaultTabBar;
- 

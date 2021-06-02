@@ -138,6 +138,14 @@
 }
 // 水平布局
 .postionHorizontal(@postion) {
+  .@{prefix}.@{prefix}-@{postion} .@{prefix}-nav .@{prefix}-nav-wrap {
+    height: 100%;
+    
+    .@{prefix}-nav-list {
+      height: 100%;
+    }
+  }
+
   .@{prefix}-nav-card.@{prefix}-top .@{prefix}-nav .@{prefix}-nav-wrap .@{prefix}-nav-list .@{prefix}-nav-active {
       border-bottom: 1px solid #fff;
   }
@@ -216,13 +224,11 @@
       flex: 1;
       overflow: hidden;
       display: flex;
-      align-items: center;
 
       .@{prefix}-nav-list {
         display: flex;
         transition: transform .3s;
         position: relative;
-        height: 100%;
       
         .@{prefix}-nav-item {
             white-space: nowrap;

@@ -24,7 +24,6 @@ export default function(){
         setActiveKey(key);
     };
     const onEdit = (key, action) => {
-        // console.log('key =>',key, action);
         if(action === 'add') {
             setData(d => d.concat({
                 key: d[d.length - 1].key+1,
@@ -48,7 +47,6 @@ export default function(){
         }
     };
     
-    // const 
     return(
         <>
             <div style={{ display: 'flex', alignItems: 'center' }}>

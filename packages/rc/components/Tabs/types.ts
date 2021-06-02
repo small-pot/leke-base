@@ -39,6 +39,7 @@ export interface ITabPaneProps {
 
 export interface IDefaultTabBar extends ITabsProps {
   ref: any;
+  navList: navType[];
   currentTabKey: string | number;
   setCurrentTabKey: any;
   barStyle: {};
