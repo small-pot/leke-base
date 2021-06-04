@@ -129,7 +129,6 @@ const DefaultTabBar = forwardRef((props: IDefaultTabBar, ref: any) => {
             }
 
             if (isShowScroll) {
-                console.log(88888);
                 // 校正是否超出最大和最小长度
                 setScrollLength(v => {
                     const maxLength = maxScrollLength.current = navRef.current?.getElementsByClassName('leke-tabs-nav-list')?.[0]?.[postionOpt.scroll] - navRef.current[postionOpt.length];

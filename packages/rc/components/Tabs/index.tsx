@@ -2,7 +2,7 @@
  * @author zhoujunda
  * @description Tabs标签页
  */
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import cn from 'classnames';
 import { More, Plus } from "@leke/icons";
 import { useControl } from "@leke/hooks";
@@ -13,22 +13,17 @@ import TabpaneContent from "./TabpaneContent";
 const Tabs = (props: ITabsProps) => {
     const { children, onChange, animated, tabPosition, style, type, activeKey, defaultActiveKey, size, renderTabBar, className } = props;
     const tabBarRef = useRef(null);
-    const [navList, setNavList] = useState<navType[]>([]); // 导航栏tab数组
     const [barStyle, setBarStyle] = useState({}); // bar行内样式
     const [currentTabKey, setCurrentTabKey] = useControl<string | number>(activeKey ? String(activeKey) : undefined, onChange, defaultActiveKey ? String(defaultActiveKey) : undefined); // 当前选中tab的key
 
-    // 监听生成新的tabs
-    useEffect(() => {
-        setNavList(() => {
-            return React.Children.map(children, (item) => {
-                if (item.type.name !== 'TabPane') {
-                    return { key: null, tab: null, children: item };
-                }
-                const { disabled, closable, tabIcon } = item.props;
-                return { key: item.key, tab: item.props.tab, disabled, closable, tabIcon, children: item };
-            }).filter(item => item.key !== null);
-        });
-    }, [children]);
+    // 导航栏tab数组
+    const navList:navType[] = useMemo(() => React.Children.map(children, (item) => {
+        if (item.type.name !== 'TabPane') {
+            return { key: null, tab: null, children: item };
+        }
+        const { disabled, closable, tabIcon } = item.props;
+        return { key: item.key, tab: item.props.tab, disabled, closable, tabIcon, children: item };
+    }).filter(item => item.key !== null),[children]);
 
     const tabsCls = cn("leke-tabs", `leke-tabs-${tabPosition}`, {
         [`leke-tabs-nav-card`]: ['card','editable-card'].includes(type),
