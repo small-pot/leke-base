@@ -60,6 +60,10 @@ export default {
         {
             key:'Modal',
             title:'对话框'
+        },
+        {
+            key:'Tabs',
+            title:'标签页'
         }
     ]
 };

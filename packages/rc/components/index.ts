@@ -20,3 +20,4 @@ export {default as Radio} from './Radio';
 export { default as BusinessHeader } from "./BusinessHeader";
 export { default as Rate } from "./Rate";
 export { default as Modal } from "./Modal";
+export { default as Tabs } from "./Tabs";
