@@ -23,7 +23,7 @@ export default function(){
             }}>{item}</div>)}
         </div>
         <Modal title='基础弹框' visible={visible} size={size} onCancel={()=>{setV(false);}} destroyOnClose={true}>
-            <div className="center">基础弹框</div>
+            <div className={`center ${size}`}>基础弹框</div>
         </Modal>
     </div>;
 }
@@ -46,9 +46,12 @@ export default function(){
     border-color:#1FB5AB;
 }
 .center {
-    height: 98px;
+    height: 92px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.center.mini {
+    height: 50px;
 }
 ```

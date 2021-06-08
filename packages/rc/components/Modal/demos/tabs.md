@@ -25,7 +25,7 @@ export default function(){
             onOk={handleOk}
             onChangeTitle={onChangeTitle}
         >
-            <div className="center">
+            <div className="center3">
                 {tab === 0 ? (
                     <p>第一页啊啊啊啊阿</p>
                 ) : tab === 1 ? (
@@ -40,8 +40,8 @@ export default function(){
 ```
 
 ```css
-.center {
-    height: 98px;
+.center3 {
+    height: 92px;
     display: flex;
     justify-content: center;
     align-items: center;

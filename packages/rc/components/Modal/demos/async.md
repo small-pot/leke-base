@@ -26,7 +26,7 @@ export default function(){
             onCancel={()=>{setVisible(false);}}
             onOk={handleOk}
         >
-            <div className="center">
+            <div className="center4">
                 <p>balabala~</p>
                 <p>balabala~</p>
                 <p>balabala~</p>
@@ -37,8 +37,8 @@ export default function(){
 ```
 
 ```css
-.center {
-    height: 98px;
+.center4 {
+    height: 92px;
     display: flex;
     justify-content: center;
     align-items: center;
