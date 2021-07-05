@@ -1,5 +1,5 @@
 export type paramsType<K>={
-    [p in keyof K]: any
+    [P in keyof K]?: K[P]
 }
 export type getDataType<T=object>=()=>T
 export type setDataType<T=object>=(newData:paramsType<T> | ((data:T)=>paramsType<T>))=>void
