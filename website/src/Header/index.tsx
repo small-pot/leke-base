@@ -10,7 +10,8 @@ const navList=[
     {key:'icons',title:'icons'},
     {key:'ssr',title:'SSR脚手架'},
     {key:'store',title:'store'},
-    {key:'AV',title:'音视频'}
+    {key:'AV',title:'音视频'},
+    {key:'formula',title:'公式编辑器'}
 ];
 function filter(opt,text) {
     return opt.key.toLowerCase().indexOf(text)>-1||(opt.title&&opt.title.indexOf(text)>-1);
