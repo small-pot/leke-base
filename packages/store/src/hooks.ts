@@ -1,5 +1,5 @@
 import StoreContext from "./context";
-import {useCallback,useEffect, useReducer,useRef,useContext} from "react";
+import {useCallback,useEffect, useReducer,useContext} from "react";
 import {storeType,setDataType} from "./types";
 
 export function shallowEqual(objA, objB):boolean {
@@ -23,7 +23,7 @@ export function shallowEqual(objA, objB):boolean {
 }
 
 
-export const useStore=function<T=object> ():storeType<T> {
+export const useStore=function<T=any> ():storeType<T> {
     return useContext(StoreContext);
 };
 const subscription=[];
@@ -49,7 +49,7 @@ export const useData=<T=any>(selector:(data)=>T,compare=shallowEqual):T=>{
     return state;
 };
 
-export const useDispatch=<T=object>():setDataType<T>=>{
+export const useDispatch=<T=any>():setDataType<T>=>{
     const {setData}=useStore<T>();
     return useCallback((o)=>{
         setData(o);
