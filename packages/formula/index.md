@@ -18,6 +18,6 @@ formula.latex('\\frac{1}{2}'); //根据latex渲染公式
 | 属性 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
 | latex | 获取或者重置公式 | ?:string | _ |
-| toDataURL | 获取base64 Url| string | _ |
+| toDataURL | 获取base64 Url| _ | _ |
 
 
